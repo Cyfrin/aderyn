@@ -3,7 +3,7 @@ use std::collections::HashSet;
 use crate::{
     ast::{NodeID, NodeType},
     context::{
-        graph::LegacyWorkspaceCallGraph,
+        graph::RawCallGraph,
         workspace::{ASTNode, WorkspaceContext},
     },
 };
@@ -18,13 +18,46 @@ impl CallGraphConsumer {
     pub(super) fn _accept<T>(
         &self,
         context: &WorkspaceContext,
-        inward_callgraph: &LegacyWorkspaceCallGraph,
-        outward_callgraph: &LegacyWorkspaceCallGraph,
         visitor: &mut T,
     ) -> super::Result<()>
     where
         T: CallGraphVisitor,
     {
+        let callgraphs = context.callgraphs.as_ref().expect("callgraphs not attached to context");
+
+        let inward_callgraph = {
+            if self.is_legacy() {
+                context
+                    .inward_callgraph
+                    .as_ref()
+                    .ok_or(super::Error::InwardCallgraphNotAvailable)?
+                    .raw_callgraph
+                    .clone()
+            } else {
+                callgraphs
+                    .inward_callgraphs
+                    .get(&self.base_contract.expect("base contract not set"))
+                    .ok_or(super::Error::InwardCallgraphNotAvailable)?
+                    .clone()
+            }
+        };
+        let outward_callgraph = {
+            if self.is_legacy() {
+                context
+                    .outward_callgraph
+                    .as_ref()
+                    .ok_or(super::Error::OutwardCallgraphNotAvailable)?
+                    .raw_callgraph
+                    .clone()
+            } else {
+                callgraphs
+                    .outward_callgraphs
+                    .get(&self.base_contract.expect("base contract not set"))
+                    .ok_or(super::Error::OutwardCallgraphNotAvailable)?
+                    .clone()
+            }
+        };
+
         // Visit entry point nodes (so that trackers can track the state across all code regions in
         // 1 place)
         for entry_point_id in &self.entry_points {
@@ -46,7 +79,7 @@ impl CallGraphConsumer {
                     *surface_point_id,
                     &mut visited_inward,
                     context,
-                    inward_callgraph,
+                    &inward_callgraph,
                     visitor,
                     CurrentDFSVector::Inward,
                     None,
@@ -63,7 +96,7 @@ impl CallGraphConsumer {
                     *surface_point_id,
                     &mut visited_outward,
                     context,
-                    outward_callgraph,
+                    &outward_callgraph,
                     visitor,
                     CurrentDFSVector::Outward,
                     None,
@@ -87,7 +120,7 @@ impl CallGraphConsumer {
                     *surface_point_id,
                     &mut visited_outward_side_effects,
                     context,
-                    inward_callgraph,
+                    &inward_callgraph,
                     visitor,
                     CurrentDFSVector::OutwardSideEffect,
                     Some(&blacklisted),
@@ -104,7 +137,7 @@ impl CallGraphConsumer {
         node_id: NodeID,
         visited: &mut HashSet<NodeID>,
         context: &WorkspaceContext,
-        callgraph: &LegacyWorkspaceCallGraph,
+        callgraph: &RawCallGraph,
         visitor: &mut T,
         current_investigation_direction: CurrentDFSVector,
         blacklist: Option<&HashSet<NodeID>>,
@@ -136,7 +169,7 @@ impl CallGraphConsumer {
             )?;
         }
 
-        if let Some(pointing_to) = callgraph.raw_callgraph.get(&node_id) {
+        if let Some(pointing_to) = callgraph.get(&node_id) {
             for destination in pointing_to {
                 self.dfs_and_visit_subgraph(
                     *destination,

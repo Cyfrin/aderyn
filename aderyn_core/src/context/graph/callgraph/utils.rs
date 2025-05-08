@@ -31,6 +31,9 @@ impl CallGraphConsumer {
         })
     }
 
+    /// New method
+    ///
+    /// Creates a [`CallGraphConsumer`] that can explore paths from given nodes.
     pub fn many_from_nodes(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
@@ -143,7 +146,7 @@ pub(super) fn derive_inward_surface_points(
         let modifier_calls = ExtractModifierInvocations::from(node).extracted;
 
         let cg = context.callgraphs.as_ref().expect("callgraph not found");
-        for (contract_id, graph) in &cg.raw_callgraphs {
+        for (contract_id, graph) in &cg.inward_callgraphs {
             let mut insert = |contract_id: NodeID, dest: NodeID| {
                 match potential.entry(contract_id) {
                     Entry::Occupied(mut o) => {

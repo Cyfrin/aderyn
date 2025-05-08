@@ -67,14 +67,10 @@ impl CallGraphConsumer {
     where
         T: CallGraphVisitor,
     {
-        self._accept(
-            context,
-            context.inward_callgraph.as_ref().ok_or(super::Error::InwardCallgraphNotAvailable)?,
-            context.outward_callgraph.as_ref().ok_or(super::Error::OutwardCallgraphNotAvailable)?,
-            visitor,
-        )
+        self._accept(context, visitor)
     }
 
+    #[inline]
     pub fn is_legacy(&self) -> bool {
         self.base_contract.is_none()
     }
