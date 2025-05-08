@@ -13,7 +13,7 @@ use crate::{
     context::workspace::{ASTNode, WorkspaceContext},
 };
 
-#[derive(PartialEq)]
+#[derive(Clone, PartialEq)]
 pub enum CallGraphDirection {
     /// Deeper into the callgraph
     Inward,
@@ -38,8 +38,11 @@ pub struct CallGraphConsumer {
     /// Same as the inward one, but acts on reverse graph.
     pub outward_surface_points: Vec<NodeID>,
 
-    /// Decides what graph type to chose from [`WorkspaceContext`]
+    /// Decides what graph type to chose.
     pub direction: CallGraphDirection,
+
+    /// Decides what graph to chose from [`WorkspaceContext::callgraphs`].
+    pub base_contract: Option<NodeID>,
 }
 
 #[derive(PartialEq, Clone, Copy)]
@@ -70,5 +73,9 @@ impl CallGraphConsumer {
             context.outward_callgraph.as_ref().ok_or(super::Error::OutwardCallgraphNotAvailable)?,
             visitor,
         )
+    }
+
+    pub fn is_legacy(&self) -> bool {
+        self.base_contract.is_none()
     }
 }
