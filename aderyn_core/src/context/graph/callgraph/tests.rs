@@ -25,7 +25,6 @@ mod callgraph_test_functions {
     }
 
     #[test]
-
     fn test_callgraph_is_not_none() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -35,7 +34,6 @@ mod callgraph_test_functions {
     }
 
     #[test]
-
     fn test_tower1_modifier_has_no_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -54,7 +52,6 @@ mod callgraph_test_functions {
     }
 
     #[test]
-
     fn test_tower1_modifier_has_outward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -73,7 +70,6 @@ mod callgraph_test_functions {
     }
 
     #[test]
-
     fn test_tower2_modifier_has_both_outward_and_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -94,7 +90,6 @@ mod callgraph_test_functions {
     }
 
     #[test]
-
     fn test_tower3_modifier_has_both_outward_and_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -117,7 +112,6 @@ mod callgraph_test_functions {
     }
 
     #[test]
-
     fn test_tower3_functions_has_outward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -135,7 +129,6 @@ mod callgraph_test_functions {
     }
 
     #[test]
-
     fn test_tower4_functions_has_outward_and_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
