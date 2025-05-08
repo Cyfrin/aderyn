@@ -17,7 +17,7 @@ impl CallGraphConsumer {
     /// Legacy method
     ///
     /// Creates a [`CallGraphConsumer`] that can explore paths from given nodes.
-    pub fn from_nodes_legacy(
+    pub fn from_nodes(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
         direction: CallGraphDirection,

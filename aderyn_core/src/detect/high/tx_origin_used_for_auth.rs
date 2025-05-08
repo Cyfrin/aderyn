@@ -83,7 +83,8 @@ impl TxOriginUsedForAuthDetector {
     ) -> Result<(), Box<dyn Error>> {
         // Boilerplate
         let mut tracker = MsgSenderAndTxOriginTracker::default();
-        let callgraph = CallGraphConsumer::new(context, check_nodes, CallGraphDirection::Inward)?;
+        let callgraph =
+            CallGraphConsumer::make_legacy(context, check_nodes, CallGraphDirection::Inward)?;
         callgraph.accept(context, &mut tracker)?;
 
         if tracker.satisfied() {

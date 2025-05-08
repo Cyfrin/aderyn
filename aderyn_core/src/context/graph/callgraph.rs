@@ -53,12 +53,20 @@ enum CurrentDFSVector {
 }
 
 impl CallGraphConsumer {
-    pub fn new(
+    pub fn make_legacy(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
         direction: CallGraphDirection,
     ) -> super::Result<CallGraphConsumer> {
-        Self::from_nodes_legacy(context, nodes, direction)
+        Self::from_nodes(context, nodes, direction)
+    }
+
+    pub fn make_new(
+        context: &WorkspaceContext,
+        nodes: &[&ASTNode],
+        direction: CallGraphDirection,
+    ) -> super::Result<Vec<CallGraphConsumer>> {
+        Self::many_from_nodes(context, nodes, direction)
     }
 
     /// Visit the entry points and all the plausible function definitions and modifier definitions

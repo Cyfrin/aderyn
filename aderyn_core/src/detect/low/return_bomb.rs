@@ -43,8 +43,11 @@ impl IssueDetector for ReturnBombDetector {
                                                                 * variable */
                 context,
             };
-            let callgraph =
-                CallGraphConsumer::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            let callgraph = CallGraphConsumer::make_legacy(
+                context,
+                &[&(func.into())],
+                CallGraphDirection::Inward,
+            )?;
             callgraph.accept(context, &mut tracker)?;
 
             if !tracker.has_address_checks {

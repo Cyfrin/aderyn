@@ -43,7 +43,7 @@ impl IssueDetector for FunctionInitializingStateDetector {
                         let mut tracker =
                             NonConstantStateVariableReferenceDeclarationTracker::new(context);
 
-                        let callgraph = CallGraphConsumer::new(
+                        let callgraph = CallGraphConsumer::make_legacy(
                             context,
                             &[&(func.into())],
                             CallGraphDirection::Inward,

@@ -108,7 +108,7 @@ mod contract_eth_helper {
 
                     let mut tracker = EthWithdrawalAllowerTracker::default();
 
-                    let callgraph = CallGraphConsumer::new(
+                    let callgraph = CallGraphConsumer::make_legacy(
                         context,
                         funcs.iter().collect::<Vec<_>>().as_slice(),
                         CallGraphDirection::Inward,

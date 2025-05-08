@@ -28,7 +28,8 @@ impl IssueDetector for RequireRevertInLoopDetector {
         let loop_explore_centers = get_explore_centers_of_loops(context);
 
         for l in loop_explore_centers {
-            let callgraph = CallGraphConsumer::new(context, &[l], CallGraphDirection::Inward)?;
+            let callgraph =
+                CallGraphConsumer::make_legacy(context, &[l], CallGraphDirection::Inward)?;
             let mut tracker = RevertAndRequireTracker::default();
             callgraph.accept(context, &mut tracker)?;
 
