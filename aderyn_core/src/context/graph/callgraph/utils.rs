@@ -162,12 +162,12 @@ pub(super) fn derive_inward_surface_points(
             if let Some(ASTNode::ContractDefinition(contract)) = context.nodes.get(contract_id) {
                 if graph.contains_key(&containing_fm) {
                     for function_call in function_calls.iter() {
-                        if let Some(f) = context.resolve_internal_call(contract, &function_call) {
+                        if let Some(f) = context.resolve_internal_call(contract, function_call) {
                             insert(*contract_id, f.id);
                         }
                     }
                     for modifier_call in modifier_calls.iter() {
-                        if let Some(m) = context.resolve_modifier_call(contract, &modifier_call) {
+                        if let Some(m) = context.resolve_modifier_call(contract, modifier_call) {
                             insert(*contract_id, m.id);
                         }
                     }
