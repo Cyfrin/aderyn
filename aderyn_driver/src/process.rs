@@ -53,8 +53,9 @@ pub fn make_context(
     // Supplement the context
     // 1. Inject nSLOC stats
     // 2. Collect lines marked by aderyn-ignore-line, aderyn-ignore-next-line
-    // 3. Inject Callgraph
+    // 3. Inject Legacy Callgraph
     // 4. Inject Router
+    // 5. Inject New Callgraph
     for context in contexts.iter_mut() {
         let absolute_root_path = &ensure_valid_root_path(&root_path);
         let stats = stats::collect_stats(absolute_root_path.as_path(), common.skip_cloc, context);
