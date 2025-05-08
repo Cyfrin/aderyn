@@ -53,7 +53,7 @@ enum CurrentDFSVector {
 }
 
 impl CallGraphConsumer {
-    pub fn make_legacy(
+    pub fn get_legacy(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
         direction: CallGraphDirection,
@@ -61,7 +61,7 @@ impl CallGraphConsumer {
         Self::from_nodes(context, nodes, direction)
     }
 
-    pub fn make_new(
+    pub fn get(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
         direction: CallGraphDirection,

@@ -31,7 +31,7 @@ impl IssueDetector for DelegateCallUncheckedAddressDetector {
                 has_delegate_call_on_non_state_variable_address: false,
                 context,
             };
-            let callgraph = CallGraphConsumer::make_legacy(
+            let callgraph = CallGraphConsumer::get_legacy(
                 context,
                 &[&(func.into())],
                 CallGraphDirection::Inward,

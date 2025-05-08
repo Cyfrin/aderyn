@@ -43,7 +43,7 @@ impl IssueDetector for ReturnBombDetector {
                                                                 * variable */
                 context,
             };
-            let callgraph = CallGraphConsumer::make_legacy(
+            let callgraph = CallGraphConsumer::get_legacy(
                 context,
                 &[&(func.into())],
                 CallGraphDirection::Inward,

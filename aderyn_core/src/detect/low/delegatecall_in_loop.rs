@@ -36,7 +36,7 @@ impl IssueDetector for DelegatecallInLoopDetector {
             let mut delegate_call_tracker = DelegateCallTracker::default();
 
             // All the ASTNodes that are potentially run in a loop
-            let callgraph = CallGraphConsumer::make_legacy(
+            let callgraph = CallGraphConsumer::get_legacy(
                 context,
                 &[explore_center],
                 CallGraphDirection::Inward,

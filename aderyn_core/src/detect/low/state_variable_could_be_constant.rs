@@ -129,7 +129,7 @@ mod function_state_changes_finder_helper {
         ) -> Option<ApproximateStorageChangeFinder<'a>> {
             let mut tracker = StateVariableChangeTracker { changes: None, context };
 
-            let investigator = CallGraphConsumer::make_legacy(
+            let investigator = CallGraphConsumer::get_legacy(
                 context,
                 &[&(self.into())],
                 CallGraphDirection::Inward,

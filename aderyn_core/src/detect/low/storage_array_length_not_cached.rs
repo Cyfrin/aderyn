@@ -144,7 +144,7 @@ mod loop_investigation_helper {
         ) -> Option<ApproximateStorageChangeFinder<'a>> {
             let mut tracker = StateVariableChangeTracker { changes: None, context };
 
-            let callgraph = CallGraphConsumer::make_legacy(
+            let callgraph = CallGraphConsumer::get_legacy(
                 context,
                 &[&(self.into())],
                 CallGraphDirection::Inward,

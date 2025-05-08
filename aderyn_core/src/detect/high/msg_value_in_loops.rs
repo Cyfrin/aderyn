@@ -70,7 +70,7 @@ impl IssueDetector for MsgValueUsedInLoopDetector {
 fn uses_msg_value(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool> {
     let mut tracker = MsgValueTracker::default();
     let callgraph =
-        CallGraphConsumer::make_legacy(context, &[ast_node], CallGraphDirection::Inward).ok()?;
+        CallGraphConsumer::get_legacy(context, &[ast_node], CallGraphDirection::Inward).ok()?;
 
     callgraph.accept(context, &mut tracker).ok()?;
     Some(tracker.has_msg_value)

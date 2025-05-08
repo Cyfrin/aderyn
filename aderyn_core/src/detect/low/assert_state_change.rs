@@ -93,7 +93,7 @@ mod assert_state_change_tracker {
             let ast_nodes: &[&ASTNode] = &(arguments.iter().collect::<Vec<_>>());
 
             let callgraph =
-                CallGraphConsumer::make_legacy(context, ast_nodes, CallGraphDirection::Inward)
+                CallGraphConsumer::get_legacy(context, ast_nodes, CallGraphDirection::Inward)
                     .ok()?;
 
             callgraph.accept(context, &mut tracker).ok()?;

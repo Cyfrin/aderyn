@@ -30,7 +30,7 @@ impl IssueDetector for StateVariableChangesWithoutEventDetector {
                 continue;
             }
             let mut event_tracker = EventEmissionTracker { does_emit_events: false };
-            let investigator = CallGraphConsumer::make_legacy(
+            let investigator = CallGraphConsumer::get_legacy(
                 context,
                 &[&(func.into())],
                 CallGraphDirection::Inward,

@@ -37,7 +37,7 @@ impl IssueDetector for ConstantFunctionChangesStateDetector {
             // Now, investigate the function to see if there is scope for any state variable changes
             let mut tracker = StateVariableChangeTracker { state_var_has_changed: false, context };
 
-            let callgraph = CallGraphConsumer::make_legacy(
+            let callgraph = CallGraphConsumer::get_legacy(
                 context,
                 &[&(func.into())],
                 CallGraphDirection::Inward,
