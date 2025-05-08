@@ -13,8 +13,8 @@ impl WorkspaceCallGraphs {
         let mut workspace_cg: WorkspaceCallGraphs = Default::default();
         for contract in context.deployable_contracts() {
             if let Some(raw_callgraph) = _create_raw_callgraph(context, contract) {
-                workspace_cg.raw_callgraphs.insert(contract.id, raw_callgraph.clone());
-                workspace_cg.reverse_callgraphs.insert(contract.id, raw_callgraph.reverse());
+                workspace_cg.inward_callgraphs.insert(contract.id, raw_callgraph.clone());
+                workspace_cg.outward_callgraphs.insert(contract.id, raw_callgraph.reverse());
             }
         }
         workspace_cg

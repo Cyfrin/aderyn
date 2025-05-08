@@ -22,8 +22,8 @@ pub struct LegacyWorkspaceCallGraph {
 #[derive(Debug, Default)]
 pub struct WorkspaceCallGraphs {
     // Key => Contract Definition NodeID
-    pub raw_callgraphs: HashMap<NodeID, RawCallGraph>,
-    pub reverse_callgraphs: HashMap<NodeID, RawCallGraph>,
+    pub inward_callgraphs: HashMap<NodeID, RawCallGraph>,
+    pub outward_callgraphs: HashMap<NodeID, RawCallGraph>,
 }
 
 /**
