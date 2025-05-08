@@ -17,7 +17,7 @@ impl CallGraphConsumer {
     /// Legacy method
     ///
     /// Creates a [`CallGraphConsumer`] that can explore paths from given nodes.
-    pub fn from_nodes(
+    pub(super) fn from_nodes(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
         direction: CallGraphDirection,
@@ -34,7 +34,7 @@ impl CallGraphConsumer {
     /// New method
     ///
     /// Creates a [`CallGraphConsumer`] that can explore paths from given nodes.
-    pub fn many_from_nodes(
+    pub(super) fn many_from_nodes(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
         direction: CallGraphDirection,
