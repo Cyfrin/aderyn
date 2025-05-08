@@ -147,8 +147,8 @@ pub(super) fn derive_inward_surface_points(
 
         let cg = context.callgraphs.as_ref().expect("callgraph not found");
         for (contract_id, graph) in &cg.inward_callgraphs {
-            let mut insert = |contract_id: NodeID, dest: NodeID| {
-                match potential.entry(contract_id) {
+            let mut insert = |dest: NodeID| {
+                match potential.entry(*contract_id) {
                     Entry::Occupied(mut o) => {
                         o.get_mut().insert(dest);
                     }
@@ -163,12 +163,12 @@ pub(super) fn derive_inward_surface_points(
                 if graph.contains_key(&containing_fm) {
                     for function_call in function_calls.iter() {
                         if let Some(f) = context.resolve_internal_call(contract, function_call) {
-                            insert(*contract_id, f.id);
+                            insert(f.id);
                         }
                     }
                     for modifier_call in modifier_calls.iter() {
                         if let Some(m) = context.resolve_modifier_call(contract, modifier_call) {
-                            insert(*contract_id, m.id);
+                            insert(m.id);
                         }
                     }
                 }
