@@ -43,16 +43,19 @@ impl CallGraphConsumer {
 
         let entry_points = derive_entry_points(nodes)?;
         let outward_surface_points = derive_outward_surface_points(context, nodes);
-
         let inward_surface_pointss = derive_inward_surface_points(context, nodes);
-        for (contract_id, inward_surface_points) in inward_surface_pointss {
-            consumers.push(CallGraphConsumer {
-                entry_points: entry_points.clone(),
-                inward_surface_points: inward_surface_points.into_iter().collect(),
-                outward_surface_points: outward_surface_points.clone(),
-                direction: direction.clone(),
-                base_contract: Some(contract_id),
-            });
+
+        if inward_surface_pointss.is_empty() {
+        } else {
+            for (contract_id, inward_surface_points) in inward_surface_pointss {
+                consumers.push(CallGraphConsumer {
+                    entry_points: entry_points.clone(), // maybe not valid
+                    inward_surface_points: inward_surface_points.into_iter().collect(),
+                    outward_surface_points: outward_surface_points.clone(),
+                    direction: direction.clone(),
+                    base_contract: Some(contract_id),
+                });
+            }
         }
 
         Ok(consumers)
@@ -128,6 +131,10 @@ pub(super) fn derive_inward_surface_points(
     // key => base contract IDs
     // value => set of callgraph entrypoints
     let mut potential: HashMap<NodeID, HashSet<NodeID>> = Default::default();
+
+    // TODO:
+    // Key => Node ID
+    // Value => Set of contracts where it's valid to visit CallgraphConsumer::entry_points
 
     let containing_function_or_modifier = |node: &ASTNode| -> Option<NodeID> {
         if matches!(node.node_type(), NodeType::FunctionDefinition | NodeType::ModifierDefinition) {

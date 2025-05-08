@@ -69,11 +69,18 @@ impl IssueDetector for CostlyLoopDetector {
 
 fn changes_state(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool> {
     // Now, investigate the function to see if there is scope for any state variable changes
-    let mut tracker = StateVariableChangeTracker { state_var_has_changed: false, context };
-    let callgraph =
-        CallGraphConsumer::get_legacy(context, &[ast_node], CallGraphDirection::Inward).ok()?;
-    callgraph.accept(context, &mut tracker).ok()?;
-    Some(tracker.state_var_has_changed)
+    let callgraphs =
+        CallGraphConsumer::get(context, &[ast_node], CallGraphDirection::Inward).ok()?;
+
+    println!("num callgraphs got: {}", callgraphs.len());
+    for callgraph in callgraphs {
+        let mut tracker = StateVariableChangeTracker { state_var_has_changed: false, context };
+        callgraph.accept(context, &mut tracker).ok()?;
+        if tracker.state_var_has_changed {
+            return Some(true);
+        }
+    }
+    Some(false)
 }
 
 struct StateVariableChangeTracker<'a> {
