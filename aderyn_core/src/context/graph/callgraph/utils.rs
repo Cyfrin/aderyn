@@ -125,7 +125,7 @@ pub(super) fn derive_inward_surface_points(
     context: &WorkspaceContext,
     nodes: &[&ASTNode],
 ) -> HashMap<NodeID, HashSet<NodeID>> {
-    // key => base ontract IDs
+    // key => base contract IDs
     // value => set of callgraph entrypoints
     let mut potential: HashMap<NodeID, HashSet<NodeID>> = Default::default();
 
