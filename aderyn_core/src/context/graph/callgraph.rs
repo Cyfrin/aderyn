@@ -3,6 +3,8 @@
 //! Our first kind of callgraph is [`CallGraph`] it comes bundled with actions to help
 //! application modules "hook in" and consume the graphs.
 
+mod legacy;
+mod new;
 mod tests;
 mod utils;
 mod visit;
