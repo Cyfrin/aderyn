@@ -84,20 +84,23 @@ mod assert_state_change_tracker {
 
     impl FunctionCall {
         pub fn arguments_change_contract_state(&self, context: &WorkspaceContext) -> Option<bool> {
-            let mut tracker =
-                StateVariableChangeTracker { has_some_state_variable_changed: false, context };
-
             let arguments =
                 self.arguments.clone().into_iter().map(|n| n.into()).collect::<Vec<ASTNode>>();
-
             let ast_nodes: &[&ASTNode] = &(arguments.iter().collect::<Vec<_>>());
 
-            let callgraph =
-                CallGraphConsumer::get_legacy(context, ast_nodes, CallGraphDirection::Inward)
-                    .ok()?;
+            let callgraphs =
+                CallGraphConsumer::get(context, ast_nodes, CallGraphDirection::Inward).ok()?;
 
-            callgraph.accept(context, &mut tracker).ok()?;
-            Some(tracker.has_some_state_variable_changed)
+            for callgraph in callgraphs {
+                let mut tracker =
+                    StateVariableChangeTracker { has_some_state_variable_changed: false, context };
+                callgraph.accept(context, &mut tracker).ok()?;
+                if tracker.has_some_state_variable_changed {
+                    return Some(true);
+                }
+            }
+
+            Some(false)
         }
     }
 }

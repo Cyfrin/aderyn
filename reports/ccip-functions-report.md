@@ -2017,7 +2017,7 @@ Consider using or removing the unused error.
 
 Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop
 
-<details><summary>18 Found Instances</summary>
+<details><summary>20 Found Instances</summary>
 
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol [Line: 194](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol#L194)
@@ -2038,10 +2038,16 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 	    for (uint256 i = 0; i < requestsToTimeoutByCommitment.length; ++i) {
 	```
 
-- Found in src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol [Line: 52](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol#L52)
+- Found in src/v0.8/functions/dev/v1_X/libraries/FunctionsRequest.sol [Line: 57](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/libraries/FunctionsRequest.sol#L57)
 
 	```solidity
-	    for (uint256 j = 0; j < initialBlockedSenders.length; ++j) {
+	      for (uint256 i = 0; i < self.args.length; ++i) {
+	```
+
+- Found in src/v0.8/functions/dev/v1_X/libraries/FunctionsRequest.sol [Line: 76](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/libraries/FunctionsRequest.sol#L76)
+
+	```solidity
+	      for (uint256 i = 0; i < self.bytesArgs.length; ++i) {
 	```
 
 - Found in src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol [Line: 147](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol#L147)
@@ -2072,6 +2078,18 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 
 	```solidity
 	    for (uint256 i = 0; i < requestsToTimeoutByCommitment.length; ++i) {
+	```
+
+- Found in src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol [Line: 57](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol#L57)
+
+	```solidity
+	      for (uint256 i = 0; i < self.args.length; ++i) {
+	```
+
+- Found in src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol [Line: 76](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol#L76)
+
+	```solidity
+	      for (uint256 i = 0; i < self.bytesArgs.length; ++i) {
 	```
 
 - Found in src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol [Line: 145](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol#L145)
@@ -2108,12 +2126,6 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 
 	```solidity
 	    for (uint256 i = 0; i < numberOfFulfillments; ++i) {
-	```
-
-- Found in src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol [Line: 53](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol#L53)
-
-	```solidity
-	    for (uint256 j = 0; j < initialBlockedSenders.length; ++j) {
 	```
 
 - Found in src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol [Line: 147](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol#L147)

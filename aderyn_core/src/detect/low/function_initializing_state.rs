@@ -40,19 +40,21 @@ impl IssueDetector for FunctionInitializingStateDetector {
                 }) = expression.as_ref()
                 {
                     if let Some(ASTNode::FunctionDefinition(func)) = context.nodes.get(func_id) {
-                        let mut tracker =
-                            NonConstantStateVariableReferenceDeclarationTracker::new(context);
-
-                        let callgraph = CallGraphConsumer::get_legacy(
+                        let callgraphs = CallGraphConsumer::get(
                             context,
                             &[&(func.into())],
                             CallGraphDirection::Inward,
                         )?;
 
-                        callgraph.accept(context, &mut tracker)?;
+                        for callgraph in callgraphs {
+                            let mut tracker =
+                                NonConstantStateVariableReferenceDeclarationTracker::new(context);
 
-                        if tracker.makes_a_reference {
-                            capture!(self, context, variable_declaration);
+                            callgraph.accept(context, &mut tracker)?;
+
+                            if tracker.makes_a_reference {
+                                capture!(self, context, variable_declaration);
+                            }
                         }
                     }
                 }

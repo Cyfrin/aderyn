@@ -50,6 +50,7 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                                 || function.state_mutability() == &StateMutability::Pure
                             {
                                 let mut tracker = AssemblyTracker { has_assembly: false };
+                                // keep legacy because < 0.5.0
                                 let callgraph = CallGraphConsumer::get_legacy(
                                     context,
                                     &[&(function.into())],

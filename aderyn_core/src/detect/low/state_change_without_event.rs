@@ -29,23 +29,22 @@ impl IssueDetector for StateVariableChangesWithoutEventDetector {
             if *func.kind() == FunctionKind::Constructor {
                 continue;
             }
-            let mut event_tracker = EventEmissionTracker { does_emit_events: false };
-            let investigator = CallGraphConsumer::get_legacy(
-                context,
-                &[&(func.into())],
-                CallGraphDirection::Inward,
-            )?;
+            let callgraphs =
+                CallGraphConsumer::get(context, &[&(func.into())], CallGraphDirection::Inward)?;
 
-            investigator.accept(context, &mut event_tracker)?;
+            for callgraph in callgraphs {
+                let mut tracker = EventEmissionTracker { does_emit_events: false };
+                callgraph.accept(context, &mut tracker)?;
 
-            if event_tracker.does_emit_events {
-                continue;
-            }
+                if tracker.does_emit_events {
+                    continue;
+                }
 
-            // At this point, we know that no events are emitted
-            if let Some(changes) = func.state_variable_changes(context) {
-                if changes.state_variables_have_been_manipulated() {
-                    capture!(self, context, func);
+                // At this point, we know that no events are emitted
+                if let Some(changes) = func.state_variable_changes(context) {
+                    if changes.state_variables_have_been_manipulated() {
+                        capture!(self, context, func);
+                    }
                 }
             }
         }
