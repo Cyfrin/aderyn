@@ -6951,12 +6951,6 @@
             "src_char": "690:20"
           },
           {
-            "contract_path": "src/EmitAfterExternalCall.sol",
-            "line_no": 78,
-            "src": "1691:1",
-            "src_char": "1691:1"
-          },
-          {
             "contract_path": "src/EnumerableSetIteration.sol",
             "line_no": 28,
             "src": "939:28",
@@ -6997,30 +6991,6 @@
             "line_no": 19,
             "src": "309:9",
             "src_char": "309:9"
-          },
-          {
-            "contract_path": "src/ExternalCalls.sol",
-            "line_no": 33,
-            "src": "530:4",
-            "src_char": "530:4"
-          },
-          {
-            "contract_path": "src/ExternalCalls.sol",
-            "line_no": 37,
-            "src": "599:4",
-            "src_char": "599:4"
-          },
-          {
-            "contract_path": "src/ExternalCalls.sol",
-            "line_no": 51,
-            "src": "884:4",
-            "src_char": "884:4"
-          },
-          {
-            "contract_path": "src/ExternalCalls.sol",
-            "line_no": 55,
-            "src": "955:4",
-            "src_char": "955:4"
           },
           {
             "contract_path": "src/ExternalCalls.sol",
@@ -7141,12 +7111,6 @@
             "line_no": 68,
             "src": "1733:3",
             "src_char": "1733:3"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 63,
-            "src": "1649:11",
-            "src_char": "1649:11"
           },
           {
             "contract_path": "src/OutOfOrderRetryable.sol",

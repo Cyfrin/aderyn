@@ -11487,17 +11487,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EmitAfterExternalCall.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 1691
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/EnumerableSetIteration.sol"
                 },
                 "region": {
@@ -11569,50 +11558,6 @@
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 309
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ExternalCalls.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 530
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ExternalCalls.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 599
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ExternalCalls.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 884
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ExternalCalls.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 955
                 }
               }
             },
@@ -11833,17 +11778,6 @@
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 1733
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 1649
                 }
               }
             },

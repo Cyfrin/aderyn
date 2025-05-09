@@ -6855,7 +6855,7 @@ State variables that are not updated following deployment should be declared con
 
 There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes.
 
-<details><summary>121 Found Instances</summary>
+<details><summary>115 Found Instances</summary>
 
 
 - Found in src/AdminContract.sol [Line: 14](../tests/contract-playground/src/AdminContract.sol#L14)
@@ -6990,12 +6990,6 @@ There are state variable changes in this function but no event is emitted. Consi
 	    function calculateAlsoCorrect(uint a, uint b, uint c, uint d) external {
 	```
 
-- Found in src/EmitAfterExternalCall.sol [Line: 78](../tests/contract-playground/src/EmitAfterExternalCall.sol#L78)
-
-	```solidity
-		function f() external {
-	```
-
 - Found in src/EnumerableSetIteration.sol [Line: 28](../tests/contract-playground/src/EnumerableSetIteration.sol#L28)
 
 	```solidity
@@ -7036,30 +7030,6 @@ There are state variable changes in this function but no event is emitted. Consi
 
 	```solidity
 	    function baseThing(address x) public {
-	```
-
-- Found in src/ExternalCalls.sol [Line: 33](../tests/contract-playground/src/ExternalCalls.sol#L33)
-
-	```solidity
-	    function ext1() external payable {
-	```
-
-- Found in src/ExternalCalls.sol [Line: 37](../tests/contract-playground/src/ExternalCalls.sol#L37)
-
-	```solidity
-	    function ext2(address target) external {
-	```
-
-- Found in src/ExternalCalls.sol [Line: 51](../tests/contract-playground/src/ExternalCalls.sol#L51)
-
-	```solidity
-	    function ext5() external {
-	```
-
-- Found in src/ExternalCalls.sol [Line: 55](../tests/contract-playground/src/ExternalCalls.sol#L55)
-
-	```solidity
-	    function ext6(address target) external {
 	```
 
 - Found in src/ExternalCalls.sol [Line: 78](../tests/contract-playground/src/ExternalCalls.sol#L78)
@@ -7180,12 +7150,6 @@ There are state variable changes in this function but no event is emitted. Consi
 
 	```solidity
 	    function bad(address[] memory receivers) external payable {
-	```
-
-- Found in src/OutOfOrderRetryable.sol [Line: 63](../tests/contract-playground/src/OutOfOrderRetryable.sol#L63)
-
-	```solidity
-	    function doStuffOnL2() external {
 	```
 
 - Found in src/OutOfOrderRetryable.sol [Line: 175](../tests/contract-playground/src/OutOfOrderRetryable.sol#L175)
