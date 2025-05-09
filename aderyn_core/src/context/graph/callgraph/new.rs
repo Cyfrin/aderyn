@@ -1,15 +1,11 @@
-use std::collections::{hash_map::*, HashMap, HashSet};
-
 use crate::{
     ast::{NodeID, NodeType},
     context::{
-        browser::{
-            ExtractFunctionCalls, ExtractModifierInvocations,
-            GetClosestAncestorOfTypeX,
-        },
+        browser::{ExtractFunctionCalls, ExtractModifierInvocations, GetClosestAncestorOfTypeX},
         workspace::{ASTNode, WorkspaceContext},
     },
 };
+use std::collections::{hash_map::*, HashMap, HashSet};
 
 pub(super) fn derive_inward_surface_points(
     context: &WorkspaceContext,

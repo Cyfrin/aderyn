@@ -1,7 +1,5 @@
-
-use crate::context::workspace::{ASTNode, WorkspaceContext};
-
 use super::*;
+use crate::context::workspace::{ASTNode, WorkspaceContext};
 
 impl CallGraphConsumer {
     /// Legacy method
