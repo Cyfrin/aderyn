@@ -30,23 +30,19 @@ impl IssueDetector for DelegatecallInLoopDetector {
         let loop_explore_centers = get_explore_centers_of_loops(context);
 
         for explore_center in loop_explore_centers {
-            // Setup
-            // Later when https://github.com/Cyfrin/aderyn/pull/650 is merged, we can make it so that it
-            // tracks the whole path to the actual delegate call site to display in the report.
-            let mut delegate_call_tracker = DelegateCallTracker::default();
+            // TODO: capture hints!
 
             // All the ASTNodes that are potentially run in a loop
-            let callgraph = CallGraphConsumer::get_legacy(
-                context,
-                &[explore_center],
-                CallGraphDirection::Inward,
-            )?;
+            let callgraphs =
+                CallGraphConsumer::get(context, &[explore_center], CallGraphDirection::Inward)?;
 
-            // Kick-off
-            callgraph.accept(context, &mut delegate_call_tracker)?;
+            for callgraph in callgraphs {
+                let mut delegate_call_tracker = DelegateCallTracker::default();
+                callgraph.accept(context, &mut delegate_call_tracker)?;
 
-            if delegate_call_tracker.has_delegate_call {
-                capture!(self, context, explore_center);
+                if delegate_call_tracker.has_delegate_call {
+                    capture!(self, context, explore_center);
+                }
             }
         }
 

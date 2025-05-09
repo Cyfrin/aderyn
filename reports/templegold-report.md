@@ -6611,7 +6611,7 @@ Consider using or removing the unused error.
 
 Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop
 
-<details><summary>19 Found Instances</summary>
+<details><summary>18 Found Instances</summary>
 
 
 - Found in contracts/admin/TempleTeamPayments.sol [Line: 38](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPayments.sol#L38)
@@ -6644,12 +6644,6 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 	        for (uint256 i = 0; i < vaults.length; i++) {
 	```
 
-- Found in contracts/core/OpsManager.sol [Line: 113](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L113)
-
-	```solidity
-	        for (uint256 i = 0; i < exposureTokens.length; i++) {
-	```
-
 - Found in contracts/core/OpsManager.sol [Line: 133](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L133)
 
 	```solidity
@@ -6660,18 +6654,6 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 
 	```solidity
 	        for (uint256 i = 0; i < vaults.length; i++) {
-	```
-
-- Found in contracts/core/OpsManagerLib.sol [Line: 100](../tests/2024-07-templegold/protocol/contracts/core/OpsManagerLib.sol#L100)
-
-	```solidity
-	        for (uint256 i = 0; i < exposureTokens.length; i++) {
-	```
-
-- Found in contracts/core/Vault.sol [Line: 114](../tests/2024-07-templegold/protocol/contracts/core/Vault.sol#L114)
-
-	```solidity
-	        for (uint256 i = 0; i < exposures.length; i++) {
 	```
 
 - Found in contracts/fakes/UniswapV2Router02NoEth.sol [Line: 178](../tests/2024-07-templegold/protocol/contracts/fakes/UniswapV2Router02NoEth.sol#L178)
@@ -6692,10 +6674,28 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 	        for (uint i; i < path.length - 1; i++) {
 	```
 
+- Found in contracts/fakes/UniswapV2Router02NoEth.sol [Line: 378](../tests/2024-07-templegold/protocol/contracts/fakes/UniswapV2Router02NoEth.sol#L378)
+
+	```solidity
+	        for (uint i = path.length - 1; i > 0; i--) {
+	```
+
 - Found in contracts/util/ABDKMath64x64.sol [Line: 411](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L411)
 
 	```solidity
 	        while (y != 0) {
+	```
+
+- Found in contracts/v2/TempleDebtToken.sol [Line: 454](../tests/2024-07-templegold/protocol/contracts/v2/TempleDebtToken.sol#L454)
+
+	```solidity
+	        for (uint256 i; i < _length; ++i) {
+	```
+
+- Found in contracts/v2/TempleDebtToken.sol [Line: 507](../tests/2024-07-templegold/protocol/contracts/v2/TempleDebtToken.sol#L507)
+
+	```solidity
+	        for (uint256 i; i < _length; ++i) {
 	```
 
 - Found in contracts/v2/TreasuryReservesVault.sol [Line: 187](../tests/2024-07-templegold/protocol/contracts/v2/TreasuryReservesVault.sol#L187)
@@ -6708,12 +6708,6 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 
 	```solidity
 	        for (; i < _length; ++i) {
-	```
-
-- Found in contracts/v2/safeGuards/SafeForked.sol [Line: 78](../tests/2024-07-templegold/protocol/contracts/v2/safeGuards/SafeForked.sol#L78)
-
-	```solidity
-	        for (i = 0; i < requiredSignatures; i++) {
 	```
 
 - Found in contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol [Line: 330](../tests/2024-07-templegold/protocol/contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol#L330)
@@ -7185,7 +7179,7 @@ Redundant import statement. Consider removing it.
 
 There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes.
 
-<details><summary>20 Found Instances</summary>
+<details><summary>28 Found Instances</summary>
 
 
 - Found in contracts/admin/TempleTeamPayments.sol [Line: 29](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPayments.sol#L29)
@@ -7224,22 +7218,58 @@ There are state variable changes in this function but no event is emitted. Consi
 	    function setDefendStable(address _defendStable) external onlyOwner {
 	```
 
-- Found in contracts/amm/TempleUniswapV2Pair.sol [Line: 74](../tests/2024-07-templegold/protocol/contracts/amm/TempleUniswapV2Pair.sol#L74)
+- Found in contracts/amm/TempleStableAMMRouter.sol [Line: 142](../tests/2024-07-templegold/protocol/contracts/amm/TempleStableAMMRouter.sol#L142)
 
 	```solidity
-	    function setRouter(address _router) external {
-	```
-
-- Found in contracts/amm/TempleUniswapV2Pair.sol [Line: 173](../tests/2024-07-templegold/protocol/contracts/amm/TempleUniswapV2Pair.sol#L173)
-
-	```solidity
-	    function skim(address to) external lock {
+	    function swapExactTempleForStable(
 	```
 
 - Found in contracts/amm/TreasuryIV.sol [Line: 23](../tests/2024-07-templegold/protocol/contracts/amm/TreasuryIV.sol#L23)
 
 	```solidity
 	    function setIV(uint256 frax, uint256 temple) external onlyOwner {
+	```
+
+- Found in contracts/core/OpsManager.sol [Line: 110](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L110)
+
+	```solidity
+	    function addRevenue(IERC20[] memory exposureTokens, uint256[] memory amounts) external onlyOwner {
+	```
+
+- Found in contracts/core/OpsManager.sol [Line: 130](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L130)
+
+	```solidity
+	    function increaseVaultTemple(Vault[] memory vaults, uint256[] memory amountsTemple) external onlyOwner {
+	```
+
+- Found in contracts/core/Vault.sol [Line: 113](../tests/2024-07-templegold/protocol/contracts/core/Vault.sol#L113)
+
+	```solidity
+	    function redeemExposures(Exposure[] memory exposures) external onlyOwner {
+	```
+
+- Found in contracts/core/VaultProxy.sol [Line: 58](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L58)
+
+	```solidity
+	    function depositTempleWithFaith(uint256 _amountTemple, uint112 _amountFaith, Vault vault) public {
+	```
+
+- Found in contracts/core/VaultProxy.sol [Line: 71](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L71)
+
+	```solidity
+	    function unstakeAndDepositTempleWithFaith(uint256 _amountOGT, uint112 _amountFaith, Vault vault) external {
+	```
+
+- Found in contracts/core/VaultProxy.sol [Line: 83](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L83)
+
+	```solidity
+	    function unstakeAndDepositIntoVault(uint256 _amountOGT, Vault vault) external {
+	```
+
+- Found in contracts/core/VaultProxy.sol [Line: 109](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L109)
+
+	```solidity
+	    function depositTempleFor(uint256 _amount, Vault vault) public {
 	```
 
 - Found in contracts/core/VaultProxy.sol [Line: 118](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L118)
@@ -7264,6 +7294,18 @@ There are state variable changes in this function but no event is emitted. Consi
 
 	```solidity
 	    function setExitQueue(IExitQueue _EXIT_QUEUE) external onlyOwner {
+	```
+
+- Found in contracts/fakes/NoopLiquidator.sol [Line: 19](../tests/2024-07-templegold/protocol/contracts/fakes/NoopLiquidator.sol#L19)
+
+	```solidity
+	    function toTemple(uint256 amount, address toAccount) external override {
+	```
+
+- Found in contracts/fakes/NoopVaultedTempleLiquidator.sol [Line: 22](../tests/2024-07-templegold/protocol/contracts/fakes/NoopVaultedTempleLiquidator.sol#L22)
+
+	```solidity
+	    function toTemple(uint256 amount, address /* toAccount */) external override {
 	```
 
 - Found in contracts/fakes/templegold/TempleGoldStakingMock.sol [Line: 268](../tests/2024-07-templegold/protocol/contracts/fakes/templegold/TempleGoldStakingMock.sol#L268)

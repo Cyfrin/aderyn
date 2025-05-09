@@ -2929,8 +2929,8 @@
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 2,
-            "src": "32:21",
-            "src_char": "32:21"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/FunctionSignatureCollision.sol",
@@ -3790,50 +3790,50 @@
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 23,
-            "src": "790:2",
-            "src_char": "790:2"
+            "src": "792:2",
+            "src_char": "792:2"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 26,
-            "src": "820:2",
-            "src_char": "820:2"
+            "src": "822:2",
+            "src_char": "822:2"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 34,
-            "src": "1109:2",
-            "src_char": "1109:2"
+            "src": "1111:2",
+            "src_char": "1111:2"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 37,
-            "src": "1139:2",
-            "src_char": "1139:2"
+            "src": "1141:2",
+            "src_char": "1141:2"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 42,
-            "src": "1268:4",
-            "src_char": "1268:4"
+            "src": "1270:4",
+            "src_char": "1270:4"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 42,
-            "src": "1275:4",
-            "src_char": "1275:4"
+            "src": "1277:4",
+            "src_char": "1277:4"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 48,
-            "src": "1459:4",
-            "src_char": "1459:4"
+            "src": "1461:4",
+            "src_char": "1461:4"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 48,
-            "src": "1466:4",
-            "src_char": "1466:4"
+            "src": "1468:4",
+            "src_char": "1468:4"
           },
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
@@ -4448,6 +4448,12 @@
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -5637,12 +5643,6 @@
         "detector_name": "require-revert-in-loop",
         "instances": [
           {
-            "contract_path": "src/EmitAfterExternalCall.sol",
-            "line_no": 48,
-            "src": "1180:120",
-            "src_char": "1180:120"
-          },
-          {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
             "src": "263:93",
@@ -5653,12 +5653,6 @@
             "line_no": 17,
             "src": "452:114",
             "src_char": "452:114"
-          },
-          {
-            "contract_path": "src/StateChangeAfterExternalCall.sol",
-            "line_no": 47,
-            "src": "1182:116",
-            "src_char": "1182:116"
           }
         ]
       },
@@ -6006,14 +6000,14 @@
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 41,
-            "src": "1246:6",
-            "src_char": "1246:6"
+            "src": "1253:1",
+            "src_char": "1253:1"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 46,
-            "src": "1385:6",
-            "src_char": "1385:6"
+            "src": "1392:1",
+            "src_char": "1392:1"
           },
           {
             "contract_path": "src/LocalVariableShadow.sol",
@@ -6177,20 +6171,20 @@
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 6,
-            "src": "108:21",
-            "src_char": "108:21"
+            "src": "122:1",
+            "src_char": "122:1"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 8,
-            "src": "199:21",
-            "src_char": "199:21"
+            "src": "213:1",
+            "src_char": "213:1"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 9,
-            "src": "267:21",
-            "src_char": "267:21"
+            "src": "281:1",
+            "src_char": "281:1"
           }
         ]
       },
@@ -6556,14 +6550,14 @@
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 7,
-            "src": "176:17",
-            "src_char": "176:17"
+            "src": "190:1",
+            "src_char": "190:1"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 58,
-            "src": "1603:17",
-            "src_char": "1603:17"
+            "src": "1617:1",
+            "src_char": "1617:1"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
@@ -6825,12 +6819,6 @@
         "detector_name": "state-change-without-event",
         "instances": [
           {
-            "contract_path": "src/AbstractContract.sol",
-            "line_no": 9,
-            "src": "176:13",
-            "src_char": "176:13"
-          },
-          {
             "contract_path": "src/AdminContract.sol",
             "line_no": 14,
             "src": "457:23",
@@ -6877,18 +6865,6 @@
             "line_no": 113,
             "src": "3222:20",
             "src_char": "3222:20"
-          },
-          {
-            "contract_path": "src/ConstFuncChangeState.sol",
-            "line_no": 8,
-            "src": "173:112",
-            "src_char": "173:112"
-          },
-          {
-            "contract_path": "src/ConstFuncChangeState.sol",
-            "line_no": 14,
-            "src": "339:108",
-            "src_char": "339:108"
           },
           {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
@@ -6975,10 +6951,10 @@
             "src_char": "690:20"
           },
           {
-            "contract_path": "src/DynamicArrayLengthAssignment.sol",
-            "line_no": 11,
-            "src": "242:345",
-            "src_char": "242:345"
+            "contract_path": "src/EmitAfterExternalCall.sol",
+            "line_no": 78,
+            "src": "1691:1",
+            "src_char": "1691:1"
           },
           {
             "contract_path": "src/EnumerableSetIteration.sol",
@@ -7592,6 +7568,18 @@
             "line_no": 25,
             "src": "416:2",
             "src_char": "416:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 57,
+            "src": "1598:1",
+            "src_char": "1598:1"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 59,
+            "src": "1640:1",
+            "src_char": "1640:1"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
