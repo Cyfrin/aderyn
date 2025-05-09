@@ -5,7 +5,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractContractDefinitions, GetClosestAncestorOfTypeX},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };

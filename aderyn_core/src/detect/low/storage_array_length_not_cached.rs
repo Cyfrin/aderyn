@@ -4,7 +4,7 @@ use crate::ast::{ASTNode, NodeID};
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -96,8 +96,8 @@ mod loop_investigation_helper {
         ast::{ASTNode, Expression, ForStatement, Identifier, NodeID, TypeDescriptions},
         context::{
             browser::{ApproximateStorageChangeFinder, ExtractMemberAccesses},
-            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-            workspace_context::WorkspaceContext,
+            graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+            workspace::WorkspaceContext,
         },
     };
 
@@ -142,14 +142,24 @@ mod loop_investigation_helper {
             &self,
             context: &'a WorkspaceContext,
         ) -> Option<ApproximateStorageChangeFinder<'a>> {
-            let mut tracker = StateVariableChangeTracker { changes: None, context };
+            let mut all_changes = None;
+            let callgraphs =
+                CallGraphConsumer::get(context, &[&(self.into())], CallGraphDirection::Inward)
+                    .ok()?;
 
-            let callgraph =
-                CallGraph::new(context, &[&(self.into())], CallGraphDirection::Inward).ok()?;
+            for callgraph in callgraphs {
+                let mut tracker = StateVariableChangeTracker { changes: None, context };
+                callgraph.accept(context, &mut tracker).ok()?;
+                if let Some(changes) = tracker.changes.take() {
+                    if all_changes.is_none() {
+                        all_changes = Some(changes);
+                    } else if let Some(existing_changes) = all_changes {
+                        all_changes = Some(existing_changes + changes);
+                    }
+                }
+            }
 
-            callgraph.accept(context, &mut tracker).ok()?;
-
-            tracker.changes.take()
+            all_changes
         }
     }
 

@@ -1,6 +1,6 @@
 use std::collections::BTreeSet;
 
-use crate::context::workspace_context::{ASTNode, WorkspaceContext};
+use crate::context::workspace::{ASTNode, WorkspaceContext};
 
 pub trait SortNodeReferencesToSequence<'a> {
     fn sort_by_src_position(self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;

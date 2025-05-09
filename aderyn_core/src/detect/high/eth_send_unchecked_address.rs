@@ -6,8 +6,8 @@ use crate::{
     capture,
     context::{
         browser::ExtractModifierInvocations,
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::{ASTNode, WorkspaceContext},
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::{ASTNode, WorkspaceContext},
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -26,25 +26,29 @@ pub struct SendEtherNoChecksDetector {
 impl IssueDetector for SendEtherNoChecksDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let mut tracker = AddressChecksAndCallWithValueTracker::default();
-            let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
-            callgraph.accept(context, &mut tracker)?;
+            let callgraphs =
+                CallGraphConsumer::get(context, &[&(func.into())], CallGraphDirection::Inward)?;
 
-            // Hacky way to check if the modifier is a know msg.sender checking modifier
-            // This is because our Callgraph doesn't navigate inside contracts that are outside
-            // the scope, this includes imported contracts.
-            let has_oz_modifier =
-                ExtractModifierInvocations::from(func).extracted.iter().any(|invocation| {
-                    invocation.modifier_name.name().contains("onlyRole")
-                        || invocation.modifier_name.name() == "onlyOwner"
-                        || invocation.modifier_name.name() == "requiresAuth"
-                });
+            for callgraph in callgraphs {
+                let mut tracker = AddressChecksAndCallWithValueTracker::default();
+                callgraph.accept(context, &mut tracker)?;
 
-            if tracker.sends_native_eth
-                && !tracker.has_binary_checks_on_some_address
-                && !has_oz_modifier
-            {
-                capture!(self, context, func);
+                // Hacky way to check if the modifier is a know msg.sender checking modifier
+                // This is because our Callgraph doesn't navigate inside contracts that are outside
+                // the scope, this includes imported contracts.
+                let has_oz_modifier =
+                    ExtractModifierInvocations::from(func).extracted.iter().any(|invocation| {
+                        invocation.modifier_name.name().contains("onlyRole")
+                            || invocation.modifier_name.name() == "onlyOwner"
+                            || invocation.modifier_name.name() == "requiresAuth"
+                    });
+
+                if tracker.sends_native_eth
+                    && !tracker.has_binary_checks_on_some_address
+                    && !has_oz_modifier
+                {
+                    capture!(self, context, func);
+                }
             }
         }
 
@@ -100,7 +104,6 @@ mod send_ether_no_checks_detector_tests {
     };
 
     #[test]
-
     fn test_send_ether_no_checks_lib_import() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/SendEtherNoChecksLibImport.sol",
@@ -113,7 +116,6 @@ mod send_ether_no_checks_detector_tests {
     }
 
     #[test]
-
     fn test_send_ether_no_checks() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/SendEtherNoChecks.sol",

@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractMemberAccesses, GetClosestAncestorOfTypeX},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };

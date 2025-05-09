@@ -3,7 +3,7 @@ pub mod control_flow_tests {
 
     use std::{collections::HashMap, fmt::Debug, path::Path, process::Command};
 
-    use crate::context::{flow::Cfg, workspace_context::WorkspaceContext};
+    use crate::context::{flow::Cfg, workspace::WorkspaceContext};
     use petgraph::{dot::Dot, prelude::Graph};
 
     struct CustomString {

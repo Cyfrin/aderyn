@@ -6,8 +6,8 @@ use crate::{
     capture,
     context::{
         browser::ExtractMemberAccesses,
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -82,12 +82,14 @@ impl TxOriginUsedForAuthDetector {
         capture_node: &ASTNode,
     ) -> Result<(), Box<dyn Error>> {
         // Boilerplate
-        let mut tracker = MsgSenderAndTxOriginTracker::default();
-        let callgraph = CallGraph::new(context, check_nodes, CallGraphDirection::Inward)?;
-        callgraph.accept(context, &mut tracker)?;
+        let callgraphs = CallGraphConsumer::get(context, check_nodes, CallGraphDirection::Inward)?;
+        for callgraph in callgraphs {
+            let mut tracker = MsgSenderAndTxOriginTracker::default();
+            callgraph.accept(context, &mut tracker)?;
 
-        if tracker.satisfied() {
-            capture!(self, context, capture_node);
+            if tracker.satisfied() {
+                capture!(self, context, capture_node);
+            }
         }
         Ok(())
     }

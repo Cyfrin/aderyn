@@ -11,8 +11,8 @@ use crate::{
 
 use crate::{
     context::{
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -50,7 +50,8 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                                 || function.state_mutability() == &StateMutability::Pure
                             {
                                 let mut tracker = AssemblyTracker { has_assembly: false };
-                                let callgraph = CallGraph::new(
+                                // keep legacy because < 0.5.0
+                                let callgraph = CallGraphConsumer::get_legacy(
                                     context,
                                     &[&(function.into())],
                                     CallGraphDirection::Inward,

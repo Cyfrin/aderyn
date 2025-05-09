@@ -1,6 +1,9 @@
 use super::{
-    browser::GetImmediateParent, capturable::Capturable, graph::WorkspaceCallGraph,
+    browser::GetImmediateParent,
+    capturable::Capturable,
+    graph::{LegacyWorkspaceCallGraph, WorkspaceCallGraphs},
     macros::generate_get_source_unit,
+    router::Router,
 };
 pub use crate::ast::ASTNode;
 use crate::{ast::*, stats::IgnoreLine};
@@ -33,15 +36,23 @@ pub struct WorkspaceContext {
     pub src_filepaths: Vec<String>,
     pub sloc_stats: HashMap<String, usize>,
     pub ignore_lines_stats: HashMap<String, Vec<IgnoreLine>>,
-    pub inward_callgraph: Option<WorkspaceCallGraph>,
-    pub outward_callgraph: Option<WorkspaceCallGraph>,
     pub nodes: HashMap<NodeID, ASTNode>,
+
+    // Legacy callgraphs
+    pub inward_callgraph: Option<LegacyWorkspaceCallGraph>,
+    pub outward_callgraph: Option<LegacyWorkspaceCallGraph>,
+
+    // Callgraphs
+    pub callgraphs: Option<WorkspaceCallGraphs>,
 
     // Source units
     pub source_units_context: Vec<SourceUnit>,
 
     // In-scope files
     pub included: HashSet<PathBuf>,
+
+    // Function router
+    pub router: Option<Router>,
 
     // Hashmaps of all nodes => source_unit_id
     pub(crate) array_type_names_context: HashMap<ArrayTypeName, NodeContext>,

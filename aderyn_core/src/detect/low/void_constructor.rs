@@ -4,7 +4,7 @@ use crate::ast::{ASTNode, FunctionKind, ModifierInvocationKind, NodeID};
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

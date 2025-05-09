@@ -1,4 +1,4 @@
-use aderyn_core::{audit_tools, context::workspace_context::WorkspaceContext};
+use aderyn_core::{audit_tools, context::workspace::WorkspaceContext};
 use prettytable::*;
 
 pub fn print_audit_info_tables(

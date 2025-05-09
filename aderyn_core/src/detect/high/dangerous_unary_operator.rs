@@ -4,7 +4,7 @@ use crate::ast::NodeID;
 
 use crate::{
     capture,
-    context::{browser::Peek, workspace_context::WorkspaceContext},
+    context::{browser::Peek, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
