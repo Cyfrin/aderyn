@@ -82,13 +82,14 @@ impl TxOriginUsedForAuthDetector {
         capture_node: &ASTNode,
     ) -> Result<(), Box<dyn Error>> {
         // Boilerplate
-        let mut tracker = MsgSenderAndTxOriginTracker::default();
-        let callgraph =
-            CallGraphConsumer::get_legacy(context, check_nodes, CallGraphDirection::Inward)?;
-        callgraph.accept(context, &mut tracker)?;
+        let callgraphs = CallGraphConsumer::get(context, check_nodes, CallGraphDirection::Inward)?;
+        for callgraph in callgraphs {
+            let mut tracker = MsgSenderAndTxOriginTracker::default();
+            callgraph.accept(context, &mut tracker)?;
 
-        if tracker.satisfied() {
-            capture!(self, context, capture_node);
+            if tracker.satisfied() {
+                capture!(self, context, capture_node);
+            }
         }
         Ok(())
     }

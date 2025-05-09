@@ -37,6 +37,8 @@ impl IssueDetector for ConstantFunctionChangesStateDetector {
             // Now, investigate the function to see if there is scope for any state variable changes
             let mut tracker = StateVariableChangeTracker { state_var_has_changed: false, context };
 
+            // Keep legacy for this because it is for solc version beloe 0.5.0 and the function
+            // selectors don't exist
             let callgraph = CallGraphConsumer::get_legacy(
                 context,
                 &[&(func.into())],

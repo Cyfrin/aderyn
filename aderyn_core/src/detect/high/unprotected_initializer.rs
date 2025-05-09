@@ -25,19 +25,18 @@ pub struct UnprotectedInitializerDetector {
 impl IssueDetector for UnprotectedInitializerDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let callgraph = CallGraphConsumer::get_legacy(
-                context,
-                &[&func.into()],
-                CallGraphDirection::Inward,
-            )?;
-            let mut tracker = UnprotectedInitializationTracker::default();
-            callgraph.accept(context, &mut tracker)?;
+            let callgraphs =
+                CallGraphConsumer::get(context, &[&func.into()], CallGraphDirection::Inward)?;
+            for callgraph in callgraphs {
+                let mut tracker = UnprotectedInitializationTracker::default();
+                callgraph.accept(context, &mut tracker)?;
 
-            if func.name.starts_with("_init") || func.name.starts_with("init") {
-                if tracker.has_initializer_modifier || tracker.has_require_or_revert {
-                    continue;
+                if func.name.starts_with("_init") || func.name.starts_with("init") {
+                    if tracker.has_initializer_modifier || tracker.has_require_or_revert {
+                        continue;
+                    }
+                    capture!(self, context, func);
                 }
-                capture!(self, context, func);
             }
         }
 
