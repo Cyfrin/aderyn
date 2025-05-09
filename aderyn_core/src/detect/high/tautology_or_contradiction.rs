@@ -4,7 +4,7 @@ use crate::ast::{BinaryOperation, NodeID, TypeDescriptions};
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers::get_literal_value_or_constant_variable_value,

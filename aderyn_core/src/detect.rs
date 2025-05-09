@@ -47,7 +47,7 @@ macro_rules! issue_detector {
 
         impl $crate::detect::detector::IssueDetector for $detector_struct {
 
-            fn detect(&mut self, context: &$crate::context::workspace_context::WorkspaceContext) -> Result<bool, Box<dyn std::error::Error>> {
+            fn detect(&mut self, context: &$crate::context::workspace::WorkspaceContext) -> Result<bool, Box<dyn std::error::Error>> {
 
                 let $context = context;
 

@@ -1,8 +1,9 @@
 use crate::{
     ast::SourceUnit,
     context::{
-        graph::{Transpose, WorkspaceCallGraph},
-        workspace_context::WorkspaceContext,
+        graph::{LegacyWorkspaceCallGraph, Transpose, WorkspaceCallGraphs},
+        router::Router,
+        workspace::WorkspaceContext,
     },
     visitor::ast_visitor::Node,
 };
@@ -12,8 +13,6 @@ use solidity_ast::{
     ProjectConfigInputBuilder, SolcVersionConfig, Source,
 };
 use std::path::{Path, PathBuf};
-
-use super::ensure_valid_solidity_file;
 
 pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     let solidity_file = &ensure_valid_solidity_file(filepath);
@@ -96,14 +95,26 @@ fn make_context(project_config: &ProjectConfigInput) -> WorkspaceContext {
         }
     }
 
-    fn load_callgraphs(context: &mut WorkspaceContext) {
-        let inward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
+    fn load_legacy_callgraphs(context: &mut WorkspaceContext) {
+        let inward_callgraph = LegacyWorkspaceCallGraph::from_context(context).unwrap();
         let outward_callgraph =
-            WorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
+            LegacyWorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
         context.inward_callgraph = Some(inward_callgraph);
         context.outward_callgraph = Some(outward_callgraph);
     }
 
+    fn load_router(context: &mut WorkspaceContext) {
+        let router = Router::build(context);
+        context.router = Some(router);
+    }
+
+    fn load_callgraphs(context: &mut WorkspaceContext) {
+        let callgraphs = WorkspaceCallGraphs::build(context);
+        context.callgraphs = Some(callgraphs);
+    }
+
+    load_legacy_callgraphs(&mut context);
+    load_router(&mut context);
     load_callgraphs(&mut context);
 
     context
@@ -142,4 +153,25 @@ fn absorb_ast_content_into_context(
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
+}
+
+fn ensure_valid_solidity_file(filepath: &str) -> PathBuf {
+    let filepath = PathBuf::from(filepath);
+
+    if !filepath.exists() {
+        eprintln!("{} does not exist!", filepath.to_string_lossy());
+        std::process::exit(1);
+    }
+
+    let extension = filepath.extension().unwrap_or_else(|| {
+        eprintln!("{} is not a solidity file!", filepath.to_string_lossy());
+        std::process::exit(1);
+    });
+
+    if extension != "sol" {
+        eprintln!("Please make sure {} represents a solidity file!", filepath.to_string_lossy());
+        std::process::exit(1);
+    }
+
+    std::fs::canonicalize(filepath).unwrap()
 }

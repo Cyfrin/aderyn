@@ -5,8 +5,9 @@ use crate::{
 };
 use aderyn_core::{
     context::{
-        graph::{Transpose, WorkspaceCallGraph},
-        workspace_context::WorkspaceContext,
+        graph::{LegacyWorkspaceCallGraph, Transpose, WorkspaceCallGraphs},
+        router::Router,
+        workspace::WorkspaceContext,
     },
     stats,
 };
@@ -52,7 +53,9 @@ pub fn make_context(
     // Supplement the context
     // 1. Inject nSLOC stats
     // 2. Collect lines marked by aderyn-ignore-line, aderyn-ignore-next-line
-    // 3. Callgraph
+    // 3. Inject Legacy Callgraph
+    // 4. Inject Router
+    // 5. Inject New Callgraph
     for context in contexts.iter_mut() {
         let absolute_root_path = &ensure_valid_root_path(&root_path);
         let stats = stats::collect_stats(absolute_root_path.as_path(), common.skip_cloc, context);
@@ -65,12 +68,17 @@ pub fn make_context(
         context.set_sloc_stats(sloc_stats);
         context.set_ignore_lines_stats(ignore_line_stats);
 
-        let inward_callgraph = WorkspaceCallGraph::from_context(context)?;
+        let inward_callgraph = LegacyWorkspaceCallGraph::from_context(context)?;
         let outward_callgraph =
-            WorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
-
+            LegacyWorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
         context.inward_callgraph = Some(inward_callgraph);
         context.outward_callgraph = Some(outward_callgraph);
+
+        let router = Router::build(context);
+        context.router = Some(router);
+
+        let callgraphs = WorkspaceCallGraphs::build(context);
+        context.callgraphs = Some(callgraphs);
     }
 
     Ok(WorkspaceContextWrapper { contexts, root_path })

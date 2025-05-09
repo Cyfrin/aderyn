@@ -7,7 +7,7 @@ use aderyn_core::{
         browser::{
             GetImmediateChildren, GetNextSibling, GetPreviousSibling, SortNodeReferencesToSequence,
         },
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };

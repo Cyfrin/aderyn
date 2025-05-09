@@ -27,7 +27,7 @@ use self::{
     voids::{CfgEndNode, CfgStartNode},
 };
 
-use super::workspace_context::WorkspaceContext;
+use super::workspace::WorkspaceContext;
 
 // This is done to differentiate AstNodeIDs from CfgNodeIDs
 type AstNodeId = NodeID;

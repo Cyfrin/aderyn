@@ -745,7 +745,7 @@ Redundant import statement. Consider removing it.
 
 State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.
 
-<details><summary>7 Found Instances</summary>
+<details><summary>5 Found Instances</summary>
 
 
 - Found in StateVariables.sol [Line: 13](../tests/adhoc-sol-files/StateVariables.sol#L13)
@@ -764,18 +764,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	    uint256 public staticNonEmptyPublicNumber = 3;
-	```
-
-- Found in multiple-versions/0.5/B.sol [Line: 5](../tests/adhoc-sol-files/multiple-versions/0.5/B.sol#L5)
-
-	```solidity
-	    address public MY_ADDRESS = address(0);
-	```
-
-- Found in multiple-versions/0.5/B.sol [Line: 6](../tests/adhoc-sol-files/multiple-versions/0.5/B.sol#L6)
-
-	```solidity
-	    uint256 public MY_UINT = 134131;
 	```
 
 - Found in multiple-versions/0.8/B.sol [Line: 5](../tests/adhoc-sol-files/multiple-versions/0.8/B.sol#L5)

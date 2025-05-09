@@ -4,7 +4,7 @@ use crate::ast::{FunctionKind, Mutability, NodeID};
 
 use crate::{
     capture,
-    context::{browser::ApproximateStorageChangeFinder, workspace_context::WorkspaceContext},
+    context::{browser::ApproximateStorageChangeFinder, workspace::WorkspaceContext},
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers,

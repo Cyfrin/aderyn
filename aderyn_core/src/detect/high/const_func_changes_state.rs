@@ -6,8 +6,8 @@ use crate::{
     capture,
     context::{
         browser::ApproximateStorageChangeFinder,
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -37,7 +37,13 @@ impl IssueDetector for ConstantFunctionChangesStateDetector {
             // Now, investigate the function to see if there is scope for any state variable changes
             let mut tracker = StateVariableChangeTracker { state_var_has_changed: false, context };
 
-            let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            // Keep legacy for this because it is for solc version beloe 0.5.0 and the function
+            // selectors don't exist
+            let callgraph = CallGraphConsumer::get_legacy(
+                context,
+                &[&(func.into())],
+                CallGraphDirection::Inward,
+            )?;
             callgraph.accept(context, &mut tracker)?;
 
             if tracker.state_var_has_changed {
@@ -97,7 +103,7 @@ mod func_compilation_solc_pragma_helper {
         ast::{FunctionDefinition, NodeType},
         context::{
             browser::{ExtractPragmaDirectives, GetClosestAncestorOfTypeX},
-            workspace_context::WorkspaceContext,
+            workspace::WorkspaceContext,
         },
         detect::helpers,
     };

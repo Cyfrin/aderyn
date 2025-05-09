@@ -4,26 +4,17 @@ use crate::{
     ast::{Expression, IdentifierOrIdentifierPath, NodeID, NodeType},
     context::{
         browser::{ExtractFunctionCalls, ExtractModifierInvocations},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
 };
 
-use super::traits::Transpose;
+use crate::context::graph::{
+    traits::Transpose, Error, LegacyWorkspaceCallGraph, RawCallGraph, Result,
+};
 
-#[derive(Debug)]
-pub struct WorkspaceCallGraph {
-    pub raw_callgraph: RawCallGraph,
-}
-
-/**
- * Every NodeID in RawCallGraph should corresponds to [`crate::ast::FunctionDefinition`] or
- * [`crate::ast::ModifierDefinition`]
- */
-pub type RawCallGraph = HashMap<NodeID, Vec<NodeID>>;
-
-impl WorkspaceCallGraph {
+impl LegacyWorkspaceCallGraph {
     /// Formula to create [`WorkspaceCallGraph`] for global preprocessing .
-    pub fn from_context(context: &WorkspaceContext) -> super::Result<WorkspaceCallGraph> {
+    pub fn from_context(context: &WorkspaceContext) -> Result<LegacyWorkspaceCallGraph> {
         let mut raw_callgraph: RawCallGraph = HashMap::new();
         let mut visited: HashSet<NodeID> = HashSet::new();
 
@@ -37,15 +28,15 @@ impl WorkspaceCallGraph {
 
         for func in funcs {
             dfs_to_create_graph(func.id, &mut raw_callgraph, &mut visited, context)
-                .map_err(|_| super::Error::WorkspaceCallGraphDFSError)?;
+                .map_err(|_| Error::WorkspaceCallGraphDFSError)?;
         }
 
         for modifier in modifier_definitions {
             dfs_to_create_graph(modifier.id, &mut raw_callgraph, &mut visited, context)
-                .map_err(|_| super::Error::WorkspaceCallGraphDFSError)?;
+                .map_err(|_| Error::WorkspaceCallGraphDFSError)?;
         }
 
-        Ok(WorkspaceCallGraph { raw_callgraph })
+        Ok(LegacyWorkspaceCallGraph { raw_callgraph })
     }
 }
 
@@ -56,7 +47,7 @@ fn dfs_to_create_graph(
     raw_callgraph: &mut RawCallGraph,
     visited: &mut HashSet<NodeID>,
     context: &WorkspaceContext,
-) -> super::Result<()> {
+) -> Result<()> {
     if visited.contains(&id) {
         return Ok(());
     }

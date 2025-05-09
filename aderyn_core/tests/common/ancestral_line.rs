@@ -6,7 +6,7 @@ use aderyn_core::{
     capture,
     context::{
         browser::{GetAncestralLine, SortNodeReferencesToSequence},
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };

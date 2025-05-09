@@ -6,8 +6,8 @@ use crate::capture;
 
 use crate::{
     context::{
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -26,18 +26,21 @@ pub struct DelegateCallUncheckedAddressDetector {
 impl IssueDetector for DelegateCallUncheckedAddressDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let mut tracker = DelegateCallNoAddressChecksTracker {
-                has_address_checks: false,
-                has_delegate_call_on_non_state_variable_address: false,
-                context,
-            };
-            let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
-            callgraph.accept(context, &mut tracker)?;
+            let callgraphs =
+                CallGraphConsumer::get(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            for callgraph in callgraphs {
+                let mut tracker = DelegateCallNoAddressChecksTracker {
+                    has_address_checks: false,
+                    has_delegate_call_on_non_state_variable_address: false,
+                    context,
+                };
+                callgraph.accept(context, &mut tracker)?;
 
-            if tracker.has_delegate_call_on_non_state_variable_address
-                && !tracker.has_address_checks
-            {
-                capture!(self, context, func)
+                if tracker.has_delegate_call_on_non_state_variable_address
+                    && !tracker.has_address_checks
+                {
+                    capture!(self, context, func)
+                }
             }
         }
 
@@ -72,7 +75,7 @@ struct DelegateCallNoAddressChecksTracker<'a> {
 }
 
 impl CallGraphVisitor for DelegateCallNoAddressChecksTracker<'_> {
-    fn visit_any(&mut self, node: &crate::context::workspace_context::ASTNode) -> eyre::Result<()> {
+    fn visit_any(&mut self, node: &crate::context::workspace::ASTNode) -> eyre::Result<()> {
         if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
             self.has_address_checks = true;
         }
@@ -94,7 +97,6 @@ mod delegate_call_no_address_check_tests {
     };
 
     #[test]
-
     fn test_delegate_call_without_checks() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DelegateCallWithoutAddressCheck.sol",

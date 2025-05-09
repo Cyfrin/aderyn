@@ -6,7 +6,7 @@ use crate::ast::NodeID;
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 
@@ -63,8 +63,8 @@ mod contract_eth_helper {
         ast::{ASTNode, ContractDefinition, StateMutability, Visibility},
         context::{
             browser::ExtractFunctionDefinitions,
-            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-            workspace_context::WorkspaceContext,
+            graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+            workspace::WorkspaceContext,
         },
         detect::helpers,
     };
@@ -106,19 +106,20 @@ mod contract_eth_helper {
                         .map(|f| f.into())
                         .collect::<Vec<ASTNode>>();
 
-                    let mut tracker = EthWithdrawalAllowerTracker::default();
-
-                    let callgraph = CallGraph::new(
+                    let callgraphs = CallGraphConsumer::get(
                         context,
                         funcs.iter().collect::<Vec<_>>().as_slice(),
                         CallGraphDirection::Inward,
                     )
                     .ok()?;
 
-                    callgraph.accept(context, &mut tracker).ok()?;
+                    for callgraph in callgraphs {
+                        let mut tracker = EthWithdrawalAllowerTracker::default();
+                        callgraph.accept(context, &mut tracker).ok()?;
 
-                    if tracker.has_calls_that_sends_native_eth {
-                        return Some(true);
+                        if tracker.has_calls_that_sends_native_eth {
+                            return Some(true);
+                        }
                     }
                 }
             }

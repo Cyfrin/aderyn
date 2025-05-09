@@ -6,8 +6,8 @@ use crate::{
     capture,
     context::{
         browser::{ExtractIdentifiers, ExtractRevertStatements},
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -28,12 +28,15 @@ impl IssueDetector for RequireRevertInLoopDetector {
         let loop_explore_centers = get_explore_centers_of_loops(context);
 
         for l in loop_explore_centers {
-            let callgraph = CallGraph::new(context, &[l], CallGraphDirection::Inward)?;
-            let mut tracker = RevertAndRequireTracker::default();
-            callgraph.accept(context, &mut tracker)?;
+            let callgraphs = CallGraphConsumer::get(context, &[l], CallGraphDirection::Inward)?;
 
-            if tracker.has_require_or_revert || tracker.has_revert_statement {
-                capture!(self, context, l);
+            for callgraph in callgraphs {
+                let mut tracker = RevertAndRequireTracker::default();
+                callgraph.accept(context, &mut tracker)?;
+
+                if tracker.has_require_or_revert || tracker.has_revert_statement {
+                    capture!(self, context, l);
+                }
             }
         }
 

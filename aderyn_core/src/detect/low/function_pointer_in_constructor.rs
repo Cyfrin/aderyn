@@ -4,7 +4,7 @@ use crate::ast::{FunctionKind, NodeID};
 
 use crate::{
     capture,
-    context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
+    context::{browser::ExtractVariableDeclarations, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -74,7 +74,7 @@ mod func_compilation_solc_pragma_helper {
         ast::{FunctionDefinition, NodeType},
         context::{
             browser::{ExtractPragmaDirectives, GetClosestAncestorOfTypeX},
-            workspace_context::WorkspaceContext,
+            workspace::WorkspaceContext,
         },
         detect::helpers,
     };

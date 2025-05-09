@@ -11,7 +11,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractFunctionCalls, ExtractVariableDeclarations},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };

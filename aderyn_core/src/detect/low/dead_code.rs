@@ -4,7 +4,7 @@ use crate::ast::{ASTNode, ContractKind, FunctionKind, NodeID, NodeType, Visibili
 
 use crate::{
     capture,
-    context::{browser::GetClosestAncestorOfTypeX, workspace_context::WorkspaceContext},
+    context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers,

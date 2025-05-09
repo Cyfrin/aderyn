@@ -1,4 +1,4 @@
-use crate::context::workspace_context::WorkspaceContext;
+use crate::context::workspace::WorkspaceContext;
 use cloc::count_code_lines;
 use ignore::get_lines_to_ignore;
 use rayon::prelude::*;

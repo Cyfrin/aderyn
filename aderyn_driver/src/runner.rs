@@ -1,4 +1,4 @@
-use aderyn_core::{context::workspace_context::WorkspaceContext, detect::detector::IssueDetector};
+use aderyn_core::{context::workspace::WorkspaceContext, detect::detector::IssueDetector};
 use std::error::Error;
 
 use crate::{

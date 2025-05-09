@@ -4,7 +4,7 @@ use crate::ast::{ASTNode, NodeID, Visibility};
 
 use crate::{
     capture,
-    context::{browser::ExtractFunctionDefinitions, workspace_context::WorkspaceContext},
+    context::{browser::ExtractFunctionDefinitions, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

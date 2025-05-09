@@ -4,7 +4,7 @@ use crate::ast::{Expression, LiteralKind, Mutability, NodeID};
 
 use crate::{
     capture,
-    context::workspace_context::{ASTNode, WorkspaceContext},
+    context::workspace::{ASTNode, WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
