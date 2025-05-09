@@ -26,15 +26,14 @@ pub struct OutOfOrderRetryableDetector {
 impl IssueDetector for OutOfOrderRetryableDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let mut tracker = OutOfOrderRetryableTracker { number_of_retry_calls: 0 };
-            let callgraph = CallGraphConsumer::get_legacy(
-                context,
-                &[&(func.into())],
-                CallGraphDirection::Inward,
-            )?;
-            callgraph.accept(context, &mut tracker)?;
-            if tracker.number_of_retry_calls >= 2 {
-                capture!(self, context, func);
+            let callgraphs =
+                CallGraphConsumer::get(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            for callgraph in callgraphs {
+                let mut tracker = OutOfOrderRetryableTracker { number_of_retry_calls: 0 };
+                callgraph.accept(context, &mut tracker)?;
+                if tracker.number_of_retry_calls >= 2 {
+                    capture!(self, context, func);
+                }
             }
         }
 

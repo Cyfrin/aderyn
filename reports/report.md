@@ -1456,8 +1456,44 @@ The patterns `if (… || true)` and `if (.. && false)` will always evaluate to t
 
 Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended.
 
-<details><summary>21 Found Instances</summary>
+<details><summary>27 Found Instances</summary>
 
+
+- Found in src/ArbitraryTransferFrom.sol [Line: 23](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L23)
+
+	```solidity
+	    function bad2(address from, address to, uint256 amount) external {
+	```
+
+- Found in src/ArbitraryTransferFrom.sol [Line: 28](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L28)
+
+	```solidity
+	    function bad3(address from, address to, uint256 amount) external {
+	```
+
+- Found in src/ArbitraryTransferFrom.sol [Line: 37](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L37)
+
+	```solidity
+	    function good2(address to, uint256 amount) external {
+	```
+
+- Found in src/ArbitraryTransferFrom.sol [Line: 41](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L41)
+
+	```solidity
+	    function good3(address to, uint256 amount) external {
+	```
+
+- Found in src/ArbitraryTransferFrom.sol [Line: 45](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L45)
+
+	```solidity
+	    function good4(address to, uint256 amount) external {
+	```
+
+- Found in src/ArbitraryTransferFrom.sol [Line: 49](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L49)
+
+	```solidity
+	    function good5(address from, address to, uint256 amount) external {
+	```
 
 - Found in src/CallGraphTests.sol [Line: 38](../tests/contract-playground/src/CallGraphTests.sol#L38)
 
@@ -1489,22 +1525,22 @@ Consider introducing checks for `msg.sender` to ensure the recipient of the mone
 	    function takeEthBack(uint256 amount) external {
 	```
 
+- Found in src/DeprecatedOZFunctions.sol [Line: 16](../tests/contract-playground/src/DeprecatedOZFunctions.sol#L16)
+
+	```solidity
+	    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) external {
+	```
+
+- Found in src/DeprecatedOZFunctions.sol [Line: 26](../tests/contract-playground/src/DeprecatedOZFunctions.sol#L26)
+
+	```solidity
+	    function safeApprove(IERC20 token, address spender, uint256 value) external {
+	```
+
 - Found in src/ExternalCalls.sol [Line: 67](../tests/contract-playground/src/ExternalCalls.sol#L67)
 
 	```solidity
 	    function ext9() external {
-	```
-
-- Found in src/OutOfOrderRetryable.sol [Line: 63](../tests/contract-playground/src/OutOfOrderRetryable.sol#L63)
-
-	```solidity
-	    function doStuffOnL2() external {
-	```
-
-- Found in src/OutOfOrderRetryable.sol [Line: 90](../tests/contract-playground/src/OutOfOrderRetryable.sol#L90)
-
-	```solidity
-	    function doStuffOnL2Alternative() external {
 	```
 
 - Found in src/OutOfOrderRetryable.sol [Line: 167](../tests/contract-playground/src/OutOfOrderRetryable.sol#L167)
@@ -1947,7 +1983,7 @@ Provide an explicit array of amounts alongside the receivers array, and check th
 
 It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract.
 
-<details><summary>14 Found Instances</summary>
+<details><summary>15 Found Instances</summary>
 
 
 - Found in src/ContractLocksEther.sol [Line: 5](../tests/contract-playground/src/ContractLocksEther.sol#L5)
@@ -2008,6 +2044,12 @@ It appears that the contract includes a payable function to accept Ether but lac
 
 	```solidity
 	contract MsgValueInLoop4 {
+	```
+
+- Found in src/OutOfOrderRetryable.sol [Line: 38](../tests/contract-playground/src/OutOfOrderRetryable.sol#L38)
+
+	```solidity
+	contract L1 {
 	```
 
 - Found in src/eth2/DepositContract.sol [Line: 58](../tests/contract-playground/src/eth2/DepositContract.sol#L58)
