@@ -27,25 +27,18 @@ impl CallGraphConsumer {
         nodes: &[&ASTNode],
         direction: CallGraphDirection,
     ) -> super::Result<Vec<CallGraphConsumer>> {
-        let mut consumers = vec![];
-
-        let entry_points = legacy::derive_entry_points(nodes)?;
-        let outward_surface_points = legacy::derive_outward_surface_points(context, nodes);
-        let inward_surface_pointss = new::derive_inward_surface_points(context, nodes);
-
-        if inward_surface_pointss.is_empty() {
-        } else {
-            for (contract_id, inward_surface_points) in inward_surface_pointss {
-                consumers.push(CallGraphConsumer {
-                    entry_points: entry_points.clone(), // maybe not valid
-                    inward_surface_points: inward_surface_points.into_iter().collect(),
-                    outward_surface_points: outward_surface_points.clone(),
-                    direction: direction.clone(),
-                    base_contract: Some(contract_id),
-                });
-            }
+        let mut cg_consumers = vec![];
+        let cg_points = new::derive_surface_points(context, nodes);
+        for (contract_id, points) in cg_points.points {
+            cg_consumers.push(CallGraphConsumer {
+                entry_points: points.entry.into_iter().collect(),
+                inward_surface_points: points.inward.into_iter().collect(),
+                outward_surface_points: points.outward.into_iter().collect(),
+                direction: direction.clone(),
+                base_contract: Some(contract_id),
+            });
         }
-
-        Ok(consumers)
+        Ok(cg_consumers)
     }
 }
+
