@@ -6815,7 +6815,7 @@ Initialize all the variables. If a variable is meant to be initialized to zero, 
 
 Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hold the loop computation result.
 
-<details><summary>18 Found Instances</summary>
+<details><summary>13 Found Instances</summary>
 
 
 - Found in contracts/admin/TempleTeamPayments.sol [Line: 38](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPayments.sol#L38)
@@ -6828,36 +6828,6 @@ Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hol
 
 	```solidity
 	        for (uint256 i; i < _addresses.length; ) {
-	```
-
-- Found in contracts/core/OpsManager.sol [Line: 113](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L113)
-
-	```solidity
-	        for (uint256 i = 0; i < exposureTokens.length; i++) {
-	```
-
-- Found in contracts/core/OpsManager.sol [Line: 133](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L133)
-
-	```solidity
-	        for (uint256 i = 0; i < vaults.length; i++) {
-	```
-
-- Found in contracts/core/OpsManagerLib.sol [Line: 100](../tests/2024-07-templegold/protocol/contracts/core/OpsManagerLib.sol#L100)
-
-	```solidity
-	        for (uint256 i = 0; i < exposureTokens.length; i++) {
-	```
-
-- Found in contracts/core/Vault.sol [Line: 114](../tests/2024-07-templegold/protocol/contracts/core/Vault.sol#L114)
-
-	```solidity
-	        for (uint256 i = 0; i < exposures.length; i++) {
-	```
-
-- Found in contracts/core/VaultEarlyWithdraw.sol [Line: 36](../tests/2024-07-templegold/protocol/contracts/core/VaultEarlyWithdraw.sol#L36)
-
-	```solidity
-	        for (uint256 i=0; i<_validVaults.length; ++i) {
 	```
 
 - Found in contracts/v2/TempleDebtToken.sol [Line: 454](../tests/2024-07-templegold/protocol/contracts/v2/TempleDebtToken.sol#L454)

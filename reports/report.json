@@ -4369,6 +4369,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/CostlyOperationsInsideLoops.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/Counter.sol",
             "line_no": 2,
             "src": "39:24",
@@ -6288,24 +6294,6 @@
           },
           {
             "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 16,
-            "src": "602:98",
-            "src_char": "602:98"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 19,
-            "src": "709:100",
-            "src_char": "709:100"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 22,
-            "src": "818:89",
-            "src_char": "818:89"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
             "line_no": 29,
             "src": "989:157",
             "src_char": "989:157"
@@ -6387,12 +6375,6 @@
             "line_no": 47,
             "src": "1144:154",
             "src_char": "1144:154"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 70,
-            "src": "5010:178",
-            "src_char": "3522:178"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -6526,8 +6508,8 @@
           {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
             "line_no": 6,
-            "src": "123:21",
-            "src_char": "123:21"
+            "src": "128:10",
+            "src_char": "128:10"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
@@ -6869,14 +6851,14 @@
           {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
             "line_no": 9,
-            "src": "180:119",
-            "src_char": "180:119"
+            "src": "189:3",
+            "src_char": "189:3"
           },
           {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
             "line_no": 15,
-            "src": "305:207",
-            "src_char": "305:207"
+            "src": "314:4",
+            "src_char": "314:4"
           },
           {
             "contract_path": "src/Counter.sol",

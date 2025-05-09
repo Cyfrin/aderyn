@@ -41,4 +41,3 @@ impl CallGraphConsumer {
         Ok(cg_consumers)
     }
 }
-

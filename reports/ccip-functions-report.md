@@ -2170,7 +2170,7 @@ Calling `.length` on a storage array in a loop condition is expensive. Consider 
 
 Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hold the loop computation result.
 
-<details><summary>32 Found Instances</summary>
+<details><summary>28 Found Instances</summary>
 
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsBilling.sol [Line: 399](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsBilling.sol#L399)
@@ -2213,18 +2213,6 @@ Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hol
 
 	```solidity
 	    for (uint256 i = 0; i < requestsToTimeoutByCommitment.length; ++i) {
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol [Line: 48](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol#L48)
-
-	```solidity
-	    for (uint256 i = 0; i < initialAllowedSenders.length; ++i) {
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol [Line: 52](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol#L52)
-
-	```solidity
-	    for (uint256 j = 0; j < initialBlockedSenders.length; ++j) {
 	```
 
 - Found in src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol [Line: 135](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol#L135)
@@ -2339,18 +2327,6 @@ Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hol
 
 	```solidity
 	    for (uint256 i = 0; i < numberOfFulfillments; ++i) {
-	```
-
-- Found in src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol [Line: 49](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol#L49)
-
-	```solidity
-	    for (uint256 i = 0; i < initialAllowedSenders.length; ++i) {
-	```
-
-- Found in src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol [Line: 53](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol#L53)
-
-	```solidity
-	    for (uint256 j = 0; j < initialBlockedSenders.length; ++j) {
 	```
 
 - Found in src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol [Line: 135](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol#L135)

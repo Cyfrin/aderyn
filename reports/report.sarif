@@ -6861,6 +6861,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/CostlyOperationsInsideLoops.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/Counter.sol"
                 },
                 "region": {
@@ -10296,39 +10307,6 @@
                   "uri": "src/EnumerableSetIteration.sol"
                 },
                 "region": {
-                  "byteLength": 98,
-                  "byteOffset": 602
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EnumerableSetIteration.sol"
-                },
-                "region": {
-                  "byteLength": 100,
-                  "byteOffset": 709
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EnumerableSetIteration.sol"
-                },
-                "region": {
-                  "byteLength": 89,
-                  "byteOffset": 818
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EnumerableSetIteration.sol"
-                },
-                "region": {
                   "byteLength": 157,
                   "byteOffset": 989
                 }
@@ -10474,17 +10452,6 @@
                 "region": {
                   "byteLength": 154,
                   "byteOffset": 1144
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/eth2/DepositContract.sol"
-                },
-                "region": {
-                  "byteLength": 178,
-                  "byteOffset": 5010
                 }
               }
             },
@@ -10711,8 +10678,8 @@
                   "uri": "src/CostlyOperationsInsideLoops.sol"
                 },
                 "region": {
-                  "byteLength": 21,
-                  "byteOffset": 123
+                  "byteLength": 10,
+                  "byteOffset": 128
                 }
               }
             },
@@ -11336,8 +11303,8 @@
                   "uri": "src/CostlyOperationsInsideLoops.sol"
                 },
                 "region": {
-                  "byteLength": 119,
-                  "byteOffset": 180
+                  "byteLength": 3,
+                  "byteOffset": 189
                 }
               }
             },
@@ -11347,8 +11314,8 @@
                   "uri": "src/CostlyOperationsInsideLoops.sol"
                 },
                 "region": {
-                  "byteLength": 207,
-                  "byteOffset": 305
+                  "byteLength": 4,
+                  "byteOffset": 314
                 }
               }
             },
