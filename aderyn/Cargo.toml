@@ -1,6 +1,6 @@
 [package]
 name = "aderyn"
-version = "0.5.10"
+version = "0.5.11"
 edition = "2021"
 authors = ["Cyfrin <aderyn@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer"
