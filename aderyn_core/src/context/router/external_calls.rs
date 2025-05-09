@@ -126,7 +126,7 @@ pub(super) fn build_ec_router_for_contract(
                                 e.insert(ECDest::RealExtFn(func.id));
                             }
                         }
-                        _ => (),
+                        _ => {}
                     };
                 }
                 FunctionKind::Receive => {
@@ -140,7 +140,7 @@ pub(super) fn build_ec_router_for_contract(
                     }
                 }
                 FunctionKind::FreeFunction => unreachable!(), // can't be inside a contract.
-                FunctionKind::Constructor => (),
+                FunctionKind::Constructor => {}
             };
         }
     }

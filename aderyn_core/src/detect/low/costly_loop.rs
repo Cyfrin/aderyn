@@ -72,7 +72,6 @@ fn changes_state(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool>
     let callgraphs =
         CallGraphConsumer::get(context, &[ast_node], CallGraphDirection::Inward).ok()?;
 
-    println!("num callgraphs got: {}", callgraphs.len());
     for callgraph in callgraphs {
         let mut tracker = StateVariableChangeTracker { state_var_has_changed: false, context };
         callgraph.accept(context, &mut tracker).ok()?;

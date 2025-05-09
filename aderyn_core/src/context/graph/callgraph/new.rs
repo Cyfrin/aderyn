@@ -98,6 +98,5 @@ pub(super) fn derive_surface_points(
             }
         }
     }
-
     cg_points
 }

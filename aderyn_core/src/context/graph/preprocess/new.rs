@@ -34,6 +34,7 @@ pub fn _create_raw_callgraph(
                 continue;
             }
             visited.insert(node_id);
+            create_node_if_not_exists(node_id, &mut raw_callgraph);
             let Some(node) = context.nodes.get(&node_id) else {
                 continue;
             };
@@ -52,6 +53,12 @@ pub fn _create_raw_callgraph(
         }
     }
     Some(raw_callgraph)
+}
+
+fn create_node_if_not_exists(node_id: NodeID, raw_callgraph: &mut RawCallGraph) {
+    if let Entry::Vacant(v) = raw_callgraph.entry(node_id) {
+        v.insert(vec![]);
+    }
 }
 
 fn create_connection_if_not_exists(
