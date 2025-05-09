@@ -127,17 +127,24 @@ mod function_state_changes_finder_helper {
             &self,
             context: &'a WorkspaceContext,
         ) -> Option<ApproximateStorageChangeFinder<'a>> {
-            let mut tracker = StateVariableChangeTracker { changes: None, context };
+            let mut all_changes = None;
+            let callgraphs =
+                CallGraphConsumer::get(context, &[&(self.into())], CallGraphDirection::Inward)
+                    .ok()?;
 
-            let investigator = CallGraphConsumer::get_legacy(
-                context,
-                &[&(self.into())],
-                CallGraphDirection::Inward,
-            )
-            .ok()?;
-            investigator.accept(context, &mut tracker).ok()?;
+            for callgraph in callgraphs {
+                let mut tracker = StateVariableChangeTracker { changes: None, context };
+                callgraph.accept(context, &mut tracker).ok()?;
+                if let Some(changes) = tracker.changes.take() {
+                    if all_changes.is_none() {
+                        all_changes = Some(changes);
+                    } else if let Some(existing_changes) = all_changes {
+                        all_changes = Some(existing_changes + changes);
+                    }
+                }
+            }
 
-            tracker.changes.take()
+            all_changes
         }
     }
 

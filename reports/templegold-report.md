@@ -7179,7 +7179,7 @@ Redundant import statement. Consider removing it.
 
 There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes.
 
-<details><summary>28 Found Instances</summary>
+<details><summary>18 Found Instances</summary>
 
 
 - Found in contracts/admin/TempleTeamPayments.sol [Line: 29](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPayments.sol#L29)
@@ -7218,58 +7218,10 @@ There are state variable changes in this function but no event is emitted. Consi
 	    function setDefendStable(address _defendStable) external onlyOwner {
 	```
 
-- Found in contracts/amm/TempleStableAMMRouter.sol [Line: 142](../tests/2024-07-templegold/protocol/contracts/amm/TempleStableAMMRouter.sol#L142)
-
-	```solidity
-	    function swapExactTempleForStable(
-	```
-
 - Found in contracts/amm/TreasuryIV.sol [Line: 23](../tests/2024-07-templegold/protocol/contracts/amm/TreasuryIV.sol#L23)
 
 	```solidity
 	    function setIV(uint256 frax, uint256 temple) external onlyOwner {
-	```
-
-- Found in contracts/core/OpsManager.sol [Line: 110](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L110)
-
-	```solidity
-	    function addRevenue(IERC20[] memory exposureTokens, uint256[] memory amounts) external onlyOwner {
-	```
-
-- Found in contracts/core/OpsManager.sol [Line: 130](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L130)
-
-	```solidity
-	    function increaseVaultTemple(Vault[] memory vaults, uint256[] memory amountsTemple) external onlyOwner {
-	```
-
-- Found in contracts/core/Vault.sol [Line: 113](../tests/2024-07-templegold/protocol/contracts/core/Vault.sol#L113)
-
-	```solidity
-	    function redeemExposures(Exposure[] memory exposures) external onlyOwner {
-	```
-
-- Found in contracts/core/VaultProxy.sol [Line: 58](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L58)
-
-	```solidity
-	    function depositTempleWithFaith(uint256 _amountTemple, uint112 _amountFaith, Vault vault) public {
-	```
-
-- Found in contracts/core/VaultProxy.sol [Line: 71](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L71)
-
-	```solidity
-	    function unstakeAndDepositTempleWithFaith(uint256 _amountOGT, uint112 _amountFaith, Vault vault) external {
-	```
-
-- Found in contracts/core/VaultProxy.sol [Line: 83](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L83)
-
-	```solidity
-	    function unstakeAndDepositIntoVault(uint256 _amountOGT, Vault vault) external {
-	```
-
-- Found in contracts/core/VaultProxy.sol [Line: 109](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L109)
-
-	```solidity
-	    function depositTempleFor(uint256 _amount, Vault vault) public {
 	```
 
 - Found in contracts/core/VaultProxy.sol [Line: 118](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L118)
@@ -7294,18 +7246,6 @@ There are state variable changes in this function but no event is emitted. Consi
 
 	```solidity
 	    function setExitQueue(IExitQueue _EXIT_QUEUE) external onlyOwner {
-	```
-
-- Found in contracts/fakes/NoopLiquidator.sol [Line: 19](../tests/2024-07-templegold/protocol/contracts/fakes/NoopLiquidator.sol#L19)
-
-	```solidity
-	    function toTemple(uint256 amount, address toAccount) external override {
-	```
-
-- Found in contracts/fakes/NoopVaultedTempleLiquidator.sol [Line: 22](../tests/2024-07-templegold/protocol/contracts/fakes/NoopVaultedTempleLiquidator.sol#L22)
-
-	```solidity
-	    function toTemple(uint256 amount, address /* toAccount */) external override {
 	```
 
 - Found in contracts/fakes/templegold/TempleGoldStakingMock.sol [Line: 268](../tests/2024-07-templegold/protocol/contracts/fakes/templegold/TempleGoldStakingMock.sol#L268)
