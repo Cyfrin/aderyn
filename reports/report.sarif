@@ -2383,18 +2383,7 @@
                 },
                 "region": {
                   "byteLength": 6,
-                  "byteOffset": 255
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TautologicalCompare.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 359
+                  "byteOffset": 528
                 }
               }
             },
@@ -2405,7 +2394,7 @@
                 },
                 "region": {
                   "byteLength": 5,
-                  "byteOffset": 463
+                  "byteOffset": 634
                 }
               }
             },
@@ -2416,7 +2405,7 @@
                 },
                 "region": {
                   "byteLength": 5,
-                  "byteOffset": 566
+                  "byteOffset": 739
                 }
               }
             }
@@ -8783,6 +8772,17 @@
                   "byteOffset": 74
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 66
+                }
+              }
             }
           ],
           "message": {
@@ -8910,7 +8910,7 @@
                 },
                 "region": {
                   "byteLength": 1,
-                  "byteOffset": 186
+                  "byteOffset": 351
                 }
               }
             },
