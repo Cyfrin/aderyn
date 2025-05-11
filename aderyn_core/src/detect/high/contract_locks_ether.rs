@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use std::{convert::identity, error::Error};
+use std::error::Error;
 
 use crate::ast::NodeID;
 
@@ -22,10 +22,13 @@ pub struct ContractLocksEtherDetector {
 impl IssueDetector for ContractLocksEtherDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for contract in context.deployable_contracts() {
-            // If a contract can accept eth, but doesn't allow for withdrawal capture it!
-            if contract.can_accept_eth(context).is_some_and(identity)
-                && !contract.allows_withdrawal_of_eth(context).is_some_and(identity)
-            {
+            let Some(accepts_eth) = contract.can_accept_eth(context) else {
+                continue;
+            };
+            let Some(allows_withdraw) = contract.allows_withdrawal_of_eth(context) else {
+                continue;
+            };
+            if accepts_eth && !allows_withdraw {
                 capture!(self, context, contract);
             }
         }
@@ -68,8 +71,24 @@ mod contract_eth_helper {
         detect::helpers,
     };
 
+    #[derive(Default)]
+    struct EthWithdrawalAllowerTracker {
+        has_calls_that_sends_native_eth: bool,
+    }
+
+    impl CallGraphVisitor for EthWithdrawalAllowerTracker {
+        fn visit_any(&mut self, ast_node: &ASTNode) -> eyre::Result<()> {
+            if !self.has_calls_that_sends_native_eth
+                && helpers::has_calls_that_sends_native_eth(ast_node)
+            {
+                self.has_calls_that_sends_native_eth = true;
+            }
+            Ok(())
+        }
+    }
+
     impl ContractDefinition {
-        pub fn can_accept_eth(&self, context: &WorkspaceContext) -> Option<bool> {
+        pub(super) fn can_accept_eth(&self, context: &WorkspaceContext) -> Option<bool> {
             for func in self.entrypoint_functions(context)? {
                 if *func.state_mutability() == StateMutability::Payable {
                     return Some(true);
@@ -78,12 +97,7 @@ mod contract_eth_helper {
             Some(false)
         }
 
-        pub fn allows_withdrawal_of_eth(&self, context: &WorkspaceContext) -> Option<bool> {
-            /*
-                For all the contracts in the hierarchy try and see if there is exists a public/external function that
-                can be called which takes the execution flow in a path where there is possibility to send back eth away from
-                the contract using the low level `call{value: XXX}` or `transfer` or `send`.
-            */
+        pub(super) fn allows_withdrawal_of_eth(&self, context: &WorkspaceContext) -> Option<bool> {
             for func in self.entrypoint_functions(context)? {
                 let callgraphs =
                     CallGraphConsumer::get(context, &[&func.into()], CallGraphDirection::Inward)
@@ -98,22 +112,6 @@ mod contract_eth_helper {
                 }
             }
             Some(false)
-        }
-    }
-
-    #[derive(Default)]
-    struct EthWithdrawalAllowerTracker {
-        has_calls_that_sends_native_eth: bool,
-    }
-
-    impl CallGraphVisitor for EthWithdrawalAllowerTracker {
-        fn visit_any(&mut self, ast_node: &ASTNode) -> eyre::Result<()> {
-            if !self.has_calls_that_sends_native_eth
-                && helpers::has_calls_that_sends_native_eth(ast_node)
-            {
-                self.has_calls_that_sends_native_eth = true;
-            }
-            Ok(())
         }
     }
 }

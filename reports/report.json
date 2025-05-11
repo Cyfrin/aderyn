@@ -1858,27 +1858,21 @@
         "instances": [
           {
             "contract_path": "src/TautologicalCompare.sol",
-            "line_no": 13,
-            "src": "255:6",
-            "src_char": "255:6"
-          },
-          {
-            "contract_path": "src/TautologicalCompare.sol",
             "line_no": 18,
-            "src": "359:6",
-            "src_char": "359:6"
+            "src": "528:6",
+            "src_char": "528:6"
           },
           {
             "contract_path": "src/TautologicalCompare.sol",
             "line_no": 23,
-            "src": "463:5",
-            "src_char": "463:5"
+            "src": "634:5",
+            "src_char": "634:5"
           },
           {
             "contract_path": "src/TautologicalCompare.sol",
             "line_no": 28,
-            "src": "566:5",
-            "src_char": "566:5"
+            "src": "739:5",
+            "src_char": "739:5"
           }
         ]
       },
@@ -5428,6 +5422,12 @@
             "line_no": 4,
             "src": "74:7",
             "src_char": "74:7"
+          },
+          {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 4,
+            "src": "66:19",
+            "src_char": "66:19"
           }
         ]
       },
@@ -5499,8 +5499,8 @@
           {
             "contract_path": "src/TautologicalCompare.sol",
             "line_no": 11,
-            "src": "186:1",
-            "src_char": "186:1"
+            "src": "351:1",
+            "src_char": "351:1"
           },
           {
             "contract_path": "src/TautologyOrContradiction.sol",
