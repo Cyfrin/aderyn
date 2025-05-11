@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::ExtractModifierInvocations,
-        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        graph::CallGraphVisitor,
         workspace::{ASTNode, WorkspaceContext},
     },
     detect::{
@@ -25,10 +25,7 @@ pub struct SendEtherNoChecksDetector {
 
 impl IssueDetector for SendEtherNoChecksDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for func in helpers::get_implemented_external_and_public_functions(context) {
-            let callgraphs =
-                CallGraphConsumer::get(context, &[&(func.into())], CallGraphDirection::Inward)?;
-
+        for (func, callgraphs) in context.entrypoints_with_callgraphs() {
             for callgraph in callgraphs {
                 let mut tracker = AddressChecksAndCallWithValueTracker::default();
                 callgraph.accept(context, &mut tracker)?;

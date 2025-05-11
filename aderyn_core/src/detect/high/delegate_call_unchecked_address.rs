@@ -5,10 +5,7 @@ use crate::ast::NodeID;
 use crate::capture;
 
 use crate::{
-    context::{
-        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
-        workspace::WorkspaceContext,
-    },
+    context::{graph::CallGraphVisitor, workspace::WorkspaceContext},
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers,
@@ -25,9 +22,27 @@ pub struct DelegateCallUncheckedAddressDetector {
 
 impl IssueDetector for DelegateCallUncheckedAddressDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for func in helpers::get_implemented_external_and_public_functions(context) {
-            let callgraphs =
-                CallGraphConsumer::get(context, &[&(func.into())], CallGraphDirection::Inward)?;
+        struct DelegateCallNoAddressChecksTracker<'a> {
+            has_address_checks: bool,
+            has_delegate_call_on_non_state_variable_address: bool,
+            context: &'a WorkspaceContext,
+        }
+
+        impl CallGraphVisitor for DelegateCallNoAddressChecksTracker<'_> {
+            fn visit_any(&mut self, node: &crate::context::workspace::ASTNode) -> eyre::Result<()> {
+                if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
+                    self.has_address_checks = true;
+                }
+                if !self.has_delegate_call_on_non_state_variable_address
+                    && helpers::has_delegate_calls_on_non_state_variables(node, self.context)
+                {
+                    self.has_delegate_call_on_non_state_variable_address = true;
+                }
+                eyre::Ok(())
+            }
+        }
+
+        for (func, callgraphs) in context.entrypoints_with_callgraphs() {
             for callgraph in callgraphs {
                 let mut tracker = DelegateCallNoAddressChecksTracker {
                     has_address_checks: false,
@@ -43,7 +58,6 @@ impl IssueDetector for DelegateCallUncheckedAddressDetector {
                 }
             }
         }
-
         Ok(!self.found_instances.is_empty())
     }
 
@@ -65,26 +79,6 @@ impl IssueDetector for DelegateCallUncheckedAddressDetector {
 
     fn name(&self) -> String {
         IssueDetectorNamePool::DelegateCallUncheckedAddress.to_string()
-    }
-}
-
-struct DelegateCallNoAddressChecksTracker<'a> {
-    has_address_checks: bool,
-    has_delegate_call_on_non_state_variable_address: bool,
-    context: &'a WorkspaceContext,
-}
-
-impl CallGraphVisitor for DelegateCallNoAddressChecksTracker<'_> {
-    fn visit_any(&mut self, node: &crate::context::workspace::ASTNode) -> eyre::Result<()> {
-        if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
-            self.has_address_checks = true;
-        }
-        if !self.has_delegate_call_on_non_state_variable_address
-            && helpers::has_delegate_calls_on_non_state_variables(node, self.context)
-        {
-            self.has_delegate_call_on_non_state_variable_address = true;
-        }
-        eyre::Ok(())
     }
 }
 

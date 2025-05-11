@@ -1670,14 +1670,8 @@ Making a `delegatecall` to an arbitrary address without any checks is dangerous.
 
 The left hand side and the right hand side of the binary operation has the same value. This makes the condition always true or always false.
 
-<details><summary>4 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
-
-- Found in src/TautologicalCompare.sol [Line: 13](../tests/contract-playground/src/TautologicalCompare.sol#L13)
-
-	```solidity
-	        return (a >= a);
-	```
 
 - Found in src/TautologicalCompare.sol [Line: 18](../tests/contract-playground/src/TautologicalCompare.sol#L18)
 
@@ -5356,7 +5350,7 @@ Instead of separating the logic into a separate function, consider inlining the 
 
 Contract contains comments with TODOS. Consider implementing or removing them.
 
-<details><summary>2 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
 
 - Found in src/ContractWithTodo.sol [Line: 4](../tests/contract-playground/src/ContractWithTodo.sol#L4)
@@ -5369,6 +5363,12 @@ Contract contains comments with TODOS. Consider implementing or removing them.
 
 	```solidity
 	contract Counter {
+	```
+
+- Found in src/TautologicalCompare.sol [Line: 4](../tests/contract-playground/src/TautologicalCompare.sol#L4)
+
+	```solidity
+	contract TautologicalCompare {
 	```
 
 </details>
@@ -5445,7 +5445,7 @@ Inconsistency in declaring uint256/uint (or) int256/int variables within a contr
 - Found in src/TautologicalCompare.sol [Line: 11](../tests/contract-playground/src/TautologicalCompare.sol#L11)
 
 	```solidity
-	    function check(uint a) external pure returns(bool){
+	    function check(uint a) external pure returns (bool) {
 	```
 
 - Found in src/TautologyOrContradiction.sol [Line: 6](../tests/contract-playground/src/TautologyOrContradiction.sol#L6)

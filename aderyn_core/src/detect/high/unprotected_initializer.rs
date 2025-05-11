@@ -5,13 +5,10 @@ use crate::{
     capture,
     context::{
         browser::{ExtractIdentifiers, ExtractModifierInvocations, ExtractRevertStatements},
-        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        graph::CallGraphVisitor,
         workspace::WorkspaceContext,
     },
-    detect::{
-        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
-        helpers,
-    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -24,9 +21,52 @@ pub struct UnprotectedInitializerDetector {
 
 impl IssueDetector for UnprotectedInitializerDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for func in helpers::get_implemented_external_and_public_functions(context) {
-            let callgraphs =
-                CallGraphConsumer::get(context, &[&func.into()], CallGraphDirection::Inward)?;
+        #[derive(Default, Debug)]
+        struct UnprotectedInitializationTracker {
+            has_require_or_revert: bool,
+            has_initializer_modifier: bool, // devtooligan's suggestion
+        }
+
+        impl CallGraphVisitor for UnprotectedInitializationTracker {
+            fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
+                // Check for revert(), require(), revert SomeError()
+                let has_req_or_revert_calls = ExtractIdentifiers::from(node)
+                    .extracted
+                    .into_iter()
+                    .any(|x| x.name == "require" || x.name == "revert");
+
+                let has_revert_stmnts = !ExtractRevertStatements::from(node).extracted.is_empty();
+
+                if has_req_or_revert_calls || has_revert_stmnts {
+                    self.has_require_or_revert = true;
+                }
+
+                // Check if modifier name is "initializer" or "reinitializer" and assume it works
+                // This is done because often times initialized comes from openzeppelin and it is
+                // out of scope when running aderyn due to it being a library
+
+                let modifier_invocations = ExtractModifierInvocations::from(node).extracted;
+
+                for inv in modifier_invocations {
+                    match inv.modifier_name {
+                        crate::ast::IdentifierOrIdentifierPath::Identifier(n) => {
+                            if n.name == "initializer" || n.name == "reinitializer" {
+                                self.has_initializer_modifier = true;
+                            }
+                        }
+                        crate::ast::IdentifierOrIdentifierPath::IdentifierPath(n) => {
+                            if n.name == "initializer" || n.name == "reinitializer" {
+                                self.has_initializer_modifier = true;
+                            }
+                        }
+                    }
+                }
+
+                Ok(())
+            }
+        }
+
+        for (func, callgraphs) in context.entrypoints_with_callgraphs() {
             for callgraph in callgraphs {
                 let mut tracker = UnprotectedInitializationTracker::default();
                 callgraph.accept(context, &mut tracker)?;
@@ -61,51 +101,6 @@ impl IssueDetector for UnprotectedInitializerDetector {
 
     fn name(&self) -> String {
         format!("{}", IssueDetectorNamePool::UnprotectedInitializer)
-    }
-}
-
-#[derive(Default, Debug)]
-struct UnprotectedInitializationTracker {
-    has_require_or_revert: bool,
-    has_initializer_modifier: bool, // devtooligan's suggestion
-}
-
-impl CallGraphVisitor for UnprotectedInitializationTracker {
-    fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
-        // Check for revert(), require(), revert SomeError()
-        let has_req_or_revert_calls = ExtractIdentifiers::from(node)
-            .extracted
-            .into_iter()
-            .any(|x| x.name == "require" || x.name == "revert");
-
-        let has_revert_stmnts = !ExtractRevertStatements::from(node).extracted.is_empty();
-
-        if has_req_or_revert_calls || has_revert_stmnts {
-            self.has_require_or_revert = true;
-        }
-
-        // Check if modifier name is "initializer" or "reinitializer" and assume it works
-        // This is done because often times initialized comes from openzeppelin and it is out of
-        // scope when running aderyn due to it being a library
-
-        let modifier_invocations = ExtractModifierInvocations::from(node).extracted;
-
-        for inv in modifier_invocations {
-            match inv.modifier_name {
-                crate::ast::IdentifierOrIdentifierPath::Identifier(n) => {
-                    if n.name == "initializer" || n.name == "reinitializer" {
-                        self.has_initializer_modifier = true;
-                    }
-                }
-                crate::ast::IdentifierOrIdentifierPath::IdentifierPath(n) => {
-                    if n.name == "initializer" || n.name == "reinitializer" {
-                        self.has_initializer_modifier = true;
-                    }
-                }
-            }
-        }
-
-        Ok(())
     }
 }
 
