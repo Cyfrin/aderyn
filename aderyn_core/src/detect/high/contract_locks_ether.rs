@@ -21,7 +21,7 @@ pub struct ContractLocksEtherDetector {
 
 impl IssueDetector for ContractLocksEtherDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for contract in context.contract_definitions() {
+        for contract in context.deployable_contracts() {
             // If a contract can accept eth, but doesn't allow for withdrawal capture it!
             if contract.can_accept_eth(context).is_some_and(identity)
                 && !contract.allows_withdrawal_of_eth(context).is_some_and(identity)
@@ -60,9 +60,8 @@ impl IssueDetector for ContractLocksEtherDetector {
 /// Handles tasks related to contract level analysis for eth
 mod contract_eth_helper {
     use crate::{
-        ast::{ASTNode, ContractDefinition, StateMutability, Visibility},
+        ast::{ASTNode, ContractDefinition, StateMutability},
         context::{
-            browser::ExtractFunctionDefinitions,
             graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
             workspace::WorkspaceContext,
         },
@@ -71,15 +70,8 @@ mod contract_eth_helper {
 
     impl ContractDefinition {
         pub fn can_accept_eth(&self, context: &WorkspaceContext) -> Option<bool> {
-            let contracts = &self.linearized_base_contracts;
-            for contract_id in contracts {
-                let funcs =
-                    ExtractFunctionDefinitions::from(context.nodes.get(contract_id)?).extracted;
-                let num_payable_funcs = funcs
-                    .into_iter()
-                    .filter(|f| f.implemented && *f.state_mutability() == StateMutability::Payable)
-                    .count();
-                if num_payable_funcs > 0 {
+            for func in self.entrypoint_functions(context)? {
+                if *func.state_mutability() == StateMutability::Payable {
                     return Some(true);
                 }
             }
@@ -92,41 +84,19 @@ mod contract_eth_helper {
                 can be called which takes the execution flow in a path where there is possibility to send back eth away from
                 the contract using the low level `call{value: XXX}` or `transfer` or `send`.
             */
-            let contracts = &self.linearized_base_contracts;
-            for contract_id in contracts {
-                if let ASTNode::ContractDefinition(contract) = context.nodes.get(contract_id)? {
-                    let funcs = contract
-                        .function_definitions()
-                        .into_iter()
-                        .filter(|f| {
-                            f.implemented
-                                && (f.visibility == Visibility::Public
-                                    || f.visibility == Visibility::External)
-                        })
-                        .map(|f| f.into())
-                        .collect::<Vec<ASTNode>>();
+            for func in self.entrypoint_functions(context)? {
+                let callgraphs =
+                    CallGraphConsumer::get(context, &[&func.into()], CallGraphDirection::Inward)
+                        .ok()?;
+                for callgraph in callgraphs {
+                    let mut tracker = EthWithdrawalAllowerTracker::default();
+                    callgraph.accept(context, &mut tracker).ok()?;
 
-                    let callgraphs = CallGraphConsumer::get(
-                        context,
-                        funcs.iter().collect::<Vec<_>>().as_slice(),
-                        CallGraphDirection::Inward,
-                    )
-                    .ok()?;
-
-                    for callgraph in callgraphs {
-                        let mut tracker = EthWithdrawalAllowerTracker::default();
-                        callgraph.accept(context, &mut tracker).ok()?;
-
-                        if tracker.has_calls_that_sends_native_eth {
-                            return Some(true);
-                        }
+                    if tracker.has_calls_that_sends_native_eth {
+                        return Some(true);
                     }
                 }
             }
-            // At this point we have successfully gone through all the contracts in the inheritance
-            // hierarchy but tracker has determined that none of them have have calls
-            // that sends native eth Even if they are by some chance, they are not
-            // reachable from external & public functions
             Some(false)
         }
     }

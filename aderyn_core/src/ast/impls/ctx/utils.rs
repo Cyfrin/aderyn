@@ -46,6 +46,13 @@ impl ContractDefinition {
         }
         false
     }
+
+    pub fn entrypoint_functions<'a>(
+        &'a self,
+        context: &'a WorkspaceContext,
+    ) -> Option<Vec<&'a FunctionDefinition>> {
+        context.entrypoint_functions(self)
+    }
 }
 
 impl FunctionCall {
