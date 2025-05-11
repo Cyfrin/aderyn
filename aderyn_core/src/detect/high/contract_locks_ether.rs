@@ -71,6 +71,22 @@ mod contract_eth_helper {
         detect::helpers,
     };
 
+    #[derive(Default)]
+    struct EthWithdrawalAllowerTracker {
+        has_calls_that_sends_native_eth: bool,
+    }
+
+    impl CallGraphVisitor for EthWithdrawalAllowerTracker {
+        fn visit_any(&mut self, ast_node: &ASTNode) -> eyre::Result<()> {
+            if !self.has_calls_that_sends_native_eth
+                && helpers::has_calls_that_sends_native_eth(ast_node)
+            {
+                self.has_calls_that_sends_native_eth = true;
+            }
+            Ok(())
+        }
+    }
+
     impl ContractDefinition {
         pub(super) fn can_accept_eth(&self, context: &WorkspaceContext) -> Option<bool> {
             for func in self.entrypoint_functions(context)? {
@@ -82,27 +98,6 @@ mod contract_eth_helper {
         }
 
         pub(super) fn allows_withdrawal_of_eth(&self, context: &WorkspaceContext) -> Option<bool> {
-            /*
-                For all the contracts in the hierarchy try and see if there is exists a public/external function that
-                can be called which takes the execution flow in a path where there is possibility to send back eth away from
-                the contract using the low level `call{value: XXX}` or `transfer` or `send`.
-            */
-            #[derive(Default)]
-            struct EthWithdrawalAllowerTracker {
-                has_calls_that_sends_native_eth: bool,
-            }
-
-            impl CallGraphVisitor for EthWithdrawalAllowerTracker {
-                fn visit_any(&mut self, ast_node: &ASTNode) -> eyre::Result<()> {
-                    if !self.has_calls_that_sends_native_eth
-                        && helpers::has_calls_that_sends_native_eth(ast_node)
-                    {
-                        self.has_calls_that_sends_native_eth = true;
-                    }
-                    Ok(())
-                }
-            }
-
             for func in self.entrypoint_functions(context)? {
                 let callgraphs =
                     CallGraphConsumer::get(context, &[&func.into()], CallGraphDirection::Inward)
