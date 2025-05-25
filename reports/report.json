@@ -1300,24 +1300,6 @@
             "src_char": "2952:18"
           },
           {
-            "contract_path": "src/VoidConstructor.sol",
-            "line_no": 13,
-            "src": "272:1",
-            "src_char": "272:1"
-          },
-          {
-            "contract_path": "src/VoidConstructor.sol",
-            "line_no": 25,
-            "src": "583:1",
-            "src_char": "583:1"
-          },
-          {
-            "contract_path": "src/VoidConstructor.sol",
-            "line_no": 32,
-            "src": "663:1",
-            "src_char": "663:1"
-          },
-          {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 4,
             "src": "67:6",

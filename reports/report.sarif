@@ -1400,39 +1400,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/VoidConstructor.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 272
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/VoidConstructor.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 583
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/VoidConstructor.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 663
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
@@ -13370,8 +13337,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.5.12",
-          "version": "0.5.12"
+          "semanticVersion": "0.5.11",
+          "version": "0.5.11"
         }
       }
     }
