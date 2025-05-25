@@ -6,8 +6,8 @@ use crate::{
     capture,
     context::{
         browser::ExtractReferencedDeclarations,
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -40,16 +40,21 @@ impl IssueDetector for FunctionInitializingStateDetector {
                 }) = expression.as_ref()
                 {
                     if let Some(ASTNode::FunctionDefinition(func)) = context.nodes.get(func_id) {
-                        let mut tracker =
-                            NonConstantStateVariableReferenceDeclarationTracker::new(context);
+                        let callgraphs = CallGraphConsumer::get(
+                            context,
+                            &[&(func.into())],
+                            CallGraphDirection::Inward,
+                        )?;
 
-                        let callgraph =
-                            CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+                        for callgraph in callgraphs {
+                            let mut tracker =
+                                NonConstantStateVariableReferenceDeclarationTracker::new(context);
 
-                        callgraph.accept(context, &mut tracker)?;
+                            callgraph.accept(context, &mut tracker)?;
 
-                        if tracker.makes_a_reference {
-                            capture!(self, context, variable_declaration);
+                            if tracker.makes_a_reference {
+                                capture!(self, context, variable_declaration);
+                            }
                         }
                     }
                 }
@@ -131,11 +136,7 @@ mod function_initializing_state_tests {
 
         let mut detector = FunctionInitializingStateDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 3);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

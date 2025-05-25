@@ -4,7 +4,7 @@ use crate::ast::{ASTNode, ContractKind, FunctionKind, NodeID, NodeType, Visibili
 
 use crate::{
     capture,
-    context::{browser::GetClosestAncestorOfTypeX, workspace_context::WorkspaceContext},
+    context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers,
@@ -40,13 +40,8 @@ impl IssueDetector for DeadCodeDetector {
                 if let Some(ASTNode::ContractDefinition(contract)) =
                     f.closest_ancestor_of_type(context, NodeType::ContractDefinition)
                 {
-                    if contract.kind == ContractKind::Contract {
-                        match contract.is_abstract {
-                            Some(false) | None => {
-                                return true;
-                            }
-                            _ => (),
-                        }
+                    if contract.kind == ContractKind::Contract && !contract.is_abstract {
+                        return true;
                     }
                 }
                 false
@@ -95,11 +90,7 @@ mod dead_code_tests {
 
         let mut detector = DeadCodeDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

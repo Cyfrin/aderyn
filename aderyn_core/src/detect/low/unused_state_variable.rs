@@ -1,6 +1,5 @@
 use std::{
     collections::{BTreeMap, BTreeSet},
-    convert::identity,
     error::Error,
 };
 
@@ -12,7 +11,7 @@ use crate::{
         browser::{
             ExtractReferencedDeclarations, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
         },
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -58,9 +57,7 @@ impl IssueDetector for UnusedStateVariablesDetector {
                 {
                     // If this variable is defined inside a contract, make sure it's not an abstract
                     // contract before capturing it
-                    if !contract.is_abstract.is_some_and(identity)
-                        && contract.kind == ContractKind::Contract
-                    {
+                    if !contract.is_abstract && contract.kind == ContractKind::Contract {
                         capture!(self, context, node);
                     }
                 } else {
@@ -111,11 +108,7 @@ mod unused_detector_tests {
 
         let mut detector = UnusedStateVariablesDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

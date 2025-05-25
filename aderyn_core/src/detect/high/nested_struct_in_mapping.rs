@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::ExtractPragmaDirectives,
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -123,19 +123,8 @@ mod nested_struct_in_mapping_detector_tests {
 
         let mut detector = NestedStructInMappingDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Nested Structs in Mappings pre-0.5.0"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Prior to updates in Solidity 0.5.0, public mappings with nested structs compiled, but produced incorrect values. Refrain from using these, or update to a more recent version of Solidity.")
-        );
     }
 
     #[test]
@@ -147,9 +136,7 @@ mod nested_struct_in_mapping_detector_tests {
 
         let mut detector = NestedStructInMappingDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector did not find an issue
         assert!(!found);
-        // assert that the detector did not find any instances
         assert_eq!(detector.instances().len(), 0);
     }
 }

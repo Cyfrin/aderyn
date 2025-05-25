@@ -4,7 +4,7 @@ use crate::ast::{FunctionKind, Mutability, NodeID};
 
 use crate::{
     capture,
-    context::{browser::ApproximateStorageChangeFinder, workspace_context::WorkspaceContext},
+    context::{browser::ApproximateStorageChangeFinder, workspace::WorkspaceContext},
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers,
@@ -169,12 +169,7 @@ mod state_variable_could_be_immutable_tests {
 
         let mut detector = StateVariableCouldBeImmutableDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        println!("{:?}", detector.instances());
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

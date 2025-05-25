@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::NodeID,
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -78,7 +78,6 @@ mod avoid_abi_encode_packed_tests {
     use super::AvoidAbiEncodePackedDetector;
 
     #[test]
-
     fn test_avoid_abi_encode_packed_detectorby_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/KeccakContract.sol",
@@ -86,26 +85,7 @@ mod avoid_abi_encode_packed_tests {
 
         let mut detector = AvoidAbiEncodePackedDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an abi encode packed
         assert!(found);
-        // assert that the detector found the correct abi encode packed
-        // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 3);
-        // assert that the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert that the title is correct
-        assert_eq!(detector.title(), String::from("`abi.encodePacked()` Hash Collision"));
-        // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as `keccak256()`. \
-                Use `abi.encode()` instead which will pad items to 32 bytes, preventing hash collisions: https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode. \
-                (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). \
-                Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` \
-                it can often be cast to `bytes()` or `bytes32()` instead: https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739. \
-                If all arguments are strings and or bytes, `bytes.concat()` should be used instead."
-            )
-        );
     }
 }

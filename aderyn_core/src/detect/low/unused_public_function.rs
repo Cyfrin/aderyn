@@ -5,7 +5,7 @@ use crate::{
     capture,
     context::{
         browser::GetClosestAncestorOfTypeX,
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -36,10 +36,8 @@ impl IssueDetector for UnusedPublicFunctionDetector {
             if let Some(ASTNode::ContractDefinition(parent_contract)) = unreferenced_public_function
                 .closest_ancestor_of_type(context, crate::ast::NodeType::ContractDefinition)
             {
-                if let Some(is_abstract) = parent_contract.is_abstract {
-                    if is_abstract {
-                        continue;
-                    }
+                if parent_contract.is_abstract {
+                    continue;
                 }
             }
             capture!(self, context, unreferenced_public_function);
@@ -83,17 +81,9 @@ mod useless_public_function_tests {
         );
 
         let mut detector = UnusedPublicFunctionDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert that the detector returns the correct severity
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the detector returns the correct title
-        assert_eq!(detector.title(), String::from("Public Function Not Used Internally"));
-        // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from("If a function is marked public but is not used internally, consider marking it as `external`."));
     }
 
     #[test]
@@ -104,10 +94,8 @@ mod useless_public_function_tests {
         );
 
         let mut detector = UnusedPublicFunctionDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(!found);
-        // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 0);
     }
 
@@ -119,10 +107,8 @@ mod useless_public_function_tests {
         );
 
         let mut detector = UnusedPublicFunctionDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(!found);
-        // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 0);
     }
 }

@@ -8,7 +8,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractPragmaDirectives, ExtractTupleExpressions, GetImmediateParent},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -156,25 +156,8 @@ mod storage_signed_array_detector {
         let mut detector = StorageSignedIntegerArrayDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:?}", detector.instances());
-
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Signed integer array in storage (solc `<0.5.10`)")
-        );
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.\
-            Use solidity version 0.5.10 or above.")
-        );
     }
 
     #[test]

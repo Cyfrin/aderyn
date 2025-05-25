@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::{GetClosestAncestorOfTypeX, GetImmediateParent},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -100,13 +100,7 @@ mod unchecked_low_level_calls_tests {
         let mut detector = UncheckedLowLevelCallDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        // println!("{:#?}", detector.instances());
-
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 9);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

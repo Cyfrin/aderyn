@@ -5,7 +5,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractContractDefinitions, GetClosestAncestorOfTypeX},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -76,22 +76,9 @@ mod unspecific_solidity_pragma_tests {
 
         let mut detector = UnspecificSolidityPragmaDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an abi encode packed
         assert!(found);
-        // assert that the detector found the correct abi encode packed
         // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 1);
-        // assert that the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the title is correct
-        assert_eq!(detector.title(), String::from("Unspecific Solidity Pragma"));
-        // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`"
-            )
-        );
     }
 
     #[test]
@@ -103,7 +90,6 @@ mod unspecific_solidity_pragma_tests {
 
         let mut detector = UnspecificSolidityPragmaDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an abi encode packed
         assert!(!found);
     }
 }

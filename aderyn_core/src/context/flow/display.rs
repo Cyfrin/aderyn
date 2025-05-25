@@ -1,4 +1,4 @@
-use crate::context::{browser::Peek, workspace_context::WorkspaceContext};
+use crate::context::{browser::Peek, workspace::WorkspaceContext};
 
 use super::{primitives::*, voids::*, CfgBreakStatement, CfgNodeDescriptor};
 

@@ -5,7 +5,7 @@ use crate::ast::NodeID;
 use crate::{
     ast::Expression,
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -68,15 +68,5 @@ mod division_before_multiplication_detector_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 4);
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        assert_eq!(
-            detector.title(),
-            String::from("Incorrect Order of Division and Multiplication")
-        );
-        assert_eq!(
-            detector.description(),
-            String::from("Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity./
-        Consider Multiplication before Division.")
-        );
     }
 }

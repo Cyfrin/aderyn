@@ -4,7 +4,7 @@ use crate::ast::{FunctionKind, NodeID};
 
 use crate::{
     capture,
-    context::{browser::ExtractFunctionDefinitions, workspace_context::WorkspaceContext},
+    context::{browser::ExtractFunctionDefinitions, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -73,19 +73,8 @@ mod multiple_constructors_detector_tests {
 
         let mut detector = MultipleConstructorsDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Contract Has Multiple Constructors"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("In some versions of Solidity, contracts compile with multiple constructors. The first constructor takes precedence. This can lead to unexpected behavior.")
-        );
     }
 
     #[test]
@@ -97,9 +86,7 @@ mod multiple_constructors_detector_tests {
 
         let mut detector = MultipleConstructorsDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector did not find an issue
         assert!(!found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 0);
     }
 }

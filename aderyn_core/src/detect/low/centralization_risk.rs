@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::NodeID,
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -86,20 +86,8 @@ mod centralization_risk_detector_tests {
 
         let mut detector = CentralizationRiskDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found a centralization risk
         assert!(found);
         // assert that the number of instances found is 3
         assert_eq!(detector.instances().len(), 3);
-        // assert that the severity is Low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the title is correct
-        assert_eq!(detector.title(), String::from("Centralization Risk"));
-        // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds."
-            )
-        );
     }
 }

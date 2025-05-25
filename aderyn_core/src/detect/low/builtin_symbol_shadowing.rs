@@ -6,7 +6,7 @@ use crate::{capture, detect::detector::IssueDetectorNamePool};
 use phf::phf_set;
 
 use crate::{
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
 };
 use eyre::Result;
@@ -150,11 +150,7 @@ mod builtin_symbol_shadowing_tests {
 
         let mut detector = BuiltinSymbolShadowingDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

@@ -1,4 +1,4 @@
-use crate::{ast::Block, context::workspace_context::WorkspaceContext};
+use crate::{ast::Block, context::workspace::WorkspaceContext};
 
 use super::{ASTNode, AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId, CfgReduce};
 

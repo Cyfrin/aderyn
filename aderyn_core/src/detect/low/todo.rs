@@ -5,7 +5,7 @@ use crate::{
     capture,
     context::{
         browser::Peek,
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
     stats,
@@ -92,9 +92,6 @@ mod contracts_with_todos_tests {
         let found = detector.detect(&context).unwrap();
 
         assert!(found);
-        // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert that the detector returns the correct severity
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

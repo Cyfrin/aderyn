@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::NodeID,
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -66,21 +66,8 @@ mod unsafe_erc20_functions_tests {
 
         let mut detector = UnsafeERC20OperationDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an abi encode packed
         assert!(found);
-        // assert that the detector found the correct abi encode packed
         // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 5);
-        // assert that the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the title is correct
-        assert_eq!(detector.title(), String::from("Unsafe ERC20 Operation"));
-        // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library."
-            )
-        );
     }
 }

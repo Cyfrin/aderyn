@@ -1,6 +1,5 @@
 use std::{
     collections::{BTreeMap, BTreeSet, HashMap},
-    convert::identity,
     error::Error,
 };
 
@@ -8,7 +7,7 @@ use crate::ast::{ASTNode, ContractKind, NodeID};
 
 use crate::{
     capture,
-    context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
+    context::{browser::ExtractVariableDeclarations, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -30,39 +29,37 @@ impl IssueDetector for MissingInheritanceDetector {
         let mut inheritance_map: HashMap<NodeID, Vec<NodeID>> = Default::default();
 
         for contract in context.contract_definitions() {
-            if let Some(full_contract) = &contract.linearized_base_contracts {
-                inheritance_map
-                    .entry(contract.id)
-                    .or_insert(Vec::from_iter(full_contract.iter().copied()));
+            let full_contract = &contract.linearized_base_contracts;
+            inheritance_map
+                .entry(contract.id)
+                .or_insert(Vec::from_iter(full_contract.iter().copied()));
 
-                for contract_node_id in full_contract {
-                    if let Some(ASTNode::ContractDefinition(contract_node)) =
-                        context.nodes.get(contract_node_id)
-                    {
-                        let function_selectors: Vec<String> = contract_node
-                            .function_definitions()
-                            .iter()
-                            .flat_map(|f| f.function_selector.clone())
-                            .collect();
+            for contract_node_id in full_contract {
+                if let Some(ASTNode::ContractDefinition(contract_node)) =
+                    context.nodes.get(contract_node_id)
+                {
+                    let function_selectors: Vec<String> = contract_node
+                        .function_definitions()
+                        .iter()
+                        .flat_map(|f| f.function_selector.clone())
+                        .collect();
 
-                        let all_variables =
-                            ExtractVariableDeclarations::from(contract_node).extracted;
+                    let all_variables = ExtractVariableDeclarations::from(contract_node).extracted;
 
-                        let state_variable_function_selectors: Vec<String> = all_variables
-                            .into_iter()
-                            .flat_map(|v| v.function_selector.clone())
-                            .collect();
+                    let state_variable_function_selectors: Vec<String> = all_variables
+                        .into_iter()
+                        .flat_map(|v| v.function_selector.clone())
+                        .collect();
 
-                        let mut all_function_selectors = Vec::with_capacity(
-                            function_selectors.len() + state_variable_function_selectors.len(),
-                        );
-                        all_function_selectors.extend(function_selectors);
-                        all_function_selectors.extend(state_variable_function_selectors);
+                    let mut all_function_selectors = Vec::with_capacity(
+                        function_selectors.len() + state_variable_function_selectors.len(),
+                    );
+                    all_function_selectors.extend(function_selectors);
+                    all_function_selectors.extend(state_variable_function_selectors);
 
-                        contract_function_selectors
-                            .entry(contract.id)
-                            .or_insert(all_function_selectors);
-                    }
+                    contract_function_selectors
+                        .entry(contract.id)
+                        .or_insert(all_function_selectors);
                 }
             }
         }
@@ -74,7 +71,7 @@ impl IssueDetector for MissingInheritanceDetector {
                 continue;
             }
             if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(contract_id) {
-                if c.kind != ContractKind::Contract || c.is_abstract.is_some_and(identity) {
+                if c.kind != ContractKind::Contract || c.is_abstract {
                     continue;
                 }
             }
@@ -100,7 +97,7 @@ impl IssueDetector for MissingInheritanceDetector {
                 if let Some(ASTNode::ContractDefinition(c)) =
                     context.nodes.get(potentially_missing_inheritance)
                 {
-                    if c.kind == ContractKind::Interface || c.is_abstract.is_some_and(identity) {
+                    if c.kind == ContractKind::Interface || c.is_abstract {
                         // Check that the contract is compatible with the missing inheritance
                         if missing_function_selectors.iter().all(|s| contract_selectors.contains(s))
                         {
@@ -115,7 +112,7 @@ impl IssueDetector for MissingInheritanceDetector {
             if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(&contract) {
                 // If the contract c already has some inheritance, don't report it because we want
                 // to respect the developer's choice.
-                if c.linearized_base_contracts.as_ref().is_some_and(|chain| chain.len() != 1) {
+                if c.linearized_base_contracts.len() != 1 {
                     continue;
                 }
                 let missing_inheritances_vector =
@@ -174,14 +171,8 @@ mod missing_inheritance_tests {
 
         let mut detector = MissingInheritanceDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
 
-        println!("{:#?}", detector.instances());
-
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

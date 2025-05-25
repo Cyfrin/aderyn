@@ -3,6 +3,7 @@ pub mod audit;
 pub mod context;
 pub mod detect;
 pub mod stats;
+pub mod test_utils;
 pub mod visitor;
 
 // Use this to detect issues (Actively maintained)

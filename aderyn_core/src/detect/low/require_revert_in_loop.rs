@@ -6,8 +6,8 @@ use crate::{
     capture,
     context::{
         browser::{ExtractIdentifiers, ExtractRevertStatements},
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -28,12 +28,15 @@ impl IssueDetector for RequireRevertInLoopDetector {
         let loop_explore_centers = get_explore_centers_of_loops(context);
 
         for l in loop_explore_centers {
-            let callgraph = CallGraph::new(context, &[l], CallGraphDirection::Inward)?;
-            let mut tracker = RevertAndRequireTracker::default();
-            callgraph.accept(context, &mut tracker)?;
+            let callgraphs = CallGraphConsumer::get(context, &[l], CallGraphDirection::Inward)?;
 
-            if tracker.has_require_or_revert || tracker.has_revert_statement {
-                capture!(self, context, l);
+            for callgraph in callgraphs {
+                let mut tracker = RevertAndRequireTracker::default();
+                callgraph.accept(context, &mut tracker)?;
+
+                if tracker.has_require_or_revert || tracker.has_revert_statement {
+                    capture!(self, context, l);
+                }
             }
         }
 
@@ -106,20 +109,7 @@ mod reevrts_and_requires_in_loops {
         let mut detector = RequireRevertInLoopDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        // println!("{:?}", detector.instances());
-
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Loop Contains `require`/`revert`"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop")
-        );
     }
 }

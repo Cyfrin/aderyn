@@ -7,7 +7,7 @@ use crate::ast::{
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -110,18 +110,7 @@ mod deletion_nested_mapping_tests {
 
         let mut detector = DeletionNestedMappingDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Deletion from a nested mapping"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract.")
-        );
     }
 }

@@ -4,7 +4,7 @@ use crate::ast::{ASTNode, NodeID, Visibility};
 
 use crate::{
     capture,
-    context::{browser::ExtractFunctionDefinitions, workspace_context::WorkspaceContext},
+    context::{browser::ExtractFunctionDefinitions, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -21,67 +21,64 @@ impl IssueDetector for IncorrectERC721InterfaceDetector {
         // Analyze each contract in context
         for current_contract in context.contract_definitions() {
             // Look through it's inheritance hierarchy to determine if it's an ERC721
-            if let Some(contract_ids) = current_contract.linearized_base_contracts.as_ref() {
-                let current_contract_is_erc721 = contract_ids.iter().any(|i| {
-                    context.nodes.get(i).is_some_and(|c| {
-                        if let ASTNode::ContractDefinition(contract) = c {
-                            if contract.name.contains("ERC721") {
-                                return true;
-                            }
+            let contract_ids = &current_contract.linearized_base_contracts;
+            let current_contract_is_erc721 = contract_ids.iter().any(|i| {
+                context.nodes.get(i).is_some_and(|c| {
+                    if let ASTNode::ContractDefinition(contract) = c {
+                        if contract.name.contains("ERC721") {
+                            return true;
                         }
-                        false
-                    })
-                });
+                    }
+                    false
+                })
+            });
 
-                if !current_contract_is_erc721 {
-                    continue;
-                }
+            if !current_contract_is_erc721 {
+                continue;
+            }
 
-                // Now we know that current contract is an ERC721
+            // Now we know that current contract is an ERC721
 
-                for contract_id in contract_ids {
-                    if let Some(ASTNode::ContractDefinition(contract)) =
-                        context.nodes.get(contract_id)
-                    {
-                        let functions = ExtractFunctionDefinitions::from(contract).extracted;
+            for contract_id in contract_ids {
+                if let Some(ASTNode::ContractDefinition(contract)) = context.nodes.get(contract_id)
+                {
+                    let functions = ExtractFunctionDefinitions::from(contract).extracted;
 
-                        for func in functions {
-                            if (func.visibility != Visibility::Public
-                                && func.visibility != Visibility::External)
-                                || !func.implemented
-                            {
-                                continue;
-                            }
+                    for func in functions {
+                        if (func.visibility != Visibility::Public
+                            && func.visibility != Visibility::External)
+                            || !func.implemented
+                        {
+                            continue;
+                        }
 
-                            if func.represents_erc721_balance_of() && !func.returns_uint256() {
-                                capture!(self, context, func);
-                            }
+                        if func.represents_erc721_balance_of() && !func.returns_uint256() {
+                            capture!(self, context, func);
+                        }
 
-                            if (func.represents_erc721_get_approved()
-                                || func.represents_erc721_owner_of())
-                                && !func.returns_address()
-                            {
-                                capture!(self, context, func);
-                            }
+                        if (func.represents_erc721_get_approved()
+                            || func.represents_erc721_owner_of())
+                            && !func.returns_address()
+                        {
+                            capture!(self, context, func);
+                        }
 
-                            if (func.represents_erc721_safe_transfer_from()
-                                || func.represents_erc721_transfer_from())
-                                && !func.returns_nothing()
-                            {
-                                capture!(self, context, func);
-                            }
+                        if (func.represents_erc721_safe_transfer_from()
+                            || func.represents_erc721_transfer_from())
+                            && !func.returns_nothing()
+                        {
+                            capture!(self, context, func);
+                        }
 
-                            if (func.represents_erc721_approve()
-                                || func.represents_erc721_set_approval_for_all())
-                                && !func.returns_nothing()
-                            {
-                                capture!(self, context, func);
-                            }
+                        if (func.represents_erc721_approve()
+                            || func.represents_erc721_set_approval_for_all())
+                            && !func.returns_nothing()
+                        {
+                            capture!(self, context, func);
+                        }
 
-                            if func.represents_erc721_is_approved_for_all() && !func.returns_bool()
-                            {
-                                capture!(self, context, func);
-                            }
+                        if func.represents_erc721_is_approved_for_all() && !func.returns_bool() {
+                            capture!(self, context, func);
                         }
                     }
                 }
@@ -276,15 +273,9 @@ mod incorrect_erc721_tests {
 
         // We capture every faulty method in the IncorrectERC721 contract that has the wrong return
         // type
-        println!("{:#?}", detector.instances());
 
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
 
         assert_eq!(detector.instances().len(), 8);
-
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

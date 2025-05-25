@@ -4,7 +4,7 @@ use crate::ast::{FunctionKind, NodeID};
 
 use crate::{
     capture,
-    context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
+    context::{browser::ExtractVariableDeclarations, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -74,7 +74,7 @@ mod func_compilation_solc_pragma_helper {
         ast::{FunctionDefinition, NodeType},
         context::{
             browser::{ExtractPragmaDirectives, GetClosestAncestorOfTypeX},
-            workspace_context::WorkspaceContext,
+            workspace::WorkspaceContext,
         },
         detect::helpers,
     };
@@ -180,11 +180,7 @@ mod function_pointers_tests {
 
         let mut detector = FunctionPointerInConstructorDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

@@ -1,6 +1,6 @@
 use std::io::{Result, Write};
 
-use aderyn_core::{context::workspace_context::WorkspaceContext, report::*};
+use aderyn_core::{context::workspace::WorkspaceContext, report::*};
 use serde::Serialize;
 
 use super::util::files_details;

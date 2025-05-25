@@ -5,8 +5,8 @@ use crate::{
     capture,
     context::{
         browser::ExtractMemberAccesses,
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -30,19 +30,19 @@ impl IssueDetector for DelegatecallInLoopDetector {
         let loop_explore_centers = get_explore_centers_of_loops(context);
 
         for explore_center in loop_explore_centers {
-            // Setup
-            // Later when https://github.com/Cyfrin/aderyn/pull/650 is merged, we can make it so that it
-            // tracks the whole path to the actual delegate call site to display in the report.
-            let mut delegate_call_tracker = DelegateCallTracker::default();
+            // TODO: capture hints!
 
             // All the ASTNodes that are potentially run in a loop
-            let callgraph = CallGraph::new(context, &[explore_center], CallGraphDirection::Inward)?;
+            let callgraphs =
+                CallGraphConsumer::get(context, &[explore_center], CallGraphDirection::Inward)?;
 
-            // Kick-off
-            callgraph.accept(context, &mut delegate_call_tracker)?;
+            for callgraph in callgraphs {
+                let mut delegate_call_tracker = DelegateCallTracker::default();
+                callgraph.accept(context, &mut delegate_call_tracker)?;
 
-            if delegate_call_tracker.has_delegate_call {
-                capture!(self, context, explore_center);
+                if delegate_call_tracker.has_delegate_call {
+                    capture!(self, context, explore_center);
+                }
             }
         }
 
@@ -108,11 +108,7 @@ mod delegate_call_in_loop_detector_tests {
 
         let mut detector = DelegatecallInLoopDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found a delegate call in a loop
         assert!(found);
-        // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

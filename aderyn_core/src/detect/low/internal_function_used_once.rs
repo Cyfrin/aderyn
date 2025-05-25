@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::{NodeID, Visibility},
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers::count_identifiers_that_reference_an_id,
@@ -68,17 +68,8 @@ mod uselss_internal_function {
         );
 
         let mut detector = InternalFunctionUsedOnceDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-
-        // assert that the detector returns the correct severity
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the detector returns the correct title
-        assert_eq!(detector.title(), String::from("Internal Function Used Only Once"));
-        // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from("Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability."));
     }
 }

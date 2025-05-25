@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 121,
-    "total_sloc": 4466
+    "total_source_units": 126,
+    "total_sloc": 4701
   },
   "files_details": {
     "files_details": [
@@ -480,6 +480,26 @@
       {
         "file_path": "src/reused_contract_name/ContractB.sol",
         "n_sloc": 7
+      },
+      {
+        "file_path": "src/router/ExternalCalls.sol",
+        "n_sloc": 30
+      },
+      {
+        "file_path": "src/router/FallbackAndReceiveOverrides.sol",
+        "n_sloc": 17
+      },
+      {
+        "file_path": "src/router/InternalCalls.sol",
+        "n_sloc": 135
+      },
+      {
+        "file_path": "src/router/ModifierCalls.sol",
+        "n_sloc": 33
+      },
+      {
+        "file_path": "src/router/VarOverridesFunction.sol",
+        "n_sloc": 20
       },
       {
         "file_path": "src/uniswap/UniswapV2Swapper.sol",
@@ -1314,6 +1334,90 @@
             "line_no": 4,
             "src": "70:10",
             "src_char": "70:10"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 4,
+            "src": "80:1",
+            "src_char": "80:1"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 8,
+            "src": "143:1",
+            "src_char": "143:1"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 12,
+            "src": "188:1",
+            "src_char": "188:1"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 31,
+            "src": "630:1",
+            "src_char": "630:1"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 35,
+            "src": "701:1",
+            "src_char": "701:1"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 4,
+            "src": "88:1",
+            "src_char": "88:1"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 12,
+            "src": "179:1",
+            "src_char": "179:1"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 28,
+            "src": "347:1",
+            "src_char": "347:1"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 41,
+            "src": "538:1",
+            "src_char": "538:1"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 4,
+            "src": "70:1",
+            "src_char": "70:1"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 9,
+            "src": "150:1",
+            "src_char": "150:1"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 13,
+            "src": "219:1",
+            "src_char": "219:1"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 17,
+            "src": "285:1",
+            "src_char": "285:1"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 21,
+            "src": "341:1",
+            "src_char": "341:1"
           }
         ]
       },
@@ -1529,6 +1633,42 @@
         "detector_name": "eth-send-unchecked-address",
         "instances": [
           {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 23,
+            "src": "672:4",
+            "src_char": "672:4"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 28,
+            "src": "813:4",
+            "src_char": "813:4"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 37,
+            "src": "1112:5",
+            "src_char": "1112:5"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 41,
+            "src": "1235:5",
+            "src_char": "1235:5"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 45,
+            "src": "1369:5",
+            "src_char": "1369:5"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 49,
+            "src": "1506:5",
+            "src_char": "1506:5"
+          },
+          {
             "contract_path": "src/CallGraphTests.sol",
             "line_no": 38,
             "src": "686:16",
@@ -1559,22 +1699,22 @@
             "src_char": "6342:11"
           },
           {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 16,
+            "src": "488:16",
+            "src_char": "488:16"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 26,
+            "src": "821:11",
+            "src_char": "821:11"
+          },
+          {
             "contract_path": "src/ExternalCalls.sol",
             "line_no": 67,
             "src": "1218:4",
             "src_char": "1218:4"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 63,
-            "src": "1649:11",
-            "src_char": "1649:11"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 90,
-            "src": "2557:22",
-            "src_char": "2557:22"
           },
           {
             "contract_path": "src/OutOfOrderRetryable.sol",
@@ -1700,27 +1840,21 @@
         "instances": [
           {
             "contract_path": "src/TautologicalCompare.sol",
-            "line_no": 13,
-            "src": "255:6",
-            "src_char": "255:6"
-          },
-          {
-            "contract_path": "src/TautologicalCompare.sol",
             "line_no": 18,
-            "src": "359:6",
-            "src_char": "359:6"
+            "src": "528:6",
+            "src_char": "528:6"
           },
           {
             "contract_path": "src/TautologicalCompare.sol",
             "line_no": 23,
-            "src": "463:5",
-            "src_char": "463:5"
+            "src": "634:5",
+            "src_char": "634:5"
           },
           {
             "contract_path": "src/TautologicalCompare.sol",
             "line_no": 28,
-            "src": "566:5",
-            "src_char": "566:5"
+            "src": "739:5",
+            "src_char": "739:5"
           }
         ]
       },
@@ -2028,10 +2162,34 @@
             "src_char": "1659:15"
           },
           {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 38,
+            "src": "1028:2",
+            "src_char": "1028:2"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 58,
             "src": "4547:15",
             "src_char": "3059:15"
+          },
+          {
+            "contract_path": "src/router/FallbackAndReceiveOverrides.sol",
+            "line_no": 4,
+            "src": "70:1",
+            "src_char": "70:1"
+          },
+          {
+            "contract_path": "src/router/FallbackAndReceiveOverrides.sol",
+            "line_no": 10,
+            "src": "172:1",
+            "src_char": "172:1"
+          },
+          {
+            "contract_path": "src/router/FallbackAndReceiveOverrides.sol",
+            "line_no": 14,
+            "src": "237:1",
+            "src_char": "237:1"
           }
         ]
       },
@@ -2747,8 +2905,8 @@
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 2,
-            "src": "32:21",
-            "src_char": "32:21"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/FunctionSignatureCollision.sol",
@@ -3321,6 +3479,84 @@
             "line_no": 15,
             "src": "422:9",
             "src_char": "422:9"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 23,
+            "src": "384:4",
+            "src_char": "384:4"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 40,
+            "src": "776:4",
+            "src_char": "776:4"
+          },
+          {
+            "contract_path": "src/router/FallbackAndReceiveOverrides.sol",
+            "line_no": 22,
+            "src": "405:4",
+            "src_char": "405:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 31,
+            "src": "510:4",
+            "src_char": "510:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 46,
+            "src": "817:5",
+            "src_char": "817:5"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 96,
+            "src": "1780:4",
+            "src_char": "1780:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 120,
+            "src": "2306:4",
+            "src_char": "2306:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 161,
+            "src": "3047:4",
+            "src_char": "3047:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 169,
+            "src": "3165:4",
+            "src_char": "3165:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 177,
+            "src": "3290:4",
+            "src_char": "3290:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 183,
+            "src": "3379:4",
+            "src_char": "3379:4"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 22,
+            "src": "304:4",
+            "src_char": "304:4"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 35,
+            "src": "447:4",
+            "src_char": "447:4"
           }
         ]
       },
@@ -3530,50 +3766,50 @@
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 23,
-            "src": "790:2",
-            "src_char": "790:2"
+            "src": "792:2",
+            "src_char": "792:2"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 26,
-            "src": "820:2",
-            "src_char": "820:2"
+            "src": "822:2",
+            "src_char": "822:2"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 34,
-            "src": "1109:2",
-            "src_char": "1109:2"
+            "src": "1111:2",
+            "src_char": "1111:2"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 37,
-            "src": "1139:2",
-            "src_char": "1139:2"
+            "src": "1141:2",
+            "src_char": "1141:2"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 42,
-            "src": "1268:4",
-            "src_char": "1268:4"
+            "src": "1270:4",
+            "src_char": "1270:4"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 42,
-            "src": "1275:4",
-            "src_char": "1275:4"
+            "src": "1277:4",
+            "src_char": "1277:4"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 48,
-            "src": "1459:4",
-            "src_char": "1459:4"
+            "src": "1461:4",
+            "src_char": "1461:4"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 48,
-            "src": "1466:4",
-            "src_char": "1466:4"
+            "src": "1468:4",
+            "src_char": "1468:4"
           },
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
@@ -4151,6 +4387,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/CostlyOperationsInsideLoops.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/Counter.sol",
             "line_no": 2,
             "src": "39:24",
@@ -4182,6 +4424,12 @@
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -4468,6 +4716,24 @@
             "line_no": 15,
             "src": "320:21",
             "src_char": "320:21"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 5,
+            "src": "105:6",
+            "src_char": "105:6"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 31,
+            "src": "395:6",
+            "src_char": "395:6"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 42,
+            "src": "555:6",
+            "src_char": "555:6"
           }
         ]
       },
@@ -4685,6 +4951,132 @@
             "line_no": 44,
             "src": "1011:23",
             "src_char": "1011:23"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 13,
+            "src": "210:3",
+            "src_char": "210:3"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 17,
+            "src": "288:3",
+            "src_char": "288:3"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 8,
+            "src": "156:5",
+            "src_char": "156:5"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 23,
+            "src": "389:5",
+            "src_char": "389:5"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 38,
+            "src": "629:5",
+            "src_char": "629:5"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 40,
+            "src": "672:1",
+            "src_char": "672:1"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 44,
+            "src": "758:1",
+            "src_char": "758:1"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 54,
+            "src": "966:4",
+            "src_char": "966:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 84,
+            "src": "1544:4",
+            "src_char": "1544:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 96,
+            "src": "1780:4",
+            "src_char": "1780:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 98,
+            "src": "1820:4",
+            "src_char": "1820:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 111,
+            "src": "2140:4",
+            "src_char": "2140:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 113,
+            "src": "2182:4",
+            "src_char": "2182:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 136,
+            "src": "2623:4",
+            "src_char": "2623:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 142,
+            "src": "2696:1",
+            "src_char": "2696:1"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 167,
+            "src": "3123:4",
+            "src_char": "3123:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 175,
+            "src": "3244:4",
+            "src_char": "3244:4"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 7,
+            "src": "137:4",
+            "src_char": "137:4"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 22,
+            "src": "304:4",
+            "src_char": "304:4"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 46,
+            "src": "597:4",
+            "src_char": "597:4"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 5,
+            "src": "87:5",
+            "src_char": "87:5"
           }
         ]
       },
@@ -4975,6 +5367,24 @@
             "line_no": 27,
             "src": "915:65",
             "src_char": "915:65"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 18,
+            "src": "300:5",
+            "src_char": "300:5"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 23,
+            "src": "389:5",
+            "src_char": "389:5"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 38,
+            "src": "629:5",
+            "src_char": "629:5"
           }
         ]
       },
@@ -4994,6 +5404,12 @@
             "line_no": 4,
             "src": "74:7",
             "src_char": "74:7"
+          },
+          {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 4,
+            "src": "66:19",
+            "src_char": "66:19"
           }
         ]
       },
@@ -5065,8 +5481,8 @@
           {
             "contract_path": "src/TautologicalCompare.sol",
             "line_no": 11,
-            "src": "186:1",
-            "src_char": "186:1"
+            "src": "351:1",
+            "src_char": "351:1"
           },
           {
             "contract_path": "src/TautologyOrContradiction.sol",
@@ -5209,12 +5625,6 @@
         "detector_name": "require-revert-in-loop",
         "instances": [
           {
-            "contract_path": "src/EmitAfterExternalCall.sol",
-            "line_no": 48,
-            "src": "1180:120",
-            "src_char": "1180:120"
-          },
-          {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
             "src": "263:93",
@@ -5225,12 +5635,6 @@
             "line_no": 17,
             "src": "452:114",
             "src_char": "452:114"
-          },
-          {
-            "contract_path": "src/StateChangeAfterExternalCall.sol",
-            "line_no": 47,
-            "src": "1182:116",
-            "src_char": "1182:116"
           }
         ]
       },
@@ -5578,14 +5982,14 @@
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 41,
-            "src": "1246:6",
-            "src_char": "1246:6"
+            "src": "1253:1",
+            "src_char": "1253:1"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 46,
-            "src": "1385:6",
-            "src_char": "1385:6"
+            "src": "1392:1",
+            "src_char": "1392:1"
           },
           {
             "contract_path": "src/LocalVariableShadow.sol",
@@ -5749,20 +6153,20 @@
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 6,
-            "src": "108:21",
-            "src_char": "108:21"
+            "src": "122:1",
+            "src_char": "122:1"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 8,
-            "src": "199:21",
-            "src_char": "199:21"
+            "src": "213:1",
+            "src_char": "213:1"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 9,
-            "src": "267:21",
-            "src_char": "267:21"
+            "src": "281:1",
+            "src_char": "281:1"
           }
         ]
       },
@@ -5908,24 +6312,6 @@
           },
           {
             "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 16,
-            "src": "602:98",
-            "src_char": "602:98"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 19,
-            "src": "709:100",
-            "src_char": "709:100"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 22,
-            "src": "818:89",
-            "src_char": "818:89"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
             "line_no": 29,
             "src": "989:157",
             "src_char": "989:157"
@@ -6007,12 +6393,6 @@
             "line_no": 47,
             "src": "1144:154",
             "src_char": "1144:154"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 70,
-            "src": "5010:178",
-            "src_char": "3522:178"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -6146,20 +6526,20 @@
           {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
             "line_no": 6,
-            "src": "123:21",
-            "src_char": "123:21"
+            "src": "128:10",
+            "src_char": "128:10"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 7,
-            "src": "176:17",
-            "src_char": "176:17"
+            "src": "190:1",
+            "src_char": "190:1"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 58,
-            "src": "1603:17",
-            "src_char": "1603:17"
+            "src": "1617:1",
+            "src_char": "1617:1"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
@@ -6421,12 +6801,6 @@
         "detector_name": "state-change-without-event",
         "instances": [
           {
-            "contract_path": "src/AbstractContract.sol",
-            "line_no": 9,
-            "src": "176:13",
-            "src_char": "176:13"
-          },
-          {
             "contract_path": "src/AdminContract.sol",
             "line_no": 14,
             "src": "457:23",
@@ -6475,28 +6849,16 @@
             "src_char": "3222:20"
           },
           {
-            "contract_path": "src/ConstFuncChangeState.sol",
-            "line_no": 8,
-            "src": "173:112",
-            "src_char": "173:112"
-          },
-          {
-            "contract_path": "src/ConstFuncChangeState.sol",
-            "line_no": 14,
-            "src": "339:108",
-            "src_char": "339:108"
-          },
-          {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
             "line_no": 9,
-            "src": "180:119",
-            "src_char": "180:119"
+            "src": "189:3",
+            "src_char": "189:3"
           },
           {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
             "line_no": 15,
-            "src": "305:207",
-            "src_char": "305:207"
+            "src": "314:4",
+            "src_char": "314:4"
           },
           {
             "contract_path": "src/Counter.sol",
@@ -6571,12 +6933,6 @@
             "src_char": "690:20"
           },
           {
-            "contract_path": "src/DynamicArrayLengthAssignment.sol",
-            "line_no": 11,
-            "src": "242:345",
-            "src_char": "242:345"
-          },
-          {
             "contract_path": "src/EnumerableSetIteration.sol",
             "line_no": 28,
             "src": "939:28",
@@ -6617,30 +6973,6 @@
             "line_no": 19,
             "src": "309:9",
             "src_char": "309:9"
-          },
-          {
-            "contract_path": "src/ExternalCalls.sol",
-            "line_no": 33,
-            "src": "530:4",
-            "src_char": "530:4"
-          },
-          {
-            "contract_path": "src/ExternalCalls.sol",
-            "line_no": 37,
-            "src": "599:4",
-            "src_char": "599:4"
-          },
-          {
-            "contract_path": "src/ExternalCalls.sol",
-            "line_no": 51,
-            "src": "884:4",
-            "src_char": "884:4"
-          },
-          {
-            "contract_path": "src/ExternalCalls.sol",
-            "line_no": 55,
-            "src": "955:4",
-            "src_char": "955:4"
           },
           {
             "contract_path": "src/ExternalCalls.sol",
@@ -6761,12 +7093,6 @@
             "line_no": 68,
             "src": "1733:3",
             "src_char": "1733:3"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 63,
-            "src": "1649:11",
-            "src_char": "1649:11"
           },
           {
             "contract_path": "src/OutOfOrderRetryable.sol",
@@ -7157,6 +7483,12 @@
             "line_no": 32,
             "src": "806:23",
             "src_char": "806:23"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 120,
+            "src": "2306:4",
+            "src_char": "2306:4"
           }
         ]
       },
@@ -7182,6 +7514,18 @@
             "line_no": 25,
             "src": "416:2",
             "src_char": "416:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 57,
+            "src": "1598:1",
+            "src_char": "1598:1"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 59,
+            "src": "1640:1",
+            "src_char": "1640:1"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
@@ -7545,6 +7889,12 @@
             "line_no": 27,
             "src": "575:47",
             "src_char": "575:47"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 27,
+            "src": "594:7",
+            "src_char": "594:7"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",

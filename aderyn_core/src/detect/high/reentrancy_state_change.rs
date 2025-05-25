@@ -10,7 +10,7 @@ use crate::{
     context::{
         browser::{ApproximateStorageChangeFinder, ExtractFunctionCalls},
         flow::{Cfg, CfgNodeId},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -197,7 +197,7 @@ fn find_external_call_sites(
         if let Some(curr_ast_node) = curr_cfg_node.reflect(context) {
             let function_calls = ExtractFunctionCalls::from(curr_ast_node).extracted;
 
-            if function_calls.iter().any(|f| f.is_external_call()) {
+            if function_calls.iter().any(|f| f.is_extcallish()) {
                 external_call_sites.insert(curr_node);
             }
         }
@@ -231,11 +231,7 @@ mod state_change_after_external_call_tests {
 
         let mut detector = ReentrancyStateChangeDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

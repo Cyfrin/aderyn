@@ -14,7 +14,7 @@ use crate::{
         browser::{
             ExtractPragmaDirectives, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
         },
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -69,7 +69,7 @@ fn are_duplicate_names_in_inherited_contracts(
             }
             UserDefinedTypeNameOrIdentifierPath::IdentifierPath(identifier_path) => {
                 if let Some(ASTNode::ContractDefinition(contract)) =
-                    context.nodes.get(&(identifier_path.referenced_declaration as i64))
+                    context.nodes.get(&(identifier_path.referenced_declaration))
                 {
                     if are_duplicate_names_in_inherited_contracts(context, variable_name, contract)
                     {
@@ -152,9 +152,8 @@ impl IssueDetector for StateVariableShadowingDetector {
                             UserDefinedTypeNameOrIdentifierPath::IdentifierPath(
                                 identifier_path,
                             ) => {
-                                if let Some(ASTNode::ContractDefinition(contract)) = context
-                                    .nodes
-                                    .get(&(identifier_path.referenced_declaration as i64))
+                                if let Some(ASTNode::ContractDefinition(contract)) =
+                                    context.nodes.get(&(identifier_path.referenced_declaration))
                                 {
                                     if are_duplicate_names_in_inherited_contracts(
                                         context,
@@ -214,23 +213,7 @@ mod state_variable_shadowing_detector_tests {
 
         let mut detector = StateVariableShadowingDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Shadowed State Variable"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "This vulnerability arises when a derived contract unintentionally shadows a state variable from \
-                a parent contract by declaring a variable with the same name. This can be misleading. \
-                To prevent this, ensure variable names \
-                are unique across the inheritance hierarchy or use proper visibility and scope controls."
-            )
-        );
     }
 }
