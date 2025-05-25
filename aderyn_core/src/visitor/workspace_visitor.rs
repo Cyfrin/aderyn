@@ -4,7 +4,7 @@ use super::{
 };
 use crate::{
     ast::*,
-    context::workspace_context::{NodeContext, WorkspaceContext},
+    context::workspace::{NodeContext, WorkspaceContext},
 };
 use eyre::Result;
 

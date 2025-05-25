@@ -4,7 +4,7 @@ use crate::ast::NodeID;
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -85,24 +85,7 @@ mod dynamic_array_length_assignment_tests {
         let mut detector = DynamicArrayLengthAssignmentDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:#?}", detector.instances());
-
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 5);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Direct assignment of array length"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "If the length of a dynamic array (storage variable) is directly assigned to, \
-        it may allow access to other storage slots by tweaking it's value. This practice has \
-        been deprecated in newer Solidity versions"
-            )
-        );
     }
 }

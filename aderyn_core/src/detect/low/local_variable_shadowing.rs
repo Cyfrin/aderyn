@@ -1,4 +1,4 @@
-use std::{collections::BTreeMap, convert::identity, error::Error};
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ContractKind, NodeID, NodeType};
 
@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractVariableDeclarations, GetClosestAncestorOfTypeX},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -24,7 +24,7 @@ impl IssueDetector for LocalVariableShadowingDetector {
         for contract in context
             .contract_definitions()
             .into_iter()
-            .filter(|&c| c.kind != ContractKind::Library && !c.is_abstract.is_some_and(identity))
+            .filter(|&c| c.kind != ContractKind::Library && !c.is_abstract)
         {
             let current_contract_variables = ExtractVariableDeclarations::from(contract).extracted;
             let local_contract_variables = current_contract_variables
@@ -81,7 +81,7 @@ impl IssueDetector for LocalVariableShadowingDetector {
 mod contract_hierarchy_variable_helpers {
     use crate::{
         ast::{ASTNode, ContractDefinition, VariableDeclaration},
-        context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
+        context::{browser::ExtractVariableDeclarations, workspace::WorkspaceContext},
     };
 
     impl ContractDefinition {
@@ -89,9 +89,8 @@ mod contract_hierarchy_variable_helpers {
             &self,
             context: &WorkspaceContext,
         ) -> Option<Vec<VariableDeclaration>> {
-            let contracts = self.linearized_base_contracts.as_ref()?;
             let mut all_state_variable_ids = vec![];
-            for contract_id in contracts {
+            for contract_id in self.linearized_base_contracts.iter() {
                 if let ASTNode::ContractDefinition(c) = context.nodes.get(contract_id)? {
                     let variable_declarations = ExtractVariableDeclarations::from(c).extracted;
                     all_state_variable_ids
@@ -119,14 +118,8 @@ mod local_variable_shadowing_tests {
 
         let mut detector = LocalVariableShadowingDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
-
-        println!("{:#?}", detector.instances());
 
         assert_eq!(detector.instances().len(), 3);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

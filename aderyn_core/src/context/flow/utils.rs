@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 use super::{voids::CfgEndNode, ASTNode, Cfg, CfgNode, CfgNodeDescriptor, CfgNodeId, Statement};
-use crate::context::workspace_context::WorkspaceContext;
+use crate::context::workspace::WorkspaceContext;
 
 impl Cfg {
     pub fn add_statement_node(&mut self, stmt: &Statement) -> CfgNodeId {

@@ -1,6 +1,6 @@
 use crate::{
     ast::*,
-    context::workspace_context::{ASTNode, WorkspaceContext},
+    context::workspace::{ASTNode, WorkspaceContext},
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 

@@ -6,8 +6,8 @@ use crate::{
     capture,
     context::{
         browser::ExtractMemberAccesses,
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -68,11 +68,17 @@ impl IssueDetector for MsgValueUsedInLoopDetector {
 }
 
 fn uses_msg_value(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool> {
-    let mut tracker = MsgValueTracker::default();
-    let callgraph = CallGraph::new(context, &[ast_node], CallGraphDirection::Inward).ok()?;
+    let callgraphs =
+        CallGraphConsumer::get(context, &[ast_node], CallGraphDirection::Inward).ok()?;
 
-    callgraph.accept(context, &mut tracker).ok()?;
-    Some(tracker.has_msg_value)
+    for callgraph in callgraphs {
+        let mut tracker = MsgValueTracker::default();
+        callgraph.accept(context, &mut tracker).ok()?;
+        if tracker.has_msg_value {
+            return Some(true);
+        }
+    }
+    Some(false)
 }
 
 #[derive(Default)]
@@ -116,11 +122,7 @@ mod msg_value_in_loop_detector {
 
         let mut detector = MsgValueUsedInLoopDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

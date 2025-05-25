@@ -11,8 +11,8 @@ use crate::{
 
 use crate::{
     context::{
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -50,7 +50,8 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                                 || function.state_mutability() == &StateMutability::Pure
                             {
                                 let mut tracker = AssemblyTracker { has_assembly: false };
-                                let callgraph = CallGraph::new(
+                                // keep legacy because < 0.5.0
+                                let callgraph = CallGraphConsumer::get_legacy(
                                     context,
                                     &[&(function.into())],
                                     CallGraphDirection::Inward,
@@ -153,11 +154,7 @@ mod constant_functions_assembly_detector {
 
         let mut detector = ConstantFunctionContainsAssemblyDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 3);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

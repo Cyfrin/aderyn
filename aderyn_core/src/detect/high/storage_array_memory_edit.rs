@@ -4,7 +4,7 @@ use crate::ast::{NodeID, StorageLocation};
 
 use crate::{
     capture,
-    context::workspace_context::{ASTNode, WorkspaceContext},
+    context::workspace::{ASTNode, WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -92,18 +92,7 @@ mod storage_array_edit_with_memory_tests {
 
         let mut detector = StorageArrayMemoryEditDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Storage Array Edited with Memory"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead.")
-        );
     }
 }

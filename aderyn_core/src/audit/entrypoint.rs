@@ -1,4 +1,4 @@
-use crate::{audit::auditor::get_auditor_detectors, context::workspace_context::WorkspaceContext};
+use crate::{audit::auditor::get_auditor_detectors, context::workspace::WorkspaceContext};
 use eyre::Result;
 use prettytable::Row;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};

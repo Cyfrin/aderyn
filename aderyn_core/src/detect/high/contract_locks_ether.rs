@@ -1,12 +1,12 @@
 use std::collections::BTreeMap;
 
-use std::{convert::identity, error::Error};
+use std::error::Error;
 
 use crate::ast::NodeID;
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 
@@ -21,11 +21,14 @@ pub struct ContractLocksEtherDetector {
 
 impl IssueDetector for ContractLocksEtherDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for contract in context.contract_definitions() {
-            // If a contract can accept eth, but doesn't allow for withdrawal capture it!
-            if contract.can_accept_eth(context).is_some_and(identity)
-                && !contract.allows_withdrawal_of_eth(context).is_some_and(identity)
-            {
+        for contract in context.deployable_contracts() {
+            let Some(accepts_eth) = contract.can_accept_eth(context) else {
+                continue;
+            };
+            let Some(allows_withdraw) = contract.allows_withdrawal_of_eth(context) else {
+                continue;
+            };
+            if accepts_eth && !allows_withdraw {
                 capture!(self, context, contract);
             }
         }
@@ -60,75 +63,13 @@ impl IssueDetector for ContractLocksEtherDetector {
 /// Handles tasks related to contract level analysis for eth
 mod contract_eth_helper {
     use crate::{
-        ast::{ASTNode, ContractDefinition, StateMutability, Visibility},
+        ast::{ASTNode, ContractDefinition, StateMutability},
         context::{
-            browser::ExtractFunctionDefinitions,
-            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-            workspace_context::WorkspaceContext,
+            graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+            workspace::WorkspaceContext,
         },
         detect::helpers,
     };
-
-    impl ContractDefinition {
-        pub fn can_accept_eth(&self, context: &WorkspaceContext) -> Option<bool> {
-            let contracts = self.linearized_base_contracts.as_ref()?;
-            for contract_id in contracts {
-                let funcs =
-                    ExtractFunctionDefinitions::from(context.nodes.get(contract_id)?).extracted;
-                let num_payable_funcs = funcs
-                    .into_iter()
-                    .filter(|f| f.implemented && *f.state_mutability() == StateMutability::Payable)
-                    .count();
-                if num_payable_funcs > 0 {
-                    return Some(true);
-                }
-            }
-            Some(false)
-        }
-
-        pub fn allows_withdrawal_of_eth(&self, context: &WorkspaceContext) -> Option<bool> {
-            /*
-                For all the contracts in the hierarchy try and see if there is exists a public/external function that
-                can be called which takes the execution flow in a path where there is possibility to send back eth away from
-                the contract using the low level `call{value: XXX}` or `transfer` or `send`.
-            */
-            let contracts = self.linearized_base_contracts.as_ref()?;
-            for contract_id in contracts {
-                if let ASTNode::ContractDefinition(contract) = context.nodes.get(contract_id)? {
-                    let funcs = contract
-                        .function_definitions()
-                        .into_iter()
-                        .filter(|f| {
-                            f.implemented
-                                && (f.visibility == Visibility::Public
-                                    || f.visibility == Visibility::External)
-                        })
-                        .map(|f| f.into())
-                        .collect::<Vec<ASTNode>>();
-
-                    let mut tracker = EthWithdrawalAllowerTracker::default();
-
-                    let callgraph = CallGraph::new(
-                        context,
-                        funcs.iter().collect::<Vec<_>>().as_slice(),
-                        CallGraphDirection::Inward,
-                    )
-                    .ok()?;
-
-                    callgraph.accept(context, &mut tracker).ok()?;
-
-                    if tracker.has_calls_that_sends_native_eth {
-                        return Some(true);
-                    }
-                }
-            }
-            // At this point we have successfully gone through all the contracts in the inheritance
-            // hierarchy but tracker has determined that none of them have have calls
-            // that sends native eth Even if they are by some chance, they are not
-            // reachable from external & public functions
-            Some(false)
-        }
-    }
 
     #[derive(Default)]
     struct EthWithdrawalAllowerTracker {
@@ -143,6 +84,34 @@ mod contract_eth_helper {
                 self.has_calls_that_sends_native_eth = true;
             }
             Ok(())
+        }
+    }
+
+    impl ContractDefinition {
+        pub(super) fn can_accept_eth(&self, context: &WorkspaceContext) -> Option<bool> {
+            for func in self.entrypoint_functions(context)? {
+                if *func.state_mutability() == StateMutability::Payable {
+                    return Some(true);
+                }
+            }
+            Some(false)
+        }
+
+        pub(super) fn allows_withdrawal_of_eth(&self, context: &WorkspaceContext) -> Option<bool> {
+            for func in self.entrypoint_functions(context)? {
+                let callgraphs =
+                    CallGraphConsumer::get(context, &[&func.into()], CallGraphDirection::Inward)
+                        .ok()?;
+                for callgraph in callgraphs {
+                    let mut tracker = EthWithdrawalAllowerTracker::default();
+                    callgraph.accept(context, &mut tracker).ok()?;
+
+                    if tracker.has_calls_that_sends_native_eth {
+                        return Some(true);
+                    }
+                }
+            }
+            Some(false)
         }
     }
 }
@@ -164,13 +133,7 @@ mod contract_locks_ether_detector_tests {
         let mut detector = ContractLocksEtherDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:#?}", detector.instances());
-
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

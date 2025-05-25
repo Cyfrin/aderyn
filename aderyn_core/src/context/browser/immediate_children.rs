@@ -2,7 +2,7 @@ use crate::{
     ast::*,
     context::{
         browser::ExtractImmediateChildrenIDs,
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };

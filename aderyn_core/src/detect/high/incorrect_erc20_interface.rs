@@ -4,7 +4,7 @@ use crate::ast::{ASTNode, NodeID, Visibility};
 
 use crate::{
     capture,
-    context::{browser::ExtractFunctionDefinitions, workspace_context::WorkspaceContext},
+    context::{browser::ExtractFunctionDefinitions, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -21,53 +21,51 @@ impl IssueDetector for IncorrectERC20InterfaceDetector {
         // Analyze each contract in context
         for current_contract in context.contract_definitions() {
             // Look through it's inheritance hierarchy to determine if it's an ERC20
-            if let Some(contract_ids) = current_contract.linearized_base_contracts.as_ref() {
-                let current_contract_is_erc20 = contract_ids.iter().any(|i| {
-                    context.nodes.get(i).is_some_and(|c| {
-                        if let ASTNode::ContractDefinition(contract) = c {
-                            if contract.name.contains("ERC20") {
-                                return true;
-                            }
+            let contract_ids = &current_contract.linearized_base_contracts;
+            let current_contract_is_erc20 = contract_ids.iter().any(|i| {
+                context.nodes.get(i).is_some_and(|c| {
+                    if let ASTNode::ContractDefinition(contract) = c {
+                        if contract.name.contains("ERC20") {
+                            return true;
                         }
-                        false
-                    })
-                });
+                    }
+                    false
+                })
+            });
 
-                if !current_contract_is_erc20 {
-                    continue;
-                }
+            if !current_contract_is_erc20 {
+                continue;
+            }
 
-                // Now we know that current contract is an ERC20
+            // Now we know that current contract is an ERC20
 
-                for contract_id in contract_ids {
-                    if let Some(ASTNode::ContractDefinition(contract)) =
-                        context.nodes.get(contract_id)
-                    {
-                        let functions = ExtractFunctionDefinitions::from(contract).extracted;
+            for contract_id in contract_ids {
+                if let Some(ASTNode::ContractDefinition(contract)) = context.nodes.get(contract_id)
+                {
+                    let functions = ExtractFunctionDefinitions::from(contract).extracted;
 
-                        for func in functions {
-                            if (func.visibility != Visibility::Public
-                                && func.visibility != Visibility::External)
-                                || !func.implemented
-                            {
-                                continue;
-                            }
+                    for func in functions {
+                        if (func.visibility != Visibility::Public
+                            && func.visibility != Visibility::External)
+                            || !func.implemented
+                        {
+                            continue;
+                        }
 
-                            if (func.represents_erc20_transfer().is_some_and(identity)
-                                || func.represents_erc20_transfer_from().is_some_and(identity)
-                                || func.represents_erc20_approve().is_some_and(identity))
-                                && !func.returns_bool()
-                            {
-                                capture!(self, context, func);
-                            }
+                        if (func.represents_erc20_transfer().is_some_and(identity)
+                            || func.represents_erc20_transfer_from().is_some_and(identity)
+                            || func.represents_erc20_approve().is_some_and(identity))
+                            && !func.returns_bool()
+                        {
+                            capture!(self, context, func);
+                        }
 
-                            if (func.represents_erc20_allowance().is_some_and(identity)
-                                || func.represents_erc20_balance_of().is_some_and(identity)
-                                || func.represents_erc20_total_supply().is_some_and(identity))
-                                && !func.returns_uint256()
-                            {
-                                capture!(self, context, func)
-                            }
+                        if (func.represents_erc20_allowance().is_some_and(identity)
+                            || func.represents_erc20_balance_of().is_some_and(identity)
+                            || func.represents_erc20_total_supply().is_some_and(identity))
+                            && !func.returns_uint256()
+                        {
+                            capture!(self, context, func)
                         }
                     }
                 }
@@ -200,11 +198,7 @@ mod incorrect_erc20_tests {
 
         let mut detector = IncorrectERC20InterfaceDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 5);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

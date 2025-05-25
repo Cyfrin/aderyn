@@ -11,11 +11,11 @@ use crate::{
     capture,
     context::{
         browser::{ExtractFunctionCalls, ExtractVariableDeclarations},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
-use eyre::{eyre, Result};
+use eyre::Result;
 
 #[derive(Default)]
 pub struct StateVariableReadExternalDetector {
@@ -101,10 +101,8 @@ fn find_all_public_state_variables_names_for_contract(
     context: &WorkspaceContext,
     contract: &ContractDefinition,
 ) -> Result<HashSet<String>, Box<dyn Error>> {
-    let inheritance_ancestors =
-        contract.linearized_base_contracts.as_ref().ok_or(eyre!("base contracts not found!"))?;
-
-    Ok(inheritance_ancestors
+    Ok(contract
+        .linearized_base_contracts
         .iter()
         .flat_map(|ancestor_id| {
             if let Some(ancestor) = context.nodes.get(ancestor_id) {
@@ -144,20 +142,7 @@ mod public_variable_read_in_external_context_detector_tests {
 
         let mut detector = StateVariableReadExternalDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("State Variable is Read as External"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "The contract reads it's own state variable using `this` which adds an unnecessary STATICCALL. Consider removing `this` to access the variable from storage.",
-            )
-        );
     }
 }

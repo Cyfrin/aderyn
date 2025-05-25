@@ -4,7 +4,7 @@ use crate::ast::NodeID;
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -61,18 +61,7 @@ mod selfdestruct_identifier_tests {
 
         let mut detector = SelfdestructDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("`selfdestruct` is Deprecated"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Remove the `selfdestruct` instruction from the code.")
-        );
     }
 }

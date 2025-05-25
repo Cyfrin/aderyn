@@ -182,8 +182,8 @@ ast_node!(
         documentation: Option<Documentation>,
         #[serde(rename = "contractKind")]
         kind: ContractKind,
-        #[serde(rename = "abstract")]
-        is_abstract: Option<bool>,
+        #[serde(default, rename = "abstract")]
+        is_abstract: bool,
         base_contracts: Vec<InheritanceSpecifier>,
         canonical_name: Option<String>,
         contract_dependencies: Vec<NodeID>,
@@ -193,8 +193,8 @@ ast_node!(
         internal_function_ids: BTreeMap<String, usize>,
         nodes: Vec<ContractDefinitionNode>,
         scope: NodeID,
-        fully_implemented: Option<bool>,
-        linearized_base_contracts: Option<Vec<NodeID>>,
+        fully_implemented: bool,
+        linearized_base_contracts: Vec<NodeID>,
     }
 );
 
@@ -457,7 +457,7 @@ ast_node_no_partial_eq!(
 ast_node_no_partial_eq!(
     struct IdentifierPath {
         name: String,
-        referenced_declaration: isize,
+        referenced_declaration: i64,
     }
 );
 

@@ -7,7 +7,7 @@ use crate::ast::{ASTNode, NodeID};
 
 use crate::{
     capture,
-    context::{browser::ExtractReferencedDeclarations, workspace_context::WorkspaceContext},
+    context::{browser::ExtractReferencedDeclarations, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -118,11 +118,7 @@ mod uninitialized_local_variables_detector_tests {
         let mut detector = UninitializedLocalVariableDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 12);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

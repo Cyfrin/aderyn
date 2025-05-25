@@ -5,7 +5,7 @@ use crate::{
     ast::{Expression, FunctionCallKind, MemberAccess, NodeID, NodeType, TypeName},
     context::{
         browser::{GetClosestAncestorOfTypeX, Peek},
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
     detect::helpers::get_calls_and_delegate_calls,
 };

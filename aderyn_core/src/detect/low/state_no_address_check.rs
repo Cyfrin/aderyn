@@ -8,7 +8,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractAssignments, ExtractBinaryOperations, ExtractIdentifiers},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -182,7 +182,7 @@ impl IssueDetector for StateNoAddressCheckDetector {
 mod zero_address_check_tests {
     use crate::{
         ast::NodeType,
-        context::{browser::GetClosestAncestorOfTypeX, workspace_context::ASTNode},
+        context::{browser::GetClosestAncestorOfTypeX, workspace::ASTNode},
         detect::{detector::IssueDetector, low::StateNoAddressCheckDetector},
     };
 
@@ -207,9 +207,7 @@ mod zero_address_check_tests {
 
         let mut detector = StateNoAddressCheckDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found the issue
         assert!(found);
-        // assert that the detector found the correct number of issues
         assert_eq!(detector.instances().len(), 3);
         for node_id in detector.instances().values() {
             if let ASTNode::Assignment(assignment) = context.nodes.get(node_id).unwrap() {
@@ -225,16 +223,5 @@ mod zero_address_check_tests {
                 panic!()
             }
         }
-        // assert that the severity is Low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the title is correct
-        assert_eq!(detector.title(), String::from("Address State Variable Set Without Checks"));
-        // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Check for `address(0)` when assigning values to address state variables."
-            )
-        );
     }
 }

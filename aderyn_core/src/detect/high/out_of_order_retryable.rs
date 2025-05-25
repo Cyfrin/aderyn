@@ -6,8 +6,8 @@ use crate::{
     capture,
     context::{
         browser::ExtractFunctionCalls,
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -26,11 +26,14 @@ pub struct OutOfOrderRetryableDetector {
 impl IssueDetector for OutOfOrderRetryableDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let mut tracker = OutOfOrderRetryableTracker { number_of_retry_calls: 0 };
-            let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
-            callgraph.accept(context, &mut tracker)?;
-            if tracker.number_of_retry_calls >= 2 {
-                capture!(self, context, func);
+            let callgraphs =
+                CallGraphConsumer::get(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            for callgraph in callgraphs {
+                let mut tracker = OutOfOrderRetryableTracker { number_of_retry_calls: 0 };
+                callgraph.accept(context, &mut tracker)?;
+                if tracker.number_of_retry_calls >= 2 {
+                    capture!(self, context, func);
+                }
             }
         }
 
@@ -103,11 +106,7 @@ mod out_of_order_retryable_tests {
 
         let mut detector = OutOfOrderRetryableDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

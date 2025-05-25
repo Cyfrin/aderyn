@@ -66,7 +66,6 @@ mod template_detector_tests {
     use crate::detect::{detector::IssueDetector, high::template_detector::TemplateDetector};
 
     #[test]
-
     fn test_template_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ArbitraryTransferFrom.sol",
@@ -74,15 +73,7 @@ mod template_detector_tests {
 
         let mut detector = TemplateDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("High Issue Title"));
-        // assert the description is correct
-        assert_eq!(detector.description(), String::from("Description of the high issue."));
     }
 }

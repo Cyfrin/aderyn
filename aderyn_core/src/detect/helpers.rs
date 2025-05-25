@@ -3,14 +3,14 @@ use semver::{Error, VersionReq};
 use crate::{
     ast::{
         ASTNode, Expression, FunctionDefinition, Identifier, LiteralKind, MemberAccess, NodeID,
-        PragmaDirective, VariableDeclaration, Visibility,
+        PragmaDirective, Visibility,
     },
     context::{
         browser::{
             ExtractBinaryOperations, ExtractFunctionCallOptions, ExtractFunctionCalls,
             ExtractMemberAccesses,
         },
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
 };
 
@@ -221,23 +221,16 @@ pub fn get_literal_value_or_constant_variable_value(
     node_id: NodeID,
     context: &WorkspaceContext,
 ) -> Option<String> {
-    fn get_constant_variable_declaration_value(variable: &VariableDeclaration) -> Option<String> {
-        if variable.mutability() == Some(&crate::ast::Mutability::Constant) {
-            if let Some(Expression::Literal(literal)) = variable.value.as_ref() {
-                return literal.value.to_owned();
+    match context.nodes.get(&node_id)? {
+        ASTNode::Literal(literal) => return literal.value.to_owned(),
+        ASTNode::VariableDeclaration(variable) => {
+            if variable.mutability() == Some(&crate::ast::Mutability::Constant) {
+                if let Some(Expression::Literal(literal)) = variable.value.as_ref() {
+                    return literal.value.to_owned();
+                }
             }
         }
-        None
-    }
-
-    if let Some(node) = context.nodes.get(&node_id) {
-        match node {
-            ASTNode::Literal(literal) => return literal.value.to_owned(),
-            ASTNode::VariableDeclaration(variable) => {
-                return get_constant_variable_declaration_value(variable);
-            }
-            _ => (),
-        }
+        _ => (),
     }
     None
 }

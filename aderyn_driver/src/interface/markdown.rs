@@ -4,7 +4,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use aderyn_core::{context::workspace_context::WorkspaceContext, report::*};
+use aderyn_core::{context::workspace::WorkspaceContext, report::*};
 
 use crate::process::WorkspaceContextWrapper;
 

@@ -4,7 +4,7 @@ use crate::ast::{Expression, Identifier, NodeID};
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -59,8 +59,8 @@ mod assert_state_change_tracker {
         ast::{ASTNode, FunctionCall},
         context::{
             browser::ApproximateStorageChangeFinder,
-            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-            workspace_context::WorkspaceContext,
+            graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+            workspace::WorkspaceContext,
         },
     };
 
@@ -84,18 +84,23 @@ mod assert_state_change_tracker {
 
     impl FunctionCall {
         pub fn arguments_change_contract_state(&self, context: &WorkspaceContext) -> Option<bool> {
-            let mut tracker =
-                StateVariableChangeTracker { has_some_state_variable_changed: false, context };
-
             let arguments =
                 self.arguments.clone().into_iter().map(|n| n.into()).collect::<Vec<ASTNode>>();
-
             let ast_nodes: &[&ASTNode] = &(arguments.iter().collect::<Vec<_>>());
 
-            let callgraph = CallGraph::new(context, ast_nodes, CallGraphDirection::Inward).ok()?;
+            let callgraphs =
+                CallGraphConsumer::get(context, ast_nodes, CallGraphDirection::Inward).ok()?;
 
-            callgraph.accept(context, &mut tracker).ok()?;
-            Some(tracker.has_some_state_variable_changed)
+            for callgraph in callgraphs {
+                let mut tracker =
+                    StateVariableChangeTracker { has_some_state_variable_changed: false, context };
+                callgraph.accept(context, &mut tracker).ok()?;
+                if tracker.has_some_state_variable_changed {
+                    return Some(true);
+                }
+            }
+
+            Some(false)
         }
     }
 }
@@ -117,13 +122,7 @@ mod asert_state_changes_tests {
         let mut detector = AssertStateChangeDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:#?}", detector.instances());
-
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

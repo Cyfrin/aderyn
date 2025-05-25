@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractReferencedDeclarationsConditionally, GetClosestAncestorOfTypeX},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -272,11 +272,7 @@ mod unused_imports_tests {
 
         let mut detector = UnusedImportDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

@@ -1,5 +1,5 @@
 use aderyn_core::{
-    ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
+    ast::SourceUnit, context::workspace::WorkspaceContext, visitor::ast_visitor::Node,
 };
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use solidity_ast::{

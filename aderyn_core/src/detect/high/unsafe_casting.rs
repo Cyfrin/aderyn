@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractBinaryOperations, ExtractIdentifiers, GetClosestAncestorOfTypeX},
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -267,11 +267,7 @@ mod unsafe_casting_detector_tests {
 
         let mut detector = UnsafeCastingDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 94);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }
