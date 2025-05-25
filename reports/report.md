@@ -1033,7 +1033,7 @@ In some versions of Solidity, contracts compile with multiple constructors. The 
 
 When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.
 
-<details><summary>29 Found Instances</summary>
+<details><summary>26 Found Instances</summary>
 
 
 - Found in src/EmitAfterExternalCall.sol [Line: 4](../tests/contract-playground/src/EmitAfterExternalCall.sol#L4)
@@ -1070,24 +1070,6 @@ When compiling contracts with certain development frameworks (for example: Truff
 
 	```solidity
 	interface IUniswapV2Router02 {
-	```
-
-- Found in src/VoidConstructor.sol [Line: 13](../tests/contract-playground/src/VoidConstructor.sol#L13)
-
-	```solidity
-	contract B is VoidConstructor, FilledConstructor {
-	```
-
-- Found in src/VoidConstructor.sol [Line: 25](../tests/contract-playground/src/VoidConstructor.sol#L25)
-
-	```solidity
-	contract C is VoidConstructor() {
-	```
-
-- Found in src/VoidConstructor.sol [Line: 32](../tests/contract-playground/src/VoidConstructor.sol#L32)
-
-	```solidity
-	contract D is VoidConstructor {
 	```
 
 - Found in src/ZeroAddressCheck.sol [Line: 4](../tests/contract-playground/src/ZeroAddressCheck.sol#L4)
