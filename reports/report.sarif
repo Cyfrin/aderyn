@@ -5881,6 +5881,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/MultiplePlaceholders.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 423
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiplePlaceholders.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 619
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiplePlaceholders.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 825
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PreDeclaredVarUsage.sol"
                 },
                 "region": {
@@ -6412,6 +6445,39 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 770
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiplePlaceholders.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 442
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiplePlaceholders.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 638
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiplePlaceholders.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 844
                 }
               }
             },
@@ -12895,7 +12961,18 @@
                 },
                 "region": {
                   "byteLength": 10,
-                  "byteOffset": 186
+                  "byteOffset": 197
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiplePlaceholders.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 700
                 }
               }
             }

@@ -1,14 +1,12 @@
 use std::{
-    collections::{BTreeMap, HashMap},
+    collections::{BTreeMap, HashSet},
     error::Error,
 };
 
-use crate::ast::NodeID;
-
 use crate::{
+    ast::{NodeID, NodeType},
     capture,
     context::{
-        browser::ExtractPlaceholderStatements,
         flow::{Cfg, CfgNodeId},
         workspace::WorkspaceContext,
     },
@@ -33,39 +31,67 @@ pub struct MultiplePlaceholdersDetector {
 impl IssueDetector for MultiplePlaceholdersDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let multiple_placeholders = |cfg: &Cfg, start: CfgNodeId| -> bool {
-            let mut placeholders: HashMap<CfgNodeId, usize> = Default::default();
+            // collect starting points
+            let placeholders: HashSet<CfgNodeId> = {
+                let mut set: HashSet<CfgNodeId> = Default::default();
+                fn collect_cfg_nodes(
+                    cfg: &Cfg,
+                    visited: &mut HashSet<CfgNodeId>,
+                    curr_node: CfgNodeId,
+                ) {
+                    if visited.contains(&curr_node) {
+                        return;
+                    }
+                    visited.insert(curr_node);
+
+                    for child in curr_node.children(cfg) {
+                        collect_cfg_nodes(cfg, visited, child);
+                    }
+                }
+                collect_cfg_nodes(cfg, &mut set, start);
+                set.into_iter()
+                    .filter(|n| {
+                        cfg.nodes.get(n).is_some_and(|c| {
+                            c.reflect(context)
+                                .is_some_and(|d| d.node_type() == NodeType::PlaceholderStatement)
+                        })
+                    })
+                    .collect()
+            };
 
             fn dfs(
                 context: &WorkspaceContext,
                 cfg: &Cfg,
-                placeholder_count: &mut HashMap<CfgNodeId, usize>,
+                visited: &mut HashSet<CfgNodeId>,
                 curr_node: CfgNodeId,
-            ) -> usize {
-                if let Some(count) = placeholder_count.get(&curr_node) {
-                    return *count;
+                count: &mut usize,
+            ) {
+                if visited.contains(&curr_node) {
+                    return;
+                }
+                visited.insert(curr_node);
+
+                if cfg.nodes.get(&curr_node).is_some_and(|c| {
+                    c.reflect(context)
+                        .is_some_and(|d| d.node_type() == NodeType::PlaceholderStatement)
+                }) {
+                    *count += 1
                 }
 
-                let self_pcount = {
-                    let curr_cfg_node = cfg.nodes.get(&curr_node).expect("cfg is incomplete!");
-                    if let Some(curr_ast_node) = curr_cfg_node.reflect(context) {
-                        ExtractPlaceholderStatements::from(curr_ast_node).extracted.len()
-                    } else {
-                        0
-                    }
-                };
-
-                let children_pcount = curr_node.children(cfg).iter().fold(0, |acc, curr| {
-                    usize::max(acc, dfs(context, cfg, placeholder_count, *curr))
-                });
-
-                let total_pcount = self_pcount + children_pcount;
-
-                placeholder_count.insert(curr_node, total_pcount);
-                total_pcount
+                for child in curr_node.children(cfg) {
+                    dfs(context, cfg, visited, child, count);
+                }
             }
 
-            dfs(context, cfg, &mut placeholders, start);
-            placeholders.get(&start).is_some_and(|count| *count > 1)
+            let mut visited: HashSet<CfgNodeId> = Default::default();
+            for starting_point in placeholders {
+                let mut count = 0;
+                dfs(context, cfg, &mut visited, starting_point, &mut count);
+                if count > 1 {
+                    return true;
+                }
+            }
+            false
         };
 
         for modifier in context.modifier_definitions() {
@@ -109,12 +135,12 @@ mod multiple_placeholder_tests {
 
     use crate::detect::{
         detector::IssueDetector, low::multiple_placeholders::MultiplePlaceholdersDetector,
+        test_utils,
     };
 
     #[test]
-
     fn multiple_placeholders_test() {
-        let context = crate::detect::test_utils::load_solidity_source_unit(
+        let context = test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/MultiplePlaceholders.sol",
         );
 
