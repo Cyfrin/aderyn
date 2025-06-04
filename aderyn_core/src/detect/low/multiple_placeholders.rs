@@ -1,10 +1,17 @@
-use std::{collections::BTreeMap, error::Error};
+use std::{
+    collections::{BTreeMap, HashMap},
+    error::Error,
+};
 
 use crate::ast::NodeID;
 
 use crate::{
     capture,
-    context::{browser::ExtractPlaceholderStatements, workspace::WorkspaceContext},
+    context::{
+        browser::ExtractPlaceholderStatements,
+        flow::{Cfg, CfgNodeId},
+        workspace::WorkspaceContext,
+    },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -25,9 +32,47 @@ pub struct MultiplePlaceholdersDetector {
 
 impl IssueDetector for MultiplePlaceholdersDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        let multiple_placeholders = |cfg: &Cfg, start: CfgNodeId| -> bool {
+            let mut placeholders: HashMap<CfgNodeId, usize> = Default::default();
+
+            fn dfs(
+                context: &WorkspaceContext,
+                cfg: &Cfg,
+                placeholder_count: &mut HashMap<CfgNodeId, usize>,
+                curr_node: CfgNodeId,
+            ) -> usize {
+                if let Some(count) = placeholder_count.get(&curr_node) {
+                    return *count;
+                }
+
+                let self_pcount = {
+                    let curr_cfg_node = cfg.nodes.get(&curr_node).expect("cfg is incomplete!");
+                    if let Some(curr_ast_node) = curr_cfg_node.reflect(context) {
+                        ExtractPlaceholderStatements::from(curr_ast_node).extracted.len()
+                    } else {
+                        0
+                    }
+                };
+
+                let children_pcount = curr_node.children(cfg).iter().fold(0, |acc, curr| {
+                    usize::max(acc, dfs(context, cfg, placeholder_count, *curr))
+                });
+
+                let total_pcount = self_pcount + children_pcount;
+
+                placeholder_count.insert(curr_node, total_pcount);
+                total_pcount
+            }
+
+            dfs(context, cfg, &mut placeholders, start);
+            placeholders.get(&start).is_some_and(|count| *count > 1)
+        };
+
         for modifier in context.modifier_definitions() {
-            let placeholders = ExtractPlaceholderStatements::from(modifier).extracted;
-            if placeholders.len() > 1 {
+            let Some((cfg, start, _)) = Cfg::from_modifier_body(context, modifier) else {
+                continue;
+            };
+            if multiple_placeholders(&cfg, start) {
                 capture!(self, context, modifier);
             }
         }
