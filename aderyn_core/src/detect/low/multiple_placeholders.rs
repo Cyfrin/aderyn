@@ -83,8 +83,8 @@ impl IssueDetector for MultiplePlaceholdersDetector {
                 }
             }
 
-            let mut visited: HashSet<CfgNodeId> = Default::default();
             for starting_point in placeholders {
+                let mut visited: HashSet<CfgNodeId> = Default::default();
                 let mut count = 0;
                 dfs(context, cfg, &mut visited, starting_point, &mut count);
                 if count > 1 {
@@ -139,7 +139,7 @@ mod multiple_placeholder_tests {
     };
 
     #[test]
-    fn multiple_placeholders_test() {
+    fn test_multiple_placeholders() {
         let context = test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/MultiplePlaceholders.sol",
         );

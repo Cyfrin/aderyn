@@ -7801,7 +7801,7 @@ State variables that are only changed in the constructor should be declared immu
 
 Design the modifier to only contain 1 placeholder statement. If that is not possible, split the logic into multiple modifiers.
 
-<details><summary>2 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
 
 - Found in src/MultiplePlaceholders.sol [Line: 12](../tests/contract-playground/src/MultiplePlaceholders.sol#L12)
@@ -7814,6 +7814,12 @@ Design the modifier to only contain 1 placeholder statement. If that is not poss
 
 	```solidity
 	    modifier test2(uint256 a, uint256 b) {
+	```
+
+- Found in src/MultiplePlaceholders.sol [Line: 40](../tests/contract-playground/src/MultiplePlaceholders.sol#L40)
+
+	```solidity
+	    modifier test4(uint256 a, uint256 b) {
 	```
 
 </details>
