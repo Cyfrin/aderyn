@@ -121,6 +121,6 @@ mod multiple_placeholder_tests {
         let mut detector = MultiplePlaceholdersDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 3);
     }
 }
