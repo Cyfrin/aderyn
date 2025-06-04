@@ -7,7 +7,8 @@ use crate::{
 
 // Using `solc` to read AST given a source unit (i.e Solidity file)
 pub use load_source_unit::{
-    load_multiple_solidity_source_units_into_single_context, load_solidity_source_unit,
+    load_multiple_solidity_source_units_into_single_context, load_playground_solidity_source_units,
+    load_solidity_source_unit,
 };
 
 impl WorkspaceContext {
