@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 126,
-    "total_sloc": 4701
+    "total_sloc": 4727
   },
   "files_details": {
     "files_details": [
@@ -215,7 +215,7 @@
       },
       {
         "file_path": "src/MultiplePlaceholders.sol",
-        "n_sloc": 14
+        "n_sloc": 40
       },
       {
         "file_path": "src/OnceModifierExample.sol",
@@ -3824,6 +3824,24 @@
             "src_char": "606:2"
           },
           {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 22,
+            "src": "423:3",
+            "src_char": "423:3"
+          },
+          {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 33,
+            "src": "619:3",
+            "src_char": "619:3"
+          },
+          {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 45,
+            "src": "825:3",
+            "src_char": "825:3"
+          },
+          {
             "contract_path": "src/PreDeclaredVarUsage.sol",
             "line_no": 8,
             "src": "200:3",
@@ -4117,6 +4135,24 @@
             "line_no": 33,
             "src": "770:7",
             "src_char": "770:7"
+          },
+          {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 23,
+            "src": "442:6",
+            "src_char": "442:6"
+          },
+          {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 34,
+            "src": "638:6",
+            "src_char": "638:6"
+          },
+          {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 46,
+            "src": "844:6",
+            "src_char": "844:6"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
@@ -7722,9 +7758,21 @@
         "instances": [
           {
             "contract_path": "src/MultiplePlaceholders.sol",
-            "line_no": 11,
-            "src": "186:10",
-            "src_char": "186:10"
+            "line_no": 12,
+            "src": "197:10",
+            "src_char": "197:10"
+          },
+          {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 19,
+            "src": "329:5",
+            "src_char": "329:5"
+          },
+          {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 40,
+            "src": "700:5",
+            "src_char": "700:5"
           }
         ]
       },

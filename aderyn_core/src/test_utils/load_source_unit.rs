@@ -10,9 +10,15 @@ use crate::{
 use semver::Version;
 use solidity_ast::{
     derive_ast_and_evm_info, AstSourceFile, IncludeConfig, ProjectConfigInput,
-    ProjectConfigInputBuilder, SolcVersionConfig, Source,
+    ProjectConfigInputBuilder, SolcVersionConfig, Source, VersionedAstOutputs,
 };
 use std::path::{Path, PathBuf};
+
+pub fn load_playground_solidity_source_units() -> Vec<WorkspaceContext> {
+    let root = std::fs::canonicalize(Path::new("../tests/contract-playground")).unwrap();
+    let project_config = ProjectConfigInputBuilder::new(&root).build().unwrap();
+    make_context(&project_config)
+}
 
 pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     let solidity_file = &ensure_valid_solidity_file(filepath);
@@ -25,7 +31,7 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
         .build()
         .unwrap();
 
-    make_context(&project_config)
+    make_context1(&project_config)
 }
 
 /// Make sure all files belong to contract-playground
@@ -52,7 +58,7 @@ pub fn load_multiple_solidity_source_units_into_single_context(
         .build()
         .unwrap();
 
-    make_context(&project_config)
+    make_context1(&project_config)
 }
 
 fn guess_root(chunk: &str) -> PathBuf {
@@ -71,10 +77,23 @@ fn guess_root(chunk: &str) -> PathBuf {
     }
 }
 
-fn make_context(project_config: &ProjectConfigInput) -> WorkspaceContext {
+// Only makes context from the 1st group
+fn make_context1(project_config: &ProjectConfigInput) -> WorkspaceContext {
     let ast_evm_info = derive_ast_and_evm_info(project_config).unwrap();
     let ast_info = ast_evm_info.versioned_asts.first().unwrap();
+    _make_context(ast_info)
+}
 
+fn make_context(project_config: &ProjectConfigInput) -> Vec<WorkspaceContext> {
+    let mut ws = vec![];
+    let ast_evm_info = derive_ast_and_evm_info(project_config).unwrap();
+    for ast_info in ast_evm_info.versioned_asts {
+        ws.push(_make_context(&ast_info));
+    }
+    ws
+}
+
+fn _make_context(ast_info: &VersionedAstOutputs) -> WorkspaceContext {
     let mut context = WorkspaceContext::default();
 
     let sources = ast_info.sources.0.clone();
