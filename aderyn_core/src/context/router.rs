@@ -45,7 +45,7 @@ use std::collections::HashMap;
 /// TODO:
 /// Given a library resolve external calls made to public or external functions (delegate calls).
 /// It's actually straightforward - Just directly return target suspect. But right now there is no
-/// requirement for this. Therefore, I'lll pass on this one until I see a need.
+/// requirement for this. Therefore, I'll pass on this one until I see a need.
 ///
 /// -----------
 ///
