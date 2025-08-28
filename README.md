@@ -16,7 +16,7 @@
 <p align="center">
 <a href="https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme">Docs</a>
 <a href="https://discord.gg/cyfrin">Discord</a>
-<a href="https://twitter.com/cyfrinaudits">Twitter</a>
+<a href="https://x.com/cyfrinaudits">X/Twitter</a>
 <p>
 
 ---
