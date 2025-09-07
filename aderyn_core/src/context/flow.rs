@@ -300,7 +300,7 @@ impl Cfg {
     /// This is hard to perform at the time of reduction so it must be done post-reduction.
     ///
     /// Continue CFG Nodes should flow back the parent loop's condition node in case of a `while` or
-    /// `do while` and likewise to the the parent loop's update expression in case of `for`.
+    /// `do while` and likewise to the parent loop's update expression in case of `for`.
     ///
     /// Break CFG Nodes should always flow to the end of the parent loop
     ///

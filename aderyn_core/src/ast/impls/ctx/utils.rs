@@ -58,7 +58,7 @@ impl ContractDefinition {
 impl FunctionCall {
     /// Returns the function definition referenced by the function call. In practice, it's not
     /// always the case that the function call will resolve to the referenced declaration. However,
-    /// the the type identifier of the real function (possibly overriding function) would be
+    /// the type identifier of the real function (possibly overriding function) would be
     /// conserved i.e the same as the suspected target function
     ///
     /// Also see [`FunctionCall::is_internal_call`]
@@ -116,7 +116,7 @@ impl FunctionCall {
 impl ModifierInvocation {
     /// Returns the modifier definition referenced by the modifier invocation. In practice, it's not
     /// always the case that the function call will resolve to the referenced declaration. However,
-    /// the the type identifier of the real modifier (possibly overriding modifier) would be
+    /// the type identifier of the real modifier (possibly overriding modifier) would be
     /// conserved i.e the same as the suspected target modifier
     #[inline]
     pub fn suspected_target_modifier<'a>(
