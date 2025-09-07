@@ -21,7 +21,7 @@ impl IssueDetector for StorageArrayMemoryEditDetector {
         // get all Identifiers with argumentTypes
         // If any of them are of the type storage,
         //  grab the index of that param in the array of argument types
-        //  get the refereddeclaration node of the identifier (a function)
+        //  get the referreddeclaration node of the identifier (a function)
         //  get parameter at that index and check if the storageLocation is not storage
         //  if not, capture it.
 
