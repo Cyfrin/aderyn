@@ -1,5 +1,6 @@
 mod display;
 mod interface;
+mod mcp;
 mod runner;
 
 pub mod compile;

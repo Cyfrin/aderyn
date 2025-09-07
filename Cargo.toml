@@ -44,6 +44,8 @@ petgraph = "0"
 crossbeam-channel = "0.5.15"
 webbrowser = "1.0.4"
 urlencoding = "2.1.3"
+rmcp= { version = "0.6", features= ["transport-streamable-http-server"] }
+axum = { version = "0.8", features = ["macros"] }
 
 # Uncomment in Production (just before merging to dev)
 # Cyfrin managed github repository

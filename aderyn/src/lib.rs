@@ -6,6 +6,8 @@ use strum::IntoEnumIterator;
 
 pub mod birdsong;
 pub mod lsp;
+pub mod mcp;
+
 mod panic;
 
 pub fn create_aderyn_toml_file_at(directory: String) {

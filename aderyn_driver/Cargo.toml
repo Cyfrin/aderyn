@@ -22,6 +22,7 @@ tower-lsp = { workspace = true }
 dunce = { workspace = true }
 prettytable = { workspace = true }
 solidity_ast = { workspace = true }
+rmcp = { workspace = true }
 
 [dev-dependencies]
 criterion = { workspace = true }
