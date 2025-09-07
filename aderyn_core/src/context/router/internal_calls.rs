@@ -98,7 +98,7 @@ impl Router {
     /// 1. regular call like `xyz()`:
     ///     - starting point = base contract
     /// 2. laidback super call `super.xyz()`:
-    ///     - starting point = calling contrat's parent in the inheritance tree of base contract
+    ///     - starting point = calling contract's parent in the inheritance tree of base contract
     /// 3. explicit super call `Grandparent.xyz()`:
     ///     - starting point = Grandparent contract in the inheritance tree of the base contract
     ///
