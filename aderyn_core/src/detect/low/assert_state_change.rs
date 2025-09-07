@@ -106,7 +106,7 @@ mod assert_state_change_tracker {
 }
 
 #[cfg(test)]
-mod asert_state_changes_tests {
+mod assert_state_changes_tests {
 
     use crate::detect::{
         detector::IssueDetector, low::assert_state_change::AssertStateChangeDetector,
