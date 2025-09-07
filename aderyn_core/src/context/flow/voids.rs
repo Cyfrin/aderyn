@@ -8,7 +8,7 @@ pub enum CfgStartNode {
     StartModifierBody(AstNodeId),   // Modifier Definition ID
     StartBlock(AstNodeId),          // Block Node ID
     StartUncheckedBlock(AstNodeId), // Unchecked Block ID
-    StartIf(AstNodeId),             // If Statemtnt ID
+    StartIf(AstNodeId),             // If Statement ID
     StartIfCond,
     StartIfTrue,
     StartIfFalse,
