@@ -43,7 +43,7 @@ code with ease.
 
 - Off the shelf support for Foundry projects.
 - Off the shelf support for Hardhat projects. (Sometimes `remappings.txt` maybe required)
-- Configuration file (`adeyrn.toml`) needed to support custom frameworks.
+- Configuration file (`aderyn.toml`) needed to support custom frameworks.
 - Markdown, JSON and Sarif reports
 
 ## Installation
