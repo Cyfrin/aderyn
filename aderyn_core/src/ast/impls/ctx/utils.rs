@@ -85,7 +85,7 @@ impl FunctionCall {
             _ => None,
         }
     }
-    /// Returns the function definition or variable declarartion referenced by the function call.
+    /// Returns the function definition or variable declaration referenced by the function call.
     /// Also see [`FunctionCall::suspected_target_function`]
     #[inline]
     pub fn suspected_function_selector(&self, context: &WorkspaceContext) -> Option<String> {
@@ -101,7 +101,7 @@ impl FunctionCall {
                 let suspect = context.nodes.get(id)?;
                 match suspect {
                     ASTNode::FunctionDefinition(func) => func.function_selector.clone(),
-                    // could be referencing a public state variable (psuedo getter method)
+                    // could be referencing a public state variable (pseudo getter method)
                     ASTNode::VariableDeclaration(var) => var.function_selector.clone(),
                     _ => None,
                 }

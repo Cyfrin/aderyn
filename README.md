@@ -25,6 +25,7 @@
 
 [![Stargazers][stars-shield]][stars-url] [![Forks][forks-shield]][forks-url]
 [![Contributors][contributors-shield]][contributors-url]
+[![Release][release-shield]][release-url]
 [![Issues][issues-shield]][issues-url]
 [![GPL-3.0 License][license-shield]][license-url]
 
@@ -145,6 +146,8 @@ This project exists thanks to all the people who [contribute](/CONTRIBUTING.md).
 [forks-url]: https://github.com/cyfrin/aderyn/network/members
 [stars-shield]: https://img.shields.io/github/stars/cyfrin/aderyn
 [stars-url]: https://github.com/cyfrin/aderyn/stargazers
+[release-shield]: https://img.shields.io/github/v/release/Cyfrin/aderyn
+[release-url]: https://github.com/Cyfrin/aderyn/releases
 [issues-shield]: https://img.shields.io/github/issues/cyfrin/aderyn
 [issues-url]: https://github.com/cyfrin/aderyn/issues
 [license-shield]: https://img.shields.io/github/license/cyfrin/aderyn?logoColor=%23fff&color=blue
