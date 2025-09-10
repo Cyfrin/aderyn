@@ -21,7 +21,7 @@ pub fn project(
     // Decompose pre-processed config
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
 
-    // Process the pre-processed config using Cyfrin/solidity-ast-rs to transalate to runtime values
+    // Process the pre-processed config using Cyfrin/solidity-ast-rs to translate to runtime values
     let path_form_src = |src: &str| -> PathBuf { PathBuf::from_str(src).unwrap() };
     let processed_config = ProjectConfigInputBuilder::new(&root_path)
         .with_sources(src.map_or_default(|src| SourcesConfig::Specific(path_form_src(&src))))
