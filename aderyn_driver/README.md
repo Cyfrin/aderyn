@@ -28,5 +28,5 @@ Order of operation:
 1. Configuration
    * Aderyn detects the source folder containing the contracts as well as the remappings to enable scan.
 2. Build the `WorkspaceContext`.
-   * Uses `solidity-ast-rs` to get the ASTs of the solidity files and then createss a Workspace Context out of the same.
+   * Uses `solidity-ast-rs` to get the ASTs of the solidity files and then creates a Workspace Context out of the same.
 4. Calls `aderyn_core::detect_issues` and then serializes the report based on output file format
