@@ -1,41 +1,50 @@
-use rmcp::{
-    handler::server::router::tool::ToolRouter, model::*, service::RequestContext, tool,
-    tool_handler, tool_router, ErrorData as McpError, RoleServer, ServerHandler,
-};
-
 use crate::process::WorkspaceContextWrapper;
 
+use aderyn_core::context::mcp::{
+    project_overview::ProjectOverviewTool, ModelContextProtocolState, ModelContextProtocolTool,
+};
+use rmcp::{
+    handler::server::{
+        router::tool::ToolRouter,
+        tool::{cached_schema_for_type, ToolRoute},
+    },
+    model::*,
+    service::RequestContext,
+    tool_handler, ErrorData as McpError, RoleServer, ServerHandler,
+};
+use std::sync::Arc;
+
+macro_rules! make_route {
+    ($tool:ty, $st:tt) => {{
+        let t = <$tool>::new(Arc::clone(&$st));
+        ToolRoute::new(
+            Tool::new(
+                t.name().to_string(),
+                t.description().to_string(),
+                cached_schema_for_type::<<$tool as ModelContextProtocolTool>::Input>(),
+            ),
+            move |a| t.execute(a),
+        )
+    }};
+}
+
 pub struct McpServer {
-    ctx_wrapper: WorkspaceContextWrapper,
     tool_router: ToolRouter<Self>,
 }
 
-#[tool_router]
 impl McpServer {
-    pub fn new(ctx_wrapper: WorkspaceContextWrapper) -> Self {
-        Self { tool_router: Self::tool_router(), ctx_wrapper }
-    }
-
-    #[tool(description = "Check project configuration and see details")]
-    fn aderyn_project_config(&self) -> Result<CallToolResult, McpError> {
-        let mut config = String::new();
-        config.push_str(&format!(
-            "Project root: {}\n\n",
-            self.ctx_wrapper.root_path.to_string_lossy().to_string()
-        ));
-        config.push_str(&format!("Compilation units:\n\n"));
-        for (i, c) in self.ctx_wrapper.contexts.iter().enumerate() {
-            config.push_str(&format!("Unit {}\n\n", i + 1));
-            for f in c.src_filepaths.iter() {
-                config.push_str(&format!("{}\n", f));
-            }
-            config.push_str("\n\n");
-        }
-
-        config.push_str(
-            "Each unit (or) context is a set of files that compiles with it's own solc version.",
-        );
-        Ok(CallToolResult::success(vec![Content::text(config)]))
+    pub fn new(raw_state: WorkspaceContextWrapper) -> Self {
+        let state = Arc::new(ModelContextProtocolState {
+            contexts: raw_state.contexts,
+            root_path: raw_state.root_path,
+        });
+        let tools = vec![
+            // All MCP tools must be listed here
+            make_route!(ProjectOverviewTool, state),
+        ];
+        let mut tool_router = ToolRouter::new();
+        tools.into_iter().for_each(|r| tool_router.add_route(r));
+        Self { tool_router }
     }
 }
 
@@ -50,7 +59,7 @@ impl ServerHandler for McpServer {
             protocol_version: ProtocolVersion::V_2024_11_05,
             capabilities: ServerCapabilities::builder().enable_tools().build(),
             server_info: Implementation::from_build_env(),
-            instructions: Some("Ask questions about the Solidity codebase".to_string()),
+            instructions: Some("Ask Aderyn questions about the Solidity codebase".to_string()),
         })
     }
 }

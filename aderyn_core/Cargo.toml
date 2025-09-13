@@ -25,6 +25,7 @@ lazy-regex = { workspace = true }
 derive_more = { workspace = true }
 dunce = { workspace = true }
 solidity_ast = { workspace = true }
+rmcp = { workspace = true }
 
 [dev-dependencies]
 petgraph = { workspace = true }

@@ -61,6 +61,7 @@ dependencies = [
  "phf",
  "prettytable",
  "rayon",
+ "rmcp",
  "semver 1.0.26",
  "serde",
  "serde_json",
