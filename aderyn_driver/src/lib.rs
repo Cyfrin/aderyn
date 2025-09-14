@@ -1,6 +1,5 @@
 mod display;
 mod interface;
-mod macros;
 mod mcp;
 mod runner;
 

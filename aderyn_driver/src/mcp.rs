@@ -1,4 +1,3 @@
-use super::macros::*;
 use crate::process::WorkspaceContextWrapper;
 
 use aderyn_core::context::mcp::*;
@@ -19,10 +18,7 @@ impl McpServer {
             root_path: raw_state.root_path,
             project_config: raw_state.project_config,
         });
-        let tools = vec![
-            // register MCP tools here
-            make_route!(ProjectOverviewTool, state),
-        ];
+        let tools = get_all_mcp_tools(state);
         let mut tool_router = ToolRouter::new();
         tools.into_iter().for_each(|r| tool_router.add_route(r));
         Self { tool_router }
