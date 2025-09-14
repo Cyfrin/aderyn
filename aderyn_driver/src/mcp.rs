@@ -20,7 +20,7 @@ impl McpServer {
             project_config: raw_state.project_config,
         });
         let tools = vec![
-            // All MCP tools must be listed here
+            // register MCP tools here
             make_route!(ProjectOverviewTool, state),
         ];
         let mut tool_router = ToolRouter::new();
