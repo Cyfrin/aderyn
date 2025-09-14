@@ -24,7 +24,7 @@ mod project_compiler_grouping_tests {
             include: include.clone(),
             exclude: exclude.clone(),
         };
-        let contexts = compile::project(preprocessed_config, false).unwrap();
+        let (contexts, _) = compile::project(preprocessed_config, false).unwrap();
 
         assert!(!contexts.is_empty());
         contexts.iter().for_each(|c| {
@@ -77,7 +77,7 @@ mod project_compiler_grouping_tests {
             include: Some(vec!["NonExistentFile.sol".to_string()]),
             exclude: None,
         };
-        let contexts = compile::project(preprocessed_config, false).unwrap();
+        let (contexts, _) = compile::project(preprocessed_config, false).unwrap();
         assert!(contexts.iter().all(|c| c.src_filepaths.is_empty()));
     }
 
@@ -89,7 +89,7 @@ mod project_compiler_grouping_tests {
             include: None,
             exclude: Some(vec!["NonExistentFile.sol".to_string()]),
         };
-        let contexts = compile::project(preprocessed_config, false).unwrap();
+        let (contexts, _) = compile::project(preprocessed_config, false).unwrap();
         assert!(contexts.is_empty());
     }
 }

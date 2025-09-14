@@ -11,6 +11,7 @@ use aderyn_core::{
     },
     stats,
 };
+use solidity_ast::ProjectConfigInput;
 use std::{
     collections::HashMap,
     path::{Path, PathBuf},
@@ -19,6 +20,7 @@ use std::{
 pub struct WorkspaceContextWrapper {
     pub contexts: Vec<WorkspaceContext>,
     pub root_path: PathBuf,
+    pub project_config: ProjectConfigInput,
 }
 
 pub struct PreprocessedConfig {
@@ -41,7 +43,7 @@ pub fn make_context(
     // 1. Processes the above preprocessed config by translating them to runtime values Thanks to
     //    Cyfrin/solidity-ast-rs
     // 2. Parse those files and prepare ASTs.
-    let mut contexts: Vec<WorkspaceContext> = compile::project(preprocessed_config, common.lsp)?;
+    let (mut contexts, project_config) = compile::project(preprocessed_config, common.lsp)?;
 
     // Only make this an error when it's not in LSP mode
     if !common.lsp && contexts.iter().all(|c| c.src_filepaths.is_empty()) {
@@ -81,7 +83,7 @@ pub fn make_context(
         context.callgraphs = Some(callgraphs);
     }
 
-    Ok(WorkspaceContextWrapper { contexts, root_path })
+    Ok(WorkspaceContextWrapper { contexts, root_path, project_config })
 }
 
 /// Supplement the CLI arguments with values from aderyn.toml
