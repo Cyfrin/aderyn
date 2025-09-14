@@ -26,6 +26,9 @@ derive_more = { workspace = true }
 dunce = { workspace = true }
 solidity_ast = { workspace = true }
 rmcp = { workspace = true }
+askama = { workspace = true }
+indoc = { workspace = true}
+derive_builder = { workspace = true }
 
 [dev-dependencies]
 petgraph = { workspace = true }

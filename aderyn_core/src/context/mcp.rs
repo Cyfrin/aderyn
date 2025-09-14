@@ -1,6 +1,11 @@
 // Tools
 pub mod project_overview;
 
+// Export tool
+pub use project_overview::ProjectOverviewTool;
+use solidity_ast::ProjectConfigInput;
+
+// Imports
 use crate::context::workspace::WorkspaceContext;
 use rmcp::{
     handler::server::wrapper::Parameters, model::*, schemars::JsonSchema, ErrorData as McpError,
@@ -11,6 +16,8 @@ use strum::{Display, EnumString};
 pub struct ModelContextProtocolState {
     pub contexts: Vec<WorkspaceContext>,
     pub root_path: PathBuf,
+    pub project_config: ProjectConfigInput,
+    // TODO: add project config
 }
 
 pub trait ModelContextProtocolTool: Send + Sync + Clone {

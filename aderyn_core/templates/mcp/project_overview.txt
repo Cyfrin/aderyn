@@ -1,0 +1,50 @@
+### The following is the configuration of the Solidity project as identified by Aderyn:
+- **Root:** {{ root }}
+- **Source:** {{ source }}
+- **Remappings:**
+{% for r in remappings %}
+  - "{{ r }}"
+{% endfor %}
+
+### Note:
+- *Root* directory is an absolute path.
+- *Remappings* can be relative or absolute. The relative ones are relative to the root.
+- Not all solidity files in the root directory are authored by the developer. Some files are 3rd party libraries which should be omitted for analysis unless explicitly pulled as a dependency by other developer authored solidity files.
+- *Source* directory is the most important directory of all. It lives inside the *Root* and contains all the solidity contracts that the developer has worked on.
+
+### Introducing the term compilation unit:
+
+A compilation unit is set of files that can all be compiled with the same version of a Solc compiler. A project can have multiple of these compilation units. This is largely determined by the version header ex - `pragma version ^0.8`. This version string is present at the beginning of every solidity file. The important thing to note is that a file can be part of 1 or more compilation units. This is usually the library contracts because they are meant to support multiple versions of regular smart contracts.
+
+To understand simply let's say hypothetically there exists following set of files:
+- A.sol : pragma version 0.8.5
+- B.sol : pragma version 0.8.10
+- Lib.sol : pragma version ^0.8.0
+
+In the above example, we can say there are 2 compilation units: First one contains A.sol and Lib.sol (Solc version 0.8.5), second one contains B.sol and Lib.sol (Solc version 0.8.10).Note Lib.sol is a floating pragma therefore it can compile with both Solc versions.
+
+
+### The following is detailed birds eye view of project files grouped by compilation units.
+
+In this project, Aderyn has determined that there are **3 compilation units** in this project which will be listed below. The actual Solc versions itself are not important, therefore not mentioned. Note that the file paths shown are relative to the project's **Root** shown above. Please also note that only a subset of these files are actually of interest to the developer - those lines of entries are appended with `INCLUDED` keyword. The remaining ones are either 3rd party dependencies required by the included files (or) tests files (or) are marked as out of scope by the developer. This does not mean it should be omitted from analysis. It just means the developer is less interested in knowing issues or vulnerabilities in the non included files.
+
+{% for cu in compilation_units %}
+### Compilation Unit {{ loop.index }}:
+{% for f in cu.files %}
+- {{ f.path }}{% if f.included %} INCLUDED{% endif %}
+{% endfor %}
+
+{% endfor %}
+
+### Summary:
+- Total compilation units: **{{ compilation_units.len() }}**
+{% for cu in compilation_units %}
+- Compilation Unit {{ loop.index }} has **{{ cu.files.len() }}** files of which **{{ cu.included_count }}** are included.
+{% endfor %}
+
+### Tips:
+- It is important to remember the compilation units because most (if not, all) of the other `aderyn` MCP tools operate on a per compilation unit basis and so they require input of compilation unit index. Say total count is 4, that means possible values for compilation unit index are 1, 2, 3 and 4. Typically when investigating something it's required to go through all the contexts (which may imply multiple tool calls).
+- Trust the meaning of the path fragments in the filepaths to represent the theme of Solidity code contained within. For example, if the file is contracts/FlashLoan.sol it is likely that when a user is looking for loans, this file may be of interest hence must be analyzed.
+
+### Suggestions for next tool calls
+- `aderyn_get_file_overview`

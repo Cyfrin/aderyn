@@ -3,7 +3,7 @@ use aderyn_core::{
 };
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use solidity_ast::{
-    derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig,
+    derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig, ProjectConfigInput,
     ProjectConfigInputBuilder, Source, SourcesConfig,
 };
 use std::{path::PathBuf, str::FromStr};
@@ -17,7 +17,7 @@ use crate::{
 pub fn project(
     preprocessed_config: PreprocessedConfig,
     lsp_mode: bool,
-) -> Result<Vec<WorkspaceContext>, Box<dyn std::error::Error + Sync + Send>> {
+) -> Result<(Vec<WorkspaceContext>, ProjectConfigInput), Box<dyn std::error::Error + Sync + Send>> {
     // Decompose pre-processed config
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
 
@@ -86,7 +86,7 @@ pub fn project(
     }
 
     // Return the parsed ASTs as a vector of Workspace Contexts
-    Ok(contexts_results.into_iter().flatten().collect())
+    Ok((contexts_results.into_iter().flatten().collect(), processed_config))
 }
 
 fn absorb_ast_content_into_context(
