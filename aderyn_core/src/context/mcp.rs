@@ -1,10 +1,3 @@
-// Tools
-pub mod project_overview;
-
-// Export tool
-pub use project_overview::ProjectOverviewTool;
-use solidity_ast::ProjectConfigInput;
-
 // Imports
 use crate::context::{macros::make_route, workspace::WorkspaceContext};
 use rmcp::{
@@ -13,8 +6,13 @@ use rmcp::{
     schemars::JsonSchema,
     ErrorData as McpError,
 };
+use solidity_ast::ProjectConfigInput;
 use std::{any::Any, path::PathBuf, sync::Arc};
 use strum::{Display, EnumString};
+
+// Tools
+pub mod project_overview;
+pub use project_overview::ProjectOverviewTool;
 
 pub struct ModelContextProtocolState {
     pub contexts: Vec<WorkspaceContext>,
@@ -25,7 +23,7 @@ pub struct ModelContextProtocolState {
 pub trait ModelContextProtocolTool: Send + Sync + Clone {
     type Input: JsonSchema + Any + Send;
 
-    fn new(ctx_wrapper: Arc<ModelContextProtocolState>) -> Self;
+    fn new(state: Arc<ModelContextProtocolState>) -> Self;
 
     // Appears to the MCP client
     fn name(&self) -> String;
