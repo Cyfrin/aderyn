@@ -6,9 +6,12 @@ pub use project_overview::ProjectOverviewTool;
 use solidity_ast::ProjectConfigInput;
 
 // Imports
-use crate::context::workspace::WorkspaceContext;
+use crate::context::{macros::make_route, workspace::WorkspaceContext};
 use rmcp::{
-    handler::server::wrapper::Parameters, model::*, schemars::JsonSchema, ErrorData as McpError,
+    handler::server::{tool::ToolRoute, wrapper::Parameters},
+    model::*,
+    schemars::JsonSchema,
+    ErrorData as McpError,
 };
 use std::{any::Any, path::PathBuf, sync::Arc};
 use strum::{Display, EnumString};
@@ -17,7 +20,6 @@ pub struct ModelContextProtocolState {
     pub contexts: Vec<WorkspaceContext>,
     pub root_path: PathBuf,
     pub project_config: ProjectConfigInput,
-    // TODO: add project config
 }
 
 pub trait ModelContextProtocolTool: Send + Sync + Clone {
@@ -33,6 +35,16 @@ pub trait ModelContextProtocolTool: Send + Sync + Clone {
 
     // Tool execution logic
     fn execute(&self, input: Parameters<Self::Input>) -> Result<CallToolResult, McpError>;
+}
+
+pub fn get_all_mcp_tools<T: Send + Sync + 'static>(
+    state: Arc<ModelContextProtocolState>,
+) -> Vec<ToolRoute<T>> {
+    let tools = vec![
+        // register MCP tools here
+        make_route!(ProjectOverviewTool, state),
+    ];
+    return tools;
 }
 
 #[derive(Debug, PartialEq, EnumString, Display)]

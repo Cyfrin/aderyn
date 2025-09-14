@@ -90,5 +90,22 @@ macro_rules! generate_get_source_unit {
 
 }
 
+macro_rules! make_route {
+    ($tool:ty, $st:tt) => {{
+        let t = <$tool>::new(std::sync::Arc::clone(&$st));
+        rmcp::handler::server::tool::ToolRoute::new(
+            rmcp::model::Tool::new(
+                t.name().to_string(),
+                t.description().to_string(),
+                rmcp::handler::server::tool::cached_schema_for_type::<
+                    <$tool as crate::context::mcp::ModelContextProtocolTool>::Input,
+                >(),
+            ),
+            move |a| t.execute(a),
+        )
+    }};
+}
+
 pub(crate) use generate_capturable_methods;
 pub(crate) use generate_get_source_unit;
+pub(crate) use make_route;
