@@ -44,7 +44,7 @@ pub fn get_all_mcp_tools<T: Send + Sync + 'static>(
         // register MCP tools here
         make_route!(ProjectOverviewTool, state),
     ];
-    return tools;
+    tools
 }
 
 #[derive(Debug, PartialEq, EnumString, Display)]
