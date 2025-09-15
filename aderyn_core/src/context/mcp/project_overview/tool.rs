@@ -30,12 +30,11 @@ impl ModelContextProtocolTool for ProjectOverviewTool {
 
     fn description(&self) -> String {
         indoc! {
-            "Calling this tool once at the start is the best way to equip yourself with the base \
-            knowledge needed to help the user. It returns project configuration such as the root directory, \
-            source directory (where the contracts are kept), 3rd party libraries, remappings, list of source \
-            files, user preference for included and excluded files, etc. Also tells you what other tools to \
-            call following this"
-        }.to_string()
+            "It returns project configuration such as the root directory, source directory \
+            (where the contracts are kept), 3rd party libraries, remappings, list of source \
+            files, user preference for included and excluded files, etc."
+        }
+        .to_string()
     }
 
     fn execute(&self, _input: Parameters<Self::Input>) -> Result<CallToolResult, McpError> {
@@ -56,14 +55,18 @@ impl ModelContextProtocolTool for ProjectOverviewTool {
                         .path(file.clone())
                         .included(true)
                         .build()
-                        .map_err(|_| McpError::internal_error("failed to build fe", None))?;
+                        .map_err(|_| {
+                            McpError::internal_error("failed to build file entry", None)
+                        })?;
                     included_count += 1;
                 } else {
                     file_entry = FileEntryBuilder::default()
                         .path(file.clone())
                         .included(false)
                         .build()
-                        .map_err(|_| McpError::internal_error("failed to build fe", None))?;
+                        .map_err(|_| {
+                            McpError::internal_error("failed to build file entry", None)
+                        })?;
                 }
                 file_entries.push(file_entry);
             }
@@ -71,7 +74,7 @@ impl ModelContextProtocolTool for ProjectOverviewTool {
                 .files(file_entries)
                 .included_count(included_count)
                 .build()
-                .map_err(|_| McpError::internal_error("failed to build cu", None))?;
+                .map_err(|_| McpError::internal_error("failed to build compilation unit", None))?;
             compilation_units.push(compilation_unit);
         }
         // render LLM message according to the template
