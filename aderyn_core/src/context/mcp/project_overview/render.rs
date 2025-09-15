@@ -2,7 +2,7 @@ use askama::Template;
 use derive_builder::Builder;
 
 #[derive(Builder, Template)]
-#[template(path = "mcp/project_overview.txt")]
+#[template(path = "mcp-tool-response/project_overview.md")]
 #[builder(pattern = "owned")]
 pub struct ProjectOverview {
     pub root: String,

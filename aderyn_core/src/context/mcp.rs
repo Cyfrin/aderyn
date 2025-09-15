@@ -12,7 +12,10 @@ use strum::{Display, EnumString};
 
 // Tools
 pub mod project_overview;
+pub mod tool_guide;
+
 pub use project_overview::ProjectOverviewTool;
+pub use tool_guide::ToolGuide;
 
 pub struct ModelContextProtocolState {
     pub contexts: Vec<WorkspaceContext>,
@@ -35,12 +38,14 @@ pub trait ModelContextProtocolTool: Send + Sync + Clone {
     fn execute(&self, input: Parameters<Self::Input>) -> Result<CallToolResult, McpError>;
 }
 
-pub fn get_all_mcp_tools<T: Send + Sync + 'static>(
-    state: Arc<ModelContextProtocolState>,
-) -> Vec<ToolRoute<T>> {
+pub fn get_all_mcp_tools<T>(state: Arc<ModelContextProtocolState>) -> Vec<ToolRoute<T>>
+where
+    T: Send + Sync + 'static,
+{
     let tools = vec![
         // register MCP tools here
         make_route!(ProjectOverviewTool, state),
+        make_route!(ToolGuide, state),
     ];
     tools
 }
@@ -49,4 +54,5 @@ pub fn get_all_mcp_tools<T: Send + Sync + 'static>(
 #[strum(serialize_all = "kebab-case")]
 pub enum MCPToolNamePool {
     AderynGetProjectOverview,
+    ToolGuide,
 }
