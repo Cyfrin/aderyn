@@ -1,7 +1,7 @@
 ## Tool Guide
 
 ### Preface:
-This guide will first introduce essential terminology for the whole interface. Later, some general approaches with examples will be provided followed by tool call strategies that other LLMs have used to improve the quality of the answers that were provided to the user. It is assumed that you are already well versed with Solidity programming and other blockchain concepts to follow along. The hope is that after learning and following the guide, you will learn to come up with your own strategies and answer even more complex questions that the user may have for you.
+This guide will first introduce essential terminology for the whole interface. Later, some general approaches with examples will be provided followed by tool call strategies that other LLMs have used to improve the quality of the answers that were provided to the user. It is assumed that you are already well versed with Solidity programming and other blockchain concepts to follow along. The hope is that after learning and following the guide, you will follow it diligently and if warranted, even come up with your own strategies to answer complex problems that the user may have.
 
 -----
 
@@ -12,6 +12,8 @@ This guide will first introduce essential terminology for the whole interface. L
   - **Compilation unit**
   - **Compilation unit index**
   - **Included file**
+  - **Node ID**
+  - **Problem**
 
 #### 2. General approaches:
   - **Chain of thought**
@@ -49,9 +51,22 @@ It is also not true that all the files in a given compilation unit are inter-dep
 If there are N compilation units, the compilation unit index is a number to uniquely identify a compilation unit. Index counting starts from 1. For example, if there are 4 compilation units, possible values for compilation unit index are 1, 2, 3, and 4.
 
 #### **Included file**
+
 Included files are files that are in scope for issue reporting. The user decides this and also the framework used has a large say in this. Resolution of included files is already done and provided by Aderyn's project overview MCP tool. Typically that's the first tool to reach out for, before starting any analysis.
 
 Note that files that are not included are typically dependencies of included files (like third-party libraries) which may need to be examined if warranted, but there is no requirement to report on any issues in these files.
+
+#### **Node ID**
+
+A node is an element in the Abstract Syntax Tree (AST) representation of a Solidity program. Each node can be uniquely identified within a given compilation unit by its Node ID - a unique identifier that serves as a reference to that specific AST element.
+
+Node IDs are commonly required as arguments when calling MCP tools for detailed analysis. These identifiers are typically obtained from initial discovery tools (like node finder or list contracts) and then passed to other tools (like node summarizer or contract surface area inspector) to get detailed information about specific nodes.
+
+*Key point*: Node IDs are scoped to their compilation unit - the same Node ID may refer to different nodes in different compilation units.
+
+#### **Problem**
+
+Problem refers to the user's request or query to the LLM. This could range from simple tasks like identifying specific code patterns or finding particular contract features, to complex analysis requirements such as tracing transaction flows or evaluating security criteria across multiple contracts.
 
 ----
 
@@ -72,6 +87,9 @@ This approach is for simple problems that focus on the static nature of written 
 #### **Hybrid search**
 
 This approach combines both of the above approaches. Start off with chain of thought and then occasionally during the process use the fast search approach to quickly gather information about certain nodes to make decisions.
+
+
+Lastly, please be careful in making plans. You don't have to stick to the above search models for all problems. Maybe for some problems, you get the answer sooner or you'll have to make a decision that varies slightly. If not sure, please follow the general approaches above, you should get to a decent state.
 
 ----
 
