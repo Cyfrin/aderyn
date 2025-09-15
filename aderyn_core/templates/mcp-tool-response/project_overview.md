@@ -12,9 +12,9 @@
 - Not all solidity files in the root directory are authored by the developer. Some files are 3rd party libraries which should be omitted for analysis unless explicitly pulled as a dependency by other developer authored solidity files.
 - *Source* directory is the most important directory of all. It lives inside the *Root* and contains all the solidity contracts that the developer has worked on.
 
-In this project, Aderyn has determined that there are **{{ compilation_units.len() }} compilation units**. The actual Solc versions itself are not mentioned.
+Aderyn has determined that there are **{{ compilation_units.len() }} compilation units**. The actual Solc versions itself are not mentioned.
 
-Note that the file paths shown are relative to the project's **Root** shown above. Please also note that only a subset of these files are actually of interest to the developer - those lines of entries are appended with `INCLUDED` keyword. The remaining ones are either 3rd party dependencies required by the included files (or) tests files (or) are marked as out of scope by the developer. This does not mean it should be omitted from analysis. It just means the developer is less interested in knowing issues or vulnerabilities in the non included files.
+Note that the file paths shown are relative to the project's **Root** shown above. Please also note that only a subset of these files are considered included files - those lines of entries are appended with `INCLUDED` keyword.
 
 {% for cu in compilation_units %}
 ### Compilation Unit {{ loop.index }}:
