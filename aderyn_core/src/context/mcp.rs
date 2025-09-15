@@ -17,7 +17,6 @@ pub mod tool_guide;
 pub use project_overview::ProjectOverviewTool;
 pub use tool_guide::ToolGuide;
 
-
 pub struct ModelContextProtocolState {
     pub contexts: Vec<WorkspaceContext>,
     pub root_path: PathBuf,
