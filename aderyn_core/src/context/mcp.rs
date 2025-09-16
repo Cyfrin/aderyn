@@ -11,10 +11,12 @@ use std::{any::Any, path::PathBuf, sync::Arc};
 use strum::{Display, EnumString};
 
 // Tools
+pub mod contract_surface;
 pub mod list_contracts;
 pub mod project_overview;
 pub mod tool_guide;
 
+pub use contract_surface::ContractSurfaceTool;
 pub use list_contracts::ListContractsTool;
 pub use project_overview::ProjectOverviewTool;
 pub use tool_guide::ToolGuide;
@@ -49,6 +51,7 @@ where
         make_route!(ToolGuide, state),
         make_route!(ProjectOverviewTool, state),
         make_route!(ListContractsTool, state),
+        make_route!(ContractSurfaceTool, state),
     ]
 }
 
@@ -58,4 +61,5 @@ pub enum MCPToolNamePool {
     AderynToolGuide,
     AderynGetProjectOverview,
     AderynListContracts,
+    AderynContractSurfaceInspector,
 }
