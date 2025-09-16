@@ -136,7 +136,7 @@ fn print_contract_summary<W: Write>(
         writeln!(writer, "\n")?; // Add an extra newline for spacing
     }
 
-    // Analysis Sumary
+    // Analysis Summary
     {
         let issue_count = report.issue_count();
         writeln!(writer, "## Issue Summary\n")?;
