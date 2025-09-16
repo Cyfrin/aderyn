@@ -52,14 +52,14 @@ impl ModelContextProtocolTool for ContractSurfaceTool {
     }
 
     fn execute(&self, input: Parameters<Self::Input>) -> Result<CallToolResult, McpError> {
-        let cu_index = input.0.compilation_unit_index;
-        if cu_index < 1 || cu_index > self.state.contexts.len() {
+        let comp_unit_index = input.0.compilation_unit_index;
+        if comp_unit_index < 1 || comp_unit_index > self.state.contexts.len() {
             return mcp_error!(
                 "invalid value passed for compilation unit - must be in the range [1, {}] inclusive",
                 self.state.contexts.len()
             );
         }
-        let context = self.state.contexts.get(cu_index - 1).expect("bounds check failed");
+        let context = self.state.contexts.get(comp_unit_index - 1).expect("bounds check failed");
         mcp_success!("TODO")
     }
 }
