@@ -4,7 +4,7 @@
 
 *Compilation Unit index:* {{ compilation_unit_index }}
 
-*Filepath:* {{ filepath }} {% if included %} INCLUDED {% endif %}
+*Filepath:* {{ filepath }}
 
 ### C3 Linearized Inheritance
 
@@ -51,36 +51,36 @@ If a function has been overridden, it won't be listed in here. This list contain
 
 #### External Functions
 
-{% if external_functions.len() == 0 %}
+{% if entrypoints.external_functions.len() == 0 %}
 *No external functions found*
 {% else %}
-{% for func in external_functions %}
-{{ loop.index }}. **{{ func.name }}** | Node Id: {{ func.node_id }} | Contract class: {{ func.containing_contract }}
+{% for func in entrypoints.external_functions %}
+{{ loop.index }}. **{{ func.name }}** | Function's Node Id: {{ func.node_id }} | Containing contract class: {{ func.containing_contract.name }} | Containing contract's Node Id: {{ func.containing_contract.node_id }}
 {% endfor %}
 {% endif %}
 
 #### Public Functions
 
-{% if public_functions.len() == 0 %}
+{% if entrypoints.public_functions.len() == 0 %}
 *No public functions found*
 {% else %}
-{% for func in public_functions %}
-{{ loop.index }}. **{{ func.name }}** | Node Id: {{ func.node_id }} | Contract class: {{ func.containing_contract }}
+{% for func in entrypoints.public_functions %}
+{{ loop.index }}. **{{ func.name }}** | Function's Node Id: {{ func.node_id }} | Containing contract class: {{ func.containing_contract.name }} | Containing contract's Node Id: {{ func.containing_contract.node_id }}
 {% endfor %}
 {% endif %}
 
 #### Fallback Function
 
-{% if let Some(fallback_function) = fallback_function %}
-Node Id: {{ fallback_function.node_id }} | Contract class: {{ fallback_function.containing_contract }}
+{% if let Some(fallback_function) = entrypoints.fallback_function %}
+Node Id: {{ fallback_function.node_id }} | Containing contract class: {{ fallback_function.containing_contract.name }} | Containing contract's Node Id: {{ fallback_function.containing_contract.node_id }}
 {% else %}
 *No fallback function found.*
 {% endif %}
 
 #### Receive Function
 
-{% if let Some(receive_function) = receive_function %}
-Node Id: {{ receive_function.node_id }} | Contract class: {{ receive_function.containing_contract }}
+{% if let Some(receive_function) = entrypoints.receive_function %}
+Node Id: {{ receive_function.node_id }} | Containing contract class: {{ receive_function.containing_contract.name }} | Containing contract's Node Id: {{ receive_function.containing_contract.node_id }}
 {% else %}
 *No receive function found.*
 {% endif %}

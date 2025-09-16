@@ -1,10 +1,18 @@
+use super::render::*;
 use crate::{
-    ast::NodeID,
+    ast::{ASTNode, NodeID},
     context::{
         macros::{mcp_error, mcp_success},
-        mcp::{MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool},
+        mcp::{
+            contract_surface::util::{
+                get_classified_entrypoint_functions, get_inheritance_chain_info,
+                get_total_state_variables,
+            },
+            MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
+        },
     },
 };
+use askama::Template;
 use indoc::indoc;
 use rmcp::{
     handler::server::wrapper::Parameters,
@@ -52,14 +60,51 @@ impl ModelContextProtocolTool for ContractSurfaceTool {
     }
 
     fn execute(&self, input: Parameters<Self::Input>) -> Result<CallToolResult, McpError> {
-        let comp_unit_index = input.0.compilation_unit_index;
-        if comp_unit_index < 1 || comp_unit_index > self.state.contexts.len() {
+        let payload = input.0;
+
+        if payload.compilation_unit_index < 1
+            || payload.compilation_unit_index > self.state.contexts.len()
+        {
             return mcp_error!(
-                "invalid value passed for compilation unit - must be in the range [1, {}] inclusive",
+                "Invalid compilation unit index: {}. Must be in range [1, {}]",
+                payload.compilation_unit_index,
                 self.state.contexts.len()
             );
         }
-        let context = self.state.contexts.get(comp_unit_index - 1).expect("bounds check failed");
-        mcp_success!("TODO")
+
+        let context = self
+            .state
+            .contexts
+            .get(payload.compilation_unit_index - 1)
+            .expect("Compilation unit index bounds check failed");
+
+        let Some(ASTNode::ContractDefinition(contract)) = context.nodes.get(&payload.node_id)
+        else {
+            return mcp_error!(
+                "Node ID {} does not correspond to a contract definition",
+                payload.node_id
+            );
+        };
+
+        let (filepath, _, _) = context.get_node_sort_key_from_capturable(&contract.into());
+        let total_state_variables = get_total_state_variables(context, contract);
+        let reversed_chain = get_inheritance_chain_info(context, contract)?;
+        let entrypoints = get_classified_entrypoint_functions(context, contract)?;
+
+        let contract_surface = ContractSurfaceBuilder::default()
+            .name(contract.name.clone())
+            .filepath(filepath)
+            .compilation_unit_index(payload.compilation_unit_index)
+            .total_state_variables(total_state_variables)
+            .reversed_chain(reversed_chain)
+            .entrypoints(entrypoints)
+            .build()
+            .map_err(|_| McpError::internal_error("failed to build contract surface", None))?;
+
+        let text = contract_surface
+            .render()
+            .map_err(|_| McpError::internal_error("failed to render contract surface", None))?;
+
+        mcp_success!(text)
     }
 }

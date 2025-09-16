@@ -11,8 +11,13 @@ pub struct ContractSurface {
     pub filepath: String,
     pub compilation_unit_index: usize,
     pub total_state_variables: usize,
-    pub included: bool,
     pub reversed_chain: Vec<ContractInfo>,
+    pub entrypoints: EntrypointFunctions,
+}
+
+#[derive(Builder, Default)]
+#[builder(pattern = "owned")]
+pub struct EntrypointFunctions {
     pub external_functions: Vec<FunctionInfo>,
     pub public_functions: Vec<FunctionInfo>,
     pub fallback_function: Option<FunctionInfo>,
@@ -32,6 +37,13 @@ pub struct ContractInfo {
 #[builder(pattern = "owned")]
 pub struct FunctionInfo {
     pub name: String,
-    pub node_id: String,
-    pub containing_contract: String,
+    pub node_id: NodeID,
+    pub containing_contract: ContainingContract,
+}
+
+#[derive(Builder)]
+#[builder(pattern = "owned")]
+pub struct ContainingContract {
+    pub name: String,
+    pub node_id: NodeID,
 }
