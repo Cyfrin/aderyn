@@ -829,7 +829,7 @@ Contracts have owners with privileged rights to perform admin tasks and need to 
 - Found in contracts/core/Exposure.sol [Line: 67](../tests/2024-07-templegold/protocol/contracts/core/Exposure.sol#L67)
 
 	```solidity
-	    function setLiquidator(ILiquidator _liquidator) external onlyOwner {
+	    function setLiqidator(ILiquidator _liquidator) external onlyOwner {
 	```
 
 - Found in contracts/core/Exposure.sol [Line: 76](../tests/2024-07-templegold/protocol/contracts/core/Exposure.sol#L76)
