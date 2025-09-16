@@ -71,6 +71,6 @@ impl ModelContextProtocolTool for ListContractsTool {
             .map_err(|_| McpError::internal_error("failed to build contracts list", None))?;
         let text =
             renderer.render().map_err(|_| McpError::internal_error("failed to render", None))?;
-        return Ok(CallToolResult::success(vec![Content::text(text)]));
+        Ok(CallToolResult::success(vec![Content::text(text)]))
     }
 }
