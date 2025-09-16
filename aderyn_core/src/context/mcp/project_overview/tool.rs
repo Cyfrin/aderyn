@@ -1,7 +1,10 @@
 use super::render;
-use crate::context::mcp::{
-    project_overview::render::*, MCPToolNamePool, ModelContextProtocolState,
-    ModelContextProtocolTool,
+use crate::context::{
+    macros::mcp_success,
+    mcp::{
+        project_overview::render::*, MCPToolNamePool, ModelContextProtocolState,
+        ModelContextProtocolTool,
+    },
 };
 use askama::Template;
 use indoc::indoc;
@@ -87,6 +90,6 @@ impl ModelContextProtocolTool for ProjectOverviewTool {
             .map_err(|_| McpError::internal_error("failed to build project overview", None))?;
         let text =
             renderer.render().map_err(|_| McpError::internal_error("failed to render", None))?;
-        Ok(CallToolResult::success(vec![Content::text(text)]))
+        mcp_success!(text)
     }
 }

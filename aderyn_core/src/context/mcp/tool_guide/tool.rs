@@ -1,4 +1,7 @@
-use crate::context::mcp::{MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool};
+use crate::context::{
+    macros::mcp_success,
+    mcp::{MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool},
+};
 use indoc::indoc;
 use rmcp::{
     handler::server::wrapper::Parameters,
@@ -35,6 +38,6 @@ impl ModelContextProtocolTool for ToolGuide {
             env!("CARGO_MANIFEST_DIR"),
             "/templates/mcp-tool-response/tool_guide.md"
         ));
-        Ok(CallToolResult::success(vec![Content::text(response)]))
+        mcp_success!(response)
     }
 }

@@ -106,8 +106,8 @@ Lastly, please be careful in making plans. You don't have to stick to the above 
 1. First, use the project overview tool to see all the compilation units.
 2. Analyses must operate on each compilation unit.
 3. Start by calling the list contracts tool to enlist the contracts in a compilation unit.
-4. Use the contract surface area inspection tool on the contracts of interest (stick to included ones only). This reveals methods, state variables, etc. that the contract inherits from its parent contracts, third-party libraries, as well as the various library contracts that it makes internal calls to, and more. It also exposes entrypoint functions in the contract.
-5. Use the callgraph provider tool to gauge the different internal functions and modifiers that could be called as a result of executing a given entrypoint function in a contract.
+4. Use the contract surface area inspection tool on the contracts of interest (stick to contracts in included files only). This reveals methods, state variables, etc. that the contract inherits from its parent contracts, third-party libraries, as well as the various library contracts that it makes internal calls to, and more. It also exposes entrypoint functions in the contract.
+5. Use the callgraph provider tool to gauge the different functions and modifiers within the contract that could be called as a result of executing a given entrypoint function in a contract. Lookup the callgraph using the entrypoint
 6. Now, use the node summarizer tools to look inside these functions and modifiers. These tools will also output code snippets, so carefully use all the information gathered and evaluate it against the issue criteria. Report matches if found in included files.
 
 #### Notes:

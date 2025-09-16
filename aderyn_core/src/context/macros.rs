@@ -106,6 +106,26 @@ macro_rules! make_route {
     }};
 }
 
+macro_rules! mcp_success {
+    ($msg:expr) => {
+        Ok(CallToolResult::success(vec![Content::text($msg)]))
+    };
+    ($fmt:expr, $($arg:tt)*) => {
+        Ok(CallToolResult::success(vec![Content::text(format!($fmt, $($arg)*))]))
+    };
+}
+
+macro_rules! mcp_error {
+    ($msg:expr) => {
+        Ok(CallToolResult::error(vec![Content::text($msg)]))
+    };
+    ($fmt:expr, $($arg:tt)*) => {
+        Ok(CallToolResult::error(vec![Content::text(format!($fmt, $($arg)*))]))
+    };
+}
+
 pub(crate) use generate_capturable_methods;
 pub(crate) use generate_get_source_unit;
 pub(crate) use make_route;
+pub(crate) use mcp_error;
+pub(crate) use mcp_success;
