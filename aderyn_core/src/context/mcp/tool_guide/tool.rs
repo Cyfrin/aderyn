@@ -18,7 +18,7 @@ impl ModelContextProtocolTool for ToolGuide {
     }
 
     fn name(&self) -> String {
-        MCPToolNamePool::ToolGuide.to_string()
+        MCPToolNamePool::AderynToolGuide.to_string()
     }
 
     fn description(&self) -> String {

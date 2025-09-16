@@ -11,9 +11,11 @@ use std::{any::Any, path::PathBuf, sync::Arc};
 use strum::{Display, EnumString};
 
 // Tools
+pub mod list_contracts;
 pub mod project_overview;
 pub mod tool_guide;
 
+pub use list_contracts::ListContractsTool;
 pub use project_overview::ProjectOverviewTool;
 pub use tool_guide::ToolGuide;
 
@@ -42,17 +44,18 @@ pub fn get_all_mcp_tools<T>(state: Arc<ModelContextProtocolState>) -> Vec<ToolRo
 where
     T: Send + Sync + 'static,
 {
-    let tools = vec![
+    vec![
         // register MCP tools here
-        make_route!(ProjectOverviewTool, state),
         make_route!(ToolGuide, state),
-    ];
-    tools
+        make_route!(ProjectOverviewTool, state),
+        make_route!(ListContractsTool, state),
+    ]
 }
 
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub enum MCPToolNamePool {
+    AderynToolGuide,
     AderynGetProjectOverview,
-    ToolGuide,
+    AderynListContracts,
 }
