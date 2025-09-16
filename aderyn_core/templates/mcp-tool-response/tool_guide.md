@@ -99,7 +99,9 @@ This approach combines both of the above approaches. Start off with chain of tho
 
 Lastly, please be careful in making plans. You don't have to stick to the above search models for all problems. Maybe for some problems, you get the answer sooner or you'll have to make a decision that varies slightly. If not sure, please follow the general approaches above, you should get to a decent state.
 
-Note: If a user has already specified a plan of steps specified in the problem and if that plan is more robust than the one you come up with after reading this guide, and so you think the results are better off, feel free to follow the user's search method.
+Note: If a user has already specified a plan of steps specified in the problem and if that plan is more robust than the one you come up with after reading this guide, and so you think the results are better off, feel free to follow the user's search method. You can always supplement the techniques mentioned below.
+
+Note: Please note that if there are unsatisfactory results with one of the search models, give a try with the other strategy as a backup because chances are for some older versions of Solidity, the tools related to entrypoint and callgraph tracing in chain of thought approach may not work as well. Then you may have to resort to using node finders.
 
 ----
 
