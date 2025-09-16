@@ -11,6 +11,7 @@ This guide will first introduce essential terminology for the whole interface. L
   - **Solc**
   - **Compilation unit**
   - **Compilation unit index**
+  - **Contract class**
   - **Included file**
   - **Node ID**
   - **Problem**
@@ -45,6 +46,12 @@ Say both A.sol and B.sol import Lib.sol.
 In the above example, we can say there are 2 compilation units: The first one contains A.sol and Lib.sol (Solc version 0.8.5), the second one contains B.sol and Lib.sol (Solc version 0.8.10). Note that Lib.sol is a floating pragma, therefore it can compile with both Solc versions.
 
 It is also not true that all the files in a given compilation unit are inter-dependent. There could be many independently operating sets of files within a compilation unit. The file import graph tool would provide more insight on this when inspected.
+
+#### **Contract class**
+
+In a Solidity codebase, every contract, abstract contract, or interface you write in source code is a contract class - a definition that describes state and behaviour but does not yet exist on-chain. Only non-abstract contract classes (i.e. concrete implementations) are deployable contract classes: they compile to bytecode that can be deployed and become a smart contract instance at an address. Abstract contracts and interfaces are still contract classes but serve purely as blueprints or type definitions; they cannot be deployed directly.
+
+Note - When we say just contracts, it usually means deployable contract classes. For example the list contracts tool, as evident from its name, only lists deployable contract classes. Same way, the inspect contract surface tool only inspects deployable contract classes.
 
 #### **Compilation unit index**
 
@@ -90,8 +97,9 @@ This approach is for simple problems that focus on the static nature of written 
 
 This approach combines both of the above approaches. Start off with chain of thought and then occasionally during the process use the fast search approach to quickly gather information about certain nodes to make decisions.
 
-
 Lastly, please be careful in making plans. You don't have to stick to the above search models for all problems. Maybe for some problems, you get the answer sooner or you'll have to make a decision that varies slightly. If not sure, please follow the general approaches above, you should get to a decent state.
+
+Note: If a user has already specified a plan of steps specified in the problem and if that plan is more robust than the one you come up with after reading this guide, and so you think the results are better off, feel free to follow the user's search method.
 
 ----
 
@@ -117,6 +125,8 @@ Lastly, please be careful in making plans. You don't have to stick to the above 
 - It is also noteworthy that the callgraph does not contain edges to external calls made. If there is a requirement to analyze that, then make a guess of the external contract that is being called to and re-use some of the methods described above on those contracts to gather full overview. Although, that's a very advanced use case, you might have to sometimes go through that.
 
 - The file import graph provider is another tool that helps understand what files are connected to each other. So that means, if in a given compilation unit, there are 5 files and 3 of which are interdependent, and the remaining 2 are standalone the file import graph would expose this.
+
+- At every step see if you can eliminate the number of things to check based on the intuition developed over the years of auditing smart contracts. But don't force yourself if unsure.
 
 **Scenario 2**
 
