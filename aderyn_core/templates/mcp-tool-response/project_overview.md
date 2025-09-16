@@ -1,10 +1,16 @@
-### Project Configuration
+## Project Overview
+
+### Configuration
 - **Root:** {{ root }}
 - **Source:** {{ source }}
 - **Remappings:**
+{%if remappings.len() > 0 %}
 {% for r in remappings %}
   - "{{ r }}"
 {% endfor %}
+{% else %}
+  - No remappings found
+{% endif %}
 
 ### Notes:
 - *Root* directory is an absolute path.

@@ -64,6 +64,8 @@ Node IDs are commonly required as arguments when calling MCP tools for detailed 
 
 *Key point*: Node IDs are scoped to their compilation unit - the same Node ID may refer to different nodes in different compilation units.
 
+Also note that Node IDs are integers and can therefore be positive and negative
+
 #### **Problem**
 
 Problem refers to the user's request or query to the LLM. This could range from simple tasks like identifying specific code patterns or finding particular contract features, to complex analysis requirements such as tracing transaction flows or evaluating security criteria across multiple contracts.

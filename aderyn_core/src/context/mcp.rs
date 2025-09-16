@@ -44,13 +44,12 @@ pub fn get_all_mcp_tools<T>(state: Arc<ModelContextProtocolState>) -> Vec<ToolRo
 where
     T: Send + Sync + 'static,
 {
-    let tools = vec![
+    vec![
         // register MCP tools here
         make_route!(ToolGuide, state),
         make_route!(ProjectOverviewTool, state),
         make_route!(ListContractsTool, state),
-    ];
-    tools
+    ]
 }
 
 #[derive(Debug, PartialEq, EnumString, Display)]

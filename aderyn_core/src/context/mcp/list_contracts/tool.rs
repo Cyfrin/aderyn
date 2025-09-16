@@ -1,4 +1,8 @@
-use crate::context::mcp::{MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool};
+use crate::context::mcp::{
+    list_contracts::render::{ContractInfoBuilder, ContractsListBuilder},
+    MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
+};
+use askama::Template;
 use indoc::indoc;
 use rmcp::{
     handler::server::wrapper::Parameters,
@@ -41,12 +45,32 @@ impl ModelContextProtocolTool for ListContractsTool {
     }
 
     fn execute(&self, input: Parameters<Self::Input>) -> Result<CallToolResult, McpError> {
-        if let Some(context) = self.state.contexts.get(input.0.compilation_unit_index) {
-            return Ok(CallToolResult::success(vec![Content::text("TODO")]));
+        let cu_index = input.0.compilation_unit_index;
+        if cu_index < 1 || cu_index > self.state.contexts.len() {
+            return Ok(CallToolResult::error(vec![Content::text(format!(
+                "invalid value passed for compilation unit - must be in the range [1, {}] inclusive",
+                self.state.contexts.len()
+            ))]));
         }
-        Ok(CallToolResult::error(vec![Content::text(format!(
-            "invalid value passed for compilation unit - must be in the range [1, {}] inclusive",
-            self.state.contexts.len()
-        ))]))
+        let context = self.state.contexts.get(cu_index - 1).expect("bounds check failed");
+        let mut contracts_info = vec![];
+        for contract in context.deployable_contracts() {
+            let (filepath, _, _) = context.get_node_sort_key_from_capturable(&contract.into());
+            let contract_info = ContractInfoBuilder::default()
+                .name(contract.name.clone())
+                .filepath(filepath)
+                .node_id(contract.id)
+                .build()
+                .map_err(|_| McpError::internal_error("failed to build contract info", None))?;
+            contracts_info.push(contract_info);
+        }
+        let renderer = ContractsListBuilder::default()
+            .compilation_unit_index(cu_index)
+            .contracts_info(contracts_info)
+            .build()
+            .map_err(|_| McpError::internal_error("failed to build contracts list", None))?;
+        let text =
+            renderer.render().map_err(|_| McpError::internal_error("failed to render", None))?;
+        return Ok(CallToolResult::success(vec![Content::text(text)]));
     }
 }
