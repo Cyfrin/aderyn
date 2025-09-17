@@ -2,9 +2,19 @@ use crate::{
     ast::{ASTNode, NodeID},
     context::{
         macros::{mcp_error, mcp_success},
-        mcp::{MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool},
+        mcp::{
+            callgraph::{
+                render::{
+                    CallgraphToolResponseBuilder, ContractDataBuilder,
+                    EntrypointFunctionDataBuilder,
+                },
+                utils::{build_post_order_nodes, build_raw_callgraph_for_entrypoint},
+            },
+            MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
+        },
     },
 };
+use askama::Template;
 use indoc::indoc;
 use rmcp::{
     handler::server::wrapper::Parameters,
@@ -83,6 +93,47 @@ impl ModelContextProtocolTool for CallgraphTool {
             );
         };
 
-        mcp_success!("TODO")
+        let Some(ASTNode::FunctionDefinition(entrypoint)) =
+            context.nodes.get(&payload.entrypoint_function_node_id)
+        else {
+            return mcp_error!(
+                "Node ID {} does not correspond to a function",
+                payload.entrypoint_function_node_id
+            );
+        };
+
+        let contract_data = ContractDataBuilder::default()
+            .name(contract.name.clone())
+            .node_id(contract.id)
+            .build()
+            .map_err(|_| McpError::internal_error("failed to build contract data", None))?;
+
+        let entrypoint_function_data = EntrypointFunctionDataBuilder::default()
+            .name(entrypoint.name.clone())
+            .node_id(entrypoint.id)
+            .build()
+            .map_err(|_| {
+                McpError::internal_error("failed to build entrypoint function data", None)
+            })?;
+
+        let subgraph = build_raw_callgraph_for_entrypoint(context, contract, entrypoint)?;
+        let post_order_data = build_post_order_nodes(context, &subgraph, entrypoint)?;
+
+        let callgraph_tool_response = CallgraphToolResponseBuilder::default()
+            .compilation_unit_index(payload.compilation_unit_index)
+            .contract(contract_data)
+            .entrypoint_function(entrypoint_function_data)
+            .graph(subgraph)
+            .post_order_nodes(post_order_data)
+            .build()
+            .map_err(|_| {
+                McpError::internal_error("failed to build callgraph tool response", None)
+            })?;
+
+        let text = callgraph_tool_response.render().map_err(|_| {
+            McpError::internal_error("failed to render callgraph tool response", None)
+        })?;
+
+        mcp_success!(text)
     }
 }
