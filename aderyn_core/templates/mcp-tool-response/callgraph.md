@@ -16,16 +16,24 @@ For example, if there is an edge from `A->B` (i.e A calls B) and `A->C` (A calls
 ### Adjacency List Graph of NodeIDs
 
 {% for (from, to_list) in &graph %}
+{% if to_list.len() > 0 %}
 - {{ from }} -> {% for (i, v) in to_list.iter().enumerate() %} {{ v }}{% if i != to_list.len() %},{% endif %} {% endfor %}
+{% else %}
+- {{ from }} -> *empty*
+{% endif %}
 {% endfor %}
 
 ### Reverse Post Order of nodes in the above graph and their corresponding Node IDs
 
 {% for node in post_order_nodes.iter().rev() %}
-**{{ node.name }} (node.node_id)** calls:
+**{{ node.name }} ({{ node.node_id }})** calls:
+{% if node.called_nodes.len() == 0 %}
+  - No subsequent calls found
+{% else %}
 {% for called_node in node.called_nodes %}
   - {{ called_node.name }} ({{ called_node.node_id }})
 {% endfor %}
+{% endif %}
 {% endfor %}
 
 ### Next steps:
