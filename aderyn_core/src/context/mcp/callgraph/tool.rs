@@ -1,4 +1,3 @@
-use super::render::*;
 use crate::{
     ast::{ASTNode, NodeID},
     context::{
@@ -6,7 +5,6 @@ use crate::{
         mcp::{MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool},
     },
 };
-use askama::Template;
 use indoc::indoc;
 use rmcp::{
     handler::server::wrapper::Parameters,
@@ -50,14 +48,41 @@ impl ModelContextProtocolTool for CallgraphTool {
     fn description(&self) -> String {
         indoc! {
             "The callgraph provider tool maps and analyzes function execution flows within Solidity smart contracts \
-            by tracing all possible internal function calls and modifier executions triggered when a specific \
-            entrypoint function is invoked. It provides inheritance-aware analysis across contract hierarchies and \
+            by tracing all possible internal function calls and modifier executions triggered when given the Node ID of \
+            an entrypoint function. It provides inheritance-aware analysis across contract hierarchies and \
             imported libraries"
         }
         .to_string()
     }
 
     fn execute(&self, input: Parameters<Self::Input>) -> Result<CallToolResult, McpError> {
+        let payload = input.0;
+
+        if payload.compilation_unit_index < 1
+            || payload.compilation_unit_index > self.state.contexts.len()
+        {
+            return mcp_error!(
+                "Invalid compilation unit index: {}. Must be in range [1, {}]",
+                payload.compilation_unit_index,
+                self.state.contexts.len()
+            );
+        }
+
+        let context = self
+            .state
+            .contexts
+            .get(payload.compilation_unit_index - 1)
+            .expect("Compilation unit index bounds check failed");
+
+        let Some(ASTNode::ContractDefinition(contract)) =
+            context.nodes.get(&payload.orignal_contract_node_id)
+        else {
+            return mcp_error!(
+                "Node ID {} does not correspond to a contract definition",
+                payload.orignal_contract_node_id
+            );
+        };
+
         mcp_success!("TODO")
     }
 }

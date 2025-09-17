@@ -2,6 +2,8 @@
 
 *Contract name:* {{ name }}
 
+*Contract ID:* {{ node_id }}
+
 *Compilation Unit index:* {{ compilation_unit_index }}
 
 *Filepath:* {{ filepath }}

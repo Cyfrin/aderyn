@@ -15,6 +15,7 @@ This guide will first introduce essential terminology for the whole interface. L
   - **Included file**
   - **Node ID**
   - **Problem**
+  - **Callgraph**
 
 #### 2. General approaches:
   - **Chain of thought**
@@ -77,6 +78,36 @@ Also note that Node IDs are integers and can therefore be positive and negative
 
 Problem refers to the user's request or query to the LLM. This could range from simple tasks like identifying specific code patterns or finding particular contract features, to complex analysis requirements such as tracing transaction flows or evaluating security criteria across multiple contracts.
 
+#### **Callgraph**
+
+In the context of Aderyn's MCP tools, a callgraph is defined for a deployable contract class (or) let's just say a contract, where in a nodes are function or modifiers, and edges are function calls or modifier calls. To be more precise, the callgraph only represents JUMP opcode relations. This is in contrast to outbound contract calls which corresponds to CALL / DELEGATECALL / STATICCALL opcodes which are NOT a part of the callgraph.
+
+**Important:** The callgraph provider tool shows only a focused subgraph from one specific entrypoint function, not the complete contract callgraph.
+
+**Example:**
+If a contract has 3 public functions (entrypoints A, B, C), the complete callgraph would show all three starting points. But if you call the callgraph provider tool with entrypoint A, you only get:
+- Node A and everything A can call
+- You do NOT get nodes B, C or their call chains (unless A happens to call them)
+
+This is how the callgraph was created in Aderyn as claimed in the blog post written by the author:
+
+```blog
+#### Preparing call graphs
+The first step is to extract all deployable contracts in a project, that is, fully implemented, non-abstract contracts.
+
+A separate call graph for each contract was generated. If a function node is reused across contract classes, it will show up in multiple graphs. (Example - function node defined in a parent contract class which has 2 or more children inheriting from it) The duplication is intentional and necessary, since the same code in the function node can behave differently depending on where it’s called from. This has to do with function overriding and method resolution order during contract linearization.
+
+For each contract, start by identifying the entry points: public and external functions defined in the contract or inherited from parent contracts. These are inserted into a worklist.
+
+We go through each function in the worklist step by step, following the chain of calls within that function as far as it goes before moving on to the next one. This helps us build the full picture of how all functions connect.
+
+For every function in the worklist, we extract its inbound calls and resolve each one to its definition using Aderyn's router. We then draw an edge in the callgraph from  the calling function node to the target function or modifier node.
+
+Each resolved target, whether a function or a modifier, is pushed back into the worklist for further exploration. This continues until all the function and modifier nodes reachable from the contract’s entrypoints have been visited.
+
+Side note: A worklist is a continuously updated list that contains all the subtasks that the algorithm must complete. These can be added to or removed from the list during the execution of the algorithm itself. Typically the algorithm runs until the worklist becomes empty.
+```
+
 ----
 
 ### 2. General approaches:
@@ -117,7 +148,7 @@ Note: Please note that if there are unsatisfactory results with one of the searc
 2. Analyses must operate on each compilation unit.
 3. Start by calling the list contracts tool to enlist the contracts in a compilation unit.
 4. Use the contract surface area inspection tool on the contracts of interest (stick to contracts in included files only). This reveals methods, state variables, etc. that the contract inherits from its parent contracts, third-party libraries, as well as the various library contracts that it makes internal calls to, and more. It also exposes entrypoint functions in the contract.
-5. Use the callgraph provider tool to gauge the different functions and modifiers within the contract that could be called as a result of executing a given entrypoint function in a contract. Lookup the callgraph using the entrypoint
+5. Use the callgraph provider tool to gauge the different functions and modifiers within the contract that could be called as a result of executing a given entrypoint function in a contract. Lookup the callgraph using the entrypoint function. While it is true that a callgraph is defined for a contract, the callgraph provider tool works slightly differently in the sense that it only exposes the portion of the callgraph of the contract that is reachable from the given entrypoint function.
 6. Now, use the node summarizer tools to look inside these functions and modifiers. These tools will also output code snippets, so carefully use all the information gathered and evaluate it against the issue criteria. Report matches if found in included files.
 
 #### Notes:

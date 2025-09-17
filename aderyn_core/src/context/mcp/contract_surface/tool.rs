@@ -93,6 +93,7 @@ impl ModelContextProtocolTool for ContractSurfaceTool {
 
         let contract_surface = ContractSurfaceBuilder::default()
             .name(contract.name.clone())
+            .node_id(payload.node_id)
             .filepath(filepath)
             .compilation_unit_index(payload.compilation_unit_index)
             .total_state_variables(total_state_variables)
