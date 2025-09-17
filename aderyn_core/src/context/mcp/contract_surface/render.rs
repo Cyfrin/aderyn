@@ -8,6 +8,7 @@ use crate::ast::NodeID;
 #[builder(pattern = "owned")]
 pub struct ContractSurface {
     pub name: String,
+    pub node_id: NodeID,
     pub filepath: String,
     pub compilation_unit_index: usize,
     pub total_state_variables: usize,

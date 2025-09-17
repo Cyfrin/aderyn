@@ -2,6 +2,8 @@
 
 *Contract name:* {{ name }}
 
+*Contract ID:* {{ node_id }}
+
 *Compilation Unit index:* {{ compilation_unit_index }}
 
 *Filepath:* {{ filepath }}
@@ -84,3 +86,7 @@ Node Id: {{ receive_function.node_id }} | Containing contract class: {{ receive_
 {% else %}
 *No receive function found.*
 {% endif %}
+
+### NOTE:
+
+If your next step is to explore callgraphs starting from a given entrypoint function, use the callgraph provider tool and make sure to pass that entrypoint function's Node ID, and the Node ID of the original contract (same one used to call this contract surface tool). This is in contrast to the containing contract's Node ID, which is present, more so for ad-hoc exploration using node summarizer tool.
