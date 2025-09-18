@@ -34,11 +34,16 @@ The following code snippets show all state variables defined in each contract cl
 {% for c in reversed_chain %}
 {{ loop.index }}. {{ c.name }}
 
+{% if c.state_variables.len() == 0 %}
+No state variables found defined in {{ c.name }}
+{% else %}
 ```solidity
 {% for s in c.state_variables %}
 {{ s }}
 {% endfor %}
 ```
+{% endif %}
+
 {% endfor %}
 
 {% endif %}
