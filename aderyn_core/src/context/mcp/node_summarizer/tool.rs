@@ -1,8 +1,11 @@
 use crate::{
-    ast::{ASTNode, NodeID},
+    ast::NodeID,
     context::{
         macros::{mcp_error, mcp_success},
-        mcp::{MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool},
+        mcp::{
+            node_summarizer::{render, utils::*},
+            MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
+        },
     },
 };
 use askama::Template;
@@ -44,7 +47,9 @@ impl ModelContextProtocolTool for NodeSummarizerTool {
 
     fn description(&self) -> String {
         indoc! {
-            ""
+            "Given a compilation unit index and a Node ID, returns a focused summary of \
+            that exact AST node (e.g. function, modifier, event, variable, struct). The summary is limited to \
+            information directly available in the AST plus a source snippet"
         }
         .to_string()
     }
@@ -68,6 +73,30 @@ impl ModelContextProtocolTool for NodeSummarizerTool {
             .get(payload.compilation_unit_index - 1)
             .expect("Compilation unit index bounds check failed");
 
-        mcp_success!("TODO")
+        let Some(node) = context.nodes.get(&payload.node_id) else {
+            return mcp_error!(
+                "Node with ID {} not found in compilation unit index {}",
+                payload.node_id,
+                payload.compilation_unit_index
+            );
+        };
+
+        let (filepath, _, _) = context.get_node_sort_key_pure(&node);
+        let code_snippet = get_code_snippet(context, node);
+
+        let renderer = render::NodeSummaryBuilder::default()
+            .compilation_unit_index(payload.compilation_unit_index)
+            .node_id(payload.node_id)
+            .filepath(filepath)
+            .code(code_snippet)
+            .containing_contract(get_containing_contract(context, node))
+            .containing_function(get_containing_function(context, node))
+            .containing_modifier(get_containing_modifier(context, node))
+            .build()
+            .map_err(|_| McpError::internal_error("failed to build node summary", None))?;
+
+        let text =
+            renderer.render().map_err(|_| McpError::internal_error("failed to render", None))?;
+        mcp_success!(text)
     }
 }

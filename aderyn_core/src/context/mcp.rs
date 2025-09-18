@@ -64,10 +64,10 @@ where
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "snake_case")]
 pub enum MCPToolNamePool {
-    AderynToolGuide,
+    AderynGetToolGuide,
     AderynGetProjectOverview,
     AderynListContracts,
     AderynContractSurfaceInspector,
-    AderynCallgraphExplorer,
+    AderynExploreCallgraphFromEntrypoint,
     AderynNodeSummarizer,
 }
