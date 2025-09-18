@@ -135,7 +135,7 @@ enum MainSubcommand {
 #[derive(Debug, Subcommand)]
 enum McpTransport {
     /// Run MCP server over streamable HTTP
-    StreamableHttp {
+    HttpStream {
         /// Port to bind the MCP server on (defaults to 6277)
         #[arg(long, default_value_t = 6277)]
         port: u16,
@@ -216,7 +216,7 @@ fn main() {
                 };
             }
             MainSubcommand::Mcp { transport } => match transport {
-                McpTransport::StreamableHttp { port } => {
+                McpTransport::HttpStream { port } => {
                     // FORCE skip cloc
                     args.common_config.skip_cloc = true;
                     spin_up_mcp_server(args, port);
