@@ -52,7 +52,7 @@ impl ModelContextProtocolTool for CallgraphTool {
     }
 
     fn name(&self) -> String {
-        MCPToolNamePool::AderynCallgraphExplorer.to_string()
+        MCPToolNamePool::AderynExploreCallgraphFromEntrypoint.to_string()
     }
 
     fn description(&self) -> String {

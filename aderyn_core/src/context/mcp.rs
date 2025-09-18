@@ -14,12 +14,14 @@ use strum::{Display, EnumString};
 pub mod callgraph;
 pub mod contract_surface;
 pub mod list_contracts;
+pub mod node_summarizer;
 pub mod project_overview;
 pub mod tool_guide;
 
 pub use callgraph::CallgraphTool;
 pub use contract_surface::ContractSurfaceTool;
 pub use list_contracts::ListContractsTool;
+pub use node_summarizer::NodeSummarizerTool;
 pub use project_overview::ProjectOverviewTool;
 pub use tool_guide::ToolGuide;
 
@@ -55,15 +57,17 @@ where
         make_route!(ListContractsTool, state),
         make_route!(ContractSurfaceTool, state),
         make_route!(CallgraphTool, state),
+        make_route!(NodeSummarizerTool, state),
     ]
 }
 
 #[derive(Debug, PartialEq, EnumString, Display)]
-#[strum(serialize_all = "kebab-case")]
+#[strum(serialize_all = "snake_case")]
 pub enum MCPToolNamePool {
-    AderynToolGuide,
+    AderynGetToolGuide,
     AderynGetProjectOverview,
     AderynListContracts,
     AderynContractSurfaceInspector,
-    AderynCallgraphExplorer,
+    AderynExploreCallgraphFromEntrypoint,
+    AderynNodeSummarizer,
 }
