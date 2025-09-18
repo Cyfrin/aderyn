@@ -20,7 +20,7 @@ pub fn get_code_snippet(context: &WorkspaceContext, node: &ASTNode) -> String {
     let byte_offset: usize = byte_offset_str.parse().unwrap();
     let byte_length: usize = byte_len_str.parse().unwrap();
 
-    let code_snippet = &source_content[byte_offset..byte_length];
+    let code_snippet = &source_content[byte_offset..byte_offset + byte_length];
     code_snippet.to_owned()
 }
 
