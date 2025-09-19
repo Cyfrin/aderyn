@@ -120,9 +120,9 @@ impl ModelContextProtocolTool for NodeFinderTool {
                     SearchType::SearchContractsByName(ref name)
                     | SearchType::SearchFunctionsByName(ref name)
                     | SearchType::SearchModifiersByName(ref name) => {
-                        matching_contracts.extend(get_matching_contracts(i + 1, context, &name));
-                        matching_functions.extend(get_matching_functions(i + 1, context, &name));
-                        matching_modifiers.extend(get_matching_modifiers(i + 1, context, &name));
+                        matching_contracts.extend(get_matching_contracts(i + 1, context, name));
+                        matching_functions.extend(get_matching_functions(i + 1, context, name));
+                        matching_modifiers.extend(get_matching_modifiers(i + 1, context, name));
                     }
                     SearchType::GetAllEvents | SearchType::GetAllErrors => {
                         events.extend(get_all_events(i + 1, context));
