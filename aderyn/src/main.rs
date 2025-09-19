@@ -2,7 +2,8 @@ use std::path::PathBuf;
 
 use aderyn::{
     aderyn_is_currently_running_newest_version, birdsong, create_aderyn_toml_file_at,
-    initialize_niceties, lsp::spin_up_language_server, print_all_detectors_view, print_detail_view,
+    initialize_niceties, lsp::spin_up_language_server, mcp::spin_up_mcp_server,
+    print_all_detectors_view, print_detail_view,
 };
 use aderyn_driver::driver::{self, kick_off_report_creation, Args};
 use clap::{ArgGroup, Parser, Subcommand};
@@ -124,11 +125,47 @@ enum MainSubcommand {
         /// Ask question
         question: Option<String>,
     },
+    /// Start an MCP server that answers code queries.
+    Mcp {
+        #[command(subcommand)]
+        transport: McpTransport,
+    },
+}
+
+#[derive(Debug, Subcommand)]
+enum McpTransport {
+    /// Run MCP server over streamable HTTP
+    HttpStream {
+        /// Port to bind the MCP server on (defaults to 6277)
+        #[arg(long, default_value_t = 6277)]
+        port: u16,
+    },
+    // TODO: Add Websocket and Stdout support
 }
 
 fn main() {
     initialize_niceties();
     let cmd_args = CommandLineArgs::parse();
+
+    // Condense args
+    let mut args = Args {
+        input_config: driver::CliArgsInputConfig {
+            root: cmd_args.root.clone(),
+            src: cmd_args.src,
+            path_excludes: cmd_args.path_excludes,
+            path_includes: cmd_args.path_includes,
+        },
+        output_config: driver::CliArgsOutputConfig {
+            output: cmd_args.output,
+            stdout: cmd_args.stdout,
+            no_snippets: cmd_args.no_snippets,
+        },
+        common_config: driver::CliArgsCommonConfig {
+            lsp: cmd_args.lsp,
+            skip_cloc: cmd_args.skip_cloc,
+            highs_only: cmd_args.highs_only,
+        },
+    };
 
     if let Some(subcommand) = cmd_args.subcommand {
         match subcommand {
@@ -178,29 +215,17 @@ fn main() {
                     println!("Visit {}", url);
                 };
             }
+            MainSubcommand::Mcp { transport } => match transport {
+                McpTransport::HttpStream { port } => {
+                    // FORCE skip cloc
+                    args.common_config.skip_cloc = true;
+                    spin_up_mcp_server(args, port);
+                }
+            },
         }
 
         return;
     }
-
-    let mut args = Args {
-        input_config: driver::CliArgsInputConfig {
-            root: cmd_args.root,
-            src: cmd_args.src,
-            path_excludes: cmd_args.path_excludes,
-            path_includes: cmd_args.path_includes,
-        },
-        output_config: driver::CliArgsOutputConfig {
-            output: cmd_args.output,
-            stdout: cmd_args.stdout,
-            no_snippets: cmd_args.no_snippets,
-        },
-        common_config: driver::CliArgsCommonConfig {
-            lsp: cmd_args.lsp,
-            skip_cloc: cmd_args.skip_cloc,
-            highs_only: cmd_args.highs_only,
-        },
-    };
 
     if cmd_args.auditor_mode {
         driver::kick_off_audit_mode(args.clone());

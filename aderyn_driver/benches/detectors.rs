@@ -9,7 +9,7 @@ fn bench_individual_detectors_on_contract_playground(c: &mut Criterion) {
     let root_path = PathBuf::from("../tests/contract-playground");
     let preprocessed_config =
         PreprocessedConfig { root_path, src: None, include: None, exclude: None };
-    let contexts = aderyn_driver::compile::project(preprocessed_config, false).unwrap();
+    let (contexts, _) = aderyn_driver::compile::project(preprocessed_config, false).unwrap();
 
     for detector in get_all_issue_detectors() {
         c.bench_function(detector.name().as_str(), |b| {

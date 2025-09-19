@@ -1,5 +1,6 @@
 use crate::{
     interface::lsp::LspReport,
+    mcp::McpServer,
     process::make_context,
     runner::{run_auditor_mode, run_detector_mode, run_lsp_mode},
 };
@@ -94,6 +95,15 @@ pub fn fetch_report_for_lsp(args: Args) -> Arc<Mutex<Option<LspReport>>> {
     let lsp_report = run_lsp_mode(&ctx_wrapper, detectors);
 
     Arc::new(tokio::sync::Mutex::new(lsp_report))
+}
+
+/// Create MCP server with context fed
+pub fn create_mcp_server(args: Args) -> Option<McpServer> {
+    let ctx_wrapper = match make_context(&args.input_config, &args.common_config) {
+        Ok(ctx_wrapper) => ctx_wrapper,
+        Err(_) => return None,
+    };
+    Some(McpServer::new(ctx_wrapper))
 }
 
 fn detector_list(args: &Args) -> Vec<Box<dyn IssueDetector>> {
