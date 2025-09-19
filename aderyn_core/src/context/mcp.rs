@@ -14,6 +14,7 @@ use strum::{Display, EnumString};
 pub mod callgraph;
 pub mod contract_surface;
 pub mod list_contracts;
+pub mod node_finder;
 pub mod node_summarizer;
 pub mod project_overview;
 pub mod tool_guide;
@@ -21,6 +22,7 @@ pub mod tool_guide;
 pub use callgraph::CallgraphTool;
 pub use contract_surface::ContractSurfaceTool;
 pub use list_contracts::ListContractsTool;
+pub use node_finder::NodeFinderTool;
 pub use node_summarizer::NodeSummarizerTool;
 pub use project_overview::ProjectOverviewTool;
 pub use tool_guide::ToolGuide;
@@ -58,6 +60,7 @@ where
         make_route!(ContractSurfaceTool, state),
         make_route!(CallgraphTool, state),
         make_route!(NodeSummarizerTool, state),
+        make_route!(NodeFinderTool, state),
     ]
 }
 
@@ -70,4 +73,5 @@ pub enum MCPToolNamePool {
     AderynContractSurfaceInspector,
     AderynExploreCallgraphFromEntrypoint,
     AderynNodeSummarizer,
+    AderynNodeFinder,
 }
