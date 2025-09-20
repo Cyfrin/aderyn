@@ -43,7 +43,8 @@ pub fn make_context(
     // 1. Processes the above preprocessed config by translating them to runtime values Thanks to
     //    Cyfrin/solidity-ast-rs
     // 2. Parse those files and prepare ASTs.
-    let (mut contexts, project_config) = compile::compile_project(preprocessed_config, common.lsp)?;
+    let (mut contexts, project_config) =
+        compile::compile_project(preprocessed_config, common.lsp, common.verbose)?;
 
     // Only make this an error when it's not in LSP mode
     if !common.lsp && contexts.iter().all(|c| c.src_filepaths.is_empty()) {

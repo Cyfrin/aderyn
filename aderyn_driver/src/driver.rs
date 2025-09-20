@@ -33,6 +33,7 @@ pub struct CliArgsOutputConfig {
 
 #[derive(Debug, Clone)]
 pub struct CliArgsCommonConfig {
+    pub verbose: bool,
     pub lsp: bool,
     pub skip_cloc: bool,
     pub highs_only: bool,

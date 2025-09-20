@@ -17,6 +17,7 @@ use crate::{
 pub fn compile_project(
     preprocessed_config: PreprocessedConfig,
     lsp_mode: bool,
+    verbose: bool,
 ) -> Result<(Vec<WorkspaceContext>, ProjectConfigInput), Box<dyn std::error::Error + Sync + Send>> {
     // Decompose pre-processed config
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
@@ -29,7 +30,7 @@ pub fn compile_project(
         .with_include(include.map_or_default(|include| IncludeConfig::Specific(include.to_vec())))
         .build()?;
 
-    if !lsp_mode {
+    if verbose {
         display_configuration_info(&processed_config);
         display_header(&processed_config, "Compiling Abstract Syntax Trees");
     }
@@ -61,7 +62,7 @@ pub fn compile_project(
                 }
             }
 
-            if !lsp_mode {
+            if verbose {
                 display_ingesting_message(&sources_ast, &included, &ast_info.version.to_string());
             }
             for (source_path, ast_source_file) in sources_ast {
@@ -78,10 +79,11 @@ pub fn compile_project(
         .collect::<Vec<_>>();
 
     // Only when not in LSP mode, error out if some context had compilation errors
-    if !lsp_mode {
-        if contexts_results.iter().any(|c| c.is_none()) {
-            std::process::exit(1);
-        }
+    if !lsp_mode && contexts_results.iter().any(|c| c.is_none()) {
+        std::process::exit(1);
+    }
+
+    if verbose {
         display_header(&processed_config, "Scanning Contracts");
     }
 
