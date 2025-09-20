@@ -14,7 +14,7 @@ use crate::{
     MapOrDefault,
 };
 
-pub fn project(
+pub fn compile_project(
     preprocessed_config: PreprocessedConfig,
     lsp_mode: bool,
 ) -> Result<(Vec<WorkspaceContext>, ProjectConfigInput), Box<dyn std::error::Error + Sync + Send>> {
