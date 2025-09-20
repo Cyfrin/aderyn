@@ -23,7 +23,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn"
-version = "0.5.13"
+version = "0.6.0"
 dependencies = [
  "aderyn_driver",
  "axum",
@@ -47,7 +47,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_core"
-version = "0.5.13"
+version = "0.6.0"
 dependencies = [
  "askama",
  "derive_builder 0.20.2",
@@ -76,7 +76,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_driver"
-version = "0.5.13"
+version = "0.6.0"
 dependencies = [
  "aderyn_core",
  "criterion",
