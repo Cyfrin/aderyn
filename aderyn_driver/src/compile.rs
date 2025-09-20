@@ -79,10 +79,8 @@ pub fn compile_project(
         .collect::<Vec<_>>();
 
     // Only when not in LSP mode, error out if some context had compilation errors
-    if !lsp_mode {
-        if contexts_results.iter().any(|c| c.is_none()) {
-            std::process::exit(1);
-        }
+    if !lsp_mode && contexts_results.iter().any(|c| c.is_none()) {
+        std::process::exit(1);
     }
 
     if verbose {
