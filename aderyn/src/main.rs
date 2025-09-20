@@ -125,7 +125,9 @@ enum MainSubcommand {
         /// Ask question
         question: Option<String>,
     },
-    /// Start an MCP server that answers code queries.
+    /// ⚠️ [BETA] Start an MCP server in the project root
+    ///
+    /// ⚠️ Experimental: behavior may change or be removed without notice.
     Mcp {
         #[command(subcommand)]
         transport: McpTransport,
