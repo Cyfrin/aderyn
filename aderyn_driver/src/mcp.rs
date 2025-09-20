@@ -37,7 +37,7 @@ impl ServerHandler for McpServer {
             capabilities: ServerCapabilities::builder().enable_tools().build(),
             server_info: Implementation::from_build_env(),
             instructions: Some(
-                "Intelligently navigate Solidity codebases. To get started, call the tool guide."
+                "Intelligently search for patterns in Solidity codebases. To get started, call the tool guide."
                     .to_string(),
             ),
         })
