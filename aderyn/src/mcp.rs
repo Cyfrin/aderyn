@@ -38,6 +38,9 @@ pub fn spin_up_mcp_server(args: driver::Args, port: u16) {
                 npx -y @modelcontextprotocol/inspector
 
             in another terminal, and then enter the server URL shown above.
+
+            ⚠️ Live reload is disabled to keep session data consistent.
+            Restart the MCP server when updates are needed.
         "},
         port
     );
