@@ -1,0 +1,38 @@
+{
+  "../2024-05-Sablier": {
+    "rev": "18c6448cc61d424c2fef7e060a8e7577267a97f5"
+  },
+  "../2024-07-templegold": {
+    "rev": "57a3e597e9199f9e9e0c26aab2123332eb19cc28"
+  },
+  "../ccip-contracts": {
+    "rev": "284ee2e807792386c7da053614906119542ae6ee"
+  },
+  "../contract-playground/lib/forge-std": {
+    "rev": "74cfb77e308dd188d2f58864aaf44963ae6b88b1"
+  },
+  "../contract-playground/lib/openzeppelin-contracts": {
+    "rev": "fd81a96f01cc42ef1c9a5399364968d0e07e9e90"
+  },
+  "../contract-playground/lib/solmate": {
+    "rev": "0384dbaaa4fcb5715738a9254a7c0a4cb62cf458"
+  },
+  "../contract-playground/lib/v2-periphery": {
+    "rev": "0335e8f7e1bd1e8d8329fd300aea2ef2f36dd19f"
+  },
+  "../foundry-nft-f23-icm/lib/forge-std": {
+    "rev": "3b20d60d14b343ee4f908cb8079495c07f5e8981"
+  },
+  "../foundry-nft-f23-icm/lib/openzeppelin-contracts": {
+    "rev": "acd4ff74de833399287ed6b31b4debf6b2b35527"
+  },
+  "../prb-math": {
+    "rev": "cceb7f618c4d0c17cc834622ba8bd708a38951ad"
+  },
+  "lib/forge-std": {
+    "rev": "bb4ceea94d6f10eeb5b41dc2391c6c8bf8e734ef"
+  },
+  "lib/openzeppelin-contracts": {
+    "rev": "dbb6104ce834628e473d2173bbc9d47f81a9eec3"
+  }
+}
