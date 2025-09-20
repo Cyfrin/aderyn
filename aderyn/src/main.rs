@@ -163,6 +163,15 @@ fn main() {
             no_snippets: cmd_args.no_snippets,
         },
         common_config: driver::CliArgsCommonConfig {
+            verbose: {
+                let is_running_lsp = cmd_args.lsp;
+                let is_running_mcp = cmd_args
+                    .subcommand
+                    .as_ref()
+                    .is_some_and(|s| matches!(s, MainSubcommand::Mcp { transport: _ }));
+                // In neither of those 2 cases, shuold aderyn be verbose enough to print metadata.
+                !(is_running_lsp || is_running_mcp)
+            },
             lsp: cmd_args.lsp,
             skip_cloc: cmd_args.skip_cloc,
             highs_only: cmd_args.highs_only,
