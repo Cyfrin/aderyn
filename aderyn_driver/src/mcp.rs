@@ -27,7 +27,6 @@ impl McpServer {
 
 #[tool_handler]
 impl ServerHandler for McpServer {
-    // TODO: get info - maybe this is the missing puzzle for zed
     async fn initialize(
         &self,
         _request: InitializeRequestParam,
