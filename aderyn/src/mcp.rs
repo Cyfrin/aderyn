@@ -1,4 +1,4 @@
-use aderyn_driver::driver;
+use aderyn_driver::{driver, SingletonMcpServer};
 use indoc::indoc;
 
 use rmcp::transport::{
@@ -8,6 +8,19 @@ use tokio::runtime::Builder;
 
 /// Starts an MCP server with streamable HTTP transport on given port
 pub fn spin_up_mcp_server(args: driver::Args, port: u16) {
+    let mcp_server = driver::create_mcp_server(args).unwrap_or_else(|| {
+        eprintln!("Unable to generate workspace context. Likely, issue compiling solidity files.");
+        std::process::exit(1);
+    });
+
+    let async_runtime = Builder::new_multi_thread()
+        .worker_threads(20)
+        .thread_name("aderyn-async-runtime")
+        .thread_stack_size(3 * 1024 * 1024)
+        .enable_all()
+        .build()
+        .expect("unable to start async runtime");
+
     eprintln!(
         indoc! {"
             Dear human,
@@ -29,26 +42,15 @@ pub fn spin_up_mcp_server(args: driver::Args, port: u16) {
         port
     );
 
-    let async_runtime = Builder::new_multi_thread()
-        .worker_threads(20)
-        .thread_name("aderyn-async-runtime")
-        .thread_stack_size(3 * 1024 * 1024)
-        .enable_all()
-        .build()
-        .expect("unable to start async runtime");
+    async_runtime.block_on(async move {
+        let mcp_server = SingletonMcpServer::new(mcp_server);
 
-    async_runtime.block_on(async {
-        let args = args.clone();
         let service = StreamableHttpService::new(
-            move || {
-                Ok(driver::create_mcp_server(args.clone()).unwrap_or_else(|| {
-                    eprintln!("Unable to generate workspace context. Likely, issue compiling solidity files.");
-                    std::process::exit(1);
-                }))
-            },
+            move || Ok(mcp_server.clone()),
             LocalSessionManager::default().into(),
             Default::default(),
         );
+
         let router = axum::Router::new().nest_service("/mcp", service);
 
         let tcp_listener =
