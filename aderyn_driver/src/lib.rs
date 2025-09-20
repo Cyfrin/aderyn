@@ -9,6 +9,7 @@ pub mod driver;
 pub mod process;
 
 pub use aderyn_core::{ast as core_ast, detect as detection_modules, detect::detector};
+pub use mcp::SingletonMcpServer;
 
 pub trait MapOrDefault<T> {
     fn map_or_default<U, F>(self, f: F) -> U
