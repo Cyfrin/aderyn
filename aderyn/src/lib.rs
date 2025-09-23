@@ -5,6 +5,7 @@ use std::{cmp::Ordering, fs::File, io::Write, path::PathBuf, str::FromStr};
 use strum::IntoEnumIterator;
 
 pub mod birdsong;
+pub mod completions;
 pub mod lsp;
 pub mod mcp;
 

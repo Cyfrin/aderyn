@@ -1,13 +1,14 @@
-use std::path::PathBuf;
-
 use aderyn::{
-    aderyn_is_currently_running_newest_version, birdsong, create_aderyn_toml_file_at,
-    initialize_niceties, lsp::spin_up_language_server, mcp::spin_up_mcp_server,
-    print_all_detectors_view, print_detail_view,
+    aderyn_is_currently_running_newest_version, birdsong,
+    completions::SupportedShellsForCompletions, create_aderyn_toml_file_at, initialize_niceties,
+    lsp::spin_up_language_server, mcp::spin_up_mcp_server, print_all_detectors_view,
+    print_detail_view,
 };
 use aderyn_driver::driver::{self, kick_off_report_creation, Args};
-use clap::{ArgGroup, Parser, Subcommand};
+use clap::{ArgGroup, CommandFactory, Parser, Subcommand, ValueHint};
+use clap_complete::{generate, Shell};
 use indoc::indoc;
+use std::path::PathBuf;
 
 #[derive(Parser, Debug)]
 #[command(
@@ -39,12 +40,12 @@ pub struct CommandLineArgs {
     subcommand: Option<MainSubcommand>,
 
     /// Solidity project root directory
-    #[arg(default_value = ".")]
+    #[arg(default_value = ".", value_hint = ValueHint::DirPath)]
     root: String,
 
     /// Path to the contracts source directory (relative to the root)
     /// By default, it is auto detected in most projects.
-    #[clap(short, long, use_value_delimiter = true, verbatim_doc_comment)]
+    #[arg(short, long, use_value_delimiter = true, verbatim_doc_comment, value_hint =  ValueHint::DirPath)]
     src: Option<String>,
 
     /// List of path fragments to include, delimited by comma (no spaces)
@@ -54,7 +55,7 @@ pub struct CommandLineArgs {
     /// Examples:
     ///     -i src/MyContract.sol
     ///     -i src/MyContract.sol,src/MyOtherContract.sol
-    #[clap(short = 'i', long, use_value_delimiter = true, verbatim_doc_comment)]
+    #[arg(short = 'i', long, use_value_delimiter = true, verbatim_doc_comment, value_hint = ValueHint::Other)]
     path_includes: Option<Vec<String>>,
 
     /// List of path fragments to exclude, delimited by comma (no spaces)
@@ -64,7 +65,7 @@ pub struct CommandLineArgs {
     /// Examples:
     ///     -x src/MyContract.sol
     ///     -x src/MyContract.sol,src/MyOtherContract.sol
-    #[clap(short = 'x', long, use_value_delimiter = true, verbatim_doc_comment)]
+    #[arg(short = 'x', long, use_value_delimiter = true, verbatim_doc_comment, value_hint = ValueHint::Other)]
     path_excludes: Option<Vec<String>>,
 
     /// Desired file path for the final report
@@ -72,7 +73,7 @@ pub struct CommandLineArgs {
     ///
     /// NOTE: Allowed formats: JSON, Markdown, Sarif
     /// NOTE: Overwrites existing file if found in the same path.
-    #[arg(short, long, default_value = "report.md", verbatim_doc_comment)]
+    #[arg(short, long, default_value = "report.md", verbatim_doc_comment, value_hint = ValueHint::FilePath)]
     output: String,
 
     /// Start Aderyn's LSP server on stdout. (Must be accompanied with `--stdout`)
@@ -83,6 +84,11 @@ pub struct CommandLineArgs {
     #[arg(long)]
     highs_only: bool,
 
+    /// After generating report, skip checking if a new version of Aderyn is available.
+    #[arg(long)]
+    skip_update_check: bool,
+
+    // ---------- Hidden arguments --------------- //
     /// Serialize the reports to stdout, don't write to files.
     #[arg(long, name = "stdout", hide = true)]
     stdout: bool,
@@ -90,10 +96,6 @@ pub struct CommandLineArgs {
     /// Skip counting number of lines of code.
     #[arg(long, hide = true)]
     skip_cloc: bool,
-
-    /// After generating report, skip checking if a new version of Aderyn is available.
-    #[arg(long)]
-    skip_update_check: bool,
 
     /// Run in Auditor mode, which only outputs manual audit helpers
     #[arg(long, hide = true)]
@@ -114,9 +116,16 @@ enum MainSubcommand {
         #[arg(default_value = "all", verbatim_doc_comment)]
         detector: String,
     },
+    /// Generate shell completion scripts
+    Completions {
+        /// Shell to generate completions for
+        #[arg(value_enum)]
+        shell: SupportedShellsForCompletions,
+    },
     /// Initializes aderyn.toml. Required when solidity project root is not the workspace root
     Init {
         /// Optional path inside root where aderyn.toml will be created
+        #[arg(value_hint = ValueHint::DirPath)]
         path: Option<String>,
     },
     /// Browse Aderyn documentation
@@ -126,8 +135,6 @@ enum MainSubcommand {
         question: Option<String>,
     },
     /// ⚠️ [BETA] Start an MCP server in the project root
-    ///
-    /// ⚠️ Experimental: behavior may change or be removed without notice.
     Mcp {
         #[command(subcommand)]
         transport: McpTransport,
@@ -233,6 +240,13 @@ fn main() {
                     spin_up_mcp_server(args, port);
                 }
             },
+            MainSubcommand::Completions { shell } => {
+                let mut cmd = CommandLineArgs::command();
+                let name = cmd.get_name().to_string();
+                let clap_shell: Shell = shell.into();
+                generate(clap_shell, &mut cmd, name, &mut std::io::stdout());
+                return;
+            }
         }
 
         return;
