@@ -151,6 +151,7 @@ enum McpTransport {
         #[arg(long, default_value_t = 6277)]
         port: u16,
     },
+    /// Run MCP server over streamable STDIO
     Stdio,
     // TODO: Add Websocket support
 }
