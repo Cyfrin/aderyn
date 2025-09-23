@@ -153,7 +153,6 @@ enum McpTransport {
     },
     /// Run MCP server over streamable STDIO
     Stdio,
-    // TODO: Add Websocket support
 }
 
 fn main() {
