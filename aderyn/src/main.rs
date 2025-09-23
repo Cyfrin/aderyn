@@ -1,8 +1,10 @@
 use aderyn::{
     aderyn_is_currently_running_newest_version, birdsong,
-    completions::SupportedShellsForCompletions, create_aderyn_toml_file_at, initialize_niceties,
-    lsp::spin_up_language_server, mcp::spin_up_mcp_server, print_all_detectors_view,
-    print_detail_view,
+    completions::SupportedShellsForCompletions,
+    create_aderyn_toml_file_at, initialize_niceties,
+    lsp::spin_up_language_server,
+    mcp::{spin_up_http_stream_mcp_server, spin_up_stdio_mcp_server},
+    print_all_detectors_view, print_detail_view,
 };
 use aderyn_driver::driver::{self, kick_off_report_creation, Args};
 use clap::{ArgGroup, CommandFactory, Parser, Subcommand, ValueHint};
@@ -149,7 +151,8 @@ enum McpTransport {
         #[arg(long, default_value_t = 6277)]
         port: u16,
     },
-    // TODO: Add Websocket and Stdout support
+    Stdio,
+    // TODO: Add Websocket support
 }
 
 fn main() {
@@ -233,13 +236,18 @@ fn main() {
                     println!("Visit {}", url);
                 };
             }
-            MainSubcommand::Mcp { transport } => match transport {
-                McpTransport::HttpStream { port } => {
-                    // FORCE skip cloc
-                    args.common_config.skip_cloc = true;
-                    spin_up_mcp_server(args, port);
+            MainSubcommand::Mcp { transport } => {
+                // FORCE skip cloc
+                args.common_config.skip_cloc = true;
+                match transport {
+                    McpTransport::HttpStream { port } => {
+                        spin_up_http_stream_mcp_server(args, port);
+                    }
+                    McpTransport::Stdio => {
+                        spin_up_stdio_mcp_server(args);
+                    }
                 }
-            },
+            }
             MainSubcommand::Completions { shell } => {
                 let mut cmd = CommandLineArgs::command();
                 let name = cmd.get_name().to_string();
