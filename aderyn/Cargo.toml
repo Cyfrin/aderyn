@@ -30,3 +30,4 @@ tower-lsp = { workspace = true }
 log = { workspace = true }
 rmcp = { workspace = true }
 axum = { workspace = true }
+clap_complete = { workspace = true }
