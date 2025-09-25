@@ -123,22 +123,17 @@ pub(crate) fn find_jump_dest(
     None
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Default)]
 pub enum JumpDestination {
     /// If there is no parent loop, i.e the parent loop is outside the scope covered by
     /// `start_node`, then the break and continue statements should flow to the default
     /// site which is the `end_node`
+    #[default]
     DefaultSite,
 
     For(CfgNodeId),
     DoWhile(CfgNodeId),
     While(CfgNodeId),
-}
-
-impl Default for JumpDestination {
-    fn default() -> Self {
-        Self::DefaultSite
-    }
 }
 
 pub enum Calibration {

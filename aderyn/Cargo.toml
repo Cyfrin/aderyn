@@ -31,3 +31,6 @@ log = { workspace = true }
 rmcp = { workspace = true }
 axum = { workspace = true }
 clap_complete = { workspace = true }
+
+[lints]
+workspace = true

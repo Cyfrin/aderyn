@@ -280,7 +280,7 @@ mod callgraph_test_functions {
     }
 
     impl Tracker<'_> {
-        fn new(context: &WorkspaceContext) -> Tracker {
+        fn new(context: &WorkspaceContext) -> Tracker<'_> {
             Tracker {
                 context,
                 entry_points: vec![],

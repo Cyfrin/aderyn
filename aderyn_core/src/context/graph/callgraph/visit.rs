@@ -1,3 +1,5 @@
+#![allow(clippy::large_enum_variant)]
+#![allow(clippy::result_large_err)]
 use std::collections::HashSet;
 
 use crate::{

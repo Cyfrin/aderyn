@@ -8,6 +8,10 @@ members = [
     "tools/*",
 ]
 
+[workspace.lints.clippy]
+large_enum_variant = "allow"
+result_large_err = "allow"
+
 [workspace.dependencies]
 aderyn_core = { version = "0.6.1", path = "aderyn_core" }
 aderyn_driver = { version = "0.6.1", path = "aderyn_driver" }

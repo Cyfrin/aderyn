@@ -35,5 +35,8 @@ petgraph = { workspace = true }
 serial_test = { workspace = true }
 once_cell = { workspace = true }
 
+[lints]
+workspace = true
+
 [lib]
 doctest = false

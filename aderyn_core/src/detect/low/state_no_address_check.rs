@@ -58,7 +58,7 @@ impl IssueDetector for StateNoAddressCheckDetector {
                 ExtractBinaryOperations::from(function_definition)
                     .extracted
                     .into_iter()
-                    .filter(|x| (x.operator == "==" || x.operator == "!="))
+                    .filter(|x| x.operator == "==" || x.operator == "!=")
                     .collect();
 
             // Filter the binary checks and extract all node ids into a vector
