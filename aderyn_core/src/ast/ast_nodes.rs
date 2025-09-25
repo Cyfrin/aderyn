@@ -1,5 +1,3 @@
-#![allow(clippy::large_enum_variant)]
-
 use super::{
     macros::{ast_node, ast_node_no_partial_eq, expr_node, node_group, stmt_node},
     *,
