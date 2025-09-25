@@ -24,6 +24,9 @@ prettytable = { workspace = true }
 solidity_ast = { workspace = true }
 rmcp = { workspace = true }
 
+[lints]
+workspace = true
+
 [dev-dependencies]
 criterion = { workspace = true }
 
