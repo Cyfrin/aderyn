@@ -1,5 +1,4 @@
 #![allow(unused_imports, unused_macros)]
-#![allow(clippy::large_enum_variant)]
 
 /// Macro that expands to a struct with common AST node fields.
 macro_rules! ast_node {
