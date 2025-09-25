@@ -56,6 +56,11 @@ jobs:
           toolchain: nightly-2025-09-20
           override: true
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -64,11 +69,6 @@ jobs:
           cache-dependency-path: |
             tests/2024-05-Sablier/v2-core/pnpm-lock.yaml
             tests/prb-math/pnpm-lock.yaml
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8
 
       - name: Restore Rust Cache
         uses: Swatinem/rust-cache@v2
