@@ -33,20 +33,16 @@ impl IssueDetector for UncheckedReturnDetector {
                 }) => {
                     if let Some(ASTNode::ExpressionStatement(func_call_parent)) =
                         function_call.parent(context)
-                    {
-                        if func_call_parent
+                        && func_call_parent
                             .parent(context)
                             .is_some_and(|node| node.node_type() == NodeType::Block)
+                    {
+                        // Now, we know that the return value is unused
+                        if let Some(ASTNode::FunctionDefinition(function)) = context.nodes.get(id)
+                            && !function.return_parameters.parameters.is_empty()
                         {
-                            // Now, we know that the return value is unused
-                            if let Some(ASTNode::FunctionDefinition(function)) =
-                                context.nodes.get(id)
-                            {
-                                if !function.return_parameters.parameters.is_empty() {
-                                    // Now, we know that the function has no return value
-                                    capture!(self, context, function_call);
-                                }
-                            }
+                            // Now, we know that the function has no return value
+                            capture!(self, context, function_call);
                         }
                     }
                 }

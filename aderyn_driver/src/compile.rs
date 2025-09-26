@@ -4,15 +4,15 @@ use aderyn_core::{
 };
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use solidity_ast::{
-    derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig, ProjectConfigInput,
-    ProjectConfigInputBuilder, Source, SourcesConfig,
+    AstSourceFile, ExcludeConfig, IncludeConfig, ProjectConfigInput, ProjectConfigInputBuilder,
+    Source, SourcesConfig, derive_ast_and_evm_info,
 };
 use std::{path::PathBuf, str::FromStr};
 
 use crate::{
+    MapOrDefault,
     display::{display_configuration_info, display_header, display_ingesting_message},
     process::PreprocessedConfig,
-    MapOrDefault,
 };
 
 pub fn compile_project(

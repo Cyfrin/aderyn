@@ -137,8 +137,10 @@ impl IssueDetector for InconsistentTypeNamesDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Inconsistency in declaring uint256/uint (or) int256/int variables within a contract. Use explicit size declarations (uint256 or int256). \
-        Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion.")
+        String::from(
+            "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract. Use explicit size declarations (uint256 or int256). \
+        Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion.",
+        )
     }
 
     fn severity(&self) -> IssueSeverity {

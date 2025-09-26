@@ -63,7 +63,9 @@ impl IssueDetector for ConstantFunctionChangesStateDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct.")
+        String::from(
+            "Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -114,13 +116,11 @@ mod func_compilation_solc_pragma_helper {
             {
                 let pragma_directives = ExtractPragmaDirectives::from(source_unit).extracted;
 
-                if let Some(pragma_directive) = pragma_directives.first() {
-                    if let Ok(pragma_semver) = helpers::pragma_directive_to_semver(pragma_directive)
-                    {
-                        if version_req_allows_below_0_5_0(&pragma_semver) {
-                            return true;
-                        }
-                    }
+                if let Some(pragma_directive) = pragma_directives.first()
+                    && let Ok(pragma_semver) = helpers::pragma_directive_to_semver(pragma_directive)
+                    && version_req_allows_below_0_5_0(&pragma_semver)
+                {
+                    return true;
                 }
             }
             false

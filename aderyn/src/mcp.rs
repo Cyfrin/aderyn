@@ -1,11 +1,11 @@
-use aderyn_driver::{driver, SingletonMcpServer};
+use aderyn_driver::{SingletonMcpServer, driver};
 use indoc::indoc;
 
 use rmcp::{
-    transport::{
-        streamable_http_server::session::local::LocalSessionManager, StreamableHttpService,
-    },
     ServiceExt,
+    transport::{
+        StreamableHttpService, streamable_http_server::session::local::LocalSessionManager,
+    },
 };
 use tokio::runtime::Builder;
 
@@ -123,7 +123,7 @@ async fn shutdown_signal() {
 
     #[cfg(unix)]
     let terminate = async {
-        use tokio::signal::unix::{signal, SignalKind};
+        use tokio::signal::unix::{SignalKind, signal};
         let mut term = signal(SignalKind::terminate()).expect("failed to install SIGTERM handler");
         term.recv().await;
     };

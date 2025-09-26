@@ -1,6 +1,6 @@
 use crate::context::{browser::Peek, workspace::WorkspaceContext};
 
-use super::{primitives::*, voids::*, CfgBreakStatement, CfgNodeDescriptor};
+use super::{CfgBreakStatement, CfgNodeDescriptor, primitives::*, voids::*};
 
 impl CfgNodeDescriptor {
     pub fn display(&self, context: &WorkspaceContext) -> String {
@@ -99,10 +99,10 @@ impl CfgEndNode {
 impl CfgVariableDeclarationStatement {
     pub fn peek(&self, context: &WorkspaceContext) -> String {
         let mut content = format!("Variable Decl. Stmt ({})", self.variable_declaration_statement);
-        if let Some(node) = context.nodes.get(&self.variable_declaration_statement) {
-            if let Some(inside) = node.peek(context) {
-                content.push_str(&format!(": \n{}", inside));
-            }
+        if let Some(node) = context.nodes.get(&self.variable_declaration_statement)
+            && let Some(inside) = node.peek(context)
+        {
+            content.push_str(&format!(": \n{}", inside));
         }
         content
     }
@@ -111,10 +111,10 @@ impl CfgVariableDeclarationStatement {
 impl CfgExpressionStatement {
     pub fn peek(&self, context: &WorkspaceContext) -> String {
         let mut content = format!("Expression Stmt ({})", self.expression_statement);
-        if let Some(node) = context.nodes.get(&self.expression_statement) {
-            if let Some(inside) = node.peek(context) {
-                content.push_str(&format!(": \n{}", inside));
-            }
+        if let Some(node) = context.nodes.get(&self.expression_statement)
+            && let Some(inside) = node.peek(context)
+        {
+            content.push_str(&format!(": \n{}", inside));
         }
         content
     }
@@ -135,10 +135,10 @@ impl CfgContinueStatement {
 impl CfgReturnStatement {
     pub fn peek(&self, context: &WorkspaceContext) -> String {
         let mut content = format!("Return Stmt ({})", self.return_statement);
-        if let Some(node) = context.nodes.get(&self.return_statement) {
-            if let Some(inside) = node.peek(context) {
-                content.push_str(&format!(": \n{}", inside));
-            }
+        if let Some(node) = context.nodes.get(&self.return_statement)
+            && let Some(inside) = node.peek(context)
+        {
+            content.push_str(&format!(": \n{}", inside));
         }
         content
     }
@@ -147,10 +147,10 @@ impl CfgReturnStatement {
 impl CfgEmitStatement {
     pub fn peek(&self, context: &WorkspaceContext) -> String {
         let mut content = format!("Emit Stmt ({})", self.emit_statement);
-        if let Some(node) = context.nodes.get(&self.emit_statement) {
-            if let Some(inside) = node.peek(context) {
-                content.push_str(&format!(": \n{}", inside));
-            }
+        if let Some(node) = context.nodes.get(&self.emit_statement)
+            && let Some(inside) = node.peek(context)
+        {
+            content.push_str(&format!(": \n{}", inside));
         }
         content
     }
@@ -159,10 +159,10 @@ impl CfgEmitStatement {
 impl CfgRevertStatement {
     pub fn peek(&self, context: &WorkspaceContext) -> String {
         let mut content = format!("Revert Stmt ({})", self.revert_statement);
-        if let Some(node) = context.nodes.get(&self.revert_statement) {
-            if let Some(inside) = node.peek(context) {
-                content.push_str(&format!(": \n{}", inside));
-            }
+        if let Some(node) = context.nodes.get(&self.revert_statement)
+            && let Some(inside) = node.peek(context)
+        {
+            content.push_str(&format!(": \n{}", inside));
         }
         content
     }
@@ -171,10 +171,10 @@ impl CfgRevertStatement {
 impl CfgInlineAssemblyStatement {
     pub fn peek(&self, context: &WorkspaceContext) -> String {
         let mut content = format!("Inline Assembly Stmt ({})", self.inline_assembly_statement);
-        if let Some(node) = context.nodes.get(&self.inline_assembly_statement) {
-            if let Some(inside) = node.peek(context) {
-                content.push_str(&format!(": \n{}", inside));
-            }
+        if let Some(node) = context.nodes.get(&self.inline_assembly_statement)
+            && let Some(inside) = node.peek(context)
+        {
+            content.push_str(&format!(": \n{}", inside));
         }
         content
     }
@@ -194,10 +194,10 @@ impl CfgIfStatementCondition {
             return String::from("If Cond");
         };
         let mut content = format!("If Cond ({})", if_cond);
-        if let Some(node) = context.nodes.get(&if_cond) {
-            if let Some(inside) = node.peek(context) {
-                content.push_str(&format!(": \n{}", inside));
-            }
+        if let Some(node) = context.nodes.get(&if_cond)
+            && let Some(inside) = node.peek(context)
+        {
+            content.push_str(&format!(": \n{}", inside));
         }
         content
     }
@@ -209,10 +209,10 @@ impl CfgWhileStatementCondition {
             return String::from("While Cond");
         };
         let mut content = format!("While Cond ({})", while_cond);
-        if let Some(node) = context.nodes.get(&while_cond) {
-            if let Some(inside) = node.peek(context) {
-                content.push_str(&format!(": \n{}", inside));
-            }
+        if let Some(node) = context.nodes.get(&while_cond)
+            && let Some(inside) = node.peek(context)
+        {
+            content.push_str(&format!(": \n{}", inside));
         }
         content
     }
@@ -224,10 +224,10 @@ impl CfgForStatementCondition {
             return String::from("For Cond");
         };
         let mut content = format!("For Cond ({})", for_stmt);
-        if let Some(node) = context.nodes.get(&for_stmt) {
-            if let Some(inside) = node.peek(context) {
-                content.push_str(&format!(": \n{}", inside));
-            }
+        if let Some(node) = context.nodes.get(&for_stmt)
+            && let Some(inside) = node.peek(context)
+        {
+            content.push_str(&format!(": \n{}", inside));
         }
         content
     }
@@ -239,10 +239,10 @@ impl CfgDoWhileStatementCondition {
             return String::from("Do While Cond");
         };
         let mut content = format!("Do While Cond ({})", for_stmt);
-        if let Some(node) = context.nodes.get(&for_stmt) {
-            if let Some(inside) = node.peek(context) {
-                content.push_str(&format!(": \n{}", inside));
-            }
+        if let Some(node) = context.nodes.get(&for_stmt)
+            && let Some(inside) = node.peek(context)
+        {
+            content.push_str(&format!(": \n{}", inside));
         }
         content
     }
@@ -251,10 +251,10 @@ impl CfgDoWhileStatementCondition {
 impl CfgTryStatement {
     pub fn peek(&self, context: &WorkspaceContext) -> String {
         let mut content = format!("Try Stmt ({})", self.try_statement);
-        if let Some(node) = context.nodes.get(&self.try_statement) {
-            if let Some(inside) = node.peek(context) {
-                content.push_str(&format!(": \n{}", inside));
-            }
+        if let Some(node) = context.nodes.get(&self.try_statement)
+            && let Some(inside) = node.peek(context)
+        {
+            content.push_str(&format!(": \n{}", inside));
         }
         content
     }

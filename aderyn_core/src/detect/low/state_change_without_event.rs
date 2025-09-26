@@ -41,10 +41,10 @@ impl IssueDetector for StateVariableChangesWithoutEventDetector {
                 }
 
                 // At this point, we know that no events are emitted
-                if let Some(changes) = func.state_variable_changes(context) {
-                    if changes.state_variables_have_been_manipulated() {
-                        capture!(self, context, func);
-                    }
+                if let Some(changes) = func.state_variable_changes(context)
+                    && changes.state_variables_have_been_manipulated()
+                {
+                    capture!(self, context, func);
                 }
             }
         }
@@ -61,7 +61,9 @@ impl IssueDetector for StateVariableChangesWithoutEventDetector {
     }
 
     fn description(&self) -> String {
-        String::from("There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes.")
+        String::from(
+            "There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

@@ -29,9 +29,9 @@ impl IssueDetector for ArbitraryTransferFromDetector {
             get_implemented_external_and_public_functions(context).filter(|function_definition| {
                 !has_msg_sender_binary_operation(&((*function_definition).into()))
                     && function_definition.modifiers.is_empty() // If there are modifiers, assume
-                                                                // the function is safe because
-                                                                // sometime modifiers' definition
-                                                                // may not be in scope
+                // the function is safe because
+                // sometime modifiers' definition
+                // may not be in scope
             });
 
         for func in suspected_functions {
@@ -46,12 +46,11 @@ impl IssueDetector for ArbitraryTransferFromDetector {
                     // and if the member name is "transferFrom" or "safeTransferFrom", then check if
                     // the first argument is valid If the first argument is
                     // valid, add the function call to found_instances
-                    if let Expression::MemberAccess(member_access) = &*function_call.expression {
-                        if member_access.member_name == "transferFrom"
-                            || member_access.member_name == "safeTransferFrom"
-                        {
-                            return true;
-                        }
+                    if let Expression::MemberAccess(member_access) = &*function_call.expression
+                        && (member_access.member_name == "transferFrom"
+                            || member_access.member_name == "safeTransferFrom")
+                    {
+                        return true;
                     }
                     false
                 })
@@ -75,10 +74,9 @@ impl IssueDetector for ArbitraryTransferFromDetector {
                     referenced_declaration: Some(referenced_id),
                     ..
                 }) = arg
+                    && func_parameters_ids.iter().any(|r| r == referenced_id)
                 {
-                    if func_parameters_ids.iter().any(|r| r == referenced_id) {
-                        capture!(self, context, func);
-                    }
+                    capture!(self, context, func);
                 }
             }
         }
@@ -95,7 +93,9 @@ impl IssueDetector for ArbitraryTransferFromDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.")
+        String::from(
+            "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

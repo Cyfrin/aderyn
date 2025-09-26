@@ -47,7 +47,9 @@ impl IssueDetector for MultipleConstructorsDetector {
     }
 
     fn description(&self) -> String {
-        String::from("In some versions of Solidity, contracts compile with multiple constructors. The first constructor takes precedence. This can lead to unexpected behavior.")
+        String::from(
+            "In some versions of Solidity, contracts compile with multiple constructors. The first constructor takes precedence. This can lead to unexpected behavior.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

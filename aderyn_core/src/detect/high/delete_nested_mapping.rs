@@ -26,44 +26,40 @@ impl IssueDetector for DeletionNestedMappingDetector {
         {
             if let Expression::IndexAccess(IndexAccess { base_expression, .. }) =
                 delete_operation.sub_expression.as_ref()
-            {
-                if let Expression::Identifier(Identifier {
+                && let Expression::Identifier(Identifier {
                     referenced_declaration: Some(referenced_id),
                     type_descriptions,
                     ..
                 }) = base_expression.as_ref()
+            {
+                // Check if we're deleting a value from mapping
+                if type_descriptions
+                    .type_string
+                    .as_ref()
+                    .is_some_and(|type_string| type_string.starts_with("mapping"))
                 {
-                    // Check if we're deleting a value from mapping
-                    if type_descriptions
-                        .type_string
-                        .as_ref()
-                        .is_some_and(|type_string| type_string.starts_with("mapping"))
-                    {
-                        // Check if the value in the mapping is of type struct that has a member
-                        // which is also a mapping
-                        if let Some(ASTNode::VariableDeclaration(VariableDeclaration {
-                            type_name: Some(TypeName::Mapping(Mapping { value_type, .. })),
+                    // Check if the value in the mapping is of type struct that has a member
+                    // which is also a mapping
+                    if let Some(ASTNode::VariableDeclaration(VariableDeclaration {
+                        type_name: Some(TypeName::Mapping(Mapping { value_type, .. })),
+                        ..
+                    })) = context.nodes.get(referenced_id)
+                        && let TypeName::UserDefinedTypeName(UserDefinedTypeName {
+                            referenced_declaration,
                             ..
-                        })) = context.nodes.get(referenced_id)
-                        {
-                            if let TypeName::UserDefinedTypeName(UserDefinedTypeName {
-                                referenced_declaration,
-                                ..
-                            }) = value_type.as_ref()
-                            {
-                                if let Some(ASTNode::StructDefinition(structure)) =
-                                    context.nodes.get(referenced_declaration)
-                                {
-                                    // Check that a member of a struct is of type mapping
-                                    if structure.members.iter().any(|member| {
-                                        member.type_descriptions.type_string.as_ref().is_some_and(
-                                            |type_string| type_string.starts_with("mapping"),
-                                        )
-                                    }) {
-                                        capture!(self, context, delete_operation);
-                                    }
-                                }
-                            }
+                        }) = value_type.as_ref()
+                        && let Some(ASTNode::StructDefinition(structure)) =
+                            context.nodes.get(referenced_declaration)
+                    {
+                        // Check that a member of a struct is of type mapping
+                        if structure.members.iter().any(|member| {
+                            member
+                                .type_descriptions
+                                .type_string
+                                .as_ref()
+                                .is_some_and(|type_string| type_string.starts_with("mapping"))
+                        }) {
+                            capture!(self, context, delete_operation);
                         }
                     }
                 }
@@ -82,7 +78,9 @@ impl IssueDetector for DeletionNestedMappingDetector {
     }
 
     fn description(&self) -> String {
-        String::from("A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract.")
+        String::from(
+            "A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

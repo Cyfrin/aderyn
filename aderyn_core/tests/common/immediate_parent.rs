@@ -29,37 +29,27 @@ impl IssueDetector for ImmediateParentDemonstrator {
         for assignment in context.assignments() {
             println!("0 {}", assignment);
             capture!(self, context, assignment);
-            if let Some(first_parent) = assignment.parent(context) {
-                if let ASTNode::ExpressionStatement(expr_stmnt) = first_parent {
-                    println!("1 {}", expr_stmnt);
-                    if let Some(second_parent) = first_parent.parent(context) {
-                        if let ASTNode::Block(for_statement) = second_parent {
-                            println!("2 {}", for_statement);
-                            capture!(self, context, second_parent);
-                            if let Some(third_parent) = for_statement.parent(context) {
-                                if let ASTNode::ForStatement(block) = third_parent {
-                                    println!("3 {}", block);
-                                    capture!(self, context, third_parent);
-                                }
-
-                                assert!(first_parent
-                                    .appears_after(context, second_parent)
-                                    .unwrap());
-                                assert!(first_parent
-                                    .appears_after(context, for_statement)
-                                    .unwrap());
-                                assert!(expr_stmnt.appears_after(context, for_statement).unwrap());
-                                assert!(second_parent
-                                    .appears_after(context, third_parent)
-                                    .unwrap());
-                                assert!(second_parent
-                                    .appears_before(context, first_parent)
-                                    .unwrap());
-                                assert!(third_parent
-                                    .appears_before(context, second_parent)
-                                    .unwrap());
-                            }
+            if let Some(first_parent) = assignment.parent(context)
+                && let ASTNode::ExpressionStatement(expr_stmnt) = first_parent
+            {
+                println!("1 {}", expr_stmnt);
+                if let Some(second_parent) = first_parent.parent(context)
+                    && let ASTNode::Block(for_statement) = second_parent
+                {
+                    println!("2 {}", for_statement);
+                    capture!(self, context, second_parent);
+                    if let Some(third_parent) = for_statement.parent(context) {
+                        if let ASTNode::ForStatement(block) = third_parent {
+                            println!("3 {}", block);
+                            capture!(self, context, third_parent);
                         }
+
+                        assert!(first_parent.appears_after(context, second_parent).unwrap());
+                        assert!(first_parent.appears_after(context, for_statement).unwrap());
+                        assert!(expr_stmnt.appears_after(context, for_statement).unwrap());
+                        assert!(second_parent.appears_after(context, third_parent).unwrap());
+                        assert!(second_parent.appears_before(context, first_parent).unwrap());
+                        assert!(third_parent.appears_before(context, second_parent).unwrap());
                     }
                 }
             }

@@ -1,16 +1,17 @@
 use crate::context::{
     macros::{mcp_error, mcp_success},
     mcp::{
-        list_contracts::render::{ContractInfoBuilder, ContractsListBuilder},
         MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
+        list_contracts::render::{ContractInfoBuilder, ContractsListBuilder},
     },
 };
 use askama::Template;
 use indoc::indoc;
 use rmcp::{
+    ErrorData as McpError,
     handler::server::wrapper::Parameters,
     model::{CallToolResult, Content},
-    schemars, ErrorData as McpError,
+    schemars,
 };
 use serde::Deserialize;
 use std::sync::Arc;

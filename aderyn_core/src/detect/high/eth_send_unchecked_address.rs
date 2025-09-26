@@ -61,7 +61,9 @@ impl IssueDetector for SendEtherNoChecksDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended.")
+        String::from(
+            "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

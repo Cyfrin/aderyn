@@ -5,7 +5,7 @@ use crate::{
     },
     context::workspace::WorkspaceContext,
 };
-use std::collections::{hash_map::Entry, HashMap};
+use std::collections::{HashMap, hash_map::Entry};
 
 impl Router {
     /// Given a function call, resolve the function definition with it's selector.
@@ -40,10 +40,10 @@ impl Router {
             return None;
         }
         let lookup_index = self.external_calls.get(&base_contract.id)?;
-        if let Some(ECDest::Fallback(func_id)) = lookup_index.routes.get("FALLBACK") {
-            if let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(func_id) {
-                return Some(fallback);
-            }
+        if let Some(ECDest::Fallback(func_id)) = lookup_index.routes.get("FALLBACK")
+            && let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(func_id)
+        {
+            return Some(fallback);
         }
         None
     }
@@ -58,10 +58,10 @@ impl Router {
             return None;
         }
         let lookup_index = self.external_calls.get(&base_contract.id)?;
-        if let Some(ECDest::Receive(func_id)) = lookup_index.routes.get("RECEIVE") {
-            if let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(func_id) {
-                return Some(fallback);
-            }
+        if let Some(ECDest::Receive(func_id)) = lookup_index.routes.get("RECEIVE")
+            && let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(func_id)
+        {
+            return Some(fallback);
         }
         None
     }

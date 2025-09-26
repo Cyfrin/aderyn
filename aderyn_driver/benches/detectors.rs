@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use aderyn_driver::{detector::get_all_issue_detectors, process::PreprocessedConfig};
 
-use criterion::{criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, criterion_group, criterion_main};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 
 fn bench_individual_detectors_on_contract_playground(c: &mut Criterion) {

@@ -1,6 +1,6 @@
 use super::{
-    token::{TokenDescriptor, TokenType},
     IgnoreLine, When,
+    token::{TokenDescriptor, TokenType},
 };
 use lazy_regex::*;
 
@@ -28,13 +28,8 @@ pub fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<Igno
 
         // Check if we have a specific set of detectors only, for which we want to ignore.
         for capture in ADERYN_IGNORE_REGEX.captures_iter(&token.content) {
-            let line_number = {
-                if capture.get(1).is_none() {
-                    token.end_line
-                } else {
-                    token.end_line + 1
-                }
-            };
+            let line_number =
+                { if capture.get(1).is_none() { token.end_line } else { token.end_line + 1 } };
             let detector_names = capture
                 .get(2)
                 .map(|m| m.as_str())

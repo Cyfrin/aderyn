@@ -53,7 +53,9 @@ impl IssueDetector for IncorrectUseOfModifierDetector {
     }
 
     fn description(&self) -> String {
-        String::from("If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert.")
+        String::from(
+            "If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -97,10 +99,10 @@ fn all_paths_have_revert_or_placeholder(
         curr_node: CfgNodeId,
         so_far: SoFar,
     ) -> bool {
-        if let Some(visited_node) = visited.get(&curr_node) {
-            if visited_node[so_far] {
-                return answers.get(&curr_node).expect("answers corrupted!")[so_far];
-            }
+        if let Some(visited_node) = visited.get(&curr_node)
+            && visited_node[so_far]
+        {
+            return answers.get(&curr_node).expect("answers corrupted!")[so_far];
         }
 
         let curr_cfg_node = cfg.nodes.get(&curr_node).expect("cfg is incomplete!");

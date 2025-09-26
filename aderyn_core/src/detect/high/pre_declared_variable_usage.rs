@@ -53,21 +53,18 @@ impl IssueDetector for PreDeclaredLocalVariableUsageDetector {
                 .collect::<HashSet<_>>();
 
             for used in used_local_variables {
-                if let Some(id) = used.referenced_declaration {
-                    if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
+                if let Some(id) = used.referenced_declaration
+                    && let Some(ASTNode::VariableDeclaration(variable_declaration)) =
                         context.nodes.get(&id)
-                    {
-                        let used_offset = helpers::get_node_offset(&used.into());
-                        let declaration_offset =
-                            helpers::get_node_offset(&variable_declaration.into());
+                {
+                    let used_offset = helpers::get_node_offset(&used.into());
+                    let declaration_offset = helpers::get_node_offset(&variable_declaration.into());
 
-                        if let (Some(used_offset), Some(declaration_offset)) =
-                            (used_offset, declaration_offset)
-                        {
-                            if used_offset < declaration_offset {
-                                capture!(self, context, used);
-                            }
-                        }
+                    if let (Some(used_offset), Some(declaration_offset)) =
+                        (used_offset, declaration_offset)
+                        && used_offset < declaration_offset
+                    {
+                        capture!(self, context, used);
                     }
                 }
             }

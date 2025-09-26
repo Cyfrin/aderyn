@@ -24,10 +24,10 @@ impl IssueDetector for RTLODetector {
         // capture!(self, context, item);
 
         for source_unit in context.source_units() {
-            if let Some(content) = &source_unit.source {
-                if content.contains('\u{202e}') {
-                    capture!(self, context, source_unit);
-                }
+            if let Some(content) = &source_unit.source
+                && content.contains('\u{202e}')
+            {
+                capture!(self, context, source_unit);
             }
         }
 
@@ -43,7 +43,9 @@ impl IssueDetector for RTLODetector {
     }
 
     fn description(&self) -> String {
-        String::from("The right to left override character may be misleading and cause potential attacks by visually misordering method arguments.")
+        String::from(
+            "The right to left override character may be misleading and cause potential attacks by visually misordering method arguments.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

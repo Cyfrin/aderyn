@@ -8,6 +8,9 @@ members = [
     "tools/*",
 ]
 
+[workspace.package]
+edition = "2024"
+
 [workspace.lints.clippy]
 large_enum_variant = "allow"
 result_large_err = "allow"

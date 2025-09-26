@@ -36,7 +36,9 @@ impl IssueDetector for YulReturnDetector {
     }
 
     fn description(&self) -> String {
-        String::from("This causes the transaction execution to halt, and nothing after that call will execute including code following the assembly block.")
+        String::from(
+            "This causes the transaction execution to halt, and nothing after that call will execute including code following the assembly block.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

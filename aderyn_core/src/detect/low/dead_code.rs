@@ -39,10 +39,10 @@ impl IssueDetector for DeadCodeDetector {
             .filter(|&f| {
                 if let Some(ASTNode::ContractDefinition(contract)) =
                     f.closest_ancestor_of_type(context, NodeType::ContractDefinition)
+                    && contract.kind == ContractKind::Contract
+                    && !contract.is_abstract
                 {
-                    if contract.kind == ContractKind::Contract && !contract.is_abstract {
-                        return true;
-                    }
+                    return true;
                 }
                 false
             })

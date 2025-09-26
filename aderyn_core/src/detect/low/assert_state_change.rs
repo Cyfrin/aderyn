@@ -21,12 +21,10 @@ impl IssueDetector for AssertStateChangeDetector {
         for function_call in context.function_calls() {
             if let Expression::Identifier(Identifier { name, .. }) =
                 function_call.expression.as_ref()
+                && name == "assert"
+                && function_call.arguments_change_contract_state(context).is_some_and(identity)
             {
-                if name == "assert"
-                    && function_call.arguments_change_contract_state(context).is_some_and(identity)
-                {
-                    capture!(self, context, function_call);
-                }
+                capture!(self, context, function_call);
             }
         }
 
@@ -42,7 +40,9 @@ impl IssueDetector for AssertStateChangeDetector {
     }
 
     fn description(&self) -> String {
-        String::from("An argument to `assert()` modifies the state. Use `require` for invariants modifying state.")
+        String::from(
+            "An argument to `assert()` modifies the state. Use `require` for invariants modifying state.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

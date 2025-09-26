@@ -98,7 +98,9 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
     }
 
     fn description(&self) -> String {
-        String::from("State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.")
+        String::from(
+            "State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

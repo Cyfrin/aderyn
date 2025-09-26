@@ -18,12 +18,11 @@ pub struct PeekOverDemonstrator {
 impl IssueDetector for PeekOverDemonstrator {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for event in context.event_definitions() {
-            if let Some(text) = event.peek_over(context) {
-                if text.contains("// SAME CONDITIONALS")
-                    || text.contains("// DIFFERENT CONDITIONALS")
-                {
-                    capture!(self, context, event);
-                }
+            if let Some(text) = event.peek_over(context)
+                && (text.contains("// SAME CONDITIONALS")
+                    || text.contains("// DIFFERENT CONDITIONALS"))
+            {
+                capture!(self, context, event);
             }
         }
 

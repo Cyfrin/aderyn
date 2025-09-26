@@ -6,7 +6,7 @@ pub mod tables;
 pub mod util;
 
 use std::{
-    fs::{remove_file, File},
+    fs::{File, remove_file},
     io::{self, Result, Write},
     path::Path,
 };

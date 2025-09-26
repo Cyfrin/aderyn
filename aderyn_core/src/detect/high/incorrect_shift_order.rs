@@ -43,7 +43,9 @@ impl IssueDetector for IncorrectShiftOrderDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.")
+        String::from(
+            "Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

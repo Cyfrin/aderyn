@@ -43,38 +43,37 @@ impl IssueDetector for UnsafeCastingDetector {
 
                 if let Expression::ElementaryTypeNameExpression(to_expression) =
                     &*function_call.expression
+                    && let Some(argument_types) = &to_expression.argument_types
                 {
-                    if let Some(argument_types) = &to_expression.argument_types {
-                        let casting_from_type =
-                            match argument_types.first().and_then(|arg| arg.type_string.as_ref()) {
-                                Some(t) => t,
-                                None => continue,
-                            };
-
-                        let casting_map = if casting_from_type.contains("uint") {
-                            &UINT_CASTING_MAP
-                        } else if casting_from_type.contains("int")
-                            && !casting_from_type.contains("uint")
-                        {
-                            &INT_CASTING_MAP
-                        } else if casting_from_type.contains("bytes")
-                            && !casting_from_type.contains("bytes ")
-                        {
-                            &BYTES32_CASTING_MAP
-                        } else {
-                            continue;
+                    let casting_from_type =
+                        match argument_types.first().and_then(|arg| arg.type_string.as_ref()) {
+                            Some(t) => t,
+                            None => continue,
                         };
 
-                        handle_casting(
-                            self,
-                            context,
-                            function_call,
-                            casting_from_type,
-                            casting_to_type,
-                            casting_map,
-                            identifier_id,
-                        );
-                    }
+                    let casting_map = if casting_from_type.contains("uint") {
+                        &UINT_CASTING_MAP
+                    } else if casting_from_type.contains("int")
+                        && !casting_from_type.contains("uint")
+                    {
+                        &INT_CASTING_MAP
+                    } else if casting_from_type.contains("bytes")
+                        && !casting_from_type.contains("bytes ")
+                    {
+                        &BYTES32_CASTING_MAP
+                    } else {
+                        continue;
+                    };
+
+                    handle_casting(
+                        self,
+                        context,
+                        function_call,
+                        casting_from_type,
+                        casting_to_type,
+                        casting_map,
+                        identifier_id,
+                    );
                 }
             }
         }
@@ -90,9 +89,11 @@ impl IssueDetector for UnsafeCastingDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.\
+        String::from(
+            "Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.\
         When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,\
-        leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers.")
+        leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

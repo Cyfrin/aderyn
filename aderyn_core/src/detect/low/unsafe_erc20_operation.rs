@@ -35,7 +35,9 @@ impl IssueDetector for UnsafeERC20OperationDetector {
     }
 
     fn description(&self) -> String {
-        String::from("ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.")
+        String::from(
+            "ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.",
+        )
     }
 
     fn severity(&self) -> IssueSeverity {

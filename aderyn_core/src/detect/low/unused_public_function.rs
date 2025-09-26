@@ -35,10 +35,9 @@ impl IssueDetector for UnusedPublicFunctionDetector {
         for unreferenced_public_function in unreferenced_public_functions {
             if let Some(ASTNode::ContractDefinition(parent_contract)) = unreferenced_public_function
                 .closest_ancestor_of_type(context, crate::ast::NodeType::ContractDefinition)
+                && parent_contract.is_abstract
             {
-                if parent_contract.is_abstract {
-                    continue;
-                }
+                continue;
             }
             capture!(self, context, unreferenced_public_function);
         }
@@ -51,7 +50,9 @@ impl IssueDetector for UnusedPublicFunctionDetector {
     }
 
     fn description(&self) -> String {
-        String::from("If a function is marked public but is not used internally, consider marking it as `external`.")
+        String::from(
+            "If a function is marked public but is not used internally, consider marking it as `external`.",
+        )
     }
 
     fn severity(&self) -> IssueSeverity {

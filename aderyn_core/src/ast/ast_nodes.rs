@@ -134,12 +134,12 @@ pub enum ExpressionOrVariableDeclarationStatement {
 impl ExpressionOrVariableDeclarationStatement {
     pub fn get_node_id(&self) -> Option<NodeID> {
         match self {
-            ExpressionOrVariableDeclarationStatement::ExpressionStatement(ref expression) => {
+            ExpressionOrVariableDeclarationStatement::ExpressionStatement(expression) => {
                 Some(expression.id)
             }
-            ExpressionOrVariableDeclarationStatement::VariableDeclarationStatement(
-                ref vd_stmnt,
-            ) => Some(vd_stmnt.id),
+            ExpressionOrVariableDeclarationStatement::VariableDeclarationStatement(vd_stmnt) => {
+                Some(vd_stmnt.id)
+            }
         }
     }
 }

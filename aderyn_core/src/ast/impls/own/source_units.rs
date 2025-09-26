@@ -1,5 +1,5 @@
 use crate::ast::{ImportDirective, SourceUnit, SourceUnitNode};
-use eyre::{eyre, Result};
+use eyre::{Result, eyre};
 use std::io;
 
 impl SourceUnit {

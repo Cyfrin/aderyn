@@ -9,8 +9,8 @@ use crate::{
 };
 use semver::Version;
 use solidity_ast::{
-    derive_ast_and_evm_info, AstSourceFile, IncludeConfig, ProjectConfigInput,
-    ProjectConfigInputBuilder, SolcVersionConfig, Source, VersionedAstOutputs,
+    AstSourceFile, IncludeConfig, ProjectConfigInput, ProjectConfigInputBuilder, SolcVersionConfig,
+    Source, VersionedAstOutputs, derive_ast_and_evm_info,
 };
 use std::path::{Path, PathBuf};
 

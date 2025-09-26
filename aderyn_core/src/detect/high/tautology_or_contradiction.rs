@@ -27,10 +27,9 @@ impl IssueDetector for TautologyOrContraditionDetector {
         for binary_operation in context.binary_operations() {
             if let Some(is_tautlogy_or_contradiction) =
                 binary_operation.is_tautology_or_contradiction(context)
+                && is_tautlogy_or_contradiction
             {
-                if is_tautlogy_or_contradiction {
-                    capture!(self, context, binary_operation);
-                }
+                capture!(self, context, binary_operation);
             }
         }
 
@@ -46,7 +45,9 @@ impl IssueDetector for TautologyOrContraditionDetector {
     }
 
     fn description(&self) -> String {
-        String::from("The condition has been determined to be either always true or always false due to the integer range in which we're operating.")
+        String::from(
+            "The condition has been determined to be either always true or always false due to the integer range in which we're operating.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -102,27 +103,21 @@ impl OperationIsTautologyOrContradiction for BinaryOperation {
             if let Some(lhs_value) = get_literal_value_or_constant_variable_value(
                 self.left_expression.get_node_id()?,
                 context,
-            ) {
-                if let Some(makes_sense) =
-                    does_operation_make_sense_with_lhs_value(&lhs_value, &operator, rhs_type_string)
-                {
-                    if !makes_sense {
-                        return Some(true);
-                    }
-                }
+            ) && let Some(makes_sense) =
+                does_operation_make_sense_with_lhs_value(&lhs_value, &operator, rhs_type_string)
+                && !makes_sense
+            {
+                return Some(true);
             }
 
             if let Some(rhs_value) = get_literal_value_or_constant_variable_value(
                 self.right_expression.get_node_id()?,
                 context,
-            ) {
-                if let Some(makes_sense) =
-                    does_operation_make_sense_with_rhs_value(lhs_type_string, &operator, &rhs_value)
-                {
-                    if !makes_sense {
-                        return Some(true);
-                    }
-                }
+            ) && let Some(makes_sense) =
+                does_operation_make_sense_with_rhs_value(lhs_type_string, &operator, &rhs_value)
+                && !makes_sense
+            {
+                return Some(true);
             }
         }
 
@@ -272,14 +267,14 @@ pub mod solidity_integer_helper {
                     max_val: find_uint_max(num_of_bits),
                 });
             }
-        } else if type_string.starts_with("int") {
-            if let Some((_, num_of_bits)) = &type_string.split_once("int") {
-                let num_of_bits = num_of_bits.parse::<u32>()?;
-                return Ok(SolidityNumberRange {
-                    min_val: find_int_min(num_of_bits),
-                    max_val: find_int_max(num_of_bits),
-                });
-            }
+        } else if type_string.starts_with("int")
+            && let Some((_, num_of_bits)) = &type_string.split_once("int")
+        {
+            let num_of_bits = num_of_bits.parse::<u32>()?;
+            return Ok(SolidityNumberRange {
+                min_val: find_int_min(num_of_bits),
+                max_val: find_int_max(num_of_bits),
+            });
         }
         Err("Invalid type string provided!".into())
     }
@@ -317,8 +312,8 @@ pub mod solidity_integer_helper {
         };
 
         use super::{
-            does_operation_make_sense_with_lhs_value, get_range_for_type_string,
-            SolidityNumberRange,
+            SolidityNumberRange, does_operation_make_sense_with_lhs_value,
+            get_range_for_type_string,
         };
 
         /*

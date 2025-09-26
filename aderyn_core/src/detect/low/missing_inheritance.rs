@@ -70,10 +70,10 @@ impl IssueDetector for MissingInheritanceDetector {
             if contract_selectors.is_empty() {
                 continue;
             }
-            if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(contract_id) {
-                if c.kind != ContractKind::Contract || c.is_abstract {
-                    continue;
-                }
+            if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(contract_id)
+                && (c.kind != ContractKind::Contract || c.is_abstract)
+            {
+                continue;
             }
             let inheritances = inheritance_map.entry(*contract_id).or_default();
             for (potentially_missing_inheritance, missing_function_selectors) in
@@ -96,13 +96,11 @@ impl IssueDetector for MissingInheritanceDetector {
 
                 if let Some(ASTNode::ContractDefinition(c)) =
                     context.nodes.get(potentially_missing_inheritance)
+                    && (c.kind == ContractKind::Interface || c.is_abstract)
                 {
-                    if c.kind == ContractKind::Interface || c.is_abstract {
-                        // Check that the contract is compatible with the missing inheritance
-                        if missing_function_selectors.iter().all(|s| contract_selectors.contains(s))
-                        {
-                            results.entry(*contract_id).or_default().insert(c.name.clone());
-                        }
+                    // Check that the contract is compatible with the missing inheritance
+                    if missing_function_selectors.iter().all(|s| contract_selectors.contains(s)) {
+                        results.entry(*contract_id).or_default().insert(c.name.clone());
                     }
                 }
             }
@@ -144,7 +142,9 @@ impl IssueDetector for MissingInheritanceDetector {
     }
 
     fn description(&self) -> String {
-        String::from("There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract.")
+        String::from(
+            "There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

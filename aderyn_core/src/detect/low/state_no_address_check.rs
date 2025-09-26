@@ -44,7 +44,7 @@ impl IssueDetector for StateNoAddressCheckDetector {
                             .contains("contract "))
                 {
                     Some((var_decl.id, (*var_decl).clone())) // Deref and clone the
-                                                             // VariableDeclaration.
+                // VariableDeclaration.
                 } else {
                     None
                 }
@@ -122,9 +122,23 @@ impl IssueDetector for StateNoAddressCheckDetector {
             // Function.parameters, then add the assignment to the found_instances
             for assignment in assignments {
                 if let Expression::Identifier(right_identifier) = &*assignment.right_hand_side {
-                    if let Some(reference_id) = right_identifier.referenced_declaration {
-                        if !identifier_reference_declaration_ids_in_binary_checks
+                    if let Some(reference_id) = right_identifier.referenced_declaration
+                        && !identifier_reference_declaration_ids_in_binary_checks
                             .contains(&reference_id)
+                        && function_definition
+                            .parameters
+                            .parameters
+                            .iter()
+                            .any(|x| x.id == reference_id)
+                    {
+                        capture!(self, context, assignment);
+                    }
+                } else {
+                    let right_identifiers = ExtractIdentifiers::from(&*assignment.right_hand_side);
+                    for right_identifier in right_identifiers.extracted {
+                        if let Some(reference_id) = right_identifier.referenced_declaration
+                            && !identifier_reference_declaration_ids_in_binary_checks
+                                .contains(&reference_id)
                             && function_definition
                                 .parameters
                                 .parameters
@@ -132,22 +146,6 @@ impl IssueDetector for StateNoAddressCheckDetector {
                                 .any(|x| x.id == reference_id)
                         {
                             capture!(self, context, assignment);
-                        }
-                    }
-                } else {
-                    let right_identifiers = ExtractIdentifiers::from(&*assignment.right_hand_side);
-                    for right_identifier in right_identifiers.extracted {
-                        if let Some(reference_id) = right_identifier.referenced_declaration {
-                            if !identifier_reference_declaration_ids_in_binary_checks
-                                .contains(&reference_id)
-                                && function_definition
-                                    .parameters
-                                    .parameters
-                                    .iter()
-                                    .any(|x| x.id == reference_id)
-                            {
-                                capture!(self, context, assignment);
-                            }
                         }
                     }
                 }

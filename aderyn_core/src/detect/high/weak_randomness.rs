@@ -32,19 +32,16 @@ impl IssueDetector for WeakRandomnessDetector {
                     }
                 }
                 // get variable definition
-                else if let Expression::Identifier(ref i) = *arg {
-                    if let Some(node_id) = i.referenced_declaration {
-                        let declaration = context.get_parent(node_id);
+                else if let Expression::Identifier(ref i) = *arg
+                    && let Some(node_id) = i.referenced_declaration
+                {
+                    let declaration = context.get_parent(node_id);
 
-                        if let Some(ASTNode::VariableDeclarationStatement(var)) = declaration {
-                            if let Some(Expression::FunctionCall(function_call)) =
-                                &var.initial_value
-                            {
-                                if check_encode(function_call) {
-                                    capture!(self, context, keccak);
-                                }
-                            }
-                        }
+                    if let Some(ASTNode::VariableDeclarationStatement(var)) = declaration
+                        && let Some(Expression::FunctionCall(function_call)) = &var.initial_value
+                        && check_encode(function_call)
+                    {
+                        capture!(self, context, keccak);
                     }
                 }
             }
@@ -59,13 +56,12 @@ impl IssueDetector for WeakRandomnessDetector {
                 if let Some(node_id) = i.referenced_declaration {
                     let declaration = context.get_parent(node_id);
 
-                    if let Some(ASTNode::VariableDeclarationStatement(var)) = declaration {
-                        if let Some(expression) = &var.initial_value {
-                            if check_operand(expression) {
-                                capture!(self, context, binary_operation);
-                                continue;
-                            }
-                        }
+                    if let Some(ASTNode::VariableDeclarationStatement(var)) = declaration
+                        && let Some(expression) = &var.initial_value
+                        && check_operand(expression)
+                    {
+                        capture!(self, context, binary_operation);
+                        continue;
                     }
                 }
             }
@@ -96,7 +92,9 @@ impl IssueDetector for WeakRandomnessDetector {
     }
 
     fn description(&self) -> String {
-        String::from("The use of keccak256 hash functions on predictable values like block.timestamp, block.number, or similar data, including modulo operations on these values, should be avoided for generating randomness, as they are easily predictable and manipulable. The `PREVRANDAO` opcode also should not be used as a source of randomness. Instead, utilize Chainlink VRF for cryptographically secure and provably random values to ensure protocol integrity.")
+        String::from(
+            "The use of keccak256 hash functions on predictable values like block.timestamp, block.number, or similar data, including modulo operations on these values, should be avoided for generating randomness, as they are easily predictable and manipulable. The `PREVRANDAO` opcode also should not be used as a source of randomness. Instead, utilize Chainlink VRF for cryptographically secure and provably random values to ensure protocol integrity.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -110,18 +108,17 @@ impl IssueDetector for WeakRandomnessDetector {
 
 // returns whether block.timestamp or block.number is used in encode function
 fn check_encode(function_call: &FunctionCall) -> bool {
-    if let Expression::MemberAccess(ref member_access) = *function_call.expression {
-        if member_access.member_name == "encodePacked" || member_access.member_name == "encode" {
-            for argument in &function_call.arguments {
-                if let Expression::MemberAccess(ref member_access) = *argument {
-                    if ["timestamp", "number"].iter().any(|ma| {
+    if let Expression::MemberAccess(ref member_access) = *function_call.expression
+        && (member_access.member_name == "encodePacked" || member_access.member_name == "encode")
+    {
+        for argument in &function_call.arguments {
+            if let Expression::MemberAccess(ref member_access) = *argument
+                    && ["timestamp", "number"].iter().any(|ma| {
                         ma == &member_access.member_name &&
                         matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block")
                     }) {
                         return true;
                     }
-                }
-            }
         }
     }
     false
@@ -141,11 +138,10 @@ fn check_operand(operand: &Expression) -> bool {
         Expression::FunctionCall(function_call) => {
             if function_call.kind == FunctionCallKind::TypeConversion {
                 // type conversion must have exactly one argument
-                if let Some(Expression::FunctionCall(ref inner_function_call)) = function_call.arguments.first() {
-                    if matches!(*inner_function_call.expression, Expression::Identifier(ref id) if id.name == "blockhash") {
+                if let Some(Expression::FunctionCall(inner_function_call)) = function_call.arguments.first()
+                    && matches!(*inner_function_call.expression, Expression::Identifier(ref id) if id.name == "blockhash") {
                         return true;
                     }
-                }
             }
         },
         _ => ()

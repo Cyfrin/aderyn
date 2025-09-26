@@ -1,19 +1,20 @@
 use crate::context::{
     macros::{mcp_error, mcp_success},
     mcp::{
+        MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
         node_finder::{
             render::{self, NodeInfo},
             utils::*,
         },
-        MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
     },
 };
 use askama::Template;
 use indoc::indoc;
 use rmcp::{
+    ErrorData as McpError,
     handler::server::wrapper::Parameters,
     model::{CallToolResult, Content},
-    schemars, ErrorData as McpError,
+    schemars,
 };
 use serde::Deserialize;
 use std::sync::Arc;
@@ -73,14 +74,14 @@ impl ModelContextProtocolTool for NodeFinderTool {
     fn execute(&self, input: Parameters<Self::Input>) -> Result<CallToolResult, McpError> {
         let payload = input.0;
 
-        if let Some(compilation_unit_index) = payload.compilation_unit_index {
-            if compilation_unit_index < 1 || compilation_unit_index > self.state.contexts.len() {
-                return mcp_error!(
-                    "Invalid compilation unit index: {}. Must be in range [1, {}]",
-                    compilation_unit_index,
-                    self.state.contexts.len()
-                );
-            }
+        if let Some(compilation_unit_index) = payload.compilation_unit_index
+            && (compilation_unit_index < 1 || compilation_unit_index > self.state.contexts.len())
+        {
+            return mcp_error!(
+                "Invalid compilation unit index: {}. Must be in range [1, {}]",
+                compilation_unit_index,
+                self.state.contexts.len()
+            );
         }
 
         let search_term: SearchType = {

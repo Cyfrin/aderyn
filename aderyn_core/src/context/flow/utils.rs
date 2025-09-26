@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-use super::{voids::CfgEndNode, ASTNode, Cfg, CfgNode, CfgNodeDescriptor, CfgNodeId, Statement};
+use super::{ASTNode, Cfg, CfgNode, CfgNodeDescriptor, CfgNodeId, Statement, voids::CfgEndNode};
 use crate::context::workspace::WorkspaceContext;
 
 impl Cfg {

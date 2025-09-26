@@ -32,10 +32,10 @@ impl LspReport {
                 message.push_str(&format!("\nDescription: {}\n", issue_body.description));
             }
 
-            if let Some(hint) = instance.hint.clone() {
-                if !hint.is_empty() {
-                    message.push_str(&format!("\nHint: {}\n", hint));
-                }
+            if let Some(hint) = instance.hint.clone()
+                && !hint.is_empty()
+            {
+                message.push_str(&format!("\nHint: {}\n", hint));
             }
 
             message.push_str(&format!(

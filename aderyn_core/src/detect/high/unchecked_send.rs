@@ -25,19 +25,13 @@ impl IssueDetector for UncheckedSendDetector {
                         type_string == "address" || type_string == "address payable"
                     })
                 })
+                && let Some(ASTNode::FunctionCall(func_call)) = member_access.parent(context)
+                && let Some(ASTNode::ExpressionStatement(expr_stmnt)) = func_call.parent(context)
+                && expr_stmnt
+                    .parent(context)
+                    .is_some_and(|node| node.node_type() == NodeType::Block)
             {
-                if let Some(ASTNode::FunctionCall(func_call)) = member_access.parent(context) {
-                    if let Some(ASTNode::ExpressionStatement(expr_stmnt)) =
-                        func_call.parent(context)
-                    {
-                        if expr_stmnt
-                            .parent(context)
-                            .is_some_and(|node| node.node_type() == NodeType::Block)
-                        {
-                            capture!(self, context, func_call);
-                        }
-                    }
-                }
+                capture!(self, context, func_call);
             }
         }
 
@@ -53,9 +47,11 @@ impl IssueDetector for UncheckedSendDetector {
     }
 
     fn description(&self) -> String {
-        String::from("The call `address(payable?).send(address)` may fail because of reasons like out-of-gas, \
+        String::from(
+            "The call `address(payable?).send(address)` may fail because of reasons like out-of-gas, \
         invalid recipient address or revert from the recipient, but not revert the transaction. Therefore, the boolean returned by this function call must be checked \
-        to be `true` in order to verify that the transaction was successful.")
+        to be `true` in order to verify that the transaction was successful.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

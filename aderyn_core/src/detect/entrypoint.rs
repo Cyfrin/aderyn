@@ -1,5 +1,5 @@
 use std::{
-    collections::{btree_map::Entry, BTreeMap, HashMap},
+    collections::{BTreeMap, HashMap, btree_map::Entry},
     error::Error,
     ops::Add,
     path::{Path, PathBuf},
@@ -136,17 +136,17 @@ pub fn detect_issues(
                 .into_par_iter()
                 .map(|context| {
                     let mut d = detector.skeletal_clone();
-                    if let Ok(found) = d.detect(context) {
-                        if found {
-                            let instances = d.instances();
-                            let hints = d.hints();
-                            return (
-                                instances,
-                                hints,
-                                context.src_filepaths.clone(),
-                                context.included.clone(),
-                            );
-                        }
+                    if let Ok(found) = d.detect(context)
+                        && found
+                    {
+                        let instances = d.instances();
+                        let hints = d.hints();
+                        return (
+                            instances,
+                            hints,
+                            context.src_filepaths.clone(),
+                            context.included.clone(),
+                        );
                     }
                     (
                         Default::default(),

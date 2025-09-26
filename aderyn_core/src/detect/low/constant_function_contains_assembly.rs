@@ -42,25 +42,25 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
 
                 if let Some(pragma_directive) = pragma_directive {
                     let version_req = pragma_directive_to_semver(pragma_directive);
-                    if let Ok(version_req) = version_req {
-                        if version_req_allows_below_0_5_0(&version_req) {
-                            // Only run the logic if pragma is allowed to run on solc <0.5.0
+                    if let Ok(version_req) = version_req
+                        && version_req_allows_below_0_5_0(&version_req)
+                    {
+                        // Only run the logic if pragma is allowed to run on solc <0.5.0
 
-                            if function.state_mutability() == &StateMutability::View
-                                || function.state_mutability() == &StateMutability::Pure
-                            {
-                                let mut tracker = AssemblyTracker { has_assembly: false };
-                                // keep legacy because < 0.5.0
-                                let callgraph = CallGraphConsumer::get_legacy(
-                                    context,
-                                    &[&(function.into())],
-                                    CallGraphDirection::Inward,
-                                )?;
-                                callgraph.accept(context, &mut tracker)?;
+                        if function.state_mutability() == &StateMutability::View
+                            || function.state_mutability() == &StateMutability::Pure
+                        {
+                            let mut tracker = AssemblyTracker { has_assembly: false };
+                            // keep legacy because < 0.5.0
+                            let callgraph = CallGraphConsumer::get_legacy(
+                                context,
+                                &[&(function.into())],
+                                CallGraphDirection::Inward,
+                            )?;
+                            callgraph.accept(context, &mut tracker)?;
 
-                                if tracker.has_assembly {
-                                    capture!(self, context, function);
-                                }
+                            if tracker.has_assembly {
+                                capture!(self, context, function);
                             }
                         }
                     }
@@ -80,9 +80,11 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
     }
 
     fn description(&self) -> String {
-        String::from("constant/pure/view was not enforced prior to Solidity 0.5. Starting from Solidity 0.5, a call to a constant/pure/view function uses the STATICCALL opcode, \
+        String::from(
+            "constant/pure/view was not enforced prior to Solidity 0.5. Starting from Solidity 0.5, a call to a constant/pure/view function uses the STATICCALL opcode, \
         which reverts in case of state modification. As a result, a call to an incorrectly labeled function may trap a contract compiled with Solidity 0.5. \
-        https://docs.soliditylang.org/en/develop/050-breaking-changes.html#interoperability-with-older-contracts")
+        https://docs.soliditylang.org/en/develop/050-breaking-changes.html#interoperability-with-older-contracts",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

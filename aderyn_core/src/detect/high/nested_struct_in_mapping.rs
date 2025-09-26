@@ -50,33 +50,29 @@ impl IssueDetector for NestedStructInMappingDetector {
         });
 
         for mapping in mappings {
-            if let Some(TypeName::Mapping(mapping_type)) = &mapping.type_name {
-                if let TypeName::UserDefinedTypeName(user_defined_type) = &*mapping_type.value_type
+            if let Some(TypeName::Mapping(mapping_type)) = &mapping.type_name
+                && let TypeName::UserDefinedTypeName(user_defined_type) = &*mapping_type.value_type
+            {
+                let struct_definition_ast_node =
+                    context.nodes.get(&user_defined_type.referenced_declaration);
+                if let Some(ASTNode::StructDefinition(struct_definition)) =
+                    struct_definition_ast_node
                 {
-                    let struct_definition_ast_node =
-                        context.nodes.get(&user_defined_type.referenced_declaration);
-                    if let Some(ASTNode::StructDefinition(struct_definition)) =
-                        struct_definition_ast_node
-                    {
-                        for member in struct_definition.members.iter() {
-                            if let Some(member_type_string) = &member.type_descriptions.type_string
-                            {
-                                if member_type_string.contains("struct") {
-                                    // Check if the contract that this is in allows for solidity
-                                    // pragma below 0.5.0
-                                    let source_unit_ast_node = context
-                                        .get_closest_ancestor(mapping.id, NodeType::SourceUnit);
-                                    if let Some(source_unit_ast_node) = source_unit_ast_node {
-                                        let pragma_directives =
-                                            ExtractPragmaDirectives::from(source_unit_ast_node)
-                                                .extracted;
-                                        let version_req = pragma_directive_to_semver(
-                                            pragma_directives.first().unwrap(),
-                                        )?;
-                                        if version_req_allows_below_0_5_0(&version_req) {
-                                            capture!(self, context, mapping);
-                                        }
-                                    }
+                    for member in struct_definition.members.iter() {
+                        if let Some(member_type_string) = &member.type_descriptions.type_string
+                            && member_type_string.contains("struct")
+                        {
+                            // Check if the contract that this is in allows for solidity
+                            // pragma below 0.5.0
+                            let source_unit_ast_node =
+                                context.get_closest_ancestor(mapping.id, NodeType::SourceUnit);
+                            if let Some(source_unit_ast_node) = source_unit_ast_node {
+                                let pragma_directives =
+                                    ExtractPragmaDirectives::from(source_unit_ast_node).extracted;
+                                let version_req =
+                                    pragma_directive_to_semver(pragma_directives.first().unwrap())?;
+                                if version_req_allows_below_0_5_0(&version_req) {
+                                    capture!(self, context, mapping);
                                 }
                             }
                         }
@@ -97,7 +93,9 @@ impl IssueDetector for NestedStructInMappingDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Prior to updates in Solidity 0.5.0, public mappings with nested structs compiled, but produced incorrect values. Refrain from using these, or update to a more recent version of Solidity.")
+        String::from(
+            "Prior to updates in Solidity 0.5.0, public mappings with nested structs compiled, but produced incorrect values. Refrain from using these, or update to a more recent version of Solidity.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

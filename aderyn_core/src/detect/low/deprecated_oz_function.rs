@@ -66,7 +66,9 @@ impl IssueDetector for DeprecatedOZFunctionDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/")
+        String::from(
+            "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/",
+        )
     }
 
     fn severity(&self) -> IssueSeverity {

@@ -52,7 +52,7 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
     // Load env variables
     if let Some(map) = config.env.clone() {
         map.iter().for_each(|(k, v)| {
-            env::set_var(k, v);
+            unsafe { env::set_var(k, v) };
         })
     }
 
@@ -64,10 +64,10 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
 
     // If config.src is some, command line arg src overrides config.src
     let mut local_src: Option<String> = current.src.clone();
-    if let Some(config_src) = &config.src {
-        if local_src.is_none() {
-            local_src = Some(config_src.clone());
-        }
+    if let Some(config_src) = &config.src
+        && local_src.is_none()
+    {
+        local_src = Some(config_src.clone());
     }
 
     // If config.exclude is some, append each value to exclude if it is not already present
@@ -107,10 +107,10 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
 }
 
 fn clear_empty_vectors<T>(vec: &mut Option<Vec<T>>) {
-    if let Some(v) = vec {
-        if v.is_empty() {
-            *vec = None;
-        }
+    if let Some(v) = vec
+        && v.is_empty()
+    {
+        *vec = None;
     }
 }
 

@@ -32,37 +32,33 @@ impl IssueDetector for StorageSignedIntegerArrayDetector {
             let tuple_expressions = ExtractTupleExpressions::from(source_unit).extracted;
             let pragma_directives = ExtractPragmaDirectives::from(source_unit).extracted;
 
-            if let Some(pragma_directive) = pragma_directives.first() {
-                if let Ok(pragma_semver) = helpers::pragma_directive_to_semver(pragma_directive) {
-                    if version_req_allows_below_0_5_10(&pragma_semver) {
-                        // Search for a literal array with one negative value in it
-                        for tuple_expression in tuple_expressions
-                            .into_iter()
-                            .filter(|tuple_expression| tuple_expression.is_inline_array)
+            if let Some(pragma_directive) = pragma_directives.first()
+                && let Ok(pragma_semver) = helpers::pragma_directive_to_semver(pragma_directive)
+                && version_req_allows_below_0_5_10(&pragma_semver)
+            {
+                // Search for a literal array with one negative value in it
+                for tuple_expression in tuple_expressions
+                    .into_iter()
+                    .filter(|tuple_expression| tuple_expression.is_inline_array)
+                {
+                    // First, make sure it's being assigned to an array pointer to storage
+                    if !is_tuple_being_assigned_to_storage_array(&tuple_expression, context) {
+                        continue;
+                    }
+
+                    // Now, make sure there is at least 1 negative value in the tuple array
+                    let negative_component_present = tuple_expression.components.iter().any(|c| {
+                        if let Some(Expression::UnaryOperation(UnaryOperation {
+                            operator, ..
+                        })) = c
                         {
-                            // First, make sure it's being assigned to an array pointer to storage
-                            if !is_tuple_being_assigned_to_storage_array(&tuple_expression, context)
-                            {
-                                continue;
-                            }
-
-                            // Now, make sure there is at least 1 negative value in the tuple array
-                            let negative_component_present =
-                                tuple_expression.components.iter().any(|c| {
-                                    if let Some(Expression::UnaryOperation(UnaryOperation {
-                                        operator,
-                                        ..
-                                    })) = c
-                                    {
-                                        return operator == "-";
-                                    }
-                                    false
-                                });
-
-                            if negative_component_present {
-                                capture!(self, context, tuple_expression);
-                            }
+                            return operator == "-";
                         }
+                        false
+                    });
+
+                    if negative_component_present {
+                        capture!(self, context, tuple_expression);
                     }
                 }
             }
@@ -80,8 +76,10 @@ impl IssueDetector for StorageSignedIntegerArrayDetector {
     }
 
     fn description(&self) -> String {
-        String::from("solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.\
-            Use solidity version 0.5.10 or above.")
+        String::from(
+            "solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.\
+            Use solidity version 0.5.10 or above.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -122,16 +120,14 @@ fn is_tuple_being_assigned_to_storage_array(
     tuple_expression: &TupleExpression,
     context: &WorkspaceContext,
 ) -> bool {
-    if let Some(ASTNode::Assignment(assignment)) = tuple_expression.parent(context) {
-        if let Expression::Identifier(Identifier {
+    if let Some(ASTNode::Assignment(assignment)) = tuple_expression.parent(context)
+        && let Expression::Identifier(Identifier {
             type_descriptions: TypeDescriptions { type_string: Some(type_string), .. },
             ..
         }) = assignment.left_hand_side.as_ref()
-        {
-            if SIGNED_STORAGE_ARRAY_POINTER.is_match(type_string) {
-                return true;
-            }
-        }
+        && SIGNED_STORAGE_ARRAY_POINTER.is_match(type_string)
+    {
+        return true;
     }
     false
 }
@@ -142,7 +138,7 @@ mod storage_signed_array_detector {
     use crate::detect::{
         detector::IssueDetector,
         high::signed_integer_storage_array::{
-            StorageSignedIntegerArrayDetector, SIGNED_STORAGE_ARRAY_POINTER,
+            SIGNED_STORAGE_ARRAY_POINTER, StorageSignedIntegerArrayDetector,
         },
     };
 

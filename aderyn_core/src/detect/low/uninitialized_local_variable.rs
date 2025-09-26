@@ -35,7 +35,7 @@ impl IssueDetector for UninitializedLocalVariableDetector {
         {
             potentially_uninitialized_local_variables.extend(
                 variable_declaration_statement.declarations.iter().flat_map(|s| {
-                    if let Some(ref s) = s {
+                    if let Some(s) = s {
                         return Some(s.id);
                     }
                     None
@@ -61,17 +61,17 @@ impl IssueDetector for UninitializedLocalVariableDetector {
         }
 
         for id in potentially_uninitialized_local_variables {
-            if let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&id) {
-                if !blacklist_variable_names.contains(&v.name) {
-                    // Ignore memory structs because they can have an initializeMethod of their own.
-                    // So not covered under the assignment operator
-                    if v.type_descriptions
-                        .type_string
-                        .as_ref()
-                        .is_some_and(|type_string| !type_string.contains("struct "))
-                    {
-                        capture!(self, context, v);
-                    }
+            if let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&id)
+                && !blacklist_variable_names.contains(&v.name)
+            {
+                // Ignore memory structs because they can have an initializeMethod of their own.
+                // So not covered under the assignment operator
+                if v.type_descriptions
+                    .type_string
+                    .as_ref()
+                    .is_some_and(|type_string| !type_string.contains("struct "))
+                {
+                    capture!(self, context, v);
                 }
             }
         }
@@ -88,7 +88,9 @@ impl IssueDetector for UninitializedLocalVariableDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability.")
+        String::from(
+            "Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

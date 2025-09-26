@@ -1,10 +1,10 @@
 // Imports
 use crate::context::{macros::make_route, workspace::WorkspaceContext};
 use rmcp::{
+    ErrorData as McpError,
     handler::server::{tool::ToolRoute, wrapper::Parameters},
     model::*,
     schemars::JsonSchema,
-    ErrorData as McpError,
 };
 use solidity_ast::ProjectConfigInput;
 use std::{any::Any, path::PathBuf, sync::Arc};

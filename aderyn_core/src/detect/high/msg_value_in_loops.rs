@@ -55,7 +55,9 @@ impl IssueDetector for MsgValueUsedInLoopDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`.")
+        String::from(
+            "Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

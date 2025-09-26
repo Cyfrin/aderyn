@@ -3,10 +3,10 @@ use notify_debouncer_full::notify::{Event, RecommendedWatcher, Result as NotifyR
 use std::{collections::HashSet, path::PathBuf, sync::Arc, time::Duration};
 use tokio::{
     runtime::Builder,
-    sync::{mpsc::Receiver, Mutex},
+    sync::{Mutex, mpsc::Receiver},
 };
 use tower_lsp::{
-    jsonrpc::Result, lsp_types::*, Client, ClientSocket, LanguageServer, LspService, Server,
+    Client, ClientSocket, LanguageServer, LspService, Server, jsonrpc::Result, lsp_types::*,
 };
 
 use aderyn_driver::driver::{self, Args};

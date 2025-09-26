@@ -5,7 +5,7 @@ use crate::{
         workspace::{ASTNode, WorkspaceContext},
     },
 };
-use std::collections::{hash_map::*, HashMap, HashSet};
+use std::collections::{HashMap, HashSet, hash_map::*};
 
 #[derive(Debug, Default)]
 pub struct CallgraphExplorationPoints {

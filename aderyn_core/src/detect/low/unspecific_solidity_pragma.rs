@@ -45,7 +45,9 @@ impl IssueDetector for UnspecificSolidityPragmaDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`")
+        String::from(
+            "Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`",
+        )
     }
 
     fn severity(&self) -> IssueSeverity {

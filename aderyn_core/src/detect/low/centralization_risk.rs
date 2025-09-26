@@ -19,8 +19,8 @@ impl IssueDetector for CentralizationRiskDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for contract_definition in context.contract_definitions().iter() {
             for bc in contract_definition.base_contracts.iter() {
-                if let Some(base_name) = bc.base_name.name() {
-                    if matches!(
+                if let Some(base_name) = bc.base_name.name()
+                    && matches!(
                         base_name.as_str(),
                         "Owned"
                             | "Ownable"
@@ -31,9 +31,9 @@ impl IssueDetector for CentralizationRiskDetector {
                             | "Auth"
                             | "RolesAuthority"
                             | "MultiRolesAuthority"
-                    ) {
-                        capture!(self, context, bc);
-                    }
+                    )
+                {
+                    capture!(self, context, bc);
                 }
             }
         }
@@ -58,7 +58,9 @@ impl IssueDetector for CentralizationRiskDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.")
+        String::from(
+            "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

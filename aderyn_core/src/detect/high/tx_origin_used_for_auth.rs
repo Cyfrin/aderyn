@@ -61,8 +61,10 @@ impl IssueDetector for TxOriginUsedForAuthDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Using `tx.origin` may lead to problems when users are interacting via smart contract with your \
-            protocol. It is recommended to use `msg.sender` for authentication.")
+        String::from(
+            "Using `tx.origin` may lead to problems when users are interacting via smart contract with your \
+            protocol. It is recommended to use `msg.sender` for authentication.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

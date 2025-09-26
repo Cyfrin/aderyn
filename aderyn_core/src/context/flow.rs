@@ -10,13 +10,13 @@ pub mod voids;
 
 use crate::{
     ast::*,
-    context::flow::utils::{discover_jump_sources, Calibration},
+    context::flow::utils::{Calibration, discover_jump_sources},
 };
 
 pub use kind::CfgNodeKind;
 pub use reducibles::CfgBlock;
 
-use std::collections::{hash_map::Entry, HashMap, HashSet, VecDeque};
+use std::collections::{HashMap, HashSet, VecDeque, hash_map::Entry};
 
 use self::{
     primitives::*,

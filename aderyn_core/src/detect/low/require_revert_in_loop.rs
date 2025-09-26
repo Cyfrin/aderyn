@@ -52,7 +52,9 @@ impl IssueDetector for RequireRevertInLoopDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop")
+        String::from(
+            "Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

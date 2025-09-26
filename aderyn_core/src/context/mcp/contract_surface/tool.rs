@@ -4,20 +4,21 @@ use crate::{
     context::{
         macros::{mcp_error, mcp_success},
         mcp::{
+            MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
             contract_surface::util::{
                 get_classified_entrypoint_functions, get_inheritance_chain_info,
                 get_total_state_variables,
             },
-            MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
         },
     },
 };
 use askama::Template;
 use indoc::indoc;
 use rmcp::{
+    ErrorData as McpError,
     handler::server::wrapper::Parameters,
     model::{CallToolResult, Content},
-    schemars, ErrorData as McpError,
+    schemars,
 };
 use serde::Deserialize;
 use std::sync::Arc;

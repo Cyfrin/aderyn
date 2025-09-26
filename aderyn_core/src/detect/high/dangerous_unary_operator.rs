@@ -19,10 +19,10 @@ pub struct DangerousUnaryOperatorDetector {
 impl IssueDetector for DangerousUnaryOperatorDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for assignment in context.assignments() {
-            if let Some(content) = assignment.peek(context) {
-                if content.contains("=-") || content.contains("=+") {
-                    capture!(self, context, assignment);
-                }
+            if let Some(content) = assignment.peek(context)
+                && (content.contains("=-") || content.contains("=+"))
+            {
+                capture!(self, context, assignment);
             }
         }
 
@@ -38,8 +38,10 @@ impl IssueDetector for DangerousUnaryOperatorDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Potentially mistaken `=+` for `+=` or `=-` for `-=`. This acts as an assignment instead of an increment or decrement.\
-        Use the correct operator to increment or decrement a variable.")
+        String::from(
+            "Potentially mistaken `=+` for `+=` or `=-` for `-=`. This acts as an assignment instead of an increment or decrement.\
+        Use the correct operator to increment or decrement a variable.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

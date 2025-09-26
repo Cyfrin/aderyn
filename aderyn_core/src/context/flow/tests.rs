@@ -3,8 +3,8 @@ mod control_flow_tests {
     use crate::{
         context::{
             flow::{
-                visualizer::control_flow_tests::output_graph, Block, Cfg, CfgNode,
-                CfgNodeDescriptor, CfgNodeId,
+                Block, Cfg, CfgNode, CfgNodeDescriptor, CfgNodeId,
+                visualizer::control_flow_tests::output_graph,
             },
             workspace::WorkspaceContext,
         },
