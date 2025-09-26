@@ -97,9 +97,10 @@ impl IssueDetector for IncorrectERC721InterfaceDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Incorrect return values for ERC721 functions. A contract compiled with Solidity > 0.4.22 \
+        String::from(
+            "Incorrect return values for ERC721 functions. A contract compiled with Solidity > 0.4.22 \
             interacting with these functions will fail to execute them, as the return value is missing. Set the \
-            appropriate return values and types for the defined ERC721 functions."
+            appropriate return values and types for the defined ERC721 functions.",
         )
     }
 

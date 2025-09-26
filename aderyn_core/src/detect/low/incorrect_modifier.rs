@@ -53,7 +53,9 @@ impl IssueDetector for IncorrectUseOfModifierDetector {
     }
 
     fn description(&self) -> String {
-        String::from("If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert.")
+        String::from(
+            "If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

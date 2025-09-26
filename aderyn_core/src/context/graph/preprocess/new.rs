@@ -6,7 +6,7 @@ use crate::{
         workspace::WorkspaceContext,
     },
 };
-use std::collections::{hash_map::*, HashSet};
+use std::collections::{HashSet, hash_map::*};
 
 impl WorkspaceCallGraphs {
     pub fn build(context: &WorkspaceContext) -> WorkspaceCallGraphs {

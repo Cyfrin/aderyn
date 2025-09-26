@@ -70,7 +70,9 @@ impl IssueDetector for DelegateCallUncheckedAddressDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Making a `delegatecall` to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address.")
+        String::from(
+            "Making a `delegatecall` to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

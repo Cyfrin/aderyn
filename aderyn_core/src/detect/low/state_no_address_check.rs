@@ -44,7 +44,7 @@ impl IssueDetector for StateNoAddressCheckDetector {
                             .contains("contract "))
                 {
                     Some((var_decl.id, (*var_decl).clone())) // Deref and clone the
-                                                             // VariableDeclaration.
+                // VariableDeclaration.
                 } else {
                     None
                 }

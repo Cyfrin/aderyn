@@ -9,7 +9,7 @@ mod tests;
 mod utils;
 mod visit;
 
-use super::{traits::CallGraphVisitor, Error, Result};
+use super::{Error, Result, traits::CallGraphVisitor};
 use crate::{
     ast::NodeID,
     context::workspace::{ASTNode, WorkspaceContext},

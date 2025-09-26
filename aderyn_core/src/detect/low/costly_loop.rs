@@ -55,7 +55,9 @@ impl IssueDetector for CostlyLoopDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hold the loop computation result.")
+        String::from(
+            "Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hold the loop computation result.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

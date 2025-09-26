@@ -140,7 +140,9 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
     }
 
     fn description(&self) -> String {
-        String::from("State variables that are only changed in the constructor should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor")
+        String::from(
+            "State variables that are only changed in the constructor should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

@@ -58,7 +58,9 @@ impl IssueDetector for CentralizationRiskDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.")
+        String::from(
+            "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

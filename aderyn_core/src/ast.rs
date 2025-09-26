@@ -9,9 +9,9 @@ pub mod yul;
 
 pub use self::{impls::*, magic::*, node_type::*, yul::*};
 
+pub use NodeID;
 pub use ast::ASTNode;
 pub use ast_nodes::*;
-pub use NodeID;
 
 #[cfg(test)]
 mod tests {

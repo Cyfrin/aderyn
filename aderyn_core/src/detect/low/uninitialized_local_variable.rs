@@ -88,7 +88,9 @@ impl IssueDetector for UninitializedLocalVariableDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability.")
+        String::from(
+            "Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

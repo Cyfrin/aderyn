@@ -1,5 +1,5 @@
 use std::{
-    collections::{btree_map::Entry, BTreeMap, HashMap},
+    collections::{BTreeMap, HashMap, btree_map::Entry},
     error::Error,
     ops::Add,
     path::{Path, PathBuf},

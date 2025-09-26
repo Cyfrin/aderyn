@@ -51,7 +51,9 @@ impl IssueDetector for UnusedPublicFunctionDetector {
     }
 
     fn description(&self) -> String {
-        String::from("If a function is marked public but is not used internally, consider marking it as `external`.")
+        String::from(
+            "If a function is marked public but is not used internally, consider marking it as `external`.",
+        )
     }
 
     fn severity(&self) -> IssueSeverity {

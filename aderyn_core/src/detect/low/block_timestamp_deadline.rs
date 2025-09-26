@@ -43,8 +43,7 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
                     || member_access.member_name
                         == "swapExactTokensForETHSupportingFeeOnTransferTokens"
                 {
-                    if let Expression::MemberAccess(member_access) =
-                        call.arguments.last().unwrap()
+                    if let Expression::MemberAccess(member_access) = call.arguments.last().unwrap()
                     {
                         if member_access.member_name == "timestamp" {
                             if let Expression::Identifier(ref identifier) =

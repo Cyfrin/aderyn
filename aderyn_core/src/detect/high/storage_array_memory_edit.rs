@@ -64,7 +64,9 @@ impl IssueDetector for StorageArrayMemoryEditDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead.")
+        String::from(
+            "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

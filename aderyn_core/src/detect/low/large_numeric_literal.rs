@@ -38,7 +38,9 @@ impl IssueDetector for LargeLiteralValueDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Large literal values multiples of 10000 can be replaced with scientific notation.Use `e` notation, for example: `1e18`, instead of its full numeric value.")
+        String::from(
+            "Large literal values multiples of 10000 can be replaced with scientific notation.Use `e` notation, for example: `1e18`, instead of its full numeric value.",
+        )
     }
 
     fn severity(&self) -> IssueSeverity {

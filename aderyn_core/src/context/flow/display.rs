@@ -1,6 +1,6 @@
 use crate::context::{browser::Peek, workspace::WorkspaceContext};
 
-use super::{primitives::*, voids::*, CfgBreakStatement, CfgNodeDescriptor};
+use super::{CfgBreakStatement, CfgNodeDescriptor, primitives::*, voids::*};
 
 impl CfgNodeDescriptor {
     pub fn display(&self, context: &WorkspaceContext) -> String {

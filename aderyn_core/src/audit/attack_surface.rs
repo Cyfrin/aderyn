@@ -1,4 +1,4 @@
-use prettytable::{row, Row};
+use prettytable::{Row, row};
 
 use super::auditor::AuditorDetector;
 use crate::{

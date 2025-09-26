@@ -137,9 +137,9 @@ impl ExpressionOrVariableDeclarationStatement {
             ExpressionOrVariableDeclarationStatement::ExpressionStatement(expression) => {
                 Some(expression.id)
             }
-            ExpressionOrVariableDeclarationStatement::VariableDeclarationStatement(
-                vd_stmnt,
-            ) => Some(vd_stmnt.id),
+            ExpressionOrVariableDeclarationStatement::VariableDeclarationStatement(vd_stmnt) => {
+                Some(vd_stmnt.id)
+            }
         }
     }
 }

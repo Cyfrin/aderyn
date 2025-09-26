@@ -3,7 +3,7 @@ use eyre::Result;
 use prettytable::Row;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
 use std::{
-    collections::{btree_map::Entry, BTreeMap},
+    collections::{BTreeMap, btree_map::Entry},
     error::Error,
 };
 

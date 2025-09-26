@@ -58,7 +58,9 @@ impl IssueDetector for DelegatecallInLoopDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Using `delegatecall` in loop may consume excessive gas, or worse, lead to more severe issues.")
+        String::from(
+            "Using `delegatecall` in loop may consume excessive gas, or worse, lead to more severe issues.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

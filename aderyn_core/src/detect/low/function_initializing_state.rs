@@ -73,7 +73,9 @@ impl IssueDetector for FunctionInitializingStateDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Instead of using a function to initialize a state variable in its declaration; declare the state variable and initialize it in the constructor.")
+        String::from(
+            "Instead of using a function to initialize a state variable in its declaration; declare the state variable and initialize it in the constructor.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

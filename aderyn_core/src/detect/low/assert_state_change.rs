@@ -42,7 +42,9 @@ impl IssueDetector for AssertStateChangeDetector {
     }
 
     fn description(&self) -> String {
-        String::from("An argument to `assert()` modifies the state. Use `require` for invariants modifying state.")
+        String::from(
+            "An argument to `assert()` modifies the state. Use `require` for invariants modifying state.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

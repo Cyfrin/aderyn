@@ -80,8 +80,10 @@ impl IssueDetector for StorageSignedIntegerArrayDetector {
     }
 
     fn description(&self) -> String {
-        String::from("solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.\
-            Use solidity version 0.5.10 or above.")
+        String::from(
+            "solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.\
+            Use solidity version 0.5.10 or above.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -142,7 +144,7 @@ mod storage_signed_array_detector {
     use crate::detect::{
         detector::IssueDetector,
         high::signed_integer_storage_array::{
-            StorageSignedIntegerArrayDetector, SIGNED_STORAGE_ARRAY_POINTER,
+            SIGNED_STORAGE_ARRAY_POINTER, StorageSignedIntegerArrayDetector,
         },
     };
 

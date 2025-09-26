@@ -46,7 +46,9 @@ impl IssueDetector for TautologyOrContraditionDetector {
     }
 
     fn description(&self) -> String {
-        String::from("The condition has been determined to be either always true or always false due to the integer range in which we're operating.")
+        String::from(
+            "The condition has been determined to be either always true or always false due to the integer range in which we're operating.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -317,8 +319,8 @@ pub mod solidity_integer_helper {
         };
 
         use super::{
-            does_operation_make_sense_with_lhs_value, get_range_for_type_string,
-            SolidityNumberRange,
+            SolidityNumberRange, does_operation_make_sense_with_lhs_value,
+            get_range_for_type_string,
         };
 
         /*

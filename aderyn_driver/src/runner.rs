@@ -3,7 +3,7 @@ use std::error::Error;
 
 use crate::{
     driver::CliArgsOutputConfig,
-    interface::{lsp::LspReport, output_interface_router, tables, OutputInterface},
+    interface::{OutputInterface, lsp::LspReport, output_interface_router, tables},
     process::WorkspaceContextWrapper,
 };
 use aderyn_core::report::*;

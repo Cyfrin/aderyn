@@ -47,7 +47,9 @@ impl IssueDetector for ReusedContractNameDetector {
     }
 
     fn description(&self) -> String {
-        String::from("When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.")
+        String::from(
+            "When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

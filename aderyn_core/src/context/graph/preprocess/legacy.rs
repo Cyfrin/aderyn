@@ -1,4 +1,4 @@
-use std::collections::{hash_map, HashMap, HashSet};
+use std::collections::{HashMap, HashSet, hash_map};
 
 use crate::{
     ast::{Expression, IdentifierOrIdentifierPath, NodeID, NodeType},
@@ -9,7 +9,7 @@ use crate::{
 };
 
 use crate::context::graph::{
-    traits::Transpose, Error, LegacyWorkspaceCallGraph, RawCallGraph, Result,
+    Error, LegacyWorkspaceCallGraph, RawCallGraph, Result, traits::Transpose,
 };
 
 impl LegacyWorkspaceCallGraph {

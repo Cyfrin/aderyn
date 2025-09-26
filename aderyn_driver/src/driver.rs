@@ -4,7 +4,7 @@ use crate::{
     process::make_context,
     runner::{run_auditor_mode, run_detector_mode, run_lsp_mode},
 };
-use aderyn_core::detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity};
+use aderyn_core::detect::detector::{IssueDetector, IssueSeverity, get_all_issue_detectors};
 use field_access::FieldAccess;
 use std::sync::Arc;
 use tokio::sync::Mutex;

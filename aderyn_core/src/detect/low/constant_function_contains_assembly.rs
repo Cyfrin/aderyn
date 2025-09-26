@@ -80,9 +80,11 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
     }
 
     fn description(&self) -> String {
-        String::from("constant/pure/view was not enforced prior to Solidity 0.5. Starting from Solidity 0.5, a call to a constant/pure/view function uses the STATICCALL opcode, \
+        String::from(
+            "constant/pure/view was not enforced prior to Solidity 0.5. Starting from Solidity 0.5, a call to a constant/pure/view function uses the STATICCALL opcode, \
         which reverts in case of state modification. As a result, a call to an incorrectly labeled function may trap a contract compiled with Solidity 0.5. \
-        https://docs.soliditylang.org/en/develop/050-breaking-changes.html#interoperability-with-older-contracts")
+        https://docs.soliditylang.org/en/develop/050-breaking-changes.html#interoperability-with-older-contracts",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

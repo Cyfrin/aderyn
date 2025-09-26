@@ -65,7 +65,9 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
     }
 
     fn description(&self) -> String {
-        String::from("A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.")
+        String::from(
+            "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

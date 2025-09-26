@@ -3,6 +3,7 @@ use crate::{
     context::{
         macros::{mcp_error, mcp_success},
         mcp::{
+            MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
             callgraph::{
                 render::{
                     CallgraphToolResponseBuilder, ContractDataBuilder,
@@ -10,16 +11,16 @@ use crate::{
                 },
                 utils::{build_post_order_nodes, build_raw_callgraph_for_entrypoint},
             },
-            MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
         },
     },
 };
 use askama::Template;
 use indoc::indoc;
 use rmcp::{
+    ErrorData as McpError,
     handler::server::wrapper::Parameters,
     model::{CallToolResult, Content},
-    schemars, ErrorData as McpError,
+    schemars,
 };
 use serde::Deserialize;
 use std::sync::Arc;

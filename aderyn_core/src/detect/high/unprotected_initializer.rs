@@ -122,7 +122,7 @@ mod unprotected_initializer_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 2); // Now there are two instances: one in
-                                                   // InitializedContract and one in
-                                                   // ReinitializerContract
+        // InitializedContract and one in
+        // ReinitializerContract
     }
 }

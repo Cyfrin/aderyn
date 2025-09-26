@@ -38,8 +38,10 @@ impl IssueDetector for DangerousUnaryOperatorDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Potentially mistaken `=+` for `+=` or `=-` for `-=`. This acts as an assignment instead of an increment or decrement.\
-        Use the correct operator to increment or decrement a variable.")
+        String::from(
+            "Potentially mistaken `=+` for `+=` or `=-` for `-=`. This acts as an assignment instead of an increment or decrement.\
+        Use the correct operator to increment or decrement a variable.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

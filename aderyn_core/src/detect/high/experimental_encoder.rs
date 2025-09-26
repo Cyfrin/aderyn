@@ -38,7 +38,9 @@ impl IssueDetector for ExperimentalEncoderDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Experimental encoders should not be used in production. There are multiple known compiler bugs that are caused by the experimental encoder. Upgrade your solidity version to remove the need for experimental features.")
+        String::from(
+            "Experimental encoders should not be used in production. There are multiple known compiler bugs that are caused by the experimental encoder. Upgrade your solidity version to remove the need for experimental features.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

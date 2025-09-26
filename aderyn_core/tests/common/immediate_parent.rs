@@ -42,22 +42,22 @@ impl IssueDetector for ImmediateParentDemonstrator {
                                     capture!(self, context, third_parent);
                                 }
 
-                                assert!(first_parent
-                                    .appears_after(context, second_parent)
-                                    .unwrap());
-                                assert!(first_parent
-                                    .appears_after(context, for_statement)
-                                    .unwrap());
+                                assert!(
+                                    first_parent.appears_after(context, second_parent).unwrap()
+                                );
+                                assert!(
+                                    first_parent.appears_after(context, for_statement).unwrap()
+                                );
                                 assert!(expr_stmnt.appears_after(context, for_statement).unwrap());
-                                assert!(second_parent
-                                    .appears_after(context, third_parent)
-                                    .unwrap());
-                                assert!(second_parent
-                                    .appears_before(context, first_parent)
-                                    .unwrap());
-                                assert!(third_parent
-                                    .appears_before(context, second_parent)
-                                    .unwrap());
+                                assert!(
+                                    second_parent.appears_after(context, third_parent).unwrap()
+                                );
+                                assert!(
+                                    second_parent.appears_before(context, first_parent).unwrap()
+                                );
+                                assert!(
+                                    third_parent.appears_before(context, second_parent).unwrap()
+                                );
                             }
                         }
                     }

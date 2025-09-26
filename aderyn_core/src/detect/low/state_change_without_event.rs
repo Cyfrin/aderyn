@@ -61,7 +61,9 @@ impl IssueDetector for StateVariableChangesWithoutEventDetector {
     }
 
     fn description(&self) -> String {
-        String::from("There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes.")
+        String::from(
+            "There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

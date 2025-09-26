@@ -6,9 +6,9 @@ use aderyn::{
     mcp::{spin_up_http_stream_mcp_server, spin_up_stdio_mcp_server},
     print_all_detectors_view, print_detail_view,
 };
-use aderyn_driver::driver::{self, kick_off_report_creation, Args};
+use aderyn_driver::driver::{self, Args, kick_off_report_creation};
 use clap::{ArgGroup, CommandFactory, Parser, Subcommand, ValueHint};
-use clap_complete::{generate, Shell};
+use clap_complete::{Shell, generate};
 use indoc::indoc;
 use std::path::PathBuf;
 
@@ -278,7 +278,9 @@ fn main() {
         if let Some(yes) = aderyn_is_currently_running_newest_version() {
             if !yes {
                 println!();
-                println!("NEW VERSION OF ADERYN AVAILABLE! Please upgrade aderyn by following the instruction here - https://github.com/cyfrin/aderyn");
+                println!(
+                    "NEW VERSION OF ADERYN AVAILABLE! Please upgrade aderyn by following the instruction here - https://github.com/cyfrin/aderyn"
+                );
                 println!("NOTE: You can skip this check by passing --skip-update-check flag");
             }
         }

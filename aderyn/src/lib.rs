@@ -1,4 +1,4 @@
-use aderyn_driver::detector::{get_all_detectors_names, get_issue_detector_by_name, IssueSeverity};
+use aderyn_driver::detector::{IssueSeverity, get_all_detectors_names, get_issue_detector_by_name};
 use semver::Version;
 use serde_json::Value;
 use std::{cmp::Ordering, fs::File, io::Write, path::PathBuf, str::FromStr};

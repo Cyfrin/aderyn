@@ -4,9 +4,9 @@ use crate::context::{
 };
 use indoc::indoc;
 use rmcp::{
+    ErrorData as McpError,
     handler::server::wrapper::Parameters,
     model::{CallToolResult, Content},
-    ErrorData as McpError,
 };
 use std::sync::Arc;
 

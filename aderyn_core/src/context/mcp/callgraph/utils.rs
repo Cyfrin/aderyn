@@ -4,7 +4,7 @@ use crate::{
     context::{graph::RawCallGraph, workspace::WorkspaceContext},
 };
 use rmcp::ErrorData as McpError;
-use std::collections::{hash_map::Entry, HashSet};
+use std::collections::{HashSet, hash_map::Entry};
 
 pub fn build_post_order_nodes(
     context: &WorkspaceContext,

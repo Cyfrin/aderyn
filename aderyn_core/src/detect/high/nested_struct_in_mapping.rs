@@ -97,7 +97,9 @@ impl IssueDetector for NestedStructInMappingDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Prior to updates in Solidity 0.5.0, public mappings with nested structs compiled, but produced incorrect values. Refrain from using these, or update to a more recent version of Solidity.")
+        String::from(
+            "Prior to updates in Solidity 0.5.0, public mappings with nested structs compiled, but produced incorrect values. Refrain from using these, or update to a more recent version of Solidity.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

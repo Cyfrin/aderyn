@@ -144,7 +144,9 @@ impl IssueDetector for MissingInheritanceDetector {
     }
 
     fn description(&self) -> String {
-        String::from("There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract.")
+        String::from(
+            "There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

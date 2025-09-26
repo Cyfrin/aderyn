@@ -90,9 +90,11 @@ impl IssueDetector for UnsafeCastingDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.\
+        String::from(
+            "Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.\
         When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,\
-        leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers.")
+        leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

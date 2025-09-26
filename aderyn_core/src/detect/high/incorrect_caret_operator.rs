@@ -71,7 +71,9 @@ impl IssueDetector for IncorrectUseOfCaretOperatorDetector {
     }
 
     fn description(&self) -> String {
-        String::from("The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator.")
+        String::from(
+            "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

@@ -17,7 +17,7 @@ use crate::{
         helpers,
     },
 };
-use eyre::{eyre, Result};
+use eyre::{Result, eyre};
 
 #[derive(Default)]
 pub struct ReentrancyStateChangeDetector {

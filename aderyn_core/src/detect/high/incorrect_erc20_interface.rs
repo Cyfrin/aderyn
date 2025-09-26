@@ -84,9 +84,10 @@ impl IssueDetector for IncorrectERC20InterfaceDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 \
+        String::from(
+            "Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 \
             interacting with these functions will fail to execute them, as the return value is missing. Set the \
-            appropriate return values and types for the defined ERC20 functions."
+            appropriate return values and types for the defined ERC20 functions.",
         )
     }
 

@@ -6,7 +6,7 @@ use crate::{
     },
     context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
 };
-use std::collections::{hash_map::Entry, HashMap};
+use std::collections::{HashMap, hash_map::Entry};
 
 impl Router {
     /// Returns Function Definition by attempting to resolve internal function calls given the base

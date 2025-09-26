@@ -36,7 +36,9 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
     }
 
     fn description(&self) -> String {
-        String::from("To protect against reentrancy in other modifiers, the `nonReentrant` modifier should be the first modifier in the list of modifiers.")
+        String::from(
+            "To protect against reentrancy in other modifiers, the `nonReentrant` modifier should be the first modifier in the list of modifiers.",
+        )
     }
 
     fn severity(&self) -> IssueSeverity {

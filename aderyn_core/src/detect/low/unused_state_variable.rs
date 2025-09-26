@@ -79,8 +79,10 @@ impl IssueDetector for UnusedStateVariablesDetector {
     }
 
     fn description(&self) -> String {
-        String::from("State variable appears to be unused. No analysis has been performed to see if any inline assembly \
-            references it. Consider removing this unused variable.")
+        String::from(
+            "State variable appears to be unused. No analysis has been performed to see if any inline assembly \
+            references it. Consider removing this unused variable.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

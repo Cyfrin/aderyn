@@ -53,7 +53,9 @@ impl IssueDetector for FunctionPointerInConstructorDetector {
     }
 
     fn description(&self) -> String {
-        String::from("solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors. It is recommended to not use function pointers in constructors.")
+        String::from(
+            "solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors. It is recommended to not use function pointers in constructors.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

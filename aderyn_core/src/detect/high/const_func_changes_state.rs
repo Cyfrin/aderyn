@@ -63,7 +63,9 @@ impl IssueDetector for ConstantFunctionChangesStateDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct.")
+        String::from(
+            "Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

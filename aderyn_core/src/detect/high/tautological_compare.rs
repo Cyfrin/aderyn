@@ -139,7 +139,9 @@ impl IssueDetector for TautologicalCompareDetector {
     }
 
     fn description(&self) -> String {
-        String::from("The left hand side and the right hand side of the binary operation has the same value. This makes the condition always true or always false.")
+        String::from(
+            "The left hand side and the right hand side of the binary operation has the same value. This makes the condition always true or always false.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

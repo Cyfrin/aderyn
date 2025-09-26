@@ -82,7 +82,9 @@ impl IssueDetector for DeletionNestedMappingDetector {
     }
 
     fn description(&self) -> String {
-        String::from("A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract.")
+        String::from(
+            "A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

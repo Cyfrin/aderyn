@@ -71,7 +71,9 @@ impl IssueDetector for UncheckedLowLevelCallDetector {
     }
 
     fn description(&self) -> String {
-        String::from("The return value of the low-level call is not checked, so if the call fails, the Ether will be locked in the contract. If the low level is used to prevent blocking operations, consider logging failed calls. Ensure that the return value of a low-level call is checked or logged.")
+        String::from(
+            "The return value of the low-level call is not checked, so if the call fails, the Ether will be locked in the contract. If the low level is used to prevent blocking operations, consider logging failed calls. Ensure that the return value of a low-level call is checked or logged.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

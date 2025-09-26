@@ -3,17 +3,18 @@ use crate::{
     context::{
         macros::{mcp_error, mcp_success},
         mcp::{
-            node_summarizer::{render, utils::*},
             MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
+            node_summarizer::{render, utils::*},
         },
     },
 };
 use askama::Template;
 use indoc::indoc;
 use rmcp::{
+    ErrorData as McpError,
     handler::server::wrapper::Parameters,
     model::{CallToolResult, Content},
-    schemars, ErrorData as McpError,
+    schemars,
 };
 use serde::Deserialize;
 use std::sync::Arc;

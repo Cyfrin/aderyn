@@ -2,16 +2,16 @@ use super::render;
 use crate::context::{
     macros::mcp_success,
     mcp::{
-        project_overview::render::*, MCPToolNamePool, ModelContextProtocolState,
-        ModelContextProtocolTool,
+        MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
+        project_overview::render::*,
     },
 };
 use askama::Template;
 use indoc::indoc;
 use rmcp::{
+    ErrorData as McpError,
     handler::server::wrapper::Parameters,
     model::{CallToolResult, Content},
-    ErrorData as McpError,
 };
 use std::{path::PathBuf, str::FromStr, sync::Arc};
 

@@ -47,7 +47,7 @@ impl IssueDetector for ContractLocksEtherDetector {
         String::from(
             "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, \
             which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function \
-            that allows for the withdrawal of Ether from the contract."
+            that allows for the withdrawal of Ether from the contract.",
         )
     }
 

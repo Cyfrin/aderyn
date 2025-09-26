@@ -43,7 +43,9 @@ impl IssueDetector for RTLODetector {
     }
 
     fn description(&self) -> String {
-        String::from("The right to left override character may be misleading and cause potential attacks by visually misordering method arguments.")
+        String::from(
+            "The right to left override character may be misleading and cause potential attacks by visually misordering method arguments.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

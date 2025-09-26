@@ -1,5 +1,5 @@
 use crate::{
-    ast::{macros::accept_id, Block, UncheckedBlock},
+    ast::{Block, UncheckedBlock, macros::accept_id},
     visitor::ast_visitor::*,
 };
 use eyre::Result;
