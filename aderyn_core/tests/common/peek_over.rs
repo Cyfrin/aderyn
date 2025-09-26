@@ -21,9 +21,9 @@ impl IssueDetector for PeekOverDemonstrator {
             if let Some(text) = event.peek_over(context)
                 && (text.contains("// SAME CONDITIONALS")
                     || text.contains("// DIFFERENT CONDITIONALS"))
-                {
-                    capture!(self, context, event);
-                }
+            {
+                capture!(self, context, event);
+            }
         }
 
         Ok(!self.found_instances.is_empty())

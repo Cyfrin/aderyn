@@ -89,9 +89,10 @@ mod func_compilation_solc_pragma_helper {
 
                 if let Some(pragma_directive) = pragma_directives.first()
                     && let Ok(pragma_semver) = helpers::pragma_directive_to_semver(pragma_directive)
-                        && version_req_allows_below_0_5_9(&pragma_semver) {
-                            return true;
-                        }
+                    && version_req_allows_below_0_5_9(&pragma_semver)
+                {
+                    return true;
+                }
             }
             false
         }
@@ -102,9 +103,10 @@ mod func_compilation_solc_pragma_helper {
 
                 if let Some(pragma_directive) = pragma_directives.first()
                     && let Ok(pragma_semver) = helpers::pragma_directive_to_semver(pragma_directive)
-                        && version_req_allows_below_0_6_5(&pragma_semver) {
-                            return true;
-                        }
+                    && version_req_allows_below_0_6_5(&pragma_semver)
+                {
+                    return true;
+                }
             }
             false
         }

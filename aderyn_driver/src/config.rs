@@ -65,9 +65,10 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
     // If config.src is some, command line arg src overrides config.src
     let mut local_src: Option<String> = current.src.clone();
     if let Some(config_src) = &config.src
-        && local_src.is_none() {
-            local_src = Some(config_src.clone());
-        }
+        && local_src.is_none()
+    {
+        local_src = Some(config_src.clone());
+    }
 
     // If config.exclude is some, append each value to exclude if it is not already present
     let mut local_exclude = current.exclude.clone();
@@ -107,9 +108,10 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
 
 fn clear_empty_vectors<T>(vec: &mut Option<Vec<T>>) {
     if let Some(v) = vec
-        && v.is_empty() {
-            *vec = None;
-        }
+        && v.is_empty()
+    {
+        *vec = None;
+    }
 }
 
 #[cfg(test)]

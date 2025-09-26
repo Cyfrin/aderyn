@@ -33,16 +33,17 @@ impl IssueDetector for WeakRandomnessDetector {
                 }
                 // get variable definition
                 else if let Expression::Identifier(ref i) = *arg
-                    && let Some(node_id) = i.referenced_declaration {
-                        let declaration = context.get_parent(node_id);
+                    && let Some(node_id) = i.referenced_declaration
+                {
+                    let declaration = context.get_parent(node_id);
 
-                        if let Some(ASTNode::VariableDeclarationStatement(var)) = declaration
-                            && let Some(Expression::FunctionCall(function_call)) =
-                                &var.initial_value
-                                && check_encode(function_call) {
-                                    capture!(self, context, keccak);
-                                }
+                    if let Some(ASTNode::VariableDeclarationStatement(var)) = declaration
+                        && let Some(Expression::FunctionCall(function_call)) = &var.initial_value
+                        && check_encode(function_call)
+                    {
+                        capture!(self, context, keccak);
                     }
+                }
             }
         }
 
@@ -57,10 +58,11 @@ impl IssueDetector for WeakRandomnessDetector {
 
                     if let Some(ASTNode::VariableDeclarationStatement(var)) = declaration
                         && let Some(expression) = &var.initial_value
-                            && check_operand(expression) {
-                                capture!(self, context, binary_operation);
-                                continue;
-                            }
+                        && check_operand(expression)
+                    {
+                        capture!(self, context, binary_operation);
+                        continue;
+                    }
                 }
             }
             // otherwise perform check directly on the expression
@@ -107,17 +109,18 @@ impl IssueDetector for WeakRandomnessDetector {
 // returns whether block.timestamp or block.number is used in encode function
 fn check_encode(function_call: &FunctionCall) -> bool {
     if let Expression::MemberAccess(ref member_access) = *function_call.expression
-        && (member_access.member_name == "encodePacked" || member_access.member_name == "encode") {
-            for argument in &function_call.arguments {
-                if let Expression::MemberAccess(ref member_access) = *argument
+        && (member_access.member_name == "encodePacked" || member_access.member_name == "encode")
+    {
+        for argument in &function_call.arguments {
+            if let Expression::MemberAccess(ref member_access) = *argument
                     && ["timestamp", "number"].iter().any(|ma| {
                         ma == &member_access.member_name &&
                         matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block")
                     }) {
                         return true;
                     }
-            }
         }
+    }
     false
 }
 

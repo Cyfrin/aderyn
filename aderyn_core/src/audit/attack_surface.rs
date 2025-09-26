@@ -128,16 +128,17 @@ fn transform_surface_points(
             let function = ast_node.closest_ancestor_of_type(context, NodeType::FunctionDefinition);
             if let Some(ASTNode::ContractDefinition(contract)) = contract
                 && let Some(ASTNode::FunctionDefinition(function)) = function
-                    && let Some(source_code) = ast_node.peek(context) {
-                        let contract_name = contract.name.to_string();
-                        let function_name = function.name.to_string();
-                        auditor_instances.insert(AttackSurfaceInstance {
-                            contract_name,
-                            function_name,
-                            source_code,
-                            address_source: address_storage.to_string(),
-                        });
-                    }
+                && let Some(source_code) = ast_node.peek(context)
+            {
+                let contract_name = contract.name.to_string();
+                let function_name = function.name.to_string();
+                auditor_instances.insert(AttackSurfaceInstance {
+                    contract_name,
+                    function_name,
+                    source_code,
+                    address_source: address_storage.to_string(),
+                });
+            }
         }
     }
 
@@ -152,9 +153,10 @@ fn find_address_source_if_direct_call(
         if let Some(reference_id) = identifier.referenced_declaration
             && let Some(ASTNode::VariableDeclaration(variable_declaration)) =
                 context.nodes.get(&reference_id)
-                && variable_declaration.state_variable {
-                    return Some(AddressSource::Storage);
-                }
+            && variable_declaration.state_variable
+        {
+            return Some(AddressSource::Storage);
+        }
         return Some(AddressSource::Havoc);
     }
     None
@@ -168,16 +170,17 @@ fn find_address_source_if_function_call(
         if function_call.kind == FunctionCallKind::TypeConversion
             && let Expression::ElementaryTypeNameExpression(elementary_type_name_expression) =
                 &*function_call.expression
-                && let TypeName::ElementaryTypeName(elementary_type_name) =
-                    &elementary_type_name_expression.type_name
-                    && elementary_type_name.name == "address"
-                        && let Expression::Identifier(identifier) = &function_call.arguments[0]
-                            && let Some(reference_id) = identifier.referenced_declaration
-                                && let Some(ASTNode::VariableDeclaration(variable_declaration)) =
-                                    context.nodes.get(&reference_id)
-                                    && variable_declaration.state_variable {
-                                        return Some(AddressSource::Storage);
-                                    }
+            && let TypeName::ElementaryTypeName(elementary_type_name) =
+                &elementary_type_name_expression.type_name
+            && elementary_type_name.name == "address"
+            && let Expression::Identifier(identifier) = &function_call.arguments[0]
+            && let Some(reference_id) = identifier.referenced_declaration
+            && let Some(ASTNode::VariableDeclaration(variable_declaration)) =
+                context.nodes.get(&reference_id)
+            && variable_declaration.state_variable
+        {
+            return Some(AddressSource::Storage);
+        }
         return Some(AddressSource::Havoc);
     }
     None

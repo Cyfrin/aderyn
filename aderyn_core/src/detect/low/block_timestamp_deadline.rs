@@ -42,13 +42,13 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
                         == "swapExactETHForTokensSupportingFeeOnTransferTokens"
                     || member_access.member_name
                         == "swapExactTokensForETHSupportingFeeOnTransferTokens")
-                    && let Expression::MemberAccess(member_access) = call.arguments.last().unwrap()
-                        && member_access.member_name == "timestamp"
-                            && let Expression::Identifier(ref identifier) =
-                                *member_access.expression
-                                && identifier.name == "block" {
-                                    capture!(self, context, call);
-                                }
+                && let Expression::MemberAccess(member_access) = call.arguments.last().unwrap()
+                && member_access.member_name == "timestamp"
+                && let Expression::Identifier(ref identifier) = *member_access.expression
+                && identifier.name == "block"
+            {
+                capture!(self, context, call);
+            }
             // Uniswap V3 - Function Calls
             // For each FunctionCall, if it is of kind StructConstructorCall, where the call's
             // Expression has a name of any of the following: [
@@ -59,21 +59,21 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
             // node to the found_block_timestamp_deadlines vector.
             if call.kind == FunctionCallKind::StructConstructorCall
                 && let Expression::Identifier(ref identifier) = *call.expression
-                    && (identifier.name == "ExactInputSingleParams"
-                        || identifier.name == "ExactInputParams"
-                        || identifier.name == "ExactOutputSingleParams"
-                        || identifier.name == "ExactOutputParams")
+                && (identifier.name == "ExactInputSingleParams"
+                    || identifier.name == "ExactInputParams"
+                    || identifier.name == "ExactOutputSingleParams"
+                    || identifier.name == "ExactOutputParams")
+            {
+                for argument in call.arguments.iter() {
+                    if let Expression::MemberAccess(ref member_access) = *argument
+                        && member_access.member_name == "timestamp"
+                        && let Expression::Identifier(ref identifier) = *member_access.expression
+                        && identifier.name == "block"
                     {
-                        for argument in call.arguments.iter() {
-                            if let Expression::MemberAccess(ref member_access) = *argument
-                                && member_access.member_name == "timestamp"
-                                    && let Expression::Identifier(ref identifier) =
-                                        *member_access.expression
-                                        && identifier.name == "block" {
-                                            capture!(self, context, call);
-                                        }
-                        }
+                        capture!(self, context, call);
                     }
+                }
+            }
         }
 
         // TODO: Uniswap V3 - Struct definitions

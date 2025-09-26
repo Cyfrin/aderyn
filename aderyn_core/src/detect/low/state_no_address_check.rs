@@ -125,6 +125,20 @@ impl IssueDetector for StateNoAddressCheckDetector {
                     if let Some(reference_id) = right_identifier.referenced_declaration
                         && !identifier_reference_declaration_ids_in_binary_checks
                             .contains(&reference_id)
+                        && function_definition
+                            .parameters
+                            .parameters
+                            .iter()
+                            .any(|x| x.id == reference_id)
+                    {
+                        capture!(self, context, assignment);
+                    }
+                } else {
+                    let right_identifiers = ExtractIdentifiers::from(&*assignment.right_hand_side);
+                    for right_identifier in right_identifiers.extracted {
+                        if let Some(reference_id) = right_identifier.referenced_declaration
+                            && !identifier_reference_declaration_ids_in_binary_checks
+                                .contains(&reference_id)
                             && function_definition
                                 .parameters
                                 .parameters
@@ -133,20 +147,6 @@ impl IssueDetector for StateNoAddressCheckDetector {
                         {
                             capture!(self, context, assignment);
                         }
-                } else {
-                    let right_identifiers = ExtractIdentifiers::from(&*assignment.right_hand_side);
-                    for right_identifier in right_identifiers.extracted {
-                        if let Some(reference_id) = right_identifier.referenced_declaration
-                            && !identifier_reference_declaration_ids_in_binary_checks
-                                .contains(&reference_id)
-                                && function_definition
-                                    .parameters
-                                    .parameters
-                                    .iter()
-                                    .any(|x| x.id == reference_id)
-                            {
-                                capture!(self, context, assignment);
-                            }
                     }
                 }
             }

@@ -32,23 +32,20 @@ impl IssueDetector for IncorrectUseOfCaretOperatorDetector {
             ] {
                 if let Expression::Literal(literal) = expr
                     && literal.kind == LiteralKind::Number
-                        && literal.value.as_ref().is_some_and(|v| !v.starts_with("0x"))
-                    {
-                        capture!(self, context, binary_operation);
-                    }
+                    && literal.value.as_ref().is_some_and(|v| !v.starts_with("0x"))
+                {
+                    capture!(self, context, binary_operation);
+                }
                 if let Expression::Identifier(identifier) = expr
                     && let Some(ref_decl) = identifier.referenced_declaration
-                        && let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&ref_decl)
-                            && v.mutability() == Some(&Mutability::Constant)
-                                && let Some(Expression::Literal(literal)) = v.value.as_ref()
-                                    && literal.kind == LiteralKind::Number
-                                        && literal
-                                            .value
-                                            .as_ref()
-                                            .is_some_and(|v| !v.starts_with("0x"))
-                                    {
-                                        capture!(self, context, binary_operation);
-                                    }
+                    && let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&ref_decl)
+                    && v.mutability() == Some(&Mutability::Constant)
+                    && let Some(Expression::Literal(literal)) = v.value.as_ref()
+                    && literal.kind == LiteralKind::Number
+                    && literal.value.as_ref().is_some_and(|v| !v.starts_with("0x"))
+                {
+                    capture!(self, context, binary_operation);
+                }
             }
         }
 

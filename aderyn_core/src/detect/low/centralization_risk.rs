@@ -31,9 +31,10 @@ impl IssueDetector for CentralizationRiskDetector {
                             | "Auth"
                             | "RolesAuthority"
                             | "MultiRolesAuthority"
-                    ) {
-                        capture!(self, context, bc);
-                    }
+                    )
+                {
+                    capture!(self, context, bc);
+                }
             }
         }
 

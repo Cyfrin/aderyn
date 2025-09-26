@@ -37,24 +37,22 @@ impl IssueDetector for FunctionInitializingStateDetector {
                     referenced_declaration: Some(func_id),
                     ..
                 }) = expression.as_ref()
-                    && let Some(ASTNode::FunctionDefinition(func)) = context.nodes.get(func_id) {
-                        let callgraphs = CallGraphConsumer::get(
-                            context,
-                            &[&(func.into())],
-                            CallGraphDirection::Inward,
-                        )?;
+                && let Some(ASTNode::FunctionDefinition(func)) = context.nodes.get(func_id)
+            {
+                let callgraphs =
+                    CallGraphConsumer::get(context, &[&(func.into())], CallGraphDirection::Inward)?;
 
-                        for callgraph in callgraphs {
-                            let mut tracker =
-                                NonConstantStateVariableReferenceDeclarationTracker::new(context);
+                for callgraph in callgraphs {
+                    let mut tracker =
+                        NonConstantStateVariableReferenceDeclarationTracker::new(context);
 
-                            callgraph.accept(context, &mut tracker)?;
+                    callgraph.accept(context, &mut tracker)?;
 
-                            if tracker.makes_a_reference {
-                                capture!(self, context, variable_declaration);
-                            }
-                        }
+                    if tracker.makes_a_reference {
+                        capture!(self, context, variable_declaration);
                     }
+                }
+            }
         }
 
         Ok(!self.found_instances.is_empty())
@@ -106,9 +104,11 @@ impl CallGraphVisitor for NonConstantStateVariableReferenceDeclarationTracker<'_
         for reference in references {
             if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
                 self.context.nodes.get(&reference)
-                && variable_declaration.state_variable && !variable_declaration.constant {
-                    self.makes_a_reference = true;
-                }
+                && variable_declaration.state_variable
+                && !variable_declaration.constant
+            {
+                self.makes_a_reference = true;
+            }
         }
 
         Ok(())

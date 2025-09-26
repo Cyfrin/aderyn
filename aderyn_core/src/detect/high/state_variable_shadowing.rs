@@ -61,17 +61,17 @@ fn are_duplicate_names_in_inherited_contracts(
                 if let Some(ASTNode::ContractDefinition(contract)) =
                     context.nodes.get(&base_name.referenced_declaration)
                     && are_duplicate_names_in_inherited_contracts(context, variable_name, contract)
-                    {
-                        return true; // Return immediately if a duplicate is found
-                    }
+                {
+                    return true; // Return immediately if a duplicate is found
+                }
             }
             UserDefinedTypeNameOrIdentifierPath::IdentifierPath(identifier_path) => {
                 if let Some(ASTNode::ContractDefinition(contract)) =
                     context.nodes.get(&(identifier_path.referenced_declaration))
                     && are_duplicate_names_in_inherited_contracts(context, variable_name, contract)
-                    {
-                        return true; // Return immediately if a duplicate is found
-                    }
+                {
+                    return true; // Return immediately if a duplicate is found
+                }
             }
         }
     }
@@ -139,9 +139,10 @@ impl IssueDetector for StateVariableShadowingDetector {
                                         context,
                                         &variable.name,
                                         contract,
-                                    ) {
-                                        capture!(self, context, variable);
-                                    }
+                                    )
+                                {
+                                    capture!(self, context, variable);
+                                }
                             }
                             UserDefinedTypeNameOrIdentifierPath::IdentifierPath(
                                 identifier_path,
@@ -152,9 +153,10 @@ impl IssueDetector for StateVariableShadowingDetector {
                                         context,
                                         &variable.name,
                                         contract,
-                                    ) {
-                                        capture!(self, context, variable);
-                                    }
+                                    )
+                                {
+                                    capture!(self, context, variable);
+                                }
                             }
                         };
                     }

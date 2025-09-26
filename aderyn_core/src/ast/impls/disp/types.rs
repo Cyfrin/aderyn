@@ -20,9 +20,10 @@ impl Display for ElementaryTypeName {
         f.write_str(self.name.as_str())?;
 
         if let Some(state_mutability) = self.state_mutability
-            && state_mutability != StateMutability::NonPayable {
-                f.write_fmt(format_args!(" {state_mutability}"))?;
-            }
+            && state_mutability != StateMutability::NonPayable
+        {
+            f.write_fmt(format_args!(" {state_mutability}"))?;
+        }
 
         Ok(())
     }

@@ -41,9 +41,10 @@ impl Router {
         }
         let lookup_index = self.external_calls.get(&base_contract.id)?;
         if let Some(ECDest::Fallback(func_id)) = lookup_index.routes.get("FALLBACK")
-            && let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(func_id) {
-                return Some(fallback);
-            }
+            && let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(func_id)
+        {
+            return Some(fallback);
+        }
         None
     }
 
@@ -58,9 +59,10 @@ impl Router {
         }
         let lookup_index = self.external_calls.get(&base_contract.id)?;
         if let Some(ECDest::Receive(func_id)) = lookup_index.routes.get("RECEIVE")
-            && let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(func_id) {
-                return Some(fallback);
-            }
+            && let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(func_id)
+        {
+            return Some(fallback);
+        }
         None
     }
 

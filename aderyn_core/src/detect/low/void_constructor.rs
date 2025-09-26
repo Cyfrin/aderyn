@@ -34,18 +34,17 @@ impl IssueDetector for VoidConstructorDetector {
                 crate::ast::IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
                     Some(identifier_path.referenced_declaration)
                 }
+            } && let Some(ASTNode::ContractDefinition(contract)) =
+                context.nodes.get(&reference_declaration)
+                && contract
+                    .function_definitions()
+                    .into_iter()
+                    .filter(|f| *f.kind() == FunctionKind::Constructor)
+                    .count()
+                    == 0
+            {
+                capture!(self, context, modifier_invocation);
             }
-                && let Some(ASTNode::ContractDefinition(contract)) =
-                    context.nodes.get(&reference_declaration)
-                    && contract
-                        .function_definitions()
-                        .into_iter()
-                        .filter(|f| *f.kind() == FunctionKind::Constructor)
-                        .count()
-                        == 0
-                    {
-                        capture!(self, context, modifier_invocation);
-                    }
         }
 
         Ok(!self.found_instances.is_empty())

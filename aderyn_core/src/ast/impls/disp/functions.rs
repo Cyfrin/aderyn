@@ -56,9 +56,10 @@ impl Display for FunctionDefinition {
         f.write_fmt(format_args!("{} {}", self.parameters, self.visibility))?;
 
         if let Some(state_mutability) = &self.state_mutability
-            && *state_mutability != StateMutability::NonPayable {
-                f.write_fmt(format_args!(" {}", state_mutability))?;
-            }
+            && *state_mutability != StateMutability::NonPayable
+        {
+            f.write_fmt(format_args!(" {}", state_mutability))?;
+        }
 
         if self.is_virtual {
             f.write_str(" virtual")?;

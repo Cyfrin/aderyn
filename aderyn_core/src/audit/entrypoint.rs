@@ -20,14 +20,15 @@ pub fn prepare_audit_tables(contexts: &[WorkspaceContext]) -> Result<AT, Box<dyn
             for context in contexts {
                 let mut d = detector.skeletal_clone();
                 if let Ok(found) = d.detect(context)
-                    && found {
-                        match grouped_instances.entry(d.title()) {
-                            Entry::Occupied(o) => o.into_mut().1.extend(d.table_rows()),
-                            Entry::Vacant(v) => {
-                                v.insert((d.table_titles(), d.table_rows()));
-                            }
-                        };
-                    }
+                    && found
+                {
+                    match grouped_instances.entry(d.title()) {
+                        Entry::Occupied(o) => o.into_mut().1.extend(d.table_rows()),
+                        Entry::Vacant(v) => {
+                            v.insert((d.table_titles(), d.table_rows()));
+                        }
+                    };
+                }
             }
 
             grouped_instances

@@ -171,10 +171,11 @@ impl WorkspaceContext {
             let offset: usize = offset.parse().ok()?;
             let len: usize = len.parse().ok()?;
             if let Some(content) = source_unit.source.as_ref()
-                && offset + len < content.len() {
-                    let required_content = &content[offset..offset + len];
-                    return Some(required_content.to_string());
-                }
+                && offset + len < content.len()
+            {
+                let required_content = &content[offset..offset + len];
+                return Some(required_content.to_string());
+            }
         }
         None
     }

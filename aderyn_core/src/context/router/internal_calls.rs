@@ -145,28 +145,28 @@ impl Router {
                 referenced_declaration: Some(ref_id),
                 ..
             }) = member_access.expression.as_ref()
-            {
-                // case - explicit super call
-                // super calls must start their lookup from the calling contract's parent
-                if name == "super" {
-                    if let Some(ASTNode::ContractDefinition(calling_contract)) =
-                        func_call.closest_ancestor_of_type(context, NodeType::ContractDefinition)
-                    {
-                        let next = calling_contract.next_in(context, base_contract)?;
-                        return resolve(next);
-                    }
-                }
-                // case - laidback super call
-                // start lookup from the directly specified contract (dsc)
-                else if let Some(ASTNode::ContractDefinition(called_contract)) =
-                    context.nodes.get(ref_id)
+        {
+            // case - explicit super call
+            // super calls must start their lookup from the calling contract's parent
+            if name == "super" {
+                if let Some(ASTNode::ContractDefinition(calling_contract)) =
+                    func_call.closest_ancestor_of_type(context, NodeType::ContractDefinition)
                 {
-                    // safety check
-                    if called_contract.is_in(context, base_contract) {
-                        return resolve(called_contract);
-                    }
+                    let next = calling_contract.next_in(context, base_contract)?;
+                    return resolve(next);
                 }
             }
+            // case - laidback super call
+            // start lookup from the directly specified contract (dsc)
+            else if let Some(ASTNode::ContractDefinition(called_contract)) =
+                context.nodes.get(ref_id)
+            {
+                // safety check
+                if called_contract.is_in(context, base_contract) {
+                    return resolve(called_contract);
+                }
+            }
+        }
         None
     }
 }
@@ -183,9 +183,10 @@ pub(super) fn build_ic_router_for_contract(
             for func in contract.function_definitions() {
                 if matches!(*func.kind(), FunctionKind::Function)
                     && matches!(func.visibility, Visibility::Internal | Visibility::Public)
-                    && let Entry::Vacant(e) = routes.entry(func.selectorish()) {
-                        e.insert(func.id);
-                    }
+                    && let Entry::Vacant(e) = routes.entry(func.selectorish())
+                {
+                    e.insert(func.id);
+                }
             }
         }
         base_routes.insert(starting_point.id, routes);

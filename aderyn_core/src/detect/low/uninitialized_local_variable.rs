@@ -62,17 +62,18 @@ impl IssueDetector for UninitializedLocalVariableDetector {
 
         for id in potentially_uninitialized_local_variables {
             if let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&id)
-                && !blacklist_variable_names.contains(&v.name) {
-                    // Ignore memory structs because they can have an initializeMethod of their own.
-                    // So not covered under the assignment operator
-                    if v.type_descriptions
-                        .type_string
-                        .as_ref()
-                        .is_some_and(|type_string| !type_string.contains("struct "))
-                    {
-                        capture!(self, context, v);
-                    }
+                && !blacklist_variable_names.contains(&v.name)
+            {
+                // Ignore memory structs because they can have an initializeMethod of their own.
+                // So not covered under the assignment operator
+                if v.type_descriptions
+                    .type_string
+                    .as_ref()
+                    .is_some_and(|type_string| !type_string.contains("struct "))
+                {
+                    capture!(self, context, v);
                 }
+            }
         }
 
         Ok(!self.found_instances.is_empty())

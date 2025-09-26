@@ -22,9 +22,10 @@ impl Node for VariableDeclaration {
             visitor.visit_immediate_children(self.id, vec![overrides.id])?;
         }
         if let Some(value) = &self.value
-            && let Some(value_id) = value.get_node_id() {
-                visitor.visit_immediate_children(self.id, vec![value_id])?;
-            }
+            && let Some(value_id) = value.get_node_id()
+        {
+            visitor.visit_immediate_children(self.id, vec![value_id])?;
+        }
         Ok(())
     }
     macros::accept_id!();

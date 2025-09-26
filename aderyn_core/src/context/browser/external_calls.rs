@@ -20,13 +20,13 @@ pub fn is_extcallish(ast_node: ASTNode) -> bool {
             || member_access.member_name == "send"
             || member_access.member_name == "sendValue")
             && let Some(type_description) = member_access.expression.type_descriptions()
-                && type_description
-                    .type_string
-                    .as_ref()
-                    .is_some_and(|type_string| type_string.starts_with("address"))
-                {
-                    return true;
-                }
+            && type_description
+                .type_string
+                .as_ref()
+                .is_some_and(|type_string| type_string.starts_with("address"))
+        {
+            return true;
+        }
 
         // Any external call
         if member_access

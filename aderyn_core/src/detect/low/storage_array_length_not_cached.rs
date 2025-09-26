@@ -44,9 +44,9 @@ impl IssueDetector for CacheArrayLengthDetector {
                             && changes
                                 .state_variable_has_not_been_manipulated(var)
                                 .is_some_and(identity)
-                            {
-                                return true;
-                            }
+                        {
+                            return true;
+                        }
                         false
                     });
 
@@ -119,11 +119,11 @@ mod loop_investigation_helper {
                     }) = member_access.expression.as_ref()
                         && let Some(ASTNode::VariableDeclaration(variable_declaration)) =
                             context.nodes.get(id)
-                            && variable_declaration.state_variable
-                                && type_string.ends_with("] storage ref")
-                            {
-                                state_vars_lengths_that_are_referenced.insert(*id);
-                            }
+                        && variable_declaration.state_variable
+                        && type_string.ends_with("] storage ref")
+                    {
+                        state_vars_lengths_that_are_referenced.insert(*id);
+                    }
                 }
             }
 

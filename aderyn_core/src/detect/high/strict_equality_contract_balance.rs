@@ -34,21 +34,21 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
             ] {
                 if let Expression::MemberAccess(member_access) = expr
                     && member_access.member_name == "balance"
-                        && member_access.expression.as_ref().type_descriptions().is_some_and(
-                            |type_desc| {
-                                type_desc.type_string.as_ref().is_some_and(|type_string| {
-                                    // For older solc versions when you say this.balance, "this" is
-                                    // of type contract XXX
-                                    type_string.starts_with("contract ")
+                    && member_access.expression.as_ref().type_descriptions().is_some_and(
+                        |type_desc| {
+                            type_desc.type_string.as_ref().is_some_and(|type_string| {
+                                // For older solc versions when you say this.balance, "this" is
+                                // of type contract XXX
+                                type_string.starts_with("contract ")
                                     // In newers solidity versions, you say address(this).balance or payable(address(this)).balance
                                         || type_string == "address"
                                         || type_string == "address payable"
-                                })
-                            },
-                        )
-                    {
-                        capture!(self, context, binary_operation);
-                    }
+                            })
+                        },
+                    )
+                {
+                    capture!(self, context, binary_operation);
+                }
             }
         }
 

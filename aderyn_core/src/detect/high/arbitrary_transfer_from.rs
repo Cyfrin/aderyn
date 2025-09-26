@@ -49,9 +49,9 @@ impl IssueDetector for ArbitraryTransferFromDetector {
                     if let Expression::MemberAccess(member_access) = &*function_call.expression
                         && (member_access.member_name == "transferFrom"
                             || member_access.member_name == "safeTransferFrom")
-                        {
-                            return true;
-                        }
+                    {
+                        return true;
+                    }
                     false
                 })
                 .collect::<Vec<_>>();
@@ -74,9 +74,10 @@ impl IssueDetector for ArbitraryTransferFromDetector {
                     referenced_declaration: Some(referenced_id),
                     ..
                 }) = arg
-                    && func_parameters_ids.iter().any(|r| r == referenced_id) {
-                        capture!(self, context, func);
-                    }
+                    && func_parameters_ids.iter().any(|r| r == referenced_id)
+                {
+                    capture!(self, context, func);
+                }
             }
         }
 

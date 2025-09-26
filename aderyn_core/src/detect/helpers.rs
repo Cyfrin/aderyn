@@ -22,9 +22,10 @@ pub fn count_identifiers_that_reference_an_id(
     let mut count = 0;
     context.identifiers().iter().for_each(|&identifier| {
         if let Some(reference_id) = identifier.referenced_declaration
-            && reference_id == function_id {
-                count += 1;
-            }
+            && reference_id == function_id
+        {
+            count += 1;
+        }
     });
     count
 }
@@ -125,14 +126,14 @@ pub fn has_calls_that_sends_native_eth(ast_node: &ASTNode) -> bool {
             && (member_access.member_name == "transfer"
                 || member_access.member_name == "send"
                 || member_access.member_name == "sendValue")
-                && let Some(type_description) = member_access.expression.type_descriptions()
-                    && type_description
-                        .type_string
-                        .as_ref()
-                        .is_some_and(|type_string| type_string.starts_with("address"))
-                    {
-                        return true;
-                    }
+            && let Some(type_description) = member_access.expression.type_descriptions()
+            && type_description
+                .type_string
+                .as_ref()
+                .is_some_and(|type_string| type_string.starts_with("address"))
+        {
+            return true;
+        }
     }
 
     false
@@ -154,9 +155,10 @@ pub fn has_delegate_calls_on_non_state_variables(
         if let Expression::Identifier(identifier) = member.expression.as_ref() {
             if let Some(referenced_id) = identifier.referenced_declaration
                 && let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&referenced_id)
-                    && !v.state_variable {
-                        is_on_non_state_variable = true;
-                    }
+                && !v.state_variable
+            {
+                is_on_non_state_variable = true;
+            }
         } else if let Expression::Literal(_) = member.expression.as_ref() {
             is_on_non_state_variable = true;
         }
@@ -183,9 +185,10 @@ pub fn get_low_level_calls_on_non_state_variable_addresses(
             if let Expression::Identifier(identifier) = member.expression.as_ref() {
                 if let Some(referenced_id) = identifier.referenced_declaration
                     && let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&referenced_id)
-                        && !v.state_variable {
-                            return Some(member);
-                        }
+                    && !v.state_variable
+                {
+                    return Some(member);
+                }
             } else if let Expression::Literal(_) = member.expression.as_ref() {
                 return Some(member);
             }
@@ -215,9 +218,10 @@ pub fn get_literal_value_or_constant_variable_value(
         ASTNode::Literal(literal) => return literal.value.to_owned(),
         ASTNode::VariableDeclaration(variable) => {
             if variable.mutability() == Some(&crate::ast::Mutability::Constant)
-                && let Some(Expression::Literal(literal)) = variable.value.as_ref() {
-                    return literal.value.to_owned();
-                }
+                && let Some(Expression::Literal(literal)) = variable.value.as_ref()
+            {
+                return literal.value.to_owned();
+            }
         }
         _ => (),
     }
@@ -246,25 +250,26 @@ Expression::UnaryOperation with ! operator followed by a sub expression that cou
 pub fn is_constant_boolean(context: &WorkspaceContext, ast_node: &Expression) -> bool {
     if let Expression::Literal(literal) = ast_node
         && literal.kind == LiteralKind::Bool
-            && literal.value.as_ref().is_some_and(|value| value == "false" || value == "true")
-        {
-            return true;
-        }
+        && literal.value.as_ref().is_some_and(|value| value == "false" || value == "true")
+    {
+        return true;
+    }
     if let Expression::Identifier(Identifier { referenced_declaration: Some(id), .. }) = ast_node
         && let Some(ASTNode::VariableDeclaration(variable_declaration)) = context.nodes.get(id)
-            && variable_declaration
-                .type_descriptions
-                .type_string
-                .as_ref()
-                .is_some_and(|value| value == "bool")
-                && variable_declaration.mutability() == Some(&crate::ast::Mutability::Constant)
-            {
-                return true;
-            }
+        && variable_declaration
+            .type_descriptions
+            .type_string
+            .as_ref()
+            .is_some_and(|value| value == "bool")
+        && variable_declaration.mutability() == Some(&crate::ast::Mutability::Constant)
+    {
+        return true;
+    }
     if let Expression::UnaryOperation(operation) = ast_node
-        && operation.operator == "!" {
-            return is_constant_boolean(context, operation.sub_expression.as_ref());
-        }
+        && operation.operator == "!"
+    {
+        return is_constant_boolean(context, operation.sub_expression.as_ref());
+    }
     false
 }
 

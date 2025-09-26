@@ -42,9 +42,10 @@ impl IssueDetector for StateVariableChangesWithoutEventDetector {
 
                 // At this point, we know that no events are emitted
                 if let Some(changes) = func.state_variable_changes(context)
-                    && changes.state_variables_have_been_manipulated() {
-                        capture!(self, context, func);
-                    }
+                    && changes.state_variables_have_been_manipulated()
+                {
+                    capture!(self, context, func);
+                }
             }
         }
 

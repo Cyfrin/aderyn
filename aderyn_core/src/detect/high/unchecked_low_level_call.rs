@@ -31,26 +31,24 @@ impl IssueDetector for UncheckedLowLevelCallDetector {
                 })
                 && let Some(ASTNode::FunctionCall(func_call)) =
                     member_access.closest_ancestor_of_type(context, NodeType::FunctionCall)
+            {
+                // In most cases, it's enough to check if the function call's parent is Block
+                // But to cover this case - dst.call.value(msg.value)("");
+                // We need to also check for the possibility where the function call's parent is
+                // another function call and that has a direct parent of type block
+                if let Some(ASTNode::ExpressionStatement(e)) = func_call.parent(context)
+                    && e.parent(context).is_some_and(|node| node.node_type() == NodeType::Block)
                 {
-                    // In most cases, it's enough to check if the function call's parent is Block
-                    // But to cover this case - dst.call.value(msg.value)("");
-                    // We need to also check for the possibility where the function call's parent is
-                    // another function call and that has a direct parent of type block
-                    if let Some(ASTNode::ExpressionStatement(e)) = func_call.parent(context)
-                        && e.parent(context).is_some_and(|node| node.node_type() == NodeType::Block)
-                        {
-                            capture!(self, context, func_call);
-                        }
-
-                    if let Some(ASTNode::FunctionCall(outside_parent)) = func_call.parent(context)
-                        && let Some(ASTNode::ExpressionStatement(e)) =
-                            outside_parent.parent(context)
-                            && e.parent(context)
-                                .is_some_and(|node| node.node_type() == NodeType::Block)
-                            {
-                                capture!(self, context, func_call);
-                            }
+                    capture!(self, context, func_call);
                 }
+
+                if let Some(ASTNode::FunctionCall(outside_parent)) = func_call.parent(context)
+                    && let Some(ASTNode::ExpressionStatement(e)) = outside_parent.parent(context)
+                    && e.parent(context).is_some_and(|node| node.node_type() == NodeType::Block)
+                {
+                    capture!(self, context, func_call);
+                }
+            }
         }
 
         Ok(!self.found_instances.is_empty())

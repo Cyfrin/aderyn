@@ -34,9 +34,10 @@ impl Display for VariableDeclaration {
         }
 
         if let Some(mutability) = self.mutability.as_ref()
-            && mutability != &Mutability::Mutable {
-                f.write_fmt(format_args!(" {mutability}"))?;
-            }
+            && mutability != &Mutability::Mutable
+        {
+            f.write_fmt(format_args!(" {mutability}"))?;
+        }
 
         if let Some(true) = self.indexed {
             f.write_str(" indexed")?;

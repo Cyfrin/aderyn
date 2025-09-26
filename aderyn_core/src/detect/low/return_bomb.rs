@@ -63,9 +63,10 @@ impl IssueDetector for ReturnBombDetector {
 
                         if let Some(ASTNode::FunctionCallOptions(function_call_ops)) = member_access
                             .closest_ancestor_of_type(context, NodeType::FunctionCallOptions)
-                            && function_call_ops.names.contains(&String::from("gas")) {
-                                continue;
-                            }
+                            && function_call_ops.names.contains(&String::from("gas"))
+                        {
+                            continue;
+                        }
 
                         // Here, we know that there is no gas limit set for the call. So we need to
                         // only check for the cases where `returndatacopy`

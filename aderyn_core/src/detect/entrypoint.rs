@@ -137,16 +137,17 @@ pub fn detect_issues(
                 .map(|context| {
                     let mut d = detector.skeletal_clone();
                     if let Ok(found) = d.detect(context)
-                        && found {
-                            let instances = d.instances();
-                            let hints = d.hints();
-                            return (
-                                instances,
-                                hints,
-                                context.src_filepaths.clone(),
-                                context.included.clone(),
-                            );
-                        }
+                        && found
+                    {
+                        let instances = d.instances();
+                        let hints = d.hints();
+                        return (
+                            instances,
+                            hints,
+                            context.src_filepaths.clone(),
+                            context.included.clone(),
+                        );
+                    }
                     (
                         Default::default(),
                         Default::default(),

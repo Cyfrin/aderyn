@@ -71,9 +71,10 @@ impl Node for VariableDeclarationStatement {
         let declaration_ids = self.declarations.iter().flatten().map(|x| x.id).collect::<Vec<_>>();
         visitor.visit_immediate_children(self.id, declaration_ids)?;
         if let Some(initial_value) = &self.initial_value
-            && let Some(id) = initial_value.get_node_id() {
-                visitor.visit_immediate_children(self.id, vec![id])?;
-            }
+            && let Some(id) = initial_value.get_node_id()
+        {
+            visitor.visit_immediate_children(self.id, vec![id])?;
+        }
         Ok(())
     }
     macros::accept_id!();
@@ -112,9 +113,10 @@ impl Node for IfStatement {
             visitor.visit_immediate_children(self.id, vec![true_body_id])?;
         }
         if let Some(false_body) = &self.false_body
-            && let Some(false_body_id) = false_body.get_node_id() {
-                visitor.visit_immediate_children(self.id, vec![false_body_id])?;
-            }
+            && let Some(false_body_id) = false_body.get_node_id()
+        {
+            visitor.visit_immediate_children(self.id, vec![false_body_id])?;
+        }
         Ok(())
     }
     macros::accept_id!();
@@ -148,13 +150,15 @@ impl Node for ForStatement {
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if let Some(initialization_expr) = &self.initialization_expression
-            && let Some(expr_id) = initialization_expr.get_node_id() {
-                visitor.visit_immediate_children(self.id, vec![expr_id])?;
-            }
+            && let Some(expr_id) = initialization_expr.get_node_id()
+        {
+            visitor.visit_immediate_children(self.id, vec![expr_id])?;
+        }
         if let Some(condition) = &self.condition
-            && let Some(cond_id) = condition.get_node_id() {
-                visitor.visit_immediate_children(self.id, vec![cond_id])?;
-            }
+            && let Some(cond_id) = condition.get_node_id()
+        {
+            visitor.visit_immediate_children(self.id, vec![cond_id])?;
+        }
         if let Some(loop_expr) = &self.loop_expression {
             visitor.visit_immediate_children(self.id, vec![loop_expr.id])?;
         }
@@ -272,9 +276,10 @@ impl Node for Return {
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if let Some(expr) = &self.expression
-            && let Some(expr_id) = expr.get_node_id() {
-                visitor.visit_immediate_children(self.id, vec![expr_id])?;
-            }
+            && let Some(expr_id) = expr.get_node_id()
+        {
+            visitor.visit_immediate_children(self.id, vec![expr_id])?;
+        }
         Ok(())
     }
     macros::accept_id!();

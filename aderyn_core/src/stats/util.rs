@@ -37,9 +37,10 @@ impl Iterator for CodeIterator {
         };
 
         if let Some(ref c) = result
-            && c.curr == '\n' {
-                self.line_no += 1;
-            }
+            && c.curr == '\n'
+        {
+            self.line_no += 1;
+        }
 
         result
     }

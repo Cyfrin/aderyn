@@ -43,37 +43,38 @@ impl IssueDetector for UnsafeCastingDetector {
 
                 if let Expression::ElementaryTypeNameExpression(to_expression) =
                     &*function_call.expression
-                    && let Some(argument_types) = &to_expression.argument_types {
-                        let casting_from_type =
-                            match argument_types.first().and_then(|arg| arg.type_string.as_ref()) {
-                                Some(t) => t,
-                                None => continue,
-                            };
-
-                        let casting_map = if casting_from_type.contains("uint") {
-                            &UINT_CASTING_MAP
-                        } else if casting_from_type.contains("int")
-                            && !casting_from_type.contains("uint")
-                        {
-                            &INT_CASTING_MAP
-                        } else if casting_from_type.contains("bytes")
-                            && !casting_from_type.contains("bytes ")
-                        {
-                            &BYTES32_CASTING_MAP
-                        } else {
-                            continue;
+                    && let Some(argument_types) = &to_expression.argument_types
+                {
+                    let casting_from_type =
+                        match argument_types.first().and_then(|arg| arg.type_string.as_ref()) {
+                            Some(t) => t,
+                            None => continue,
                         };
 
-                        handle_casting(
-                            self,
-                            context,
-                            function_call,
-                            casting_from_type,
-                            casting_to_type,
-                            casting_map,
-                            identifier_id,
-                        );
-                    }
+                    let casting_map = if casting_from_type.contains("uint") {
+                        &UINT_CASTING_MAP
+                    } else if casting_from_type.contains("int")
+                        && !casting_from_type.contains("uint")
+                    {
+                        &INT_CASTING_MAP
+                    } else if casting_from_type.contains("bytes")
+                        && !casting_from_type.contains("bytes ")
+                    {
+                        &BYTES32_CASTING_MAP
+                    } else {
+                        continue;
+                    };
+
+                    handle_casting(
+                        self,
+                        context,
+                        function_call,
+                        casting_from_type,
+                        casting_to_type,
+                        casting_map,
+                        identifier_id,
+                    );
+                }
             }
         }
         Ok(!self.found_instances.is_empty())

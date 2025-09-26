@@ -80,9 +80,10 @@ impl CallGraphVisitor for OutOfOrderRetryableTracker {
         for func_call in function_calls {
             if let Expression::MemberAccess(MemberAccess { member_name, .. }) =
                 func_call.expression.as_ref()
-                && SEQUENCER_FUNCTIONS.iter().any(|f| f == member_name) {
-                    self.number_of_retry_calls += 1;
-                }
+                && SEQUENCER_FUNCTIONS.iter().any(|f| f == member_name)
+            {
+                self.number_of_retry_calls += 1;
+            }
         }
         Ok(())
     }

@@ -82,10 +82,11 @@ fn find_all_public_member_names_called_using_this_keyword_in_contract<'a>(
         if let Expression::MemberAccess(MemberAccess { id, expression, .. }) =
             function_call.expression.as_ref()
             && let Expression::Identifier(Identifier { name, .. }) = expression.as_ref()
-                && name == "this"
-                    && let Some(ASTNode::MemberAccess(member_access)) = context.nodes.get(id) {
-                        member_names.push(member_access)
-                    }
+            && name == "this"
+            && let Some(ASTNode::MemberAccess(member_access)) = context.nodes.get(id)
+        {
+            member_names.push(member_access)
+        }
     }
 
     member_names

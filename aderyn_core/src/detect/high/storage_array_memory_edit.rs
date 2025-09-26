@@ -34,20 +34,21 @@ impl IssueDetector for StorageArrayMemoryEditDetector {
                 identifier.argument_types.as_ref().unwrap().iter().enumerate()
             {
                 if let Some(type_string) = &argument_type.type_string
-                    && type_string.contains("storage ref") {
-                        let definition_ast =
-                            context.nodes.get(&identifier.referenced_declaration.unwrap());
-                        if let Some(ASTNode::FunctionDefinition(definition)) = definition_ast {
-                            let parameter = definition
-                                .parameters
-                                .parameters
-                                .get(index)
-                                .ok_or_else(|| eyre::eyre!("Parameter not found"))?;
-                            if parameter.storage_location != StorageLocation::Storage {
-                                capture!(self, context, identifier);
-                            }
+                    && type_string.contains("storage ref")
+                {
+                    let definition_ast =
+                        context.nodes.get(&identifier.referenced_declaration.unwrap());
+                    if let Some(ASTNode::FunctionDefinition(definition)) = definition_ast {
+                        let parameter = definition
+                            .parameters
+                            .parameters
+                            .get(index)
+                            .ok_or_else(|| eyre::eyre!("Parameter not found"))?;
+                        if parameter.storage_location != StorageLocation::Storage {
+                            capture!(self, context, identifier);
                         }
                     }
+                }
             }
         }
 

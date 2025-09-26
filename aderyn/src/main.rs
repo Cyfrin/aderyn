@@ -274,15 +274,17 @@ fn main() {
     }
 
     // Check for updates on non lsp mode
-    if !cmd_args.lsp && !cmd_args.skip_update_check
+    if !cmd_args.lsp
+        && !cmd_args.skip_update_check
         && let Some(yes) = aderyn_is_currently_running_newest_version()
-            && !yes {
-                println!();
-                println!(
-                    "NEW VERSION OF ADERYN AVAILABLE! Please upgrade aderyn by following the instruction here - https://github.com/cyfrin/aderyn"
-                );
-                println!("NOTE: You can skip this check by passing --skip-update-check flag");
-            }
+        && !yes
+    {
+        println!();
+        println!(
+            "NEW VERSION OF ADERYN AVAILABLE! Please upgrade aderyn by following the instruction here - https://github.com/cyfrin/aderyn"
+        );
+        println!("NOTE: You can skip this check by passing --skip-update-check flag");
+    }
 
     // Ask open source community for stars
     if !cmd_args.lsp {

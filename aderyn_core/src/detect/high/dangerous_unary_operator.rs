@@ -20,9 +20,10 @@ impl IssueDetector for DangerousUnaryOperatorDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for assignment in context.assignments() {
             if let Some(content) = assignment.peek(context)
-                && (content.contains("=-") || content.contains("=+")) {
-                    capture!(self, context, assignment);
-                }
+                && (content.contains("=-") || content.contains("=+"))
+            {
+                capture!(self, context, assignment);
+            }
         }
 
         Ok(!self.found_instances.is_empty())

@@ -34,36 +34,34 @@ impl IssueDetector for StorageSignedIntegerArrayDetector {
 
             if let Some(pragma_directive) = pragma_directives.first()
                 && let Ok(pragma_semver) = helpers::pragma_directive_to_semver(pragma_directive)
-                    && version_req_allows_below_0_5_10(&pragma_semver) {
-                        // Search for a literal array with one negative value in it
-                        for tuple_expression in tuple_expressions
-                            .into_iter()
-                            .filter(|tuple_expression| tuple_expression.is_inline_array)
-                        {
-                            // First, make sure it's being assigned to an array pointer to storage
-                            if !is_tuple_being_assigned_to_storage_array(&tuple_expression, context)
-                            {
-                                continue;
-                            }
-
-                            // Now, make sure there is at least 1 negative value in the tuple array
-                            let negative_component_present =
-                                tuple_expression.components.iter().any(|c| {
-                                    if let Some(Expression::UnaryOperation(UnaryOperation {
-                                        operator,
-                                        ..
-                                    })) = c
-                                    {
-                                        return operator == "-";
-                                    }
-                                    false
-                                });
-
-                            if negative_component_present {
-                                capture!(self, context, tuple_expression);
-                            }
-                        }
+                && version_req_allows_below_0_5_10(&pragma_semver)
+            {
+                // Search for a literal array with one negative value in it
+                for tuple_expression in tuple_expressions
+                    .into_iter()
+                    .filter(|tuple_expression| tuple_expression.is_inline_array)
+                {
+                    // First, make sure it's being assigned to an array pointer to storage
+                    if !is_tuple_being_assigned_to_storage_array(&tuple_expression, context) {
+                        continue;
                     }
+
+                    // Now, make sure there is at least 1 negative value in the tuple array
+                    let negative_component_present = tuple_expression.components.iter().any(|c| {
+                        if let Some(Expression::UnaryOperation(UnaryOperation {
+                            operator, ..
+                        })) = c
+                        {
+                            return operator == "-";
+                        }
+                        false
+                    });
+
+                    if negative_component_present {
+                        capture!(self, context, tuple_expression);
+                    }
+                }
+            }
         }
 
         Ok(!self.found_instances.is_empty())
@@ -127,9 +125,10 @@ fn is_tuple_being_assigned_to_storage_array(
             type_descriptions: TypeDescriptions { type_string: Some(type_string), .. },
             ..
         }) = assignment.left_hand_side.as_ref()
-            && SIGNED_STORAGE_ARRAY_POINTER.is_match(type_string) {
-                return true;
-            }
+        && SIGNED_STORAGE_ARRAY_POINTER.is_match(type_string)
+    {
+        return true;
+    }
     false
 }
 

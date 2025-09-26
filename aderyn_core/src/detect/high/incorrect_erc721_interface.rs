@@ -25,9 +25,10 @@ impl IssueDetector for IncorrectERC721InterfaceDetector {
             let current_contract_is_erc721 = contract_ids.iter().any(|i| {
                 context.nodes.get(i).is_some_and(|c| {
                     if let ASTNode::ContractDefinition(contract) = c
-                        && contract.name.contains("ERC721") {
-                            return true;
-                        }
+                        && contract.name.contains("ERC721")
+                    {
+                        return true;
+                    }
                     false
                 })
             });

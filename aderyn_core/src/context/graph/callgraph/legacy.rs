@@ -23,9 +23,10 @@ pub(super) fn derive_outward_surface_points(
                 .closest_ancestor_of_type(context, NodeType::FunctionDefinition)
                 .or_else(|| node.closest_ancestor_of_type(context, NodeType::ModifierDefinition));
             if let Some(parent_surface_point) = parent_surface_point
-                && let Some(parent_surface_point_id) = parent_surface_point.id() {
-                    outward_surface_points.push(parent_surface_point_id);
-                }
+                && let Some(parent_surface_point_id) = parent_surface_point.id()
+            {
+                outward_surface_points.push(parent_surface_point_id);
+            }
         }
     }
     outward_surface_points
@@ -56,9 +57,10 @@ pub(super) fn derive_inward_surface_points_legacy(
                 if node.node_type() == NodeType::ModifierDefinition {
                     inward_surface_points.push(declared_id);
                 } else if let ASTNode::FunctionDefinition(function_definition) = node
-                    && function_definition.implemented {
-                        inward_surface_points.push(declared_id);
-                    }
+                    && function_definition.implemented
+                {
+                    inward_surface_points.push(declared_id);
+                }
             }
         }
     }

@@ -35,9 +35,10 @@ impl IssueDetector for UnusedPublicFunctionDetector {
         for unreferenced_public_function in unreferenced_public_functions {
             if let Some(ASTNode::ContractDefinition(parent_contract)) = unreferenced_public_function
                 .closest_ancestor_of_type(context, crate::ast::NodeType::ContractDefinition)
-                && parent_contract.is_abstract {
-                    continue;
-                }
+                && parent_contract.is_abstract
+            {
+                continue;
+            }
             capture!(self, context, unreferenced_public_function);
         }
 

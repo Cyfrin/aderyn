@@ -33,9 +33,10 @@ impl LspReport {
             }
 
             if let Some(hint) = instance.hint.clone()
-                && !hint.is_empty() {
-                    message.push_str(&format!("\nHint: {}\n", hint));
-                }
+                && !hint.is_empty()
+            {
+                message.push_str(&format!("\nHint: {}\n", hint));
+            }
 
             message.push_str(&format!(
                "\nTo ignore this warning, add:\n\n// aderyn-ignore-next-line({})\n\nor mark as false positive:\n\n// aderyn-fp-next-line({})\n\n",

@@ -75,13 +75,14 @@ impl ModelContextProtocolTool for NodeFinderTool {
         let payload = input.0;
 
         if let Some(compilation_unit_index) = payload.compilation_unit_index
-            && (compilation_unit_index < 1 || compilation_unit_index > self.state.contexts.len()) {
-                return mcp_error!(
-                    "Invalid compilation unit index: {}. Must be in range [1, {}]",
-                    compilation_unit_index,
-                    self.state.contexts.len()
-                );
-            }
+            && (compilation_unit_index < 1 || compilation_unit_index > self.state.contexts.len())
+        {
+            return mcp_error!(
+                "Invalid compilation unit index: {}. Must be in range [1, {}]",
+                compilation_unit_index,
+                self.state.contexts.len()
+            );
+        }
 
         let search_term: SearchType = {
             if payload.get_all_errors.is_some_and(|f| f) {
