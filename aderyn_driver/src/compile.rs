@@ -1,4 +1,5 @@
 #![allow(unstable_name_collisions)]
+
 use aderyn_core::{
     ast::SourceUnit, context::workspace::WorkspaceContext, visitor::ast_visitor::Node,
 };
@@ -10,7 +11,6 @@ use solidity_ast::{
 use std::{path::PathBuf, str::FromStr};
 
 use crate::{
-    MapOrDefault,
     display::{display_configuration_info, display_header, display_ingesting_message},
     process::PreprocessedConfig,
 };
