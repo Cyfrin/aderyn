@@ -19,11 +19,10 @@ pub struct DivisionBeforeMultiplicationDetector {
 impl IssueDetector for DivisionBeforeMultiplicationDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for op in context.binary_operations().iter().filter(|op| op.operator == "*") {
-            if let Expression::BinaryOperation(left_op) = op.left_expression.as_ref() {
-                if left_op.operator == "/" {
+            if let Expression::BinaryOperation(left_op) = op.left_expression.as_ref()
+                && left_op.operator == "/" {
                     capture!(self, context, left_op)
                 }
-            }
         }
 
         Ok(!self.found_instances.is_empty())

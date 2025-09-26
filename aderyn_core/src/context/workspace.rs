@@ -170,12 +170,11 @@ impl WorkspaceContext {
         if let Some((offset, len)) = chopped_location.split_once(':') {
             let offset: usize = offset.parse().ok()?;
             let len: usize = len.parse().ok()?;
-            if let Some(content) = source_unit.source.as_ref() {
-                if offset + len < content.len() {
+            if let Some(content) = source_unit.source.as_ref()
+                && offset + len < content.len() {
                     let required_content = &content[offset..offset + len];
                     return Some(required_content.to_string());
                 }
-            }
         }
         None
     }

@@ -32,8 +32,8 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
                 binary_operation.left_expression.as_ref(),
                 binary_operation.right_expression.as_ref(),
             ] {
-                if let Expression::MemberAccess(member_access) = expr {
-                    if member_access.member_name == "balance"
+                if let Expression::MemberAccess(member_access) = expr
+                    && member_access.member_name == "balance"
                         && member_access.expression.as_ref().type_descriptions().is_some_and(
                             |type_desc| {
                                 type_desc.type_string.as_ref().is_some_and(|type_string| {
@@ -49,7 +49,6 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
                     {
                         capture!(self, context, binary_operation);
                     }
-                }
             }
         }
 

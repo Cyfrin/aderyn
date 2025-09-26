@@ -42,8 +42,8 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
 
                 if let Some(pragma_directive) = pragma_directive {
                     let version_req = pragma_directive_to_semver(pragma_directive);
-                    if let Ok(version_req) = version_req {
-                        if version_req_allows_below_0_5_0(&version_req) {
+                    if let Ok(version_req) = version_req
+                        && version_req_allows_below_0_5_0(&version_req) {
                             // Only run the logic if pragma is allowed to run on solc <0.5.0
 
                             if function.state_mutability() == &StateMutability::View
@@ -63,7 +63,6 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                                 }
                             }
                         }
-                    }
                 }
             }
         }

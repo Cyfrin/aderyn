@@ -139,8 +139,8 @@ impl Router {
             return resolve(base_contract);
         }
 
-        if let Expression::MemberAccess(member_access) = func_call.expression.as_ref() {
-            if let Expression::Identifier(Identifier {
+        if let Expression::MemberAccess(member_access) = func_call.expression.as_ref()
+            && let Expression::Identifier(Identifier {
                 name,
                 referenced_declaration: Some(ref_id),
                 ..
@@ -167,7 +167,6 @@ impl Router {
                     }
                 }
             }
-        }
         None
     }
 }
@@ -184,11 +183,9 @@ pub(super) fn build_ic_router_for_contract(
             for func in contract.function_definitions() {
                 if matches!(*func.kind(), FunctionKind::Function)
                     && matches!(func.visibility, Visibility::Internal | Visibility::Public)
-                {
-                    if let Entry::Vacant(e) = routes.entry(func.selectorish()) {
+                    && let Entry::Vacant(e) = routes.entry(func.selectorish()) {
                         e.insert(func.id);
                     }
-                }
             }
         }
         base_routes.insert(starting_point.id, routes);

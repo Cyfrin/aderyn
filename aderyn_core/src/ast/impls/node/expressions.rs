@@ -184,11 +184,10 @@ impl Node for IndexAccess {
         if let Some(base_expr_id) = self.base_expression.get_node_id() {
             visitor.visit_immediate_children(self.id, vec![base_expr_id])?;
         }
-        if let Some(index_expression) = &self.index_expression {
-            if let Some(index_expr_id) = index_expression.get_node_id() {
+        if let Some(index_expression) = &self.index_expression
+            && let Some(index_expr_id) = index_expression.get_node_id() {
                 visitor.visit_immediate_children(self.id, vec![index_expr_id])?;
             }
-        }
         Ok(())
     }
     macros::accept_id!();
@@ -209,16 +208,14 @@ impl Node for IndexRangeAccess {
         visitor.end_visit_index_range_access(self)
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if let Some(start_expression) = &self.start_expression {
-            if let Some(start_expr_id) = start_expression.get_node_id() {
+        if let Some(start_expression) = &self.start_expression
+            && let Some(start_expr_id) = start_expression.get_node_id() {
                 visitor.visit_immediate_children(self.id, vec![start_expr_id])?;
             }
-        }
-        if let Some(end_expression) = &self.end_expression {
-            if let Some(end_expr_id) = end_expression.get_node_id() {
+        if let Some(end_expression) = &self.end_expression
+            && let Some(end_expr_id) = end_expression.get_node_id() {
                 visitor.visit_immediate_children(self.id, vec![end_expr_id])?;
             }
-        }
         Ok(())
     }
     macros::accept_id!();

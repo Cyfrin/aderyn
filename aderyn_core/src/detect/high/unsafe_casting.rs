@@ -43,8 +43,7 @@ impl IssueDetector for UnsafeCastingDetector {
 
                 if let Expression::ElementaryTypeNameExpression(to_expression) =
                     &*function_call.expression
-                {
-                    if let Some(argument_types) = &to_expression.argument_types {
+                    && let Some(argument_types) = &to_expression.argument_types {
                         let casting_from_type =
                             match argument_types.first().and_then(|arg| arg.type_string.as_ref()) {
                                 Some(t) => t,
@@ -75,7 +74,6 @@ impl IssueDetector for UnsafeCastingDetector {
                             identifier_id,
                         );
                     }
-                }
             }
         }
         Ok(!self.found_instances.is_empty())

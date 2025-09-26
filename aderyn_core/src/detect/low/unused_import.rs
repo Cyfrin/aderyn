@@ -40,8 +40,7 @@ impl IssueDetector for UnusedImportDetector {
                     // everything that the source unit exports
                     if let Some(ASTNode::SourceUnit(i)) =
                         context.nodes.get(&imported_source_unit_id)
-                    {
-                        if let Some(exported_symbols) = i.exported_symbols.as_ref() {
+                        && let Some(exported_symbols) = i.exported_symbols.as_ref() {
                             let exported_symbols =
                                 exported_symbols.values().flatten().collect::<Vec<_>>();
                             // Create a relationship from source_unit -> imported source unit FOR
@@ -54,7 +53,6 @@ impl IssueDetector for UnusedImportDetector {
                                 exported_symbols.into_iter().cloned().collect::<Vec<_>>(),
                             );
                         }
-                    }
                 } else {
                     // This is a names import and we're only importing specific symbols
                     graph.create_relationship_for_symbols(
@@ -84,13 +82,12 @@ impl IssueDetector for UnusedImportDetector {
 
             for referenced_symbol in referenced_declarations {
                 graph.mark_used_pathways(source_unit.id, referenced_symbol);
-                if let Some(symbol_place) = context.nodes.get(&referenced_symbol) {
-                    if let Some(ASTNode::ContractDefinition(contract)) =
+                if let Some(symbol_place) = context.nodes.get(&referenced_symbol)
+                    && let Some(ASTNode::ContractDefinition(contract)) =
                         symbol_place.closest_ancestor_of_type(context, NodeType::ContractDefinition)
                     {
                         graph.mark_used_pathways(source_unit.id, contract.id);
                     }
-                }
             }
         }
 

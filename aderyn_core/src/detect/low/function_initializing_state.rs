@@ -33,13 +33,11 @@ impl IssueDetector for FunctionInitializingStateDetector {
         {
             if let Some(Expression::FunctionCall(FunctionCall { expression, .. })) =
                 variable_declaration.value.as_ref()
-            {
-                if let Expression::Identifier(Identifier {
+                && let Expression::Identifier(Identifier {
                     referenced_declaration: Some(func_id),
                     ..
                 }) = expression.as_ref()
-                {
-                    if let Some(ASTNode::FunctionDefinition(func)) = context.nodes.get(func_id) {
+                    && let Some(ASTNode::FunctionDefinition(func)) = context.nodes.get(func_id) {
                         let callgraphs = CallGraphConsumer::get(
                             context,
                             &[&(func.into())],
@@ -57,8 +55,6 @@ impl IssueDetector for FunctionInitializingStateDetector {
                             }
                         }
                     }
-                }
-            }
         }
 
         Ok(!self.found_instances.is_empty())
@@ -110,11 +106,9 @@ impl CallGraphVisitor for NonConstantStateVariableReferenceDeclarationTracker<'_
         for reference in references {
             if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
                 self.context.nodes.get(&reference)
-            {
-                if variable_declaration.state_variable && !variable_declaration.constant {
+                && variable_declaration.state_variable && !variable_declaration.constant {
                     self.makes_a_reference = true;
                 }
-            }
         }
 
         Ok(())

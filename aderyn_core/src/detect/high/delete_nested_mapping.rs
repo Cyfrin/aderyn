@@ -26,8 +26,7 @@ impl IssueDetector for DeletionNestedMappingDetector {
         {
             if let Expression::IndexAccess(IndexAccess { base_expression, .. }) =
                 delete_operation.sub_expression.as_ref()
-            {
-                if let Expression::Identifier(Identifier {
+                && let Expression::Identifier(Identifier {
                     referenced_declaration: Some(referenced_id),
                     type_descriptions,
                     ..
@@ -45,13 +44,11 @@ impl IssueDetector for DeletionNestedMappingDetector {
                             type_name: Some(TypeName::Mapping(Mapping { value_type, .. })),
                             ..
                         })) = context.nodes.get(referenced_id)
-                        {
-                            if let TypeName::UserDefinedTypeName(UserDefinedTypeName {
+                            && let TypeName::UserDefinedTypeName(UserDefinedTypeName {
                                 referenced_declaration,
                                 ..
                             }) = value_type.as_ref()
-                            {
-                                if let Some(ASTNode::StructDefinition(structure)) =
+                                && let Some(ASTNode::StructDefinition(structure)) =
                                     context.nodes.get(referenced_declaration)
                                 {
                                     // Check that a member of a struct is of type mapping
@@ -63,11 +60,8 @@ impl IssueDetector for DeletionNestedMappingDetector {
                                         capture!(self, context, delete_operation);
                                     }
                                 }
-                            }
-                        }
                     }
                 }
-            }
         }
 
         Ok(!self.found_instances.is_empty())

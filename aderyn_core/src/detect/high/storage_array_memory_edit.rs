@@ -33,8 +33,8 @@ impl IssueDetector for StorageArrayMemoryEditDetector {
             for (index, argument_type) in
                 identifier.argument_types.as_ref().unwrap().iter().enumerate()
             {
-                if let Some(type_string) = &argument_type.type_string {
-                    if type_string.contains("storage ref") {
+                if let Some(type_string) = &argument_type.type_string
+                    && type_string.contains("storage ref") {
                         let definition_ast =
                             context.nodes.get(&identifier.referenced_declaration.unwrap());
                         if let Some(ASTNode::FunctionDefinition(definition)) = definition_ast {
@@ -48,7 +48,6 @@ impl IssueDetector for StorageArrayMemoryEditDetector {
                             }
                         }
                     }
-                }
             }
         }
 

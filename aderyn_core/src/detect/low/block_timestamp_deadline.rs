@@ -29,8 +29,8 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
             // If the last FunctionCall argument is a MemberAccess identifier with member_name
             // "timestamp", and the MemberAccess expression.name is "block", add the
             // node to the found_block_timestamp_deadlines vector.
-            if let Expression::MemberAccess(ref member_access) = *call.expression {
-                if member_access.member_name == "swapExactTokensForTokens"
+            if let Expression::MemberAccess(ref member_access) = *call.expression
+                && (member_access.member_name == "swapExactTokensForTokens"
                     || member_access.member_name == "swapTokensForExactTokens"
                     || member_access.member_name == "swapExactETHForTokens"
                     || member_access.member_name == "swapTokensForExactETH"
@@ -41,22 +41,14 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
                     || member_access.member_name
                         == "swapExactETHForTokensSupportingFeeOnTransferTokens"
                     || member_access.member_name
-                        == "swapExactTokensForETHSupportingFeeOnTransferTokens"
-                {
-                    if let Expression::MemberAccess(member_access) = call.arguments.last().unwrap()
-                    {
-                        if member_access.member_name == "timestamp" {
-                            if let Expression::Identifier(ref identifier) =
+                        == "swapExactTokensForETHSupportingFeeOnTransferTokens")
+                    && let Expression::MemberAccess(member_access) = call.arguments.last().unwrap()
+                        && member_access.member_name == "timestamp"
+                            && let Expression::Identifier(ref identifier) =
                                 *member_access.expression
-                            {
-                                if identifier.name == "block" {
+                                && identifier.name == "block" {
                                     capture!(self, context, call);
                                 }
-                            }
-                        }
-                    }
-                }
-            }
             // Uniswap V3 - Function Calls
             // For each FunctionCall, if it is of kind StructConstructorCall, where the call's
             // Expression has a name of any of the following: [
@@ -65,29 +57,23 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
             // If any of the call's arguments is a MemberAccess identifier with member_name
             // "timestamp", and the MemberAccess expression.name is "block", add the
             // node to the found_block_timestamp_deadlines vector.
-            if call.kind == FunctionCallKind::StructConstructorCall {
-                if let Expression::Identifier(ref identifier) = *call.expression {
-                    if identifier.name == "ExactInputSingleParams"
+            if call.kind == FunctionCallKind::StructConstructorCall
+                && let Expression::Identifier(ref identifier) = *call.expression
+                    && (identifier.name == "ExactInputSingleParams"
                         || identifier.name == "ExactInputParams"
                         || identifier.name == "ExactOutputSingleParams"
-                        || identifier.name == "ExactOutputParams"
+                        || identifier.name == "ExactOutputParams")
                     {
                         for argument in call.arguments.iter() {
-                            if let Expression::MemberAccess(ref member_access) = *argument {
-                                if member_access.member_name == "timestamp" {
-                                    if let Expression::Identifier(ref identifier) =
+                            if let Expression::MemberAccess(ref member_access) = *argument
+                                && member_access.member_name == "timestamp"
+                                    && let Expression::Identifier(ref identifier) =
                                         *member_access.expression
-                                    {
-                                        if identifier.name == "block" {
+                                        && identifier.name == "block" {
                                             capture!(self, context, call);
                                         }
-                                    }
-                                }
-                            }
                         }
                     }
-                }
-            }
         }
 
         // TODO: Uniswap V3 - Struct definitions

@@ -66,14 +66,12 @@ impl IssueDetector for ReentrancyStateChangeDetector {
                             cfg.nodes.get(&state_change).expect("cfg is corrupted");
 
                         if let Some(state_change_ast_node) = state_change_cfg_node.reflect(context)
-                        {
-                            if let Some(state_change_code) = state_change_ast_node.peek(context) {
+                            && let Some(state_change_code) = state_change_ast_node.peek(context) {
                                 hint.push('`');
                                 hint.push_str(&state_change_code);
                                 hint.push('`');
                                 hint.push_str(", ");
                             }
-                        }
                     }
                 }
 

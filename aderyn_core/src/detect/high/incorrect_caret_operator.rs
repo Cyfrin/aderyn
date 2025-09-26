@@ -30,20 +30,18 @@ impl IssueDetector for IncorrectUseOfCaretOperatorDetector {
                 binary_operation.left_expression.as_ref(),
                 binary_operation.right_expression.as_ref(),
             ] {
-                if let Expression::Literal(literal) = expr {
-                    if literal.kind == LiteralKind::Number
+                if let Expression::Literal(literal) = expr
+                    && literal.kind == LiteralKind::Number
                         && literal.value.as_ref().is_some_and(|v| !v.starts_with("0x"))
                     {
                         capture!(self, context, binary_operation);
                     }
-                }
-                if let Expression::Identifier(identifier) = expr {
-                    if let Some(ref_decl) = identifier.referenced_declaration {
-                        if let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&ref_decl)
-                        {
-                            if v.mutability() == Some(&Mutability::Constant) {
-                                if let Some(Expression::Literal(literal)) = v.value.as_ref() {
-                                    if literal.kind == LiteralKind::Number
+                if let Expression::Identifier(identifier) = expr
+                    && let Some(ref_decl) = identifier.referenced_declaration
+                        && let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&ref_decl)
+                            && v.mutability() == Some(&Mutability::Constant)
+                                && let Some(Expression::Literal(literal)) = v.value.as_ref()
+                                    && literal.kind == LiteralKind::Number
                                         && literal
                                             .value
                                             .as_ref()
@@ -51,11 +49,6 @@ impl IssueDetector for IncorrectUseOfCaretOperatorDetector {
                                     {
                                         capture!(self, context, binary_operation);
                                     }
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
 

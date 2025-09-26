@@ -116,14 +116,11 @@ mod func_compilation_solc_pragma_helper {
             {
                 let pragma_directives = ExtractPragmaDirectives::from(source_unit).extracted;
 
-                if let Some(pragma_directive) = pragma_directives.first() {
-                    if let Ok(pragma_semver) = helpers::pragma_directive_to_semver(pragma_directive)
-                    {
-                        if version_req_allows_below_0_5_0(&pragma_semver) {
+                if let Some(pragma_directive) = pragma_directives.first()
+                    && let Ok(pragma_semver) = helpers::pragma_directive_to_semver(pragma_directive)
+                        && version_req_allows_below_0_5_0(&pragma_semver) {
                             return true;
                         }
-                    }
-                }
             }
             false
         }

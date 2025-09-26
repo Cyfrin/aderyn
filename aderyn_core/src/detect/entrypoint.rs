@@ -136,8 +136,8 @@ pub fn detect_issues(
                 .into_par_iter()
                 .map(|context| {
                     let mut d = detector.skeletal_clone();
-                    if let Ok(found) = d.detect(context) {
-                        if found {
+                    if let Ok(found) = d.detect(context)
+                        && found {
                             let instances = d.instances();
                             let hints = d.hints();
                             return (
@@ -147,7 +147,6 @@ pub fn detect_issues(
                                 context.included.clone(),
                             );
                         }
-                    }
                     (
                         Default::default(),
                         Default::default(),

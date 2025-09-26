@@ -19,11 +19,10 @@ impl Display for ElementaryTypeName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str(self.name.as_str())?;
 
-        if let Some(state_mutability) = self.state_mutability {
-            if state_mutability != StateMutability::NonPayable {
+        if let Some(state_mutability) = self.state_mutability
+            && state_mutability != StateMutability::NonPayable {
                 f.write_fmt(format_args!(" {state_mutability}"))?;
             }
-        }
 
         Ok(())
     }

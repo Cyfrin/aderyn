@@ -41,11 +41,10 @@ impl IssueDetector for UnsafeERC721MintDetector {
                         this_contract_definition
                     {
                         for base_contract in contract_definition.base_contracts.iter() {
-                            if let Some(base_name) = base_contract.base_name.name() {
-                                if base_name.contains("ERC721") {
+                            if let Some(base_name) = base_contract.base_name.name()
+                                && base_name.contains("ERC721") {
                                     capture!(self, context, identifier);
                                 }
-                            }
                         }
                     }
                 }

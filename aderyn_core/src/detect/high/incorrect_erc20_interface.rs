@@ -24,11 +24,10 @@ impl IssueDetector for IncorrectERC20InterfaceDetector {
             let contract_ids = &current_contract.linearized_base_contracts;
             let current_contract_is_erc20 = contract_ids.iter().any(|i| {
                 context.nodes.get(i).is_some_and(|c| {
-                    if let ASTNode::ContractDefinition(contract) = c {
-                        if contract.name.contains("ERC20") {
+                    if let ASTNode::ContractDefinition(contract) = c
+                        && contract.name.contains("ERC20") {
                             return true;
                         }
-                    }
                     false
                 })
             });

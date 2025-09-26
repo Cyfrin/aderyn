@@ -29,11 +29,11 @@ impl IssueDetector for ImmediateParentDemonstrator {
         for assignment in context.assignments() {
             println!("0 {}", assignment);
             capture!(self, context, assignment);
-            if let Some(first_parent) = assignment.parent(context) {
-                if let ASTNode::ExpressionStatement(expr_stmnt) = first_parent {
+            if let Some(first_parent) = assignment.parent(context)
+                && let ASTNode::ExpressionStatement(expr_stmnt) = first_parent {
                     println!("1 {}", expr_stmnt);
-                    if let Some(second_parent) = first_parent.parent(context) {
-                        if let ASTNode::Block(for_statement) = second_parent {
+                    if let Some(second_parent) = first_parent.parent(context)
+                        && let ASTNode::Block(for_statement) = second_parent {
                             println!("2 {}", for_statement);
                             capture!(self, context, second_parent);
                             if let Some(third_parent) = for_statement.parent(context) {
@@ -60,9 +60,7 @@ impl IssueDetector for ImmediateParentDemonstrator {
                                 );
                             }
                         }
-                    }
                 }
-            }
         }
 
         Ok(!self.found_instances.is_empty())

@@ -66,12 +66,11 @@ fn dfs_to_create_graph(
         // connections to FunctionDefinition
         let function_calls = ExtractFunctionCalls::from(from_node).extracted;
         for function_call in function_calls {
-            if let Expression::Identifier(identifier) = function_call.expression.as_ref() {
-                if let Some(referenced_function_id) = identifier.referenced_declaration {
+            if let Expression::Identifier(identifier) = function_call.expression.as_ref()
+                && let Some(referenced_function_id) = identifier.referenced_declaration {
                     create_connection_if_not_exists(id, referenced_function_id, raw_callgraph);
                     dfs_to_create_graph(referenced_function_id, raw_callgraph, visited, context)?;
                 }
-            }
         }
 
         // connections to ModifierDefinition

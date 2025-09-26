@@ -60,22 +60,18 @@ fn are_duplicate_names_in_inherited_contracts(
             UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(base_name) => {
                 if let Some(ASTNode::ContractDefinition(contract)) =
                     context.nodes.get(&base_name.referenced_declaration)
-                {
-                    if are_duplicate_names_in_inherited_contracts(context, variable_name, contract)
+                    && are_duplicate_names_in_inherited_contracts(context, variable_name, contract)
                     {
                         return true; // Return immediately if a duplicate is found
                     }
-                }
             }
             UserDefinedTypeNameOrIdentifierPath::IdentifierPath(identifier_path) => {
                 if let Some(ASTNode::ContractDefinition(contract)) =
                     context.nodes.get(&(identifier_path.referenced_declaration))
-                {
-                    if are_duplicate_names_in_inherited_contracts(context, variable_name, contract)
+                    && are_duplicate_names_in_inherited_contracts(context, variable_name, contract)
                     {
                         return true; // Return immediately if a duplicate is found
                     }
-                }
             }
         }
     }
@@ -139,30 +135,26 @@ impl IssueDetector for StateVariableShadowingDetector {
                             UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(base_name) => {
                                 if let Some(ASTNode::ContractDefinition(contract)) =
                                     context.nodes.get(&base_name.referenced_declaration)
-                                {
-                                    if are_duplicate_names_in_inherited_contracts(
+                                    && are_duplicate_names_in_inherited_contracts(
                                         context,
                                         &variable.name,
                                         contract,
                                     ) {
                                         capture!(self, context, variable);
                                     }
-                                }
                             }
                             UserDefinedTypeNameOrIdentifierPath::IdentifierPath(
                                 identifier_path,
                             ) => {
                                 if let Some(ASTNode::ContractDefinition(contract)) =
                                     context.nodes.get(&(identifier_path.referenced_declaration))
-                                {
-                                    if are_duplicate_names_in_inherited_contracts(
+                                    && are_duplicate_names_in_inherited_contracts(
                                         context,
                                         &variable.name,
                                         contract,
                                     ) {
                                         capture!(self, context, variable);
                                     }
-                                }
                             }
                         };
                     }

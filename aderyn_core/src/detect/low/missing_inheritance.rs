@@ -70,11 +70,10 @@ impl IssueDetector for MissingInheritanceDetector {
             if contract_selectors.is_empty() {
                 continue;
             }
-            if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(contract_id) {
-                if c.kind != ContractKind::Contract || c.is_abstract {
+            if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(contract_id)
+                && (c.kind != ContractKind::Contract || c.is_abstract) {
                     continue;
                 }
-            }
             let inheritances = inheritance_map.entry(*contract_id).or_default();
             for (potentially_missing_inheritance, missing_function_selectors) in
                 &contract_function_selectors
@@ -96,15 +95,13 @@ impl IssueDetector for MissingInheritanceDetector {
 
                 if let Some(ASTNode::ContractDefinition(c)) =
                     context.nodes.get(potentially_missing_inheritance)
-                {
-                    if c.kind == ContractKind::Interface || c.is_abstract {
+                    && (c.kind == ContractKind::Interface || c.is_abstract) {
                         // Check that the contract is compatible with the missing inheritance
                         if missing_function_selectors.iter().all(|s| contract_selectors.contains(s))
                         {
                             results.entry(*contract_id).or_default().insert(c.name.clone());
                         }
                     }
-                }
             }
         }
 

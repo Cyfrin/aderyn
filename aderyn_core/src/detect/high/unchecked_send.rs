@@ -25,20 +25,15 @@ impl IssueDetector for UncheckedSendDetector {
                         type_string == "address" || type_string == "address payable"
                     })
                 })
-            {
-                if let Some(ASTNode::FunctionCall(func_call)) = member_access.parent(context) {
-                    if let Some(ASTNode::ExpressionStatement(expr_stmnt)) =
+                && let Some(ASTNode::FunctionCall(func_call)) = member_access.parent(context)
+                    && let Some(ASTNode::ExpressionStatement(expr_stmnt)) =
                         func_call.parent(context)
-                    {
-                        if expr_stmnt
+                        && expr_stmnt
                             .parent(context)
                             .is_some_and(|node| node.node_type() == NodeType::Block)
                         {
                             capture!(self, context, func_call);
                         }
-                    }
-                }
-            }
         }
 
         Ok(!self.found_instances.is_empty())

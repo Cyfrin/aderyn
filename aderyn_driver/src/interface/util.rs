@@ -58,11 +58,10 @@ pub fn carve_shortest_path(from_file: PathBuf, to_file: PathBuf) -> PathBuf {
     // Keep looking forward until you reach the to_file
     while let Some(ffc) = curr_ffc {
         buffer.push(ffc);
-        if let Component::Normal(_) = ffc {
-            if buffer.is_file() {
+        if let Component::Normal(_) = ffc
+            && buffer.is_file() {
                 break;
             }
-        }
         count_back += 1;
         curr_ffc = from_file_comps.next();
     }
@@ -80,9 +79,9 @@ pub fn carve_shortest_path(from_file: PathBuf, to_file: PathBuf) -> PathBuf {
 
     // Finally, concatenate both components
     backward_comps.extend(forward_comps.iter());
-    let final_route = backward_comps.iter().map(|c| c.as_os_str()).collect::<PathBuf>();
+    
 
-    final_route
+    backward_comps.iter().map(|c| c.as_os_str()).collect::<PathBuf>()
 }
 
 pub fn files_details(context: &WorkspaceContext) -> FilesDetails {

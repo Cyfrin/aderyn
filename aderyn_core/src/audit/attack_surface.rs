@@ -126,9 +126,9 @@ fn transform_surface_points(
         if let Some(ast_node) = context.nodes.get(id) {
             let contract = ast_node.closest_ancestor_of_type(context, NodeType::ContractDefinition);
             let function = ast_node.closest_ancestor_of_type(context, NodeType::FunctionDefinition);
-            if let Some(ASTNode::ContractDefinition(contract)) = contract {
-                if let Some(ASTNode::FunctionDefinition(function)) = function {
-                    if let Some(source_code) = ast_node.peek(context) {
+            if let Some(ASTNode::ContractDefinition(contract)) = contract
+                && let Some(ASTNode::FunctionDefinition(function)) = function
+                    && let Some(source_code) = ast_node.peek(context) {
                         let contract_name = contract.name.to_string();
                         let function_name = function.name.to_string();
                         auditor_instances.insert(AttackSurfaceInstance {
@@ -138,8 +138,6 @@ fn transform_surface_points(
                             address_source: address_storage.to_string(),
                         });
                     }
-                }
-            }
         }
     }
 
@@ -151,15 +149,12 @@ fn find_address_source_if_direct_call(
     member_access: &MemberAccess,
 ) -> Option<AddressSource> {
     if let Expression::Identifier(identifier) = &*member_access.expression {
-        if let Some(reference_id) = identifier.referenced_declaration {
-            if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
+        if let Some(reference_id) = identifier.referenced_declaration
+            && let Some(ASTNode::VariableDeclaration(variable_declaration)) =
                 context.nodes.get(&reference_id)
-            {
-                if variable_declaration.state_variable {
+                && variable_declaration.state_variable {
                     return Some(AddressSource::Storage);
                 }
-            }
-        }
         return Some(AddressSource::Havoc);
     }
     None
@@ -170,29 +165,19 @@ fn find_address_source_if_function_call(
     member_access: &MemberAccess,
 ) -> Option<AddressSource> {
     if let Expression::FunctionCall(function_call) = &*member_access.expression {
-        if function_call.kind == FunctionCallKind::TypeConversion {
-            if let Expression::ElementaryTypeNameExpression(elementary_type_name_expression) =
+        if function_call.kind == FunctionCallKind::TypeConversion
+            && let Expression::ElementaryTypeNameExpression(elementary_type_name_expression) =
                 &*function_call.expression
-            {
-                if let TypeName::ElementaryTypeName(elementary_type_name) =
+                && let TypeName::ElementaryTypeName(elementary_type_name) =
                     &elementary_type_name_expression.type_name
-                {
-                    if elementary_type_name.name == "address" {
-                        if let Expression::Identifier(identifier) = &function_call.arguments[0] {
-                            if let Some(reference_id) = identifier.referenced_declaration {
-                                if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
+                    && elementary_type_name.name == "address"
+                        && let Expression::Identifier(identifier) = &function_call.arguments[0]
+                            && let Some(reference_id) = identifier.referenced_declaration
+                                && let Some(ASTNode::VariableDeclaration(variable_declaration)) =
                                     context.nodes.get(&reference_id)
-                                {
-                                    if variable_declaration.state_variable {
+                                    && variable_declaration.state_variable {
                                         return Some(AddressSource::Storage);
                                     }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
         return Some(AddressSource::Havoc);
     }
     None

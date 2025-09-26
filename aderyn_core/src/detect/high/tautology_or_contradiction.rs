@@ -27,11 +27,9 @@ impl IssueDetector for TautologyOrContraditionDetector {
         for binary_operation in context.binary_operations() {
             if let Some(is_tautlogy_or_contradiction) =
                 binary_operation.is_tautology_or_contradiction(context)
-            {
-                if is_tautlogy_or_contradiction {
+                && is_tautlogy_or_contradiction {
                     capture!(self, context, binary_operation);
                 }
-            }
         }
 
         Ok(!self.found_instances.is_empty())
@@ -104,28 +102,22 @@ impl OperationIsTautologyOrContradiction for BinaryOperation {
             if let Some(lhs_value) = get_literal_value_or_constant_variable_value(
                 self.left_expression.get_node_id()?,
                 context,
-            ) {
-                if let Some(makes_sense) =
+            )
+                && let Some(makes_sense) =
                     does_operation_make_sense_with_lhs_value(&lhs_value, &operator, rhs_type_string)
-                {
-                    if !makes_sense {
+                    && !makes_sense {
                         return Some(true);
                     }
-                }
-            }
 
             if let Some(rhs_value) = get_literal_value_or_constant_variable_value(
                 self.right_expression.get_node_id()?,
                 context,
-            ) {
-                if let Some(makes_sense) =
+            )
+                && let Some(makes_sense) =
                     does_operation_make_sense_with_rhs_value(lhs_type_string, &operator, &rhs_value)
-                {
-                    if !makes_sense {
+                    && !makes_sense {
                         return Some(true);
                     }
-                }
-            }
         }
 
         None
@@ -274,15 +266,14 @@ pub mod solidity_integer_helper {
                     max_val: find_uint_max(num_of_bits),
                 });
             }
-        } else if type_string.starts_with("int") {
-            if let Some((_, num_of_bits)) = &type_string.split_once("int") {
+        } else if type_string.starts_with("int")
+            && let Some((_, num_of_bits)) = &type_string.split_once("int") {
                 let num_of_bits = num_of_bits.parse::<u32>()?;
                 return Ok(SolidityNumberRange {
                     min_val: find_int_min(num_of_bits),
                     max_val: find_int_max(num_of_bits),
                 });
             }
-        }
         Err("Invalid type string provided!".into())
     }
 

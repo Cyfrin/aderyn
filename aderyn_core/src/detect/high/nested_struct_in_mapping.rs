@@ -50,8 +50,8 @@ impl IssueDetector for NestedStructInMappingDetector {
         });
 
         for mapping in mappings {
-            if let Some(TypeName::Mapping(mapping_type)) = &mapping.type_name {
-                if let TypeName::UserDefinedTypeName(user_defined_type) = &*mapping_type.value_type
+            if let Some(TypeName::Mapping(mapping_type)) = &mapping.type_name
+                && let TypeName::UserDefinedTypeName(user_defined_type) = &*mapping_type.value_type
                 {
                     let struct_definition_ast_node =
                         context.nodes.get(&user_defined_type.referenced_declaration);
@@ -60,8 +60,7 @@ impl IssueDetector for NestedStructInMappingDetector {
                     {
                         for member in struct_definition.members.iter() {
                             if let Some(member_type_string) = &member.type_descriptions.type_string
-                            {
-                                if member_type_string.contains("struct") {
+                                && member_type_string.contains("struct") {
                                     // Check if the contract that this is in allows for solidity
                                     // pragma below 0.5.0
                                     let source_unit_ast_node = context
@@ -78,11 +77,9 @@ impl IssueDetector for NestedStructInMappingDetector {
                                         }
                                     }
                                 }
-                            }
                         }
                     }
                 }
-            }
         }
 
         Ok(!self.found_instances.is_empty())

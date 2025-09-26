@@ -99,11 +99,10 @@ fn all_paths_have_revert_or_placeholder(
         curr_node: CfgNodeId,
         so_far: SoFar,
     ) -> bool {
-        if let Some(visited_node) = visited.get(&curr_node) {
-            if visited_node[so_far] {
+        if let Some(visited_node) = visited.get(&curr_node)
+            && visited_node[so_far] {
                 return answers.get(&curr_node).expect("answers corrupted!")[so_far];
             }
-        }
 
         let curr_cfg_node = cfg.nodes.get(&curr_node).expect("cfg is incomplete!");
 
