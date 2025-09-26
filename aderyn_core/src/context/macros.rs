@@ -107,19 +107,19 @@ macro_rules! make_route {
 }
 
 macro_rules! mcp_success {
-    ($msg:expr) => {
+    ($msg:expr_2021) => {
         Ok(CallToolResult::success(vec![Content::text($msg)]))
     };
-    ($fmt:expr, $($arg:tt)*) => {
+    ($fmt:expr_2021, $($arg:tt)*) => {
         Ok(CallToolResult::success(vec![Content::text(format!($fmt, $($arg)*))]))
     };
 }
 
 macro_rules! mcp_error {
-    ($msg:expr) => {
+    ($msg:expr_2021) => {
         Ok(CallToolResult::error(vec![Content::text($msg)]))
     };
-    ($fmt:expr, $($arg:tt)*) => {
+    ($fmt:expr_2021, $($arg:tt)*) => {
         Ok(CallToolResult::error(vec![Content::text(format!($fmt, $($arg)*))]))
     };
 }

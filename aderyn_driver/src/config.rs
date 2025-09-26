@@ -52,7 +52,7 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
     // Load env variables
     if let Some(map) = config.env.clone() {
         map.iter().for_each(|(k, v)| {
-            env::set_var(k, v);
+            unsafe { env::set_var(k, v) };
         })
     }
 

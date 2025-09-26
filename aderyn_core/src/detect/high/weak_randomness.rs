@@ -141,7 +141,7 @@ fn check_operand(operand: &Expression) -> bool {
         Expression::FunctionCall(function_call) => {
             if function_call.kind == FunctionCallKind::TypeConversion {
                 // type conversion must have exactly one argument
-                if let Some(Expression::FunctionCall(ref inner_function_call)) = function_call.arguments.first() {
+                if let Some(Expression::FunctionCall(inner_function_call)) = function_call.arguments.first() {
                     if matches!(*inner_function_call.expression, Expression::Identifier(ref id) if id.name == "blockhash") {
                         return true;
                     }

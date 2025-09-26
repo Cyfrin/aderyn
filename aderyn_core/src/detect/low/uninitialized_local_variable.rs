@@ -35,7 +35,7 @@ impl IssueDetector for UninitializedLocalVariableDetector {
         {
             potentially_uninitialized_local_variables.extend(
                 variable_declaration_statement.declarations.iter().flat_map(|s| {
-                    if let Some(ref s) = s {
+                    if let Some(s) = s {
                         return Some(s.id);
                     }
                     None

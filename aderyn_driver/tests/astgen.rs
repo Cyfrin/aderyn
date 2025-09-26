@@ -42,7 +42,7 @@ mod project_compiler_grouping_tests {
     #[test]
     fn foundry_nft_f23_icm() {
         let project_root_str = "../tests/foundry-nft-f23-icm";
-        set_var("FOUNDRY_PROFILE", "icm");
+        unsafe { set_var("FOUNDRY_PROFILE", "icm") };
         test_grouping_files_to_compile(project_root_str, &None, &None, &None);
     }
 
