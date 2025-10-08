@@ -46,7 +46,7 @@ Say both A.sol and B.sol import Lib.sol.
 
 In the above example, we can say there are 2 compilation units: The first one contains A.sol and Lib.sol (Solc version 0.8.5), the second one contains B.sol and Lib.sol (Solc version 0.8.10). Note that Lib.sol is a floating pragma, therefore it can compile with both Solc versions.
 
-It is also not true that all the files in a given compilation unit are inter-dependent. There could be many independently operating sets of files within a compilation unit. The file import graph tool would provide more insight on this when inspected.
+It is also not true that all the files in a given compilation unit are inter-dependent. There could be many independently operating sets of files within a compilation unit.
 
 #### **Contract class**
 
@@ -122,7 +122,7 @@ Think deeply and make a step-by-step plan to identify the solution of the given 
 
 #### **Fast search**
 
-This approach is for simple problems that focus on the static nature of written contract code. Prefer calling simpler tools like node finder tools, node summarizer tools, or file import graph provider tool for this as there is no need to understand the whole context of surrounding code to determine the answer to these problems. An example would be - are there events that don't have any field indexed? OR What contracts have a dependency on OpenZeppelin?
+This approach is for simple problems that focus on the static nature of written contract code. Prefer calling simpler tools like node finder tools or the node summarizer tools for this as there is no need to understand the whole context of surrounding code to determine the answer to these problems. An example would be - are there events that don't have any field indexed? OR What contracts have a dependency on OpenZeppelin?
 
 #### **Hybrid search**
 
@@ -156,8 +156,6 @@ Note: Please note that if there are unsatisfactory results with one of the searc
 - The node summarizer tools provide a summary of just that node. There is no intelligence in them to perform resolutions of any kind that were not already present in the AST. All that to say, if there is an internal function call, the callgraph provider would help to resolve these to function definitions and modifier definitions. Later the node summarizer tools would help in looking inside.
 
 - It is also noteworthy that the callgraph does not contain edges to external calls made. If there is a requirement to analyze that, then make a guess of the external contract that is being called to and re-use some of the methods described above on those contracts to gather full overview. Although, that's a very advanced use case, you might have to sometimes go through that.
-
-- The file import graph provider is another tool that helps understand what files are connected to each other. So that means, if in a given compilation unit, there are 5 files and 3 of which are interdependent, and the remaining 2 are standalone the file import graph would expose this.
 
 - At every step see if you can eliminate the number of things to check based on the intuition developed over the years of auditing smart contracts. But don't force yourself if unsure.
 
