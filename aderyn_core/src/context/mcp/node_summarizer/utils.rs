@@ -29,7 +29,7 @@ pub fn get_containing_contract(context: &WorkspaceContext, node: &ASTNode) -> Op
         return None;
     }
     let Some(ASTNode::ContractDefinition(parent_contract)) = context.get_closest_ancestor(
-        node.id().expect("node wihthout ID passed"),
+        node.id().expect("node found without an ID"),
         NodeType::ContractDefinition,
     ) else {
         return None;
@@ -42,7 +42,7 @@ pub fn get_containing_modifier(context: &WorkspaceContext, node: &ASTNode) -> Op
         return None;
     }
     let Some(ASTNode::ModifierDefinition(parent_modifier)) = context.get_closest_ancestor(
-        node.id().expect("node wihthout ID passed"),
+        node.id().expect("node found without an ID"),
         NodeType::ModifierDefinition,
     ) else {
         return None;
@@ -55,7 +55,7 @@ pub fn get_containing_function(context: &WorkspaceContext, node: &ASTNode) -> Op
         return None;
     }
     let Some(ASTNode::FunctionDefinition(parent_function)) = context.get_closest_ancestor(
-        node.id().expect("node wihthout ID passed"),
+        node.id().expect("node found without an ID"),
         NodeType::FunctionDefinition,
     ) else {
         return None;
