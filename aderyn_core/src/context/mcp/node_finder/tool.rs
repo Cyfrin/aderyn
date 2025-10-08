@@ -25,7 +25,7 @@ pub struct NodeFinderTool {
 }
 
 #[derive(Deserialize, schemars::JsonSchema)]
-/// Find nodes. Choose 1 field onyl out of functions, modifiers, contracts, events and errors.
+/// Find nodes. Choose only 1 field out of functions, modifiers, contracts, events and errors.
 pub struct NodeFinderPayload {
     /// Search function nodes by function name
     search_functions_by_name: Option<String>,
@@ -64,7 +64,7 @@ impl ModelContextProtocolTool for NodeFinderTool {
 
     fn description(&self) -> String {
         indoc! {
-            "Retreieve nodes IDs and compilation unit indexes of node definitions matched by names functions,\
+            "Retrieve nodes IDs and compilation unit indexes of node definitions matched by names functions,\
             modifiers and contracts. Optionally accepts 'compilation_unit_index' to limit the search \
             to a specific compilation unit."
         }

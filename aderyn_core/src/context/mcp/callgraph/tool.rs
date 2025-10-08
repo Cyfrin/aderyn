@@ -39,7 +39,7 @@ pub struct CallgraphPayload {
     /// The Node ID of the main contract to analyze. Obtain this from the list contracts tool,
     /// which returns Node IDs for all deployable contracts in the compilation unit. Each contract
     /// has a unique Node ID within its compilation unit.
-    pub orignal_contract_node_id: NodeID,
+    pub original_contract_node_id: NodeID,
     /// The Node ID of the specific entrypoint function in the contract to start exploring the
     /// callgraph from. Obtain this from contract surface area tool.
     pub entrypoint_function_node_id: NodeID,
@@ -86,11 +86,11 @@ impl ModelContextProtocolTool for CallgraphTool {
             .expect("Compilation unit index bounds check failed");
 
         let Some(ASTNode::ContractDefinition(contract)) =
-            context.nodes.get(&payload.orignal_contract_node_id)
+            context.nodes.get(&payload.original_contract_node_id)
         else {
             return mcp_error!(
                 "Node ID {} does not correspond to a contract definition",
-                payload.orignal_contract_node_id
+                payload.original_contract_node_id
             );
         };
 

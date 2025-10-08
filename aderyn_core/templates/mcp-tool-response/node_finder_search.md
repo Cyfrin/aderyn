@@ -12,4 +12,4 @@
 No match found for {{ node_type }}s !
 {% endif %}
 
-### Tip: Now, use the node summarizer tool to investigate thes nodes
+### Tip: Now, use the node summarizer tool to investigate these nodes

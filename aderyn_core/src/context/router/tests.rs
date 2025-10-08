@@ -328,7 +328,7 @@ mod mir_router {
 
         let b_contract = context.find_contract_by_name("B");
         let out = router._resolve_external_call(&context, b_contract, &func_calls[0]).unwrap();
-        assert!(matches!(out, ECDest::PseduoExtFn(_)));
+        assert!(matches!(out, ECDest::PseudoExtFn(_)));
 
         let e_contract = context.find_contract_by_name("E");
         let e_func = e_contract.find_function_by_name("abc");
@@ -357,7 +357,7 @@ mod mir_router {
 
         let d_contract = context.find_contract_by_name("D");
         let out = router._resolve_external_call(&context, d_contract, &func_calls[0]).unwrap();
-        assert!(matches!(out, ECDest::PseduoExtFn(_)));
+        assert!(matches!(out, ECDest::PseudoExtFn(_)));
     }
 
     #[test]

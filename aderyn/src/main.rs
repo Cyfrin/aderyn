@@ -179,7 +179,7 @@ fn main() {
                     .subcommand
                     .as_ref()
                     .is_some_and(|s| matches!(s, MainSubcommand::Mcp { transport: _ }));
-                // In neither of those 2 cases, shuold aderyn be verbose enough to print metadata.
+                // In neither of those 2 cases, should aderyn be verbose enough to print metadata.
                 !(is_running_lsp || is_running_mcp)
             },
             lsp: cmd_args.lsp,
