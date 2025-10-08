@@ -2,11 +2,11 @@
 name = "aderyn_core"
 version = "0.6.1"
 edition = { workspace = true }
-authors = ["Cyfrin <aderyn@cyfrin.io>"]
-description = "Rust based Solidity AST analyzer backend"
-license = "MIT"
-repository = "https://github.com/cyfrin/aderyn"
-homepage = "https://github.com/cyfrin/aderyn"
+authors = { workspace = true }
+description = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

@@ -10,6 +10,11 @@ members = [
 
 [workspace.package]
 edition = "2024"
+authors = ["Cyfrin <aderyn@cyfrin.io>"]
+description = "Rust based Solidity AST analyzer backend"
+license = "MIT"
+repository = "https://github.com/cyfrin/aderyn"
+homepage = "https://github.com/cyfrin/aderyn"
 
 [workspace.lints.clippy]
 large_enum_variant = "allow"
