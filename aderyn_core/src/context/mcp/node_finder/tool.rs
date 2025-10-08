@@ -25,7 +25,7 @@ pub struct NodeFinderTool {
 }
 
 #[derive(Deserialize, schemars::JsonSchema)]
-/// Find nodes. Choose 1 field onyl out of functions, modifiers, contracts, events and errors.
+/// Find nodes. Choose only 1 field out of functions, modifiers, contracts, events and errors.
 pub struct NodeFinderPayload {
     /// Search function nodes by function name
     search_functions_by_name: Option<String>,
