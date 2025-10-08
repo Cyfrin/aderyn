@@ -25,8 +25,14 @@
 {% if containing_callgraphs.len() == 0 %}
 No metadata present.
 {% else %}
-Node ID {{ node_id }} is part of callgraphs starting from:
+In this compilation unit {{ compilation_unit_index }}, Node ID {{ node_id }} appears in the callgraphs of the following entrypoints:
 {% for c in containing_callgraphs %}
-- Deployable contract ID {{ c.deployable_contract_id }} with entrypoint function node ID {{ c.entrypoint_function_id }} in compilation unit index {{ c.compilation_unit_index }} .
+- Deployable contract `{{ c.deployable_contract_name }}` (node ID: {{ c.deployable_contract_id }}) entrypoints:
+{% for e in c.entrypoint_ids %}
+    - Entrypoint Node ID {{ e }}
 {% endfor %}
+
+{% endfor %}
+
+You can make use of Aderyn's callgraph tool to further holistically explore the bigger context in which this function is a part of.
 {% endif %}

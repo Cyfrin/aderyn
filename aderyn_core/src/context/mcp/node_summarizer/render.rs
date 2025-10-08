@@ -27,7 +27,7 @@ pub struct NodeInfo {
 #[derive(Default, Builder)]
 #[builder(pattern = "owned")]
 pub struct EntrypointCallgraphInfo {
-    pub compilation_unit_index: usize,
     pub deployable_contract_id: NodeID,
-    pub entrypoint_function_id: NodeID,
+    pub deployable_contract_name: String,
+    pub entrypoint_ids: Vec<NodeID>,
 }

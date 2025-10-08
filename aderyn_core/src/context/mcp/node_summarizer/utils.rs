@@ -8,7 +8,7 @@ use crate::{
         workspace::WorkspaceContext,
     },
 };
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet, hash_map::Entry};
 
 pub fn get_code_snippet(context: &WorkspaceContext, node: &ASTNode) -> String {
     let (filepath, _, src_location) = context.get_node_sort_key_pure(node);
@@ -78,7 +78,6 @@ impl From<(NodeID, String)> for NodeInfo {
 }
 
 pub fn get_containing_callgraphs(
-    compilation_unit_index: usize,
     context: &WorkspaceContext,
     node: &ASTNode,
 ) -> Vec<EntrypointCallgraphInfo> {
@@ -98,7 +97,8 @@ pub fn get_containing_callgraphs(
         return vec![];
     };
 
-    let mut entrypoint_callgraph_info = vec![];
+    // Keys => (deployabele contract id, contract name), Values => entrypoint function ids
+    let mut entrypoint_info: HashMap<(NodeID, String), Vec<NodeID>> = HashMap::new();
 
     for contract in context.deployable_contracts() {
         let Some(contract_callgraph) =
@@ -119,16 +119,28 @@ pub fn get_containing_callgraphs(
         );
 
         for entrypoint_id in reachable_entrypoints {
-            let e = EntrypointCallgraphInfoBuilder::default()
-                .compilation_unit_index(compilation_unit_index)
-                .deployable_contract_id(contract.id)
-                .entrypoint_function_id(entrypoint_id)
-                .build()
-                .expect("failed to build node info");
-            entrypoint_callgraph_info.push(e);
+            match entrypoint_info.entry((contract.id, contract.name.to_owned())) {
+                Entry::Occupied(mut o) => {
+                    o.get_mut().push(entrypoint_id);
+                }
+                Entry::Vacant(v) => {
+                    v.insert(vec![entrypoint_id]);
+                }
+            }
         }
     }
-    entrypoint_callgraph_info
+
+    entrypoint_info
+        .into_iter()
+        .map(|((contract_id, contract_name), entrypoints)| {
+            EntrypointCallgraphInfoBuilder::default()
+                .deployable_contract_id(contract_id)
+                .deployable_contract_name(contract_name)
+                .entrypoint_ids(entrypoints)
+                .build()
+                .expect("failed to build entrypoint callgraph info")
+        })
+        .collect()
 }
 
 fn traverse_cg_and_get_reachable_entrypoints(
