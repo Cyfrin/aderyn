@@ -64,7 +64,7 @@ impl ModelContextProtocolTool for NodeFinderTool {
 
     fn description(&self) -> String {
         indoc! {
-            "Retreieve nodes IDs and compilation unit indexes of node definitions matched by names functions,\
+            "Retrieve nodes IDs and compilation unit indexes of node definitions matched by names functions,\
             modifiers and contracts. Optionally accepts 'compilation_unit_index' to limit the search \
             to a specific compilation unit."
         }

@@ -90,7 +90,7 @@ type ECStartLookupRoute = HashMap<String, ECDest>;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ECDest {
-    PseduoExtFn(NodeID), // Public State Variable Declaration Id (getter method)
+    PseudoExtFn(NodeID), // Public State Variable Declaration Id (getter method)
     RealExtFn(NodeID),   // External function Id
     PublicFn(NodeID),    // Public function Id
     Fallback(NodeID),    // Fallback function Id
@@ -149,7 +149,7 @@ impl WorkspaceContext {
             base.routes
                 .values()
                 .flat_map(|r| match r {
-                    ECDest::PseduoExtFn(_) => None,
+                    ECDest::PseudoExtFn(_) => None,
                     ECDest::RealExtFn(id)
                     | ECDest::PublicFn(id)
                     | ECDest::Fallback(id)

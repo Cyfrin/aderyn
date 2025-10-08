@@ -101,7 +101,7 @@ pub(super) fn build_ec_router_for_contract(
                     return HashMap::new();
                 };
                 if let Entry::Vacant(e) = routes.entry(func_selector.to_string()) {
-                    e.insert(ECDest::PseduoExtFn(var.id));
+                    e.insert(ECDest::PseudoExtFn(var.id));
                 }
             }
         }
