@@ -107,7 +107,8 @@ pub fn get_containing_callgraphs(
             continue;
         };
         let Some(entrypoint_ids) = contract
-            .entrypoint_functions(context).map(|funcs| funcs.into_iter().map(|f| f.id).collect::<HashSet<_>>())
+            .entrypoint_functions(context)
+            .map(|funcs| funcs.into_iter().map(|f| f.id).collect::<HashSet<_>>())
         else {
             continue;
         };
