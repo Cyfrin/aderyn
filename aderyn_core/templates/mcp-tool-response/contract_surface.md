@@ -96,4 +96,4 @@ Node Id: {{ receive_function.node_id }} | Containing contract class: {{ receive_
 
 Try to explore callgraphs starting from a given entrypoint function. To do that, use the callgraph provider tool and pass the entrypoint function's Node ID, and the Node ID of the original deployable contract (same one used to call this contract surface tool). NOT just the containing contract's Node ID.
 
-A good analysis explores the project on a per callgraph basis for entrypoints of interest. This provides a holistic picture and thefore less false positives.
+A good analysis explores the project on a per callgraph basis for entrypoints of interest. This provides a holistic picture and therefore less false positives.
