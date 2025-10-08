@@ -92,6 +92,8 @@ Node Id: {{ receive_function.node_id }} | Containing contract class: {{ receive_
 *No receive function found.*
 {% endif %}
 
-### NOTE:
+### Suggestion for next steps:
 
-If your next step is to explore callgraphs starting from a given entrypoint function, use the callgraph provider tool and make sure to pass that entrypoint function's Node ID, and the Node ID of the original contract (same one used to call this contract surface tool). This is in contrast to the containing contract's Node ID, which is present, more so for ad-hoc exploration using node summarizer tool.
+Try to explore callgraphs starting from a given entrypoint function. To do that, use the callgraph provider tool and pass the entrypoint function's Node ID, and the Node ID of the original deployable contract (same one used to call this contract surface tool). NOT just the containing contract's Node ID.
+
+A good analysis explores the project on a per callgraph basis for entrypoints of interest. This provides a holistic picture and thefore less false positives.

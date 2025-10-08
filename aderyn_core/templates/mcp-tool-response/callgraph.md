@@ -36,5 +36,7 @@ For example, if there is an edge from `A->B` (i.e A calls B) and `A->C` (A calls
 {% endif %}
 {% endfor %}
 
+The above order provides an approximation of the actual flow of data when a transaction reaches {{ entrypoint_function.name }} The infamouse LLVM project uses this technique to perform analysis so it is a very useful piece of information.
+
 ### Next steps:
-It maybe helpful to run the node summarizer tool on function nodes or a modifier nodes of interest from the above output. You only have to pass in the compilation unit index and the node ID which is mentioned next to that node.
+It is maybe helpful to now run the node summarizer tool on function nodes and modifier nodes in the above output. That gives access to the source code and some potentially interesting metadata concerning those functions. To invoke the tool you have to pass the compilation unit index and the node ID mentioned above.

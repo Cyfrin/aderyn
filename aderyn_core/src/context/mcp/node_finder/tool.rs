@@ -25,7 +25,6 @@ pub struct NodeFinderTool {
 }
 
 #[derive(Deserialize, schemars::JsonSchema)]
-/// Find nodes. Choose only 1 field out of functions, modifiers, contracts, events and errors.
 pub struct NodeFinderPayload {
     /// Search function nodes by function name
     search_functions_by_name: Option<String>,
@@ -66,7 +65,9 @@ impl ModelContextProtocolTool for NodeFinderTool {
         indoc! {
             "Retrieve nodes IDs and compilation unit indexes of node definitions matched by names functions,\
             modifiers and contracts. Optionally accepts 'compilation_unit_index' to limit the search \
-            to a specific compilation unit."
+            to a specific compilation unit. Input only 1 field out of functions, modifiers, contracts, \
+            events and errors. Also use the exact node names extracted from other tools. \
+            Regex (or) regular expressions will not work."
         }
         .to_string()
     }
@@ -84,19 +85,29 @@ impl ModelContextProtocolTool for NodeFinderTool {
             );
         }
 
+        // Get non empty string if possible otherwise return None
+        let get_nes = |opt_str: Option<String>| -> Option<String> {
+            match opt_str {
+                Some(s) if !s.trim().is_empty() => Some(s),
+                Some(_) | None => None,
+            }
+        };
+
         let search_term: SearchType = {
             if payload.get_all_errors.is_some_and(|f| f) {
                 SearchType::GetAllErrors
             } else if payload.get_all_events.is_some_and(|f| f) {
                 SearchType::GetAllEvents
-            } else if let Some(contract) = payload.search_contract_classes_by_name {
-                SearchType::SearchContractsByName(contract)
-            } else if let Some(functions) = payload.search_functions_by_name {
-                SearchType::SearchFunctionsByName(functions)
-            } else if let Some(modifiers) = payload.search_modifiers_by_name {
-                SearchType::SearchModifiersByName(modifiers)
+            } else if let Some(contract_name) = get_nes(payload.search_contract_classes_by_name) {
+                SearchType::SearchContractsByName(contract_name)
+            } else if let Some(function_name) = get_nes(payload.search_functions_by_name) {
+                SearchType::SearchFunctionsByName(function_name)
+            } else if let Some(modifier_name) = get_nes(payload.search_modifiers_by_name) {
+                SearchType::SearchModifiersByName(modifier_name)
             } else {
-                return mcp_error!("No option was chosen.");
+                return mcp_error!(
+                    "Choose a single option from contract, function, modifier, errors and events"
+                );
             }
         };
 

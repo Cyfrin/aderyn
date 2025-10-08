@@ -1,10 +1,14 @@
 use crate::{
     ast::{ASTNode, NodeID, NodeType},
     context::{
-        mcp::node_summarizer::render::{NodeInfo, NodeInfoBuilder},
+        graph::RawCallGraph,
+        mcp::node_summarizer::render::{
+            EntrypointCallgraphInfo, EntrypointCallgraphInfoBuilder, NodeInfo, NodeInfoBuilder,
+        },
         workspace::WorkspaceContext,
     },
 };
+use std::collections::{HashMap, HashSet, hash_map::Entry};
 
 pub fn get_code_snippet(context: &WorkspaceContext, node: &ASTNode) -> String {
     let (filepath, _, src_location) = context.get_node_sort_key_pure(node);
@@ -29,7 +33,7 @@ pub fn get_containing_contract(context: &WorkspaceContext, node: &ASTNode) -> Op
         return None;
     }
     let Some(ASTNode::ContractDefinition(parent_contract)) = context.get_closest_ancestor(
-        node.id().expect("node wihthout ID passed"),
+        node.id().expect("node found without an ID"),
         NodeType::ContractDefinition,
     ) else {
         return None;
@@ -42,7 +46,7 @@ pub fn get_containing_modifier(context: &WorkspaceContext, node: &ASTNode) -> Op
         return None;
     }
     let Some(ASTNode::ModifierDefinition(parent_modifier)) = context.get_closest_ancestor(
-        node.id().expect("node wihthout ID passed"),
+        node.id().expect("node found without an ID"),
         NodeType::ModifierDefinition,
     ) else {
         return None;
@@ -55,7 +59,7 @@ pub fn get_containing_function(context: &WorkspaceContext, node: &ASTNode) -> Op
         return None;
     }
     let Some(ASTNode::FunctionDefinition(parent_function)) = context.get_closest_ancestor(
-        node.id().expect("node wihthout ID passed"),
+        node.id().expect("node found without an ID"),
         NodeType::FunctionDefinition,
     ) else {
         return None;
@@ -71,4 +75,97 @@ impl From<(NodeID, String)> for NodeInfo {
             .build()
             .expect("failed to build node info")
     }
+}
+
+pub fn get_containing_callgraphs(
+    context: &WorkspaceContext,
+    node: &ASTNode,
+) -> Vec<EntrypointCallgraphInfo> {
+    // Given node, we want to locate it in the callgraph
+    let node_id = node.id().expect("node found without an ID");
+
+    let parent_graph_node = match (
+        context.get_closest_ancestor_including_self(node_id, NodeType::FunctionDefinition),
+        context.get_closest_ancestor_including_self(node_id, NodeType::ModifierDefinition),
+    ) {
+        (Some(ASTNode::FunctionDefinition(func)), _) => Some(func.id),
+        (_, Some(ASTNode::ModifierDefinition(modifier))) => Some(modifier.id),
+        (_, _) => None,
+    };
+
+    let Some(parent_graph_node) = parent_graph_node else {
+        return vec![];
+    };
+
+    // Keys => (deployabele contract id, contract name), Values => entrypoint function ids
+    let mut entrypoint_info: HashMap<(NodeID, String), Vec<NodeID>> = HashMap::new();
+
+    for contract in context.deployable_contracts() {
+        let Some(contract_callgraph) =
+            context.callgraphs.as_ref().and_then(|c| c.outward_callgraphs.get(&contract.id))
+        else {
+            continue;
+        };
+        let Some(entrypoint_ids) = contract
+            .entrypoint_functions(context)
+            .map(|funcs| funcs.into_iter().map(|f| f.id).collect::<HashSet<_>>())
+        else {
+            continue;
+        };
+        let reachable_entrypoints = traverse_cg_and_get_reachable_entrypoints(
+            parent_graph_node,
+            contract_callgraph,
+            &entrypoint_ids,
+        );
+
+        for entrypoint_id in reachable_entrypoints {
+            match entrypoint_info.entry((contract.id, contract.name.to_owned())) {
+                Entry::Occupied(mut o) => {
+                    o.get_mut().push(entrypoint_id);
+                }
+                Entry::Vacant(v) => {
+                    v.insert(vec![entrypoint_id]);
+                }
+            }
+        }
+    }
+
+    entrypoint_info
+        .into_iter()
+        .map(|((contract_id, contract_name), entrypoints)| {
+            EntrypointCallgraphInfoBuilder::default()
+                .deployable_contract_id(contract_id)
+                .deployable_contract_name(contract_name)
+                .entrypoint_ids(entrypoints)
+                .build()
+                .expect("failed to build entrypoint callgraph info")
+        })
+        .collect()
+}
+
+fn traverse_cg_and_get_reachable_entrypoints(
+    node_id: NodeID,
+    outward_cg: &RawCallGraph,
+    entrypoint_ids: &HashSet<NodeID>,
+) -> HashSet<NodeID> {
+    // Visit all possible nodes starting from node_id in the outward callgraph. Then collect all the
+    // nodes which can be potential starting points that lead to node_id in the (real) inward
+    // callgraph.
+    let mut worklist = vec![node_id];
+    let mut visited: HashSet<NodeID> = Default::default();
+
+    while let Some(node) = worklist.pop() {
+        if visited.contains(&node) {
+            continue;
+        }
+        visited.insert(node);
+
+        if let Some(connections) = outward_cg.get(&node) {
+            for conn in connections {
+                worklist.push(*conn);
+            }
+        }
+    }
+
+    visited.into_iter().filter(|f| entrypoint_ids.contains(f)).collect()
 }

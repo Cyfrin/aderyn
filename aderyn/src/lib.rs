@@ -66,7 +66,18 @@ pub fn find_solidity_dir(root: &str) -> String {
 
 pub fn initialize_niceties() {
     // Crash with a nice message on panic
-    panic::add_handler()
+    panic::add_handler();
+
+    // Logger
+    #[cfg(debug_assertions)]
+    {
+        simplelog::WriteLogger::init(
+            simplelog::LevelFilter::Info,
+            simplelog::Config::default(),
+            File::create("app.log").unwrap(),
+        )
+        .unwrap();
+    }
 }
 
 pub fn print_detail_view(detector_name: &str) {
