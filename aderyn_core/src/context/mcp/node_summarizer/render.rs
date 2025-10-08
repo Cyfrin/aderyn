@@ -14,11 +14,20 @@ pub struct NodeSummary {
     pub containing_contract: Option<NodeInfo>,
     pub containing_modifier: Option<NodeInfo>,
     pub containing_function: Option<NodeInfo>,
+    pub containing_callgraphs: Vec<EntrypointCallgraphInfo>,
 }
 
-#[derive(Builder)]
+#[derive(Default, Builder)]
 #[builder(pattern = "owned")]
 pub struct NodeInfo {
     pub name: String,
     pub node_id: NodeID,
+}
+
+#[derive(Default, Builder)]
+#[builder(pattern = "owned")]
+pub struct EntrypointCallgraphInfo {
+    pub compilation_unit_index: usize,
+    pub deployable_contract_id: NodeID,
+    pub entrypoint_function_id: NodeID,
 }

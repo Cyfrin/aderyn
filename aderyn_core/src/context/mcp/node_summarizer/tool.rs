@@ -93,6 +93,11 @@ impl ModelContextProtocolTool for NodeSummarizerTool {
             .containing_contract(get_containing_contract(context, node))
             .containing_function(get_containing_function(context, node))
             .containing_modifier(get_containing_modifier(context, node))
+            .containing_callgraphs(get_containing_callgraphs(
+                payload.compilation_unit_index,
+                context,
+                node,
+            ))
             .build()
             .map_err(|_| McpError::internal_error("failed to build node summary", None))?;
 

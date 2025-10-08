@@ -155,7 +155,18 @@ impl WorkspaceContext {
         }
         None
     }
-
+    pub fn get_closest_ancestor_including_self(
+        &self,
+        node_id: NodeID,
+        node_type: NodeType,
+    ) -> Option<&ASTNode> {
+        if let Some(node) = self.nodes.get(&node_id)
+            && node.node_type() == node_type
+        {
+            return Some(node);
+        }
+        self.get_closest_ancestor(node_id, node_type)
+    }
     pub fn get_source_code_of_node(&self, node_id: NodeID) -> Option<String> {
         let node = self.nodes.get(&node_id)?;
         let source_unit = self.get_source_unit_from_child_node(node).unwrap();

@@ -88,7 +88,7 @@ impl ModelContextProtocolTool for NodeFinderTool {
         // Get non empty string if possible otherwise return None
         let get_nes = |opt_str: Option<String>| -> Option<String> {
             match opt_str {
-                Some(s) if !s.is_empty() => Some(s),
+                Some(s) if !s.trim().is_empty() => Some(s),
                 Some(_) | None => None,
             }
         };
