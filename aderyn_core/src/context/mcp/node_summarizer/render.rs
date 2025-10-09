@@ -1,9 +1,10 @@
 use askama::Template;
 use derive_builder::Builder;
+use serde::Serialize;
 
 use crate::ast::NodeID;
 
-#[derive(Builder, Template)]
+#[derive(Builder, Serialize, Template)]
 #[template(path = "mcp-tool-response/node_summarizer.md")]
 #[builder(pattern = "owned")]
 pub struct NodeSummary {
@@ -17,14 +18,14 @@ pub struct NodeSummary {
     pub containing_callgraphs: Vec<EntrypointCallgraphInfo>,
 }
 
-#[derive(Default, Builder)]
+#[derive(Default, Serialize, Builder)]
 #[builder(pattern = "owned")]
 pub struct NodeInfo {
     pub name: String,
     pub node_id: NodeID,
 }
 
-#[derive(Default, Builder)]
+#[derive(Default, Serialize, Builder)]
 #[builder(pattern = "owned")]
 pub struct EntrypointCallgraphInfo {
     pub deployable_contract_id: NodeID,

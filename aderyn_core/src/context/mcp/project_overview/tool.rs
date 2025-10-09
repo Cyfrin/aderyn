@@ -6,13 +6,8 @@ use crate::context::{
         project_overview::render::*,
     },
 };
-use askama::Template;
 use indoc::indoc;
-use rmcp::{
-    ErrorData as McpError,
-    handler::server::wrapper::Parameters,
-    model::{CallToolResult, Content},
-};
+use rmcp::{ErrorData as McpError, handler::server::wrapper::Parameters, model::CallToolResult};
 use std::{path::PathBuf, str::FromStr, sync::Arc};
 
 #[derive(Clone)]
@@ -80,16 +75,15 @@ impl ModelContextProtocolTool for ProjectOverviewTool {
                 .map_err(|_| McpError::internal_error("failed to build compilation unit", None))?;
             compilation_units.push(compilation_unit);
         }
-        // render LLM message according to the template
-        let renderer = render::ProjectOverviewBuilder::default()
+
+        let project_overview = render::ProjectOverviewBuilder::default()
             .root(self.state.root_path.to_string_lossy().to_string())
             .source(self.state.project_config.project_paths.sources.to_string_lossy().to_string())
             .remappings(remapping_strings)
             .compilation_units(compilation_units)
             .build()
-            .map_err(|_| McpError::internal_error("failed to build project overview", None))?;
-        let text =
-            renderer.render().map_err(|_| McpError::internal_error("failed to render", None))?;
-        mcp_success!(text)
+            .expect("failed to build project overview");
+
+        mcp_success!(project_overview)
     }
 }

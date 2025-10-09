@@ -5,13 +5,9 @@ use crate::context::{
         list_contracts::render::{ContractInfoBuilder, ContractsListBuilder},
     },
 };
-use askama::Template;
 use indoc::indoc;
 use rmcp::{
-    ErrorData as McpError,
-    handler::server::wrapper::Parameters,
-    model::{CallToolResult, Content},
-    schemars,
+    ErrorData as McpError, handler::server::wrapper::Parameters, model::CallToolResult, schemars,
 };
 use serde::Deserialize;
 use std::sync::Arc;
@@ -65,16 +61,16 @@ impl ModelContextProtocolTool for ListContractsTool {
                 .filepath(filepath)
                 .node_id(contract.id)
                 .build()
-                .map_err(|_| McpError::internal_error("failed to build contract info", None))?;
+                .expect("failed to build contract info");
             contracts_info.push(contract_info);
         }
-        let renderer = ContractsListBuilder::default()
+
+        let contract_list = ContractsListBuilder::default()
             .compilation_unit_index(comp_unit_idx)
             .contracts_info(contracts_info)
             .build()
-            .map_err(|_| McpError::internal_error("failed to build contracts list", None))?;
-        let text =
-            renderer.render().map_err(|_| McpError::internal_error("failed to render", None))?;
-        mcp_success!(text)
+            .expect("failed to build contracts list");
+
+        mcp_success!(contract_list)
     }
 }

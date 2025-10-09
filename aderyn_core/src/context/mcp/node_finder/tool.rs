@@ -3,18 +3,14 @@ use crate::context::{
     mcp::{
         MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
         node_finder::{
-            render::{self, NodeInfo},
+            render::{self, NodeFinderAll, NodeFinderMatches, NodeInfo},
             utils::*,
         },
     },
 };
-use askama::Template;
 use indoc::indoc;
 use rmcp::{
-    ErrorData as McpError,
-    handler::server::wrapper::Parameters,
-    model::{CallToolResult, Content},
-    schemars,
+    ErrorData as McpError, handler::server::wrapper::Parameters, model::CallToolResult, schemars,
 };
 use serde::Deserialize;
 use std::sync::Arc;
@@ -26,11 +22,11 @@ pub struct NodeFinderTool {
 
 #[derive(Deserialize, schemars::JsonSchema)]
 pub struct NodeFinderPayload {
-    /// Search function nodes by function name
+    /// Search function nodes by the exact function name
     search_functions_by_name: Option<String>,
-    /// Search modifier nodes by modifier name
+    /// Search modifier nodes by the exact modifier name
     search_modifiers_by_name: Option<String>,
-    /// Search contract class nodes by contract class name
+    /// Search contract class nodes by the exact contract class name
     search_contract_classes_by_name: Option<String>,
     /// Get all the event definitions
     get_all_events: Option<bool>,
@@ -63,9 +59,9 @@ impl ModelContextProtocolTool for NodeFinderTool {
 
     fn description(&self) -> String {
         indoc! {
-            "Retrieve nodes IDs and compilation unit indexes of node definitions matched by names functions,\
-            modifiers and contracts. Optionally accepts 'compilation_unit_index' to limit the search \
-            to a specific compilation unit. Input only 1 field out of functions, modifiers, contracts, \
+            "Retrieve nodes IDs and compilation unit indexes of node definitions matched by supplying the exact\
+            names of functions, modifiers and contracts. Optionally accepts 'compilation_unit_index' to limit the \
+            search to a specific compilation unit. Input only 1 field out of functions, modifiers, contracts, \
             events and errors. Also use the exact node names extracted from other tools. \
             Regex (or) regular expressions will not work."
         }
@@ -144,49 +140,35 @@ impl ModelContextProtocolTool for NodeFinderTool {
             }
         }
 
-        let text = match search_term {
+        match search_term {
             SearchType::SearchContractsByName(ref name) => {
-                render_text_for_matches(name, matching_contracts, "Contract")?
+                mcp_success!(render_text_for_matches(name, matching_contracts, "Contract"))
             }
             SearchType::SearchFunctionsByName(ref name) => {
-                render_text_for_matches(name, matching_functions, "Function")?
+                mcp_success!(render_text_for_matches(name, matching_functions, "Function"))
             }
             SearchType::SearchModifiersByName(ref name) => {
-                render_text_for_matches(name, matching_modifiers, "Modifier")?
+                mcp_success!(render_text_for_matches(name, matching_modifiers, "Modifier"))
             }
-            SearchType::GetAllEvents => render_text(events, "Event")?,
-            SearchType::GetAllErrors => render_text(errors, "Error")?,
-        };
-
-        mcp_success!(text)
+            SearchType::GetAllEvents => mcp_success!(render_text(events, "Event")),
+            SearchType::GetAllErrors => mcp_success!(render_text(errors, "Error")),
+        }
     }
 }
 
-fn render_text_for_matches(term: &str, nodes: Vec<NodeInfo>, ty: &str) -> Result<String, McpError> {
-    let renderer = render::NodeFinderMatchesBuilder::default()
+fn render_text_for_matches(term: &str, nodes: Vec<NodeInfo>, ty: &str) -> NodeFinderMatches {
+    render::NodeFinderMatchesBuilder::default()
         .term(term.to_string())
         .matching_nodes(nodes)
         .node_type(ty.to_string())
         .build()
-        .expect("failed to build renderer for node finder");
-
-    let text = renderer
-        .render()
-        .map_err(|_| McpError::internal_error("failed to render node finder matches", None))?;
-
-    Ok(text)
+        .expect("failed to build renderer for node finder")
 }
 
-fn render_text(nodes: Vec<NodeInfo>, ty: &str) -> Result<String, McpError> {
-    let renderer = render::NodeFinderAllBuilder::default()
+fn render_text(nodes: Vec<NodeInfo>, ty: &str) -> NodeFinderAll {
+    render::NodeFinderAllBuilder::default()
         .nodes(nodes)
         .node_type(ty.to_string())
         .build()
-        .expect("failed to build renderer for node finder");
-
-    let text = renderer
-        .render()
-        .map_err(|_| McpError::internal_error("failed to render node finder all", None))?;
-
-    Ok(text)
+        .expect("failed to build renderer for node finder")
 }
