@@ -55,9 +55,9 @@ impl ModelContextProtocolTool for CallgraphTool {
     fn description(&self) -> String {
         indoc! {
             "The callgraph provider tool maps and analyzes function execution flows within Solidity smart contracts \
-            by tracing all possible internal function calls and modifier executions triggered when given the Node ID of \
-            an entrypoint function. It provides inheritance-aware analysis across contract hierarchies and \
-            imported libraries"
+            by tracing all possible internal function calls and modifier executions triggered by the given entrypoint\
+            function's Node ID. It provides inheritance-aware analysis across contract hierarchies and \
+            imported libraries. It returns compilation unit index and NodeIDs of the various functions in the call chain."
         }
         .to_string()
     }
