@@ -45,8 +45,8 @@ impl ModelContextProtocolTool for NodeSummarizerTool {
     fn description(&self) -> String {
         indoc! {
             "Given a compilation unit index and a Node ID, returns a focused summary of \
-            that exact AST node (e.g. function, modifier, event, variable, struct). The summary is limited to \
-            information directly available in the AST plus a source snippet"
+            that exact AST node (e.g. function, modifier, event, variable, struct). The summary typically \
+            contains a source snippet and possible different calgraph paths that collide with the said node."
         }
         .to_string()
     }
