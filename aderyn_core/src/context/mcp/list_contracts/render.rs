@@ -1,9 +1,10 @@
 use askama::Template;
 use derive_builder::Builder;
+use serde::Serialize;
 
 use crate::ast::NodeID;
 
-#[derive(Builder, Template)]
+#[derive(Builder, Serialize, Template)]
 #[template(path = "mcp-tool-response/list_contracts.md")]
 #[builder(pattern = "owned")]
 pub struct ContractsList {
@@ -11,7 +12,7 @@ pub struct ContractsList {
     pub compilation_unit_index: usize,
 }
 
-#[derive(Builder)]
+#[derive(Builder, Serialize)]
 #[builder(pattern = "owned")]
 pub struct ContractInfo {
     pub name: String,

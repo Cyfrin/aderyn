@@ -14,13 +14,9 @@ use crate::{
         },
     },
 };
-use askama::Template;
 use indoc::indoc;
 use rmcp::{
-    ErrorData as McpError,
-    handler::server::wrapper::Parameters,
-    model::{CallToolResult, Content},
-    schemars,
+    ErrorData as McpError, handler::server::wrapper::Parameters, model::CallToolResult, schemars,
 };
 use serde::Deserialize;
 use std::sync::Arc;
@@ -107,34 +103,26 @@ impl ModelContextProtocolTool for CallgraphTool {
             .name(contract.name.clone())
             .node_id(contract.id)
             .build()
-            .map_err(|_| McpError::internal_error("failed to build contract data", None))?;
+            .expect("failed to build contract data");
 
         let entrypoint_function_data = EntrypointFunctionDataBuilder::default()
             .name(entrypoint.name.clone())
             .node_id(entrypoint.id)
             .build()
-            .map_err(|_| {
-                McpError::internal_error("failed to build entrypoint function data", None)
-            })?;
+            .expect("failed to build entrypoint function data");
 
         let subgraph = build_raw_callgraph_for_entrypoint(context, contract, entrypoint)?;
         let post_order_data = build_post_order_nodes(context, &subgraph, entrypoint)?;
 
-        let callgraph_tool_response = CallgraphToolResponseBuilder::default()
+        let cg_response = CallgraphToolResponseBuilder::default()
             .compilation_unit_index(payload.compilation_unit_index)
             .contract(contract_data)
             .entrypoint_function(entrypoint_function_data)
             .graph(subgraph)
             .post_order_nodes(post_order_data)
             .build()
-            .map_err(|_| {
-                McpError::internal_error("failed to build callgraph tool response", None)
-            })?;
+            .expect("failed to build callgraph tool response");
 
-        let text = callgraph_tool_response.render().map_err(|_| {
-            McpError::internal_error("failed to render callgraph tool response", None)
-        })?;
-
-        mcp_success!(text)
+        mcp_success!(cg_response)
     }
 }

@@ -8,13 +8,9 @@ use crate::{
         },
     },
 };
-use askama::Template;
 use indoc::indoc;
 use rmcp::{
-    ErrorData as McpError,
-    handler::server::wrapper::Parameters,
-    model::{CallToolResult, Content},
-    schemars,
+    ErrorData as McpError, handler::server::wrapper::Parameters, model::CallToolResult, schemars,
 };
 use serde::Deserialize;
 use std::sync::Arc;
@@ -85,7 +81,7 @@ impl ModelContextProtocolTool for NodeSummarizerTool {
         let (filepath, _, _) = context.get_node_sort_key_pure(node);
         let code_snippet = get_code_snippet(context, node);
 
-        let renderer = render::NodeSummaryBuilder::default()
+        let summary = render::NodeSummaryBuilder::default()
             .compilation_unit_index(payload.compilation_unit_index)
             .node_id(payload.node_id)
             .filepath(filepath)
@@ -95,10 +91,8 @@ impl ModelContextProtocolTool for NodeSummarizerTool {
             .containing_modifier(get_containing_modifier(context, node))
             .containing_callgraphs(get_containing_callgraphs(context, node))
             .build()
-            .map_err(|_| McpError::internal_error("failed to build node summary", None))?;
+            .expect("failed to build node summary");
 
-        let text =
-            renderer.render().map_err(|_| McpError::internal_error("failed to render", None))?;
-        mcp_success!(text)
+        mcp_success!(summary)
     }
 }

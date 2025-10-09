@@ -12,13 +12,9 @@ use crate::{
         },
     },
 };
-use askama::Template;
 use indoc::indoc;
 use rmcp::{
-    ErrorData as McpError,
-    handler::server::wrapper::Parameters,
-    model::{CallToolResult, Content},
-    schemars,
+    ErrorData as McpError, handler::server::wrapper::Parameters, model::CallToolResult, schemars,
 };
 use serde::Deserialize;
 use std::sync::Arc;
@@ -101,12 +97,8 @@ impl ModelContextProtocolTool for ContractSurfaceTool {
             .reversed_chain(reversed_chain)
             .entrypoints(entrypoints)
             .build()
-            .map_err(|_| McpError::internal_error("failed to build contract surface", None))?;
+            .expect("failed to build contract surface");
 
-        let text = contract_surface
-            .render()
-            .map_err(|_| McpError::internal_error("failed to render contract surface", None))?;
-
-        mcp_success!(text)
+        mcp_success!(contract_surface)
     }
 }

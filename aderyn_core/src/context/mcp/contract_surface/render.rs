@@ -1,9 +1,10 @@
 use askama::Template;
 use derive_builder::Builder;
+use serde::Serialize;
 
 use crate::ast::NodeID;
 
-#[derive(Builder, Template)]
+#[derive(Builder, Serialize, Template)]
 #[template(path = "mcp-tool-response/contract_surface.md")]
 #[builder(pattern = "owned")]
 pub struct ContractSurface {
@@ -16,7 +17,7 @@ pub struct ContractSurface {
     pub entrypoints: EntrypointFunctions,
 }
 
-#[derive(Builder, Default)]
+#[derive(Builder, Serialize, Default)]
 #[builder(pattern = "owned")]
 pub struct EntrypointFunctions {
     pub external_functions: Vec<FunctionInfo>,
@@ -25,7 +26,7 @@ pub struct EntrypointFunctions {
     pub receive_function: Option<FunctionInfo>,
 }
 
-#[derive(Builder)]
+#[derive(Builder, Serialize)]
 #[builder(pattern = "owned")]
 pub struct ContractInfo {
     pub name: String,
@@ -34,7 +35,7 @@ pub struct ContractInfo {
     pub filepath: String,
 }
 
-#[derive(Builder)]
+#[derive(Builder, Serialize)]
 #[builder(pattern = "owned")]
 pub struct FunctionInfo {
     pub name: String,
@@ -42,7 +43,7 @@ pub struct FunctionInfo {
     pub containing_contract: ContainingContract,
 }
 
-#[derive(Builder)]
+#[derive(Builder, Serialize)]
 #[builder(pattern = "owned")]
 pub struct ContainingContract {
     pub name: String,
