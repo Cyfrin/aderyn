@@ -22,11 +22,11 @@ pub struct NodeFinderTool {
 
 #[derive(Deserialize, schemars::JsonSchema)]
 pub struct NodeFinderPayload {
-    /// Search function nodes by function name
+    /// Search function nodes by the exact function name
     search_functions_by_name: Option<String>,
-    /// Search modifier nodes by modifier name
+    /// Search modifier nodes by the exact modifier name
     search_modifiers_by_name: Option<String>,
-    /// Search contract class nodes by contract class name
+    /// Search contract class nodes by the exact contract class name
     search_contract_classes_by_name: Option<String>,
     /// Get all the event definitions
     get_all_events: Option<bool>,
