@@ -42,13 +42,15 @@ pub fn get_classified_entrypoint_functions(
             .name(container.name.clone())
             .node_id(container.id)
             .build()
-            .map_err(|_| McpError::internal_error("failed to build container", None))?;
+            .expect("failed to build container");
+
         let function_info = FunctionInfoBuilder::default()
             .name(func.name.clone())
             .node_id(func.id)
             .containing_contract(container)
             .build()
-            .map_err(|_| McpError::internal_error("failed to build function info", None))?;
+            .expect("failed to build function info");
+
         match *func.kind() {
             FunctionKind::Function => match func.visibility {
                 Visibility::Public => {
@@ -69,15 +71,14 @@ pub fn get_classified_entrypoint_functions(
             FunctionKind::FreeFunction => unreachable!(), // Free function is never an entrypoint
         };
     }
+
     let entrypoints = EntrypointFunctionsBuilder::default()
         .external_functions(external_functions_info)
         .public_functions(public_functions_info)
         .fallback_function(fallback_function_info)
         .receive_function(receive_function_info)
         .build()
-        .map_err(|_| {
-            McpError::internal_error("failed to build entrypoints in inheritance chain", None)
-        })?;
+        .expect("failed to build entrypoints in inheritance chain");
     Ok(entrypoints)
 }
 
@@ -94,15 +95,14 @@ pub fn get_inheritance_chain_info(
             .map(|v| v.name.clone())
             .collect::<Vec<_>>();
         let (filepath, _, _) = context.get_node_sort_key_from_capturable(&contract.into());
+
         let contract_info = ContractInfoBuilder::default()
             .name(contract.name.clone())
             .node_id(contract.id)
             .state_variables(state_variables)
             .filepath(filepath)
             .build()
-            .map_err(|_| {
-                McpError::internal_error("failed to build contract info in inheritance chain", None)
-            })?;
+            .expect("failed to build contract info in inheritance chain");
         reversed_chain.push(contract_info);
     }
     Ok(reversed_chain)

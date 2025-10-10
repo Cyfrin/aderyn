@@ -53,18 +53,14 @@ impl ModelContextProtocolTool for ProjectOverviewTool {
                         .path(file.clone())
                         .included(true)
                         .build()
-                        .map_err(|_| {
-                            McpError::internal_error("failed to build file entry", None)
-                        })?;
+                        .expect("failed to build file entry");
                     included_count += 1;
                 } else {
                     file_entry = FileEntryBuilder::default()
                         .path(file.clone())
                         .included(false)
                         .build()
-                        .map_err(|_| {
-                            McpError::internal_error("failed to build file entry", None)
-                        })?;
+                        .expect("failed to build file entry");
                 }
                 file_entries.push(file_entry);
             }
@@ -72,7 +68,8 @@ impl ModelContextProtocolTool for ProjectOverviewTool {
                 .files(file_entries)
                 .included_count(included_count)
                 .build()
-                .map_err(|_| McpError::internal_error("failed to build compilation unit", None))?;
+                .expect("failed to build compilation unit");
+
             compilation_units.push(compilation_unit);
         }
 
