@@ -148,33 +148,20 @@ impl ModelContextProtocolTool for NodeFinderTool {
 }
 
 fn extract_search_options_from_payload(payload: &NodeFinderPayload) -> Vec<SearchType> {
-    // Get non empty string if possible otherwise return None
-    let get_nes = |opt_str: &Option<String>| -> Option<String> {
-        match opt_str {
-            Some(s) if !s.trim().is_empty() => Some(s.clone()),
-            Some(_) | None => None,
-        }
-    };
+    // Keep the string if it's non empty after trimming
+    let vallid_str =
+        |opt: &Option<String>| opt.as_ref().filter(|s| !s.trim().is_empty()).map(|s| s.clone());
 
-    let mut received_search_opts: Vec<SearchType> = vec![];
-
-    if payload.get_all_errors.is_some_and(|f| f) {
-        received_search_opts.push(SearchType::GetAllErrors);
-    }
-    if payload.get_all_events.is_some_and(|f| f) {
-        received_search_opts.push(SearchType::GetAllEvents);
-    }
-    if let Some(contract_name) = get_nes(&payload.search_contract_classes_by_name) {
-        received_search_opts.push(SearchType::SearchContractsByName(contract_name));
-    }
-    if let Some(function_name) = get_nes(&payload.search_functions_by_name) {
-        received_search_opts.push(SearchType::SearchFunctionsByName(function_name));
-    }
-    if let Some(modifier_name) = get_nes(&payload.search_modifiers_by_name) {
-        received_search_opts.push(SearchType::SearchModifiersByName(modifier_name));
-    }
-
-    received_search_opts
+    [
+        payload.get_all_errors.filter(|&enabled| enabled).map(|_| SearchType::GetAllErrors),
+        payload.get_all_events.filter(|&enabled| enabled).map(|_| SearchType::GetAllEvents),
+        vallid_str(&payload.search_contract_classes_by_name).map(SearchType::SearchContractsByName),
+        vallid_str(&payload.search_functions_by_name).map(SearchType::SearchFunctionsByName),
+        vallid_str(&payload.search_modifiers_by_name).map(SearchType::SearchModifiersByName),
+    ]
+    .into_iter()
+    .flatten()
+    .collect()
 }
 
 fn node_finder_matches(term: &str, nodes: Vec<NodeInfo>, ty: &str) -> NodeFinderMatches {

@@ -74,7 +74,7 @@ pub fn initialize_niceties() {
         simplelog::WriteLogger::init(
             simplelog::LevelFilter::Info,
             simplelog::Config::default(),
-            File::create("app.log").unwrap(),
+            File::create(concat!(env!("CARGO_MANIFEST_DIR"), "/../app.log")).unwrap(),
         )
         .unwrap();
     }
