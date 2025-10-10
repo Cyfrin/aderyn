@@ -149,8 +149,7 @@ impl ModelContextProtocolTool for NodeFinderTool {
 
 fn extract_search_options_from_payload(payload: &NodeFinderPayload) -> Vec<SearchType> {
     // Keep the string if it's non empty after trimming
-    let vallid_str =
-        |opt: &Option<String>| opt.as_ref().filter(|s| !s.trim().is_empty()).cloned();
+    let vallid_str = |opt: &Option<String>| opt.as_ref().filter(|s| !s.trim().is_empty()).cloned();
 
     [
         payload.get_all_errors.filter(|&enabled| enabled).map(|_| SearchType::GetAllErrors),
