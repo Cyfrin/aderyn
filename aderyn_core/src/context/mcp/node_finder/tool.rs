@@ -149,14 +149,14 @@ impl ModelContextProtocolTool for NodeFinderTool {
 
 fn extract_search_options_from_payload(payload: &NodeFinderPayload) -> Vec<SearchType> {
     // Keep the string if it's non empty after trimming
-    let vallid_str = |opt: &Option<String>| opt.as_ref().filter(|s| !s.trim().is_empty()).cloned();
+    let valid_str = |opt: &Option<String>| opt.as_ref().filter(|s| !s.trim().is_empty()).cloned();
 
     [
         payload.get_all_errors.filter(|&enabled| enabled).map(|_| SearchType::GetAllErrors),
         payload.get_all_events.filter(|&enabled| enabled).map(|_| SearchType::GetAllEvents),
-        vallid_str(&payload.search_contract_classes_by_name).map(SearchType::SearchContractsByName),
-        vallid_str(&payload.search_functions_by_name).map(SearchType::SearchFunctionsByName),
-        vallid_str(&payload.search_modifiers_by_name).map(SearchType::SearchModifiersByName),
+        valid_str(&payload.search_contract_classes_by_name).map(SearchType::SearchContractsByName),
+        valid_str(&payload.search_functions_by_name).map(SearchType::SearchFunctionsByName),
+        valid_str(&payload.search_modifiers_by_name).map(SearchType::SearchModifiersByName),
     ]
     .into_iter()
     .flatten()
