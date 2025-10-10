@@ -23,11 +23,12 @@ impl ModelContextProtocolTool for ToolGuide {
 
     fn description(&self) -> String {
         indoc! {
-            "MUST be called at least once at the beginning so as to have that base knowledge required to help come \
-            up with solutions to user's problems. Provides glossary, general approaches to common scenarios, \
-            advanced tool calling strategies and other adhoc tips to leverage Aderyn's MCP tools for \
+            "MUST be called once at the beginning to have that base knowledge required to \
+            solve user's problems. Provides glossary, general approaches to common scenarios, \
+            advanced tool calling strategies and tips to leverage Aderyn's MCP tools for \
             high performance and accuracy."
-        }.to_string()
+        }
+        .to_string()
     }
 
     fn execute(&self, _input: Parameters<Self::Input>) -> Result<CallToolResult, McpError> {
