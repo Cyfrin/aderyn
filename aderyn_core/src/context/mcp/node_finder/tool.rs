@@ -49,6 +49,17 @@ pub enum SearchType {
     GetAllErrors,
 }
 
+impl SearchType {
+    fn get_search_name(&self) -> Option<String> {
+        match self {
+            SearchType::SearchFunctionsByName(name)
+            | SearchType::SearchModifiersByName(name)
+            | SearchType::SearchContractsByName(name) => Some(name.clone()),
+            SearchType::GetAllEvents | SearchType::GetAllErrors => None,
+        }
+    }
+}
+
 impl ModelContextProtocolTool for NodeFinderTool {
     type Input = NodeFinderPayload;
 
@@ -100,6 +111,15 @@ impl ModelContextProtocolTool for NodeFinderTool {
 
         let search_term =
             received_search_opts.first().expect("no checks to ensure 1 received search option");
+
+        if let Some(name) = search_term.get_search_name()
+            && !name.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
+        {
+            return mcp_error!(
+                "Do not pass a regular expression as a search term, restrict yourself to actual names of contracts,\
+                functions and modifiers"
+            )
+        }
 
         let mut matching_contracts = vec![];
         let mut matching_functions = vec![];
