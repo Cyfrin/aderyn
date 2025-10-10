@@ -5757,6 +5757,12 @@ Use descriptive reason strings or custom errors for revert paths.
 	      require (result >= MIN_64x64 && result <= MAX_64x64);
 	```
 
+- Found in contracts/util/ABDKMath64x64.sol [Line: 246](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L246)
+
+	```solidity
+	      require (y != 0);
+	```
+
 - Found in contracts/util/ABDKMath64x64.sol [Line: 259](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L259)
 
 	```solidity
@@ -5803,12 +5809,6 @@ Use descriptive reason strings or custom errors for revert paths.
 
 	```solidity
 	      require (result >= MIN_64x64 && result <= MAX_64x64);
-	```
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 351](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L351)
-
-	```solidity
-	      require (m >= 0);
 	```
 
 - Found in contracts/util/ABDKMath64x64.sol [Line: 352](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L352)
@@ -5907,12 +5907,6 @@ Use descriptive reason strings or custom errors for revert paths.
 	        require (result <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF);
 	```
 
-- Found in contracts/util/ABDKMathQuad.sol [Line: 133](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L133)
-
-	```solidity
-	      require (uint128 (x) < 0x80000000000000000000000000000000); // Negative
-	```
-
 - Found in contracts/util/ABDKMathQuad.sol [Line: 135](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L135)
 
 	```solidity
@@ -5943,16 +5937,22 @@ Use descriptive reason strings or custom errors for revert paths.
 	      require (exponent <= 16446); // Overflow
 	```
 
-- Found in contracts/util/ABDKMathQuad.sol [Line: 242](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L242)
-
-	```solidity
-	      uint256 result = uint256 (uint128 (x)) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF |
-	```
-
 - Found in contracts/util/ABDKMathQuad.sol [Line: 249](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L249)
 
 	```solidity
 	        require (result <= 0x80000000000000000000000000000000);
+	```
+
+- Found in contracts/util/ABDKMathQuad.sol [Line: 252](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L252)
+
+	```solidity
+	        require (result <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF);
+	```
+
+- Found in contracts/util/ABDKMathQuad.sol [Line: 337](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L337)
+
+	```solidity
+	      uint256 result = uint64 (x) & 0xFFFFFFFFFFFFF;
 	```
 
 - Found in contracts/util/ABDKMathQuad.sol [Line: 440](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L440)
