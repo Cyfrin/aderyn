@@ -81,31 +81,22 @@ impl ModelContextProtocolTool for NodeFinderTool {
             );
         }
 
-        // Get non empty string if possible otherwise return None
-        let get_nes = |opt_str: Option<String>| -> Option<String> {
-            match opt_str {
-                Some(s) if !s.trim().is_empty() => Some(s),
-                Some(_) | None => None,
-            }
-        };
+        let received_search_opts: Vec<SearchType> = extract_search_options_from_payload(&payload);
 
-        let search_term: SearchType = {
-            if payload.get_all_errors.is_some_and(|f| f) {
-                SearchType::GetAllErrors
-            } else if payload.get_all_events.is_some_and(|f| f) {
-                SearchType::GetAllEvents
-            } else if let Some(contract_name) = get_nes(payload.search_contract_classes_by_name) {
-                SearchType::SearchContractsByName(contract_name)
-            } else if let Some(function_name) = get_nes(payload.search_functions_by_name) {
-                SearchType::SearchFunctionsByName(function_name)
-            } else if let Some(modifier_name) = get_nes(payload.search_modifiers_by_name) {
-                SearchType::SearchModifiersByName(modifier_name)
-            } else {
-                return mcp_error!(
-                    "Choose a single option from contract, function, modifier, errors and events"
-                );
-            }
-        };
+        if received_search_opts.is_empty() {
+            return mcp_error!(
+                "Choose a single search option from contract, function, modifier, errors and events. None received"
+            );
+        }
+
+        if received_search_opts.len() > 1 {
+            return mcp_error!(
+                "Choose a single search option from contract, function, modifier, errors and events. Multiple received"
+            );
+        }
+
+        let search_term =
+            received_search_opts.first().expect("no checks to ensure 1 received search option");
 
         let mut matching_contracts = vec![];
         let mut matching_functions = vec![];
@@ -125,9 +116,9 @@ impl ModelContextProtocolTool for NodeFinderTool {
 
             if should_add {
                 match search_term {
-                    SearchType::SearchContractsByName(ref name)
-                    | SearchType::SearchFunctionsByName(ref name)
-                    | SearchType::SearchModifiersByName(ref name) => {
+                    SearchType::SearchContractsByName(name)
+                    | SearchType::SearchFunctionsByName(name)
+                    | SearchType::SearchModifiersByName(name) => {
                         matching_contracts.extend(get_matching_contracts(i + 1, context, name));
                         matching_functions.extend(get_matching_functions(i + 1, context, name));
                         matching_modifiers.extend(get_matching_modifiers(i + 1, context, name));
@@ -141,22 +132,52 @@ impl ModelContextProtocolTool for NodeFinderTool {
         }
 
         match search_term {
-            SearchType::SearchContractsByName(ref name) => {
-                mcp_success!(render_text_for_matches(name, matching_contracts, "Contract"))
+            SearchType::SearchContractsByName(name) => {
+                mcp_success!(node_finder_matches(name, matching_contracts, "Contract"))
             }
-            SearchType::SearchFunctionsByName(ref name) => {
-                mcp_success!(render_text_for_matches(name, matching_functions, "Function"))
+            SearchType::SearchFunctionsByName(name) => {
+                mcp_success!(node_finder_matches(name, matching_functions, "Function"))
             }
-            SearchType::SearchModifiersByName(ref name) => {
-                mcp_success!(render_text_for_matches(name, matching_modifiers, "Modifier"))
+            SearchType::SearchModifiersByName(name) => {
+                mcp_success!(node_finder_matches(name, matching_modifiers, "Modifier"))
             }
-            SearchType::GetAllEvents => mcp_success!(render_text(events, "Event")),
-            SearchType::GetAllErrors => mcp_success!(render_text(errors, "Error")),
+            SearchType::GetAllEvents => mcp_success!(node_finder_all(events, "Event")),
+            SearchType::GetAllErrors => mcp_success!(node_finder_all(errors, "Error")),
         }
     }
 }
 
-fn render_text_for_matches(term: &str, nodes: Vec<NodeInfo>, ty: &str) -> NodeFinderMatches {
+fn extract_search_options_from_payload(payload: &NodeFinderPayload) -> Vec<SearchType> {
+    // Get non empty string if possible otherwise return None
+    let get_nes = |opt_str: &Option<String>| -> Option<String> {
+        match opt_str {
+            Some(s) if !s.trim().is_empty() => Some(s.clone()),
+            Some(_) | None => None,
+        }
+    };
+
+    let mut received_search_opts: Vec<SearchType> = vec![];
+
+    if payload.get_all_errors.is_some_and(|f| f) {
+        received_search_opts.push(SearchType::GetAllErrors);
+    }
+    if payload.get_all_events.is_some_and(|f| f) {
+        received_search_opts.push(SearchType::GetAllEvents);
+    }
+    if let Some(contract_name) = get_nes(&payload.search_contract_classes_by_name) {
+        received_search_opts.push(SearchType::SearchContractsByName(contract_name));
+    }
+    if let Some(function_name) = get_nes(&payload.search_functions_by_name) {
+        received_search_opts.push(SearchType::SearchFunctionsByName(function_name));
+    }
+    if let Some(modifier_name) = get_nes(&payload.search_modifiers_by_name) {
+        received_search_opts.push(SearchType::SearchModifiersByName(modifier_name));
+    }
+
+    received_search_opts
+}
+
+fn node_finder_matches(term: &str, nodes: Vec<NodeInfo>, ty: &str) -> NodeFinderMatches {
     render::NodeFinderMatchesBuilder::default()
         .term(term.to_string())
         .matching_nodes(nodes)
@@ -165,7 +186,7 @@ fn render_text_for_matches(term: &str, nodes: Vec<NodeInfo>, ty: &str) -> NodeFi
         .expect("failed to build renderer for node finder")
 }
 
-fn render_text(nodes: Vec<NodeInfo>, ty: &str) -> NodeFinderAll {
+fn node_finder_all(nodes: Vec<NodeInfo>, ty: &str) -> NodeFinderAll {
     render::NodeFinderAllBuilder::default()
         .nodes(nodes)
         .node_type(ty.to_string())
