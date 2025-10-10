@@ -23,11 +23,14 @@ pub struct NodeFinderTool {
 #[derive(Deserialize, schemars::JsonSchema)]
 pub struct NodeFinderPayload {
     /// Search function nodes by the exact function name
-    search_functions_by_name: Option<String>,
+    #[serde(rename = "search_functions_by_exact_name")]
+    function_name: Option<String>,
     /// Search modifier nodes by the exact modifier name
-    search_modifiers_by_name: Option<String>,
+    #[serde(rename = "search_modifiers_by_exact_name")]
+    modifier_name: Option<String>,
     /// Search contract class nodes by the exact contract class name
-    search_contract_classes_by_name: Option<String>,
+    #[serde(rename = "search_contract_classes_by_exact_name")]
+    contract_class_name: Option<String>,
     /// Get all the event definitions
     get_all_events: Option<bool>,
     /// Get all the error definitions
@@ -154,9 +157,9 @@ fn extract_search_options_from_payload(payload: &NodeFinderPayload) -> Vec<Searc
     [
         payload.get_all_errors.filter(|&enabled| enabled).map(|_| SearchType::GetAllErrors),
         payload.get_all_events.filter(|&enabled| enabled).map(|_| SearchType::GetAllEvents),
-        valid_str(&payload.search_contract_classes_by_name).map(SearchType::SearchContractsByName),
-        valid_str(&payload.search_functions_by_name).map(SearchType::SearchFunctionsByName),
-        valid_str(&payload.search_modifiers_by_name).map(SearchType::SearchModifiersByName),
+        valid_str(&payload.contract_class_name).map(SearchType::SearchContractsByName),
+        valid_str(&payload.function_name).map(SearchType::SearchFunctionsByName),
+        valid_str(&payload.modifier_name).map(SearchType::SearchModifiersByName),
     ]
     .into_iter()
     .flatten()
