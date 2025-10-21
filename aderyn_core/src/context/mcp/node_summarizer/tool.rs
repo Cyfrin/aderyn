@@ -79,7 +79,7 @@ impl ModelContextProtocolTool for NodeSummarizerTool {
         };
 
         let (filepath, _, _) = context.get_node_sort_key_pure(node);
-        let code_snippet = get_code_snippet(context, node);
+        let code_snippet = context.get_code_snippet(node);
 
         let summary = render::NodeSummaryBuilder::default()
             .compilation_unit_index(payload.compilation_unit_index)

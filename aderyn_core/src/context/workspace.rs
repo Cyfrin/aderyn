@@ -302,6 +302,23 @@ impl WorkspaceContext {
 
         (absolute_path, source_line, chopped_location)
     }
+    pub fn get_code_snippet(&self, node: &ASTNode) -> String {
+        let (filepath, _, src_location) = self.get_node_sort_key_pure(node);
+        let source_unit = self
+            .source_units()
+            .into_iter()
+            .find(|s| s.absolute_path.as_ref().is_some_and(|p| *p == filepath))
+            .expect("node not found");
+
+        let source_content = source_unit.source.as_ref().expect("source not found");
+
+        let (byte_offset_str, byte_len_str) = src_location.split_once(':').unwrap();
+        let byte_offset: usize = byte_offset_str.parse().unwrap();
+        let byte_length: usize = byte_len_str.parse().unwrap();
+
+        let code_snippet = &source_content[byte_offset..byte_offset + byte_length];
+        code_snippet.to_owned()
+    }
 }
 
 impl WorkspaceContext {

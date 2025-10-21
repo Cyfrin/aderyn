@@ -1,41 +1,125 @@
+use regex::Regex;
+
 use crate::{
-    ast::{NodeID, NodeType},
+    ast::{ASTNode, FunctionKind, NodeID, NodeType},
     context::{
         mcp::node_finder::render::{NodeInfo, NodeInfoBuilder},
         workspace::WorkspaceContext,
     },
 };
 
+// Matches functions, modifiers and contracts by their exact names.
+
 #[inline]
-pub fn get_matching_functions(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
-    _get_nodes(idx, context, Some(term), NodeType::FunctionDefinition)
+pub fn get_matching_functions(idx: usize, context: &WorkspaceContext, name: &str) -> Vec<NodeInfo> {
+    get_nodes_by_exact_name_match(idx, context, Some(name), NodeType::FunctionDefinition)
 }
 
 #[inline]
-pub fn get_matching_modifiers(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
-    _get_nodes(idx, context, Some(term), NodeType::ModifierDefinition)
+pub fn get_matching_modifiers(idx: usize, context: &WorkspaceContext, name: &str) -> Vec<NodeInfo> {
+    get_nodes_by_exact_name_match(idx, context, Some(name), NodeType::ModifierDefinition)
 }
 
 #[inline]
-pub fn get_matching_contracts(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
-    _get_nodes(idx, context, Some(term), NodeType::ContractDefinition)
+pub fn get_matching_contracts(idx: usize, context: &WorkspaceContext, name: &str) -> Vec<NodeInfo> {
+    get_nodes_by_exact_name_match(idx, context, Some(name), NodeType::ContractDefinition)
+}
+
+// Matches all events and errors.
+
+#[inline]
+pub fn get_all_events(idx: usize, context: &WorkspaceContext) -> Vec<NodeInfo> {
+    get_nodes_by_exact_name_match(idx, context, None, NodeType::EventDefinition)
 }
 
 #[inline]
-pub fn get_all_events(compilation_unit_index: usize, context: &WorkspaceContext) -> Vec<NodeInfo> {
-    _get_nodes(compilation_unit_index, context, None, NodeType::EventDefinition)
+pub fn get_all_errors(idx: usize, context: &WorkspaceContext) -> Vec<NodeInfo> {
+    get_nodes_by_exact_name_match(idx, context, None, NodeType::ErrorDefinition)
+}
+
+// Matches functions, modifiers and state variables whose code snippets match a given regex
+
+#[inline]
+pub fn grep_functions(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
+    let regex = Regex::new(term).expect("invalid regex was passed");
+    context
+        .function_definitions()
+        .into_iter()
+        .filter(|&f| {
+            let f: ASTNode = f.into();
+            let code_snippet = context.get_code_snippet(&f);
+            regex.is_match(&code_snippet)
+        })
+        .map(|func| {
+            let func_kind = func.kind();
+            let mut name = func.name.to_owned();
+
+            if func_kind != &FunctionKind::Function {
+                if name.is_empty() {
+                    name = func_kind.to_string();
+                } else {
+                    name.push_str(&format!("( {} )", func_kind));
+                }
+            }
+
+            NodeInfoBuilder::default()
+                .name(name)
+                .node_id(func.id)
+                .compilation_unit_index(idx)
+                .build()
+                .expect("failed to build node info")
+        })
+        .collect()
 }
 
 #[inline]
-pub fn get_all_errors(compilation_unit_index: usize, context: &WorkspaceContext) -> Vec<NodeInfo> {
-    _get_nodes(compilation_unit_index, context, None, NodeType::ErrorDefinition)
+pub fn grep_modifiers(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
+    let regex = Regex::new(term).expect("invalid regex was passed");
+    context
+        .modifier_definitions()
+        .into_iter()
+        .filter(|&m| {
+            let m: ASTNode = m.into();
+            let code_snippet = context.get_code_snippet(&m);
+            regex.is_match(&code_snippet)
+        })
+        .map(|modifier| {
+            NodeInfoBuilder::default()
+                .name(modifier.name.to_owned())
+                .node_id(modifier.id)
+                .compilation_unit_index(idx)
+                .build()
+                .expect("failed to build node info")
+        })
+        .collect()
 }
 
-fn _get_nodes(
+#[inline]
+pub fn grep_state_variables(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
+    let regex = Regex::new(term).expect("invalid regex was passed");
+    context
+        .contract_definitions()
+        .into_iter()
+        .flat_map(|c| c.top_level_variables())
+        .filter(|v| regex.is_match(&v.name))
+        .map(|v| {
+            NodeInfoBuilder::default()
+                .name(v.name.to_string())
+                .node_id(v.id)
+                .compilation_unit_index(idx)
+                .build()
+                .expect("failed to build node info")
+        })
+        .collect()
+}
+
+// Helper functions
+
+fn get_nodes_by_exact_name_match(
     compilation_unit_index: usize,
     context: &WorkspaceContext,
     search_term: Option<&str>,
-    ty: NodeType,
+    node_ty: NodeType,
 ) -> Vec<NodeInfo> {
     let mut matching_nodes = vec![];
 
@@ -50,7 +134,7 @@ fn _get_nodes(
         }
     };
 
-    match ty {
+    match node_ty {
         NodeType::ContractDefinition => {
             context
                 .contract_definitions()

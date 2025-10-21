@@ -10,24 +10,6 @@ use crate::{
 };
 use std::collections::{HashMap, HashSet, hash_map::Entry};
 
-pub fn get_code_snippet(context: &WorkspaceContext, node: &ASTNode) -> String {
-    let (filepath, _, src_location) = context.get_node_sort_key_pure(node);
-    let source_unit = context
-        .source_units()
-        .into_iter()
-        .find(|s| s.absolute_path.as_ref().is_some_and(|p| *p == filepath))
-        .expect("node not found");
-
-    let source_content = source_unit.source.as_ref().expect("source not found");
-
-    let (byte_offset_str, byte_len_str) = src_location.split_once(':').unwrap();
-    let byte_offset: usize = byte_offset_str.parse().unwrap();
-    let byte_length: usize = byte_len_str.parse().unwrap();
-
-    let code_snippet = &source_content[byte_offset..byte_offset + byte_length];
-    code_snippet.to_owned()
-}
-
 pub fn get_containing_contract(context: &WorkspaceContext, node: &ASTNode) -> Option<NodeInfo> {
     if let ASTNode::ContractDefinition(_) = node {
         return None;

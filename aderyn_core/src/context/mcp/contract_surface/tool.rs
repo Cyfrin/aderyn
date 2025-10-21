@@ -49,8 +49,8 @@ impl ModelContextProtocolTool for ContractSurfaceTool {
 
     fn description(&self) -> String {
         indoc! {
-            "Analyzes the surface area of a specific deployable contract within a compilation unit. Returns\
-            details about the contract's state variables (own and inherited), and entrypoint functions. \
+            "Analyzes the surface area of a specific deployable contract within a compilation unit. Returns details\
+            such as contract's state variables (own and inherited), and all entrypoint functions (own and inherited).\
             Use the Node ID from the list contracts tool to specify which contract to analyze."
         }
         .to_string()
