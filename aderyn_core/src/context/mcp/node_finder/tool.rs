@@ -119,8 +119,7 @@ impl ModelContextProtocolTool for NodeFinderTool {
             && !name.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
         {
             return mcp_error!(
-                "Do not pass a regular expression as a search term, restrict yourself to actual names of contracts,\
-                functions and modifiers"
+                "To pass a regular expression as a search term, use the search by grep option"
             )
         }
 
@@ -199,7 +198,7 @@ fn extract_search_options_from_payload(payload: &NodeFinderPayload) -> Vec<Searc
     [
         payload.get_all_errors.filter(|&enabled| enabled).map(|_| SearchType::GetAllErrors),
         payload.get_all_events.filter(|&enabled| enabled).map(|_| SearchType::GetAllEvents),
-        payload.regex_term.clone().map(SearchType::SearchNodesByRegex),
+        sanitize(&payload.regex_term).map(SearchType::SearchNodesByRegex),
         sanitize(&payload.contract_class_name).map(SearchType::SearchContractsByName),
         sanitize(&payload.function_name).map(SearchType::SearchFunctionsByName),
         sanitize(&payload.modifier_name).map(SearchType::SearchModifiersByName),
