@@ -6,6 +6,7 @@ use crate::context::{
     },
 };
 use indoc::indoc;
+use regex::Regex;
 use rmcp::{
     ErrorData as McpError, handler::server::wrapper::Parameters, model::CallToolResult, schemars,
 };
@@ -110,6 +111,10 @@ impl ModelContextProtocolTool for NodeFinderTool {
             return mcp_error!(
                 "Choose a single search option from contract, function, modifier, errors and events. Multiple received"
             );
+        }
+
+        if let Some(Err(e)) = payload.regex_term.map(|regex_term| Regex::new(&regex_term)) {
+            return mcp_error!("Invalid regex passed. Error: {}", e);
         }
 
         let search_term =

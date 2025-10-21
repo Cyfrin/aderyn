@@ -1,5 +1,7 @@
+use regex::Regex;
+
 use crate::{
-    ast::{NodeID, NodeType},
+    ast::{ASTNode, NodeID, NodeType},
     context::{
         mcp::node_finder::render::{NodeInfo, NodeInfoBuilder},
         workspace::WorkspaceContext,
@@ -10,51 +12,99 @@ use crate::{
 
 #[inline]
 pub fn get_matching_functions(idx: usize, context: &WorkspaceContext, name: &str) -> Vec<NodeInfo> {
-    match_nodes_bt_exact_name(idx, context, Some(name), NodeType::FunctionDefinition)
+    get_nodes_by_exact_name_match(idx, context, Some(name), NodeType::FunctionDefinition)
 }
 
 #[inline]
 pub fn get_matching_modifiers(idx: usize, context: &WorkspaceContext, name: &str) -> Vec<NodeInfo> {
-    match_nodes_bt_exact_name(idx, context, Some(name), NodeType::ModifierDefinition)
+    get_nodes_by_exact_name_match(idx, context, Some(name), NodeType::ModifierDefinition)
 }
 
 #[inline]
 pub fn get_matching_contracts(idx: usize, context: &WorkspaceContext, name: &str) -> Vec<NodeInfo> {
-    match_nodes_bt_exact_name(idx, context, Some(name), NodeType::ContractDefinition)
+    get_nodes_by_exact_name_match(idx, context, Some(name), NodeType::ContractDefinition)
 }
 
 // Matches all events and errors.
 
 #[inline]
 pub fn get_all_events(idx: usize, context: &WorkspaceContext) -> Vec<NodeInfo> {
-    match_nodes_bt_exact_name(idx, context, None, NodeType::EventDefinition)
+    get_nodes_by_exact_name_match(idx, context, None, NodeType::EventDefinition)
 }
 
 #[inline]
 pub fn get_all_errors(idx: usize, context: &WorkspaceContext) -> Vec<NodeInfo> {
-    match_nodes_bt_exact_name(idx, context, None, NodeType::ErrorDefinition)
+    get_nodes_by_exact_name_match(idx, context, None, NodeType::ErrorDefinition)
 }
 
 // Matches functions, modifiers and state variables whose code snippets match a given regex
 
 #[inline]
 pub fn grep_functions(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
-    todo!()
+    let regex = Regex::new(term).expect("invalid regex was passed");
+    context
+        .function_definitions()
+        .into_iter()
+        .filter(|&f| {
+            let f: ASTNode = f.into();
+            let code_snippet = context.get_code_snippet(&f);
+            regex.is_match(&code_snippet)
+        })
+        .map(|func| {
+            NodeInfoBuilder::default()
+                .name(func.name.to_owned())
+                .node_id(func.id)
+                .compilation_unit_index(idx)
+                .build()
+                .expect("failed to build node info")
+        })
+        .collect()
 }
 
 #[inline]
 pub fn grep_modifiers(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
-    todo!()
+    let regex = Regex::new(term).expect("invalid regex was passed");
+    context
+        .modifier_definitions()
+        .into_iter()
+        .filter(|&m| {
+            let m: ASTNode = m.into();
+            let code_snippet = context.get_code_snippet(&m);
+            regex.is_match(&code_snippet)
+        })
+        .map(|modifier| {
+            NodeInfoBuilder::default()
+                .name(modifier.name.to_owned())
+                .node_id(modifier.id)
+                .compilation_unit_index(idx)
+                .build()
+                .expect("failed to build node info")
+        })
+        .collect()
 }
 
 #[inline]
 pub fn grep_state_variables(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
-    todo!()
+    let regex = Regex::new(term).expect("invalid regex was passed");
+    context
+        .contract_definitions()
+        .into_iter()
+        .flat_map(|c| c.top_level_variables())
+        .filter(|v| regex.is_match(&v.name))
+        .map(|v| {
+            NodeInfoBuilder::default()
+                .name(v.name.to_string())
+                .node_id(v.id)
+                .compilation_unit_index(idx)
+                .build()
+                .expect("failed to build node info")
+        })
+        .collect()
 }
 
 // Helper functions
 
-fn match_nodes_bt_exact_name(
+fn get_nodes_by_exact_name_match(
     compilation_unit_index: usize,
     context: &WorkspaceContext,
     search_term: Option<&str>,
