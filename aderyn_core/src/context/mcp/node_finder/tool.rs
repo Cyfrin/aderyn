@@ -2,10 +2,7 @@ use crate::context::{
     macros::{mcp_error, mcp_success},
     mcp::{
         MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
-        node_finder::{
-            render::{self, NodeFinderAll, NodeFinderMatches, NodeInfo},
-            utils::*,
-        },
+        node_finder::{render::*, utils::*},
     },
 };
 use indoc::indoc;
@@ -13,7 +10,7 @@ use rmcp::{
     ErrorData as McpError, handler::server::wrapper::Parameters, model::CallToolResult, schemars,
 };
 use serde::Deserialize;
-use std::sync::Arc;
+use std::{collections::BTreeMap, sync::Arc};
 
 #[derive(Clone)]
 pub struct NodeFinderTool {
@@ -31,6 +28,10 @@ pub struct NodeFinderPayload {
     /// Search contract class nodes by the exact contract class name
     #[serde(rename = "search_contract_classes_by_exact_name")]
     contract_class_name: Option<String>,
+    /// Grep for symbols and references by using regular expressions.
+    /// Input just the bare regex pattern, not wrapped in / or quotes.
+    #[serde(rename = "search_nodes_by_grep")]
+    regex_term: Option<String>,
     /// Get all the event definitions
     get_all_events: Option<bool>,
     /// Get all the error definitions
@@ -45,6 +46,7 @@ pub enum SearchType {
     SearchFunctionsByName(String),
     SearchModifiersByName(String),
     SearchContractsByName(String),
+    SearchNodesByRegex(String),
     GetAllEvents,
     GetAllErrors,
 }
@@ -55,7 +57,9 @@ impl SearchType {
             SearchType::SearchFunctionsByName(name)
             | SearchType::SearchModifiersByName(name)
             | SearchType::SearchContractsByName(name) => Some(name.clone()),
-            SearchType::GetAllEvents | SearchType::GetAllErrors => None,
+            SearchType::GetAllEvents
+            | SearchType::GetAllErrors
+            | SearchType::SearchNodesByRegex(_) => None,
         }
     }
 }
@@ -73,11 +77,10 @@ impl ModelContextProtocolTool for NodeFinderTool {
 
     fn description(&self) -> String {
         indoc! {
-            "Retrieve nodes IDs and compilation unit indexes of node definitions matched by supplying the exact\
-            names of functions, modifiers and contracts. Optionally accepts 'compilation_unit_index' to limit the \
-            search to a specific compilation unit. Input only 1 field out of functions, modifiers, contracts, \
-            events and errors. Also use the exact node names extracted from other tools. \
-            Regex (or) regular expressions will not work."
+            "Retrieve nodes IDs and compilation unit indexes of nodes matched by either supplying the exact\
+            names of functions, modifiers and contracts or grep them with a regular expression.\
+            Important: Input only 1 search field (chose from functions, modifiers, contracts, events, errors and grep) \
+            Optionally also input 'compilation_unit_index' to limit the search to a specific compilation unit."
         }
         .to_string()
     }
@@ -121,9 +124,15 @@ impl ModelContextProtocolTool for NodeFinderTool {
             )
         }
 
+        // Nodes whose names exactly match with the input term.
         let mut matching_contracts = vec![];
         let mut matching_functions = vec![];
         let mut matching_modifiers = vec![];
+
+        // Nodes whose code snippet matches the grep test.
+        let mut grepped_functions = vec![];
+        let mut grepped_modifiers = vec![];
+        let mut grepped_state_variables = vec![];
 
         let mut events = vec![];
         let mut errors = vec![];
@@ -150,6 +159,11 @@ impl ModelContextProtocolTool for NodeFinderTool {
                         events.extend(get_all_events(i + 1, context));
                         errors.extend(get_all_errors(i + 1, context));
                     }
+                    SearchType::SearchNodesByRegex(term) => {
+                        grepped_functions.extend(grep_functions(i + 1, context, term));
+                        grepped_modifiers.extend(grep_modifiers(i + 1, context, term));
+                        grepped_state_variables.extend(grep_state_variables(i + 1, context, term));
+                    }
                 }
             }
         }
@@ -166,20 +180,29 @@ impl ModelContextProtocolTool for NodeFinderTool {
             }
             SearchType::GetAllEvents => mcp_success!(node_finder_all(events, "Event")),
             SearchType::GetAllErrors => mcp_success!(node_finder_all(errors, "Error")),
+            SearchType::SearchNodesByRegex(term) => {
+                mcp_success!(node_grep_matches(
+                    term,
+                    grepped_state_variables,
+                    grepped_functions,
+                    grepped_modifiers
+                ))
+            }
         }
     }
 }
 
 fn extract_search_options_from_payload(payload: &NodeFinderPayload) -> Vec<SearchType> {
     // Keep the string if it's non empty after trimming
-    let valid_str = |opt: &Option<String>| opt.as_ref().filter(|s| !s.trim().is_empty()).cloned();
+    let sanitize = |opt: &Option<String>| opt.as_ref().filter(|s| !s.trim().is_empty()).cloned();
 
     [
         payload.get_all_errors.filter(|&enabled| enabled).map(|_| SearchType::GetAllErrors),
         payload.get_all_events.filter(|&enabled| enabled).map(|_| SearchType::GetAllEvents),
-        valid_str(&payload.contract_class_name).map(SearchType::SearchContractsByName),
-        valid_str(&payload.function_name).map(SearchType::SearchFunctionsByName),
-        valid_str(&payload.modifier_name).map(SearchType::SearchModifiersByName),
+        payload.regex_term.clone().map(SearchType::SearchNodesByRegex),
+        sanitize(&payload.contract_class_name).map(SearchType::SearchContractsByName),
+        sanitize(&payload.function_name).map(SearchType::SearchFunctionsByName),
+        sanitize(&payload.modifier_name).map(SearchType::SearchModifiersByName),
     ]
     .into_iter()
     .flatten()
@@ -187,7 +210,7 @@ fn extract_search_options_from_payload(payload: &NodeFinderPayload) -> Vec<Searc
 }
 
 fn node_finder_matches(term: &str, nodes: Vec<NodeInfo>, ty: &str) -> NodeFinderMatches {
-    render::NodeFinderMatchesBuilder::default()
+    NodeFinderMatchesBuilder::default()
         .term(term.to_string())
         .matching_nodes(nodes)
         .node_type(ty.to_string())
@@ -195,8 +218,26 @@ fn node_finder_matches(term: &str, nodes: Vec<NodeInfo>, ty: &str) -> NodeFinder
         .expect("failed to build renderer for node finder")
 }
 
+fn node_grep_matches(
+    term: &str,
+    state_vars: Vec<NodeInfo>,
+    functions: Vec<NodeInfo>,
+    modifiers: Vec<NodeInfo>,
+) -> NodeFinderGrepMatches {
+    let nodes = BTreeMap::from_iter(vec![
+        ("State Variable".to_string(), state_vars),
+        ("Function".to_string(), functions),
+        ("Modifier".to_string(), modifiers),
+    ]);
+    NodeFinderGrepMatchesBuilder::default()
+        .term(term.to_string())
+        .nodes(nodes)
+        .build()
+        .expect("failed to build node finder grep matches")
+}
+
 fn node_finder_all(nodes: Vec<NodeInfo>, ty: &str) -> NodeFinderAll {
-    render::NodeFinderAllBuilder::default()
+    NodeFinderAllBuilder::default()
         .nodes(nodes)
         .node_type(ty.to_string())
         .build()

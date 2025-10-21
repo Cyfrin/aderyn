@@ -32,6 +32,7 @@ askama = { workspace = true }
 indoc = { workspace = true}
 derive_builder = { workspace = true }
 log = { workspace = true }
+regex = { workspace = true }
 
 [dev-dependencies]
 petgraph = { workspace = true }

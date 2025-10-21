@@ -1,15 +1,18 @@
 use askama::Template;
 use derive_builder::Builder;
 use serde::Serialize;
+use std::collections::BTreeMap;
 
 use crate::ast::NodeID;
+
+pub type RNodeType = String; // To respect RMCP + template schema, chose simple type for output
 
 #[derive(Template, Builder, Serialize)]
 #[template(path = "mcp-tool-response/node_finder_search.md")]
 #[builder(pattern = "owned")]
 pub struct NodeFinderMatches {
     pub term: String,
-    pub node_type: String,
+    pub node_type: RNodeType,
     pub matching_nodes: Vec<NodeInfo>,
 }
 
@@ -17,8 +20,16 @@ pub struct NodeFinderMatches {
 #[template(path = "mcp-tool-response/node_finder_get_all.md")]
 #[builder(pattern = "owned")]
 pub struct NodeFinderAll {
-    pub node_type: String,
+    pub node_type: RNodeType,
     pub nodes: Vec<NodeInfo>,
+}
+
+#[derive(Template, Builder, Serialize)]
+#[template(path = "mcp-tool-response/node_finder_grep.md")]
+#[builder(pattern = "owned")]
+pub struct NodeFinderGrepMatches {
+    pub term: String,
+    pub nodes: BTreeMap<RNodeType, Vec<NodeInfo>>,
 }
 
 #[derive(Builder, Serialize)]

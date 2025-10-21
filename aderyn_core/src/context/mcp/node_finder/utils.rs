@@ -6,36 +6,59 @@ use crate::{
     },
 };
 
+// Matches functions, modifiers and contracts by their exact names.
+
 #[inline]
-pub fn get_matching_functions(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
-    _get_nodes(idx, context, Some(term), NodeType::FunctionDefinition)
+pub fn get_matching_functions(idx: usize, context: &WorkspaceContext, name: &str) -> Vec<NodeInfo> {
+    match_nodes_bt_exact_name(idx, context, Some(name), NodeType::FunctionDefinition)
 }
 
 #[inline]
-pub fn get_matching_modifiers(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
-    _get_nodes(idx, context, Some(term), NodeType::ModifierDefinition)
+pub fn get_matching_modifiers(idx: usize, context: &WorkspaceContext, name: &str) -> Vec<NodeInfo> {
+    match_nodes_bt_exact_name(idx, context, Some(name), NodeType::ModifierDefinition)
 }
 
 #[inline]
-pub fn get_matching_contracts(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
-    _get_nodes(idx, context, Some(term), NodeType::ContractDefinition)
+pub fn get_matching_contracts(idx: usize, context: &WorkspaceContext, name: &str) -> Vec<NodeInfo> {
+    match_nodes_bt_exact_name(idx, context, Some(name), NodeType::ContractDefinition)
+}
+
+// Matches all events and errors.
+
+#[inline]
+pub fn get_all_events(idx: usize, context: &WorkspaceContext) -> Vec<NodeInfo> {
+    match_nodes_bt_exact_name(idx, context, None, NodeType::EventDefinition)
 }
 
 #[inline]
-pub fn get_all_events(compilation_unit_index: usize, context: &WorkspaceContext) -> Vec<NodeInfo> {
-    _get_nodes(compilation_unit_index, context, None, NodeType::EventDefinition)
+pub fn get_all_errors(idx: usize, context: &WorkspaceContext) -> Vec<NodeInfo> {
+    match_nodes_bt_exact_name(idx, context, None, NodeType::ErrorDefinition)
+}
+
+// Matches functions, modifiers and state variables whose code snippets match a given regex
+
+#[inline]
+pub fn grep_functions(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
+    todo!()
 }
 
 #[inline]
-pub fn get_all_errors(compilation_unit_index: usize, context: &WorkspaceContext) -> Vec<NodeInfo> {
-    _get_nodes(compilation_unit_index, context, None, NodeType::ErrorDefinition)
+pub fn grep_modifiers(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
+    todo!()
 }
 
-fn _get_nodes(
+#[inline]
+pub fn grep_state_variables(idx: usize, context: &WorkspaceContext, term: &str) -> Vec<NodeInfo> {
+    todo!()
+}
+
+// Helper functions
+
+fn match_nodes_bt_exact_name(
     compilation_unit_index: usize,
     context: &WorkspaceContext,
     search_term: Option<&str>,
-    ty: NodeType,
+    node_ty: NodeType,
 ) -> Vec<NodeInfo> {
     let mut matching_nodes = vec![];
 
@@ -50,7 +73,7 @@ fn _get_nodes(
         }
     };
 
-    match ty {
+    match node_ty {
         NodeType::ContractDefinition => {
             context
                 .contract_definitions()
