@@ -103,18 +103,22 @@ impl ModelContextProtocolTool for NodeFinderTool {
 
         if received_search_opts.is_empty() {
             return mcp_error!(
-                "Choose a single search option from contract, function, modifier, errors and events. None received"
+                "Choose a single search option from contract, function, modifier, errors, events and grep. None received"
             );
         }
 
         if received_search_opts.len() > 1 {
             return mcp_error!(
-                "Choose a single search option from contract, function, modifier, errors and events. Multiple received"
+                "Choose a single search option from contract, function, modifier, errors, events and grep. Multiple received"
             );
         }
 
-        if let Some(Err(e)) = payload.regex_term.map(|regex_term| Regex::new(&regex_term)) {
-            return mcp_error!("Invalid regex passed. Error: {}", e);
+        if let Some(Err(regex_error)) = payload.regex_term.map(|regex_term| Regex::new(&regex_term))
+        {
+            return mcp_error!(
+                "Invalid regex passed. It must be compatible with rust's regex. {}",
+                regex_error
+            );
         }
 
         let search_term =

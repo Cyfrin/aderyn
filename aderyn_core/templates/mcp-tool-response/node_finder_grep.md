@@ -2,9 +2,11 @@
 
 ### Regex input: {{ term }}
 
+The input term has been found in the following:
+
 {% if nodes.len() > 0 %}
 {% for (node_type, nodes) in nodes %}
-### Matching {{ node_type }}s
+### {{ node_type }}s
 {% for node_info in nodes %}
 - Name: {{ node_info.name }} | NodeID: {{ node_info.node_id }} | CompilationUnitIndex: {{ node_info.compilation_unit_index }}
 {% endfor %}
