@@ -1,7 +1,7 @@
 use regex::Regex;
 
 use crate::{
-    ast::{ASTNode, NodeID, NodeType},
+    ast::{ASTNode, FunctionKind, NodeID, NodeType},
     context::{
         mcp::node_finder::render::{NodeInfo, NodeInfoBuilder},
         workspace::WorkspaceContext,
@@ -51,8 +51,19 @@ pub fn grep_functions(idx: usize, context: &WorkspaceContext, term: &str) -> Vec
             regex.is_match(&code_snippet)
         })
         .map(|func| {
+            let func_kind = func.kind();
+            let mut name = func.name.to_owned();
+
+            if func_kind != &FunctionKind::Function {
+                if name.is_empty() {
+                    name = func_kind.to_string();
+                } else {
+                    name.push_str(&format!("( {} )", func_kind));
+                }
+            }
+
             NodeInfoBuilder::default()
-                .name(func.name.to_owned())
+                .name(name)
                 .node_id(func.id)
                 .compilation_unit_index(idx)
                 .build()

@@ -13,5 +13,5 @@
 {% endfor %}
 ### Tip: Now, use the node summarizer tool to investigate these nodes
 {% else %}
-### No match found for regex {{ term }}s !
+### No match found for regex {{ term }} !
 {% endif %}

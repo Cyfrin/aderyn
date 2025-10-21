@@ -29,8 +29,9 @@ pub struct NodeFinderPayload {
     /// Search contract class nodes by the exact contract class name
     #[serde(rename = "search_contract_classes_by_exact_name")]
     contract_class_name: Option<String>,
-    /// Grep for symbols and references by using regular expressions.
-    /// Input just the bare regex pattern, not wrapped in / or quotes.
+    /// Grep for symbols and references by recursively searching through the implementaion of all
+    /// the functions, modifiers, state variables, etc. Input just the bare regex pattern, not
+    /// wrapped in / or quotes. Also do not use super advanced regex features.
     #[serde(rename = "search_nodes_by_grep")]
     regex_term: Option<String>,
     /// Get all the event definitions
