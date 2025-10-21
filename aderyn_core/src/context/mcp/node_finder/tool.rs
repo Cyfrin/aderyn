@@ -232,11 +232,18 @@ fn node_grep_matches(
     functions: Vec<NodeInfo>,
     modifiers: Vec<NodeInfo>,
 ) -> NodeFinderGrepMatches {
-    let nodes = BTreeMap::from_iter(vec![
-        ("State Variable".to_string(), state_vars),
-        ("Function".to_string(), functions),
-        ("Modifier".to_string(), modifiers),
-    ]);
+    let mut nodes = BTreeMap::new();
+
+    if !state_vars.is_empty() {
+        nodes.insert("state variable".to_string(), state_vars);
+    }
+    if !functions.is_empty() {
+        nodes.insert("function".to_string(), functions);
+    }
+    if !modifiers.is_empty() {
+        nodes.insert("modifier".to_string(), modifiers);
+    }
+
     NodeFinderGrepMatchesBuilder::default()
         .term(term.to_string())
         .nodes(nodes)
