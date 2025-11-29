@@ -103,6 +103,11 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ReentrancyStateChangeDetector>::default(),
         Box::<IncorrectUseOfModifierDetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
+        Box::<ClzSubtractionDetector>::default(),
+        Box::<ClzNormalizationDetector>::default(),
+        Box::<ClzUnsafeCastingDetector>::default(),
+        Box::<ClzSignedIntegerDetector>::default(),
+        Box::<ClzLegacyImplementationsDetector>::default(),
     ]
 }
 
@@ -202,6 +207,11 @@ pub enum IssueDetectorNamePool {
     ReturnBomb,
     OutOfOrderRetryable,
     StateVariableCouldBeConstant,
+    ClzSubtraction,
+    ClzNormalization,
+    ClzUnsafeCasting,
+    ClzSignedInteger,
+    ClzLegacyImplementations,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -432,6 +442,13 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UncheckedLowLevelCall => {
             Some(Box::<UncheckedLowLevelCallDetector>::default())
+        }
+        IssueDetectorNamePool::ClzSubtraction => Some(Box::<ClzSubtractionDetector>::default()),
+        IssueDetectorNamePool::ClzNormalization => Some(Box::<ClzNormalizationDetector>::default()),
+        IssueDetectorNamePool::ClzUnsafeCasting => Some(Box::<ClzUnsafeCastingDetector>::default()),
+        IssueDetectorNamePool::ClzSignedInteger => Some(Box::<ClzSignedIntegerDetector>::default()),
+        IssueDetectorNamePool::ClzLegacyImplementations => {
+            Some(Box::<ClzLegacyImplementationsDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }
