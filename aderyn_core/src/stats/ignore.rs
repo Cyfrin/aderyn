@@ -60,7 +60,7 @@ pub fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<Igno
 }
 
 static ADERYN_IGNORE_REGEX: Lazy<Regex> =
-    lazy_regex!(r"aderyn-(?:ignore|fp)(\-next\-line)?\s*\((\s*[a-zA-Z\-\s,]*)\)");
+    lazy_regex!(r"aderyn-(?:ignore|fp)(\-next\-line)?(?:\s*\((\s*[a-zA-Z\-\s,]*)\))?");
 
 #[cfg(test)]
 mod parse_comments_to_rightfully_ignore_lines {
