@@ -28,8 +28,8 @@ pub struct WorkspaceContextWrapper {
 pub struct PreprocessedConfig {
     pub root_path: PathBuf,
     pub src: Option<String>,
-    pub include: Option<Vec<String>>,
-    pub exclude: Option<Vec<String>>,
+    pub included_files: Option<Vec<String>>,
+    pub excluded_files: Option<Vec<String>>,
     pub included_detectors: Option<Vec<String>>,
     pub excluded_detectors: Option<Vec<String>>,
 }
@@ -54,8 +54,7 @@ pub fn make_context(
             .filter(|d| !excluded.contains(&d.name()))
             .collect(),
         // This case almost doesn't make sense but including it for completion sake.
-        // I can't think of why you would supply both fields - include detectors and exclude
-        // detectors names.
+        // I can't think of why you would supply both fields - include and exclude detector names
         (Some(included), Some(excluded)) => get_all_issue_detectors()
             .into_iter()
             .filter(|d| included.contains(&d.name()))
@@ -123,8 +122,8 @@ fn obtain_config_values(
     let current = PreprocessedConfig {
         root_path,
         src: args.src,
-        exclude: args.path_excludes,
-        include: args.path_includes,
+        excluded_files: args.path_excludes,
+        included_files: args.path_includes,
         included_detectors: None,
         excluded_detectors: None,
     };

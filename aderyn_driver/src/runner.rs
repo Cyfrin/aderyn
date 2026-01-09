@@ -14,12 +14,6 @@ pub fn run_detector_mode(
 ) -> Result<(), Box<dyn Error>> {
     println!("Running {} detectors", cx_wrapper.detectors.len());
 
-    let detectors_used = &cx_wrapper
-        .detectors
-        .iter()
-        .map(|d| (d.name(), d.severity().to_string()))
-        .collect::<Vec<_>>();
-
     let detectors = cx_wrapper.detectors.iter().map(|d| d.skeletal_clone()).collect();
     let report = detect_issues(&cx_wrapper.contexts, &cx_wrapper.root_path, detectors)?;
     let output_file_path = output_config.output.clone();
@@ -35,7 +29,7 @@ pub fn run_detector_mode(
         OutputInterface::default()
     };
 
-    output_interface_router(output_interface, &report, cx_wrapper, detectors_used, output_config)?;
+    output_interface_router(output_interface, &report, cx_wrapper, output_config)?;
 
     Ok(())
 }

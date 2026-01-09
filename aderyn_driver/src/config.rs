@@ -82,7 +82,7 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
     }
 
     // If config.exclude is some, append each value to exclude if it is not already present
-    let mut local_exclude = current.exclude.clone();
+    let mut local_exclude = current.excluded_files.clone();
     if let Some(config_exclude) = &config.excluded {
         if let Some(local_exclude) = &mut local_exclude {
             for item in config_exclude {
@@ -96,7 +96,7 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
     }
 
     // If config.include is some, append each value to include if it is not already present
-    let mut local_include = current.include.clone();
+    let mut local_include = current.included_files.clone();
     if let Some(config_scope) = &config.included {
         if let Some(local_include) = &mut local_include {
             for item in config_scope {
@@ -125,8 +125,8 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
     PreprocessedConfig {
         root_path: local_root,
         src: local_src,
-        exclude: local_exclude,
-        include: local_include,
+        excluded_files: local_exclude,
+        included_files: local_include,
         included_detectors: local_included_detectors,
         excluded_detectors: local_excluded_detectors,
     }
@@ -156,8 +156,8 @@ mod tests {
             PreprocessedConfig {
                 root_path: root.to_path_buf(),
                 src,
-                include,
-                exclude,
+                included_files: include,
+                excluded_files: exclude,
                 included_detectors: None,
                 excluded_detectors: None,
             }
@@ -187,7 +187,7 @@ mod tests {
         assert_eq!(result.root_path, std::path::Path::new("ARG_ROOT/CONFIG_ROOT"));
         assert_eq!(result.src, Some("ARG_SRC".to_string()));
         assert_eq!(
-            result.exclude,
+            result.excluded_files,
             Some(vec![
                 "ARG_EXCLUDE_1".to_string(),
                 "ARG_EXCLUDE_2".to_string(),
@@ -195,7 +195,7 @@ mod tests {
             ])
         );
         assert_eq!(
-            result.include,
+            result.included_files,
             Some(vec![
                 "ARG_SCOPE_1".to_string(),
                 "ARG_SCOPE_2".to_string(),

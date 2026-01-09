@@ -24,8 +24,8 @@ pub fn compile_project(
     let PreprocessedConfig {
         root_path,
         src,
-        include,
-        exclude,
+        included_files: include,
+        excluded_files: exclude,
         included_detectors: _,
         excluded_detectors: _,
     } = preprocessed_config;

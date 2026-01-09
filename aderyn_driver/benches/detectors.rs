@@ -10,8 +10,8 @@ fn bench_individual_detectors_on_contract_playground(c: &mut Criterion) {
     let preprocessed_config = PreprocessedConfig {
         root_path,
         src: None,
-        include: None,
-        exclude: None,
+        included_files: None,
+        excluded_files: None,
         included_detectors: None,
         excluded_detectors: None,
     };
