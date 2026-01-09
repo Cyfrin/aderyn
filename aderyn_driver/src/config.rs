@@ -175,7 +175,7 @@ mod tests {
                 included: Some(vec!["CONFIG_SCOPE".to_string()]),
                 env: Some(env),
                 detectors: Some(DetectorFilter {
-                    included: Some(vec!["included_detector".to_string()]),
+                    included: Some(vec!["INCLUDED_DETECTOR".to_string()]),
                     excluded: None,
                 }),
             };
