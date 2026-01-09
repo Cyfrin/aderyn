@@ -41,7 +41,7 @@ root = {}
 # If include is specified, only the specified detectors will be run.
 # If exclude is specified, all detectors excluding the specified ones will be run.
 #
-# Names of the detectors can be found on https://cyfrin.gitbook.io/cyfrin-docs/aderyn-vs-code/supported-detector
+# Names of the detectors can be found by running `aderyn registry`
 # Examples:
 # include = ["unused-error", "weak-randomness"]
 # exclude = ["costly-loop", "empty-require-revert"]
