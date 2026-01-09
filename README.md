@@ -61,8 +61,6 @@ Run `aderyn --version` to check the installation.
 
 Run `cyfrinup` to upgrade everything to the latest version.
 
----
-
 ### Using curl
 
 ```sh
@@ -70,8 +68,6 @@ curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cyfrin/aderyn/releases/
 ```
 
 ##### Upgrade older versions by running: `aderyn-update`
-
----
 
 ### Using Homebrew
 
@@ -81,8 +77,6 @@ brew install cyfrin/tap/aderyn
 
 ##### Upgrade older versions by running: `brew upgrade cyfrin/tap/aderyn`
 
----
-
 ### Using npm
 
 ```sh
@@ -90,8 +84,6 @@ npm install @cyfrin/aderyn -g
 ```
 
 ##### Upgrade older versions by (re)running: `npm install @cyfrin/aderyn -g`
-
----
 
 If you are installing with Curl or Homebrew or npm, ensure that the correct version of Aderyn in your path comes from either the Homebrew or npm global packages directory. If an older version exists at `~/.cyfrin/bin/aderyn`, remove it using `rm -f ~/.cyfrin/bin/aderyn`, as this is no longer the default installation location.
 
@@ -113,6 +105,11 @@ See examples using more CLI options [here](https://cyfrin.gitbook.io/cyfrin-docs
 Officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. 
 Download from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview)
 
+## Continuous Integration Assistant
+
+Checkout [Aderyn CI Assistant](https://github.com/marketplace/actions/aderyn-ci-assistant) in the marketplace.
+Performs Static analysis on Solidity codebases in CI to catch potential vulnerabilities before committing code. 
+
 ## Contributing & License
 
 Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md) for in-depth developer environment setup and PR approval process.
@@ -123,6 +120,9 @@ Aderyn is an open-source software licensed under the [GPL-3.0 License](./LICENSE
 Aderyn makes it easy to build Static Analysis detectors that can adapt to any Solidity codebase and protocol. This guide will teach you how to build, test, and run your custom Aderyn detectors.
 To learn how to create your custom Aderyn detectors, [checkout the official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/detectors-quickstart)
 
+## Solidity AST Generation Backend
+Aderyn relies on a [custom backend](https://github.com/Cyfrin/solidity-ast-rs) to generate AST for Solidity codebases. 
+It leverages [foundry-compilers](https://github.com/foundry-rs/compilers) 
 
 ## Credits
 
@@ -134,11 +134,10 @@ This project exists thanks to all the people who [contribute](/CONTRIBUTING.md).
 
 ## Attribution
 
-- AST Visitor code from [solc-ast-rs](https://github.com/hrkrshnn/solc-ast-rs).
-- Foundry Compilers for backend AST generation [foundry-compilers](https://github.com/foundry-rs/compilers)
+- Initial inspiration for AST Visitor code from [solc-ast-rs](https://github.com/hrkrshnn/solc-ast-rs).
 - Original detectors based on [4naly3er](https://github.com/Picodes/4naly3er) detectors.
 - Shoutout to the original king of static analysis [slither](https://github.com/crytic/slither).
-- Solidity AST Generator [solidity-ast-rs](https://github.com/Cyfrin/solidity-ast-rs). 
+
 
 [contributors-shield]: https://img.shields.io/github/contributors/cyfrin/aderyn
 [contributors-url]: https://github.com/cyfrin/aderyn/graphs/contributors
