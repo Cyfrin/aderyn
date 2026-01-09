@@ -65,10 +65,10 @@ regex = "1.12.2"
 
 # Uncomment in Production (just before merging to dev)
 # Cyfrin managed github repository
-# solidity_ast = { git = "https://github.com/Cyfrin/solidity-ast-rs", tag = "v0.0.1-alpha.beta.6", package = "solidity-ast" }
+solidity_ast = { git = "https://github.com/Cyfrin/solidity-ast-rs", tag = "v0.0.1-alpha.beta.7", package = "solidity-ast" }
 
 # Uncomment when debugging in branch (PR)
-solidity_ast = { git = "https://github.com/Cyfrin/solidity-ast-rs", branch = "feat/upgrade-jan-2026", package = "solidity-ast" }
+# solidity_ast = { git = "https://github.com/Cyfrin/solidity-ast-rs", branch = "feat/replace-me", package = "solidity-ast" }
 
 # Uncomment when debugging locally
 # solidity_ast = { path = "../solidity-ast-rs", package = "solidity-ast"}
