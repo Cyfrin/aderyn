@@ -80,6 +80,7 @@ pub fn compile_project(
             }
 
             context.evm_version = derived_ast_evm_info.evm_version;
+            context.via_ir = derived_ast_evm_info.via_ir;
             context.included = included;
 
             Some(context)

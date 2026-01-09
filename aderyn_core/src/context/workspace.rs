@@ -51,6 +51,9 @@ pub struct WorkspaceContext {
     // In-scope files
     pub included: HashSet<PathBuf>,
 
+    // Whether via_ir is enabled for the project in foundry config
+    pub via_ir: bool,
+
     // Function router
     pub router: Option<Router>,
 
