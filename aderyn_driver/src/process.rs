@@ -9,7 +9,7 @@ use aderyn_core::{
         router::Router,
         workspace::WorkspaceContext,
     },
-    detect::detector::{IssueDetector, get_all_issue_detectors},
+    detect::detector::{IssueDetector, IssueSeverity, get_all_issue_detectors},
     stats,
 };
 use solidity_ast::ProjectConfigInput;
@@ -41,25 +41,36 @@ pub fn make_context(
     // Preprocess config by supplementing CLI args with aderyn.toml if exists
     let preprocessed_config = obtain_config_values(args.clone())?;
 
-    let detectors = match (
-        preprocessed_config.excluded_detectors.clone(),
-        preprocessed_config.included_detectors.clone(),
-    ) {
-        (None, None) => get_all_issue_detectors(),
-        (Some(included), None) => {
-            get_all_issue_detectors().into_iter().filter(|d| included.contains(&d.name())).collect()
+    let detectors = {
+        let baseline_detectors = if common.highs_only {
+            get_all_issue_detectors()
+                .into_iter()
+                .filter(|d| d.severity() == IssueSeverity::High)
+                .collect()
+        } else {
+            get_all_issue_detectors()
+        };
+
+        match (
+            preprocessed_config.excluded_detectors.clone(),
+            preprocessed_config.included_detectors.clone(),
+        ) {
+            (None, None) => baseline_detectors,
+            (Some(included), None) => {
+                baseline_detectors.into_iter().filter(|d| included.contains(&d.name())).collect()
+            }
+            (None, Some(excluded)) => {
+                baseline_detectors.into_iter().filter(|d| !excluded.contains(&d.name())).collect()
+            }
+            // This case almost doesn't make sense but including it for completion sake.
+            // I can't think of why you would supply both fields - include and exclude detector
+            // names
+            (Some(included), Some(excluded)) => baseline_detectors
+                .into_iter()
+                .filter(|d| included.contains(&d.name()))
+                .filter(|d| !excluded.contains(&d.name()))
+                .collect(),
         }
-        (None, Some(excluded)) => get_all_issue_detectors()
-            .into_iter()
-            .filter(|d| !excluded.contains(&d.name()))
-            .collect(),
-        // This case almost doesn't make sense but including it for completion sake.
-        // I can't think of why you would supply both fields - include and exclude detector names
-        (Some(included), Some(excluded)) => get_all_issue_detectors()
-            .into_iter()
-            .filter(|d| included.contains(&d.name()))
-            .filter(|d| !excluded.contains(&d.name()))
-            .collect(),
     };
 
     let root_path = preprocessed_config.root_path.clone();
