@@ -12,7 +12,8 @@ fn bench_individual_detectors_on_contract_playground(c: &mut Criterion) {
         src: None,
         include: None,
         exclude: None,
-        detectors: vec![],
+        included_detectors: None,
+        excluded_detectors: None,
     };
     let (contexts, _) =
         aderyn_driver::compile::compile_project(preprocessed_config, false, true).unwrap();

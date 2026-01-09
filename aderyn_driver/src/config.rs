@@ -110,23 +110,15 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
     }
 
     // If config.detectors is some, override the current detectors
-    let mut finalized_detectors = current.detectors;
-    if let Some(detectors_config) = &config.detectors {
-        if let Some(include_detectors) = &detectors_config.included
-            && !include_detectors.is_empty()
-        {
-            finalized_detectors = finalized_detectors
-                .into_iter()
-                .filter(|d| include_detectors.contains(&d.name()))
-                .collect::<Vec<_>>();
+    let mut local_included_detectors = None;
+    let mut local_excluded_detectors = None;
+
+    if let Some(detectors_config) = config.detectors {
+        if let Some(include_detectors) = detectors_config.included {
+            local_included_detectors = Some(include_detectors);
         }
-        if let Some(exclude_detectors) = &detectors_config.included
-            && !exclude_detectors.is_empty()
-        {
-            finalized_detectors = finalized_detectors
-                .into_iter()
-                .filter(|d| !exclude_detectors.contains(&d.name()))
-                .collect::<Vec<_>>();
+        if let Some(exclude_detectors) = detectors_config.excluded {
+            local_excluded_detectors = Some(exclude_detectors);
         }
     }
 
@@ -135,7 +127,8 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
         src: local_src,
         exclude: local_exclude,
         include: local_include,
-        detectors: finalized_detectors,
+        included_detectors: local_included_detectors,
+        excluded_detectors: local_excluded_detectors,
     }
 }
 
@@ -149,7 +142,7 @@ fn clear_empty_vectors<T>(vec: &mut Option<Vec<T>>) {
 
 #[cfg(test)]
 mod tests {
-    use crate::process::PreprocessedConfig;
+    use crate::{config::DetectorFilter, process::PreprocessedConfig};
     use std::{collections::HashMap, env};
 
     #[test]
@@ -165,7 +158,8 @@ mod tests {
                 src,
                 include,
                 exclude,
-                detectors: vec![],
+                included_detectors: None,
+                excluded_detectors: None,
             }
         };
         let result = {
@@ -180,7 +174,10 @@ mod tests {
                 excluded: Some(vec!["CONFIG_EXCLUDE".to_string()]),
                 included: Some(vec!["CONFIG_SCOPE".to_string()]),
                 env: Some(env),
-                detectors: None,
+                detectors: Some(DetectorFilter {
+                    included: Some(vec!["included_detector".to_string()]),
+                    excluded: None,
+                }),
             };
             super::supplement(current, config)
         };
@@ -205,6 +202,7 @@ mod tests {
                 "CONFIG_SCOPE".to_string()
             ])
         );
+        assert_eq!(result.included_detectors, Some(vec!["INCLUDED_DETECTOR".to_string()]));
     }
 
     #[test]

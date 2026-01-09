@@ -108,3 +108,7 @@ pub fn detector_list(args: &CliArgsCommonConfig) -> Vec<Box<dyn IssueDetector>> 
         .filter(|d| !args.highs_only || d.severity() == IssueSeverity::High)
         .collect()
 }
+
+pub fn detector_name_list(args: &CliArgsCommonConfig) -> Vec<String> {
+    detector_list(args).into_iter().map(|d| d.name()).collect()
+}
