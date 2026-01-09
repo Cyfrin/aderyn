@@ -52,8 +52,8 @@ pub fn make_context(
         };
 
         match (
-            preprocessed_config.excluded_detectors.clone(),
             preprocessed_config.included_detectors.clone(),
+            preprocessed_config.excluded_detectors.clone(),
         ) {
             (None, None) => baseline_detectors,
             (Some(included), None) => {
