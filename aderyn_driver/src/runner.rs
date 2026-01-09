@@ -1,4 +1,4 @@
-use aderyn_core::{context::workspace::WorkspaceContext, detect::detector::IssueDetector};
+use aderyn_core::context::workspace::WorkspaceContext;
 use std::error::Error;
 
 use crate::{
@@ -10,14 +10,17 @@ use aderyn_core::report::*;
 
 pub fn run_detector_mode(
     cx_wrapper: &WorkspaceContextWrapper,
-    detectors: Vec<Box<dyn IssueDetector>>,
     output_config: &CliArgsOutputConfig,
 ) -> Result<(), Box<dyn Error>> {
-    println!("Running {} detectors", detectors.len());
+    println!("Running {} detectors", cx_wrapper.detectors.len());
 
-    let detectors_used =
-        &detectors.iter().map(|d| (d.name(), d.severity().to_string())).collect::<Vec<_>>();
+    let detectors_used = &cx_wrapper
+        .detectors
+        .iter()
+        .map(|d| (d.name(), d.severity().to_string()))
+        .collect::<Vec<_>>();
 
+    let detectors = cx_wrapper.detectors.iter().map(|d| d.skeletal_clone()).collect();
     let report = detect_issues(&cx_wrapper.contexts, &cx_wrapper.root_path, detectors)?;
     let output_file_path = output_config.output.clone();
 
@@ -32,15 +35,13 @@ pub fn run_detector_mode(
         OutputInterface::default()
     };
 
-    output_interface_router(output_interface, &report, cx_wrapper, detectors_used, output_config)?;
+    output_interface_router(output_interface, &report, &cx_wrapper, detectors_used, output_config)?;
 
     Ok(())
 }
 
-pub fn run_lsp_mode(
-    ctx_wrapper: &WorkspaceContextWrapper,
-    detectors: Vec<Box<dyn IssueDetector>>,
-) -> Option<LspReport> {
+pub fn run_lsp_mode(ctx_wrapper: &WorkspaceContextWrapper) -> Option<LspReport> {
+    let detectors = ctx_wrapper.detectors.iter().map(|d| d.skeletal_clone()).collect();
     let (root_rel_path, contexts) = (&ctx_wrapper.root_path, &ctx_wrapper.contexts);
     match detect_issues(contexts, root_rel_path, detectors) {
         Ok(report) => {

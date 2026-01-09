@@ -1,7 +1,7 @@
 use crate::{
     compile,
     config::supplement_values_from_aderyn_toml,
-    driver::{CliArgsCommonConfig, CliArgsInputConfig},
+    driver::{CliArgsCommonConfig, CliArgsInputConfig, detector_list},
 };
 use aderyn_core::{
     context::{
@@ -9,6 +9,7 @@ use aderyn_core::{
         router::Router,
         workspace::WorkspaceContext,
     },
+    detect::detector::IssueDetector,
     stats,
 };
 use solidity_ast::ProjectConfigInput;
@@ -21,6 +22,7 @@ pub struct WorkspaceContextWrapper {
     pub contexts: Vec<WorkspaceContext>,
     pub root_path: PathBuf,
     pub project_config: ProjectConfigInput,
+    pub detectors: Vec<Box<dyn IssueDetector>>,
 }
 
 pub struct PreprocessedConfig {
@@ -28,6 +30,7 @@ pub struct PreprocessedConfig {
     pub src: Option<String>,
     pub include: Option<Vec<String>>,
     pub exclude: Option<Vec<String>>,
+    pub detectors: Vec<Box<dyn IssueDetector>>,
 }
 
 pub fn make_context(
@@ -35,8 +38,9 @@ pub fn make_context(
     common: &CliArgsCommonConfig,
 ) -> Result<WorkspaceContextWrapper, Box<dyn std::error::Error + Send + Sync>> {
     // Preprocess config by supplementing CLI args with aderyn.toml if exists
-    let preprocessed_config = obtain_config_values(args.clone())?;
+    let preprocessed_config = obtain_config_values(args.clone(), common.clone())?;
 
+    let detectors = preprocessed_config.detectors.iter().map(|d| d.skeletal_clone()).collect();
     let root_path = preprocessed_config.root_path.clone();
 
     // Compilation steps:
@@ -84,12 +88,13 @@ pub fn make_context(
         context.callgraphs = Some(callgraphs);
     }
 
-    Ok(WorkspaceContextWrapper { contexts, root_path, project_config })
+    Ok(WorkspaceContextWrapper { contexts, root_path, project_config, detectors })
 }
 
 /// Supplement the CLI arguments with values from aderyn.toml
 fn obtain_config_values(
     args: CliArgsInputConfig,
+    common: CliArgsCommonConfig,
 ) -> Result<PreprocessedConfig, Box<dyn std::error::Error + Send + Sync>> {
     let root_path = PathBuf::from(&args.root);
     let aderyn_path = root_path.join("aderyn.toml");
@@ -99,6 +104,7 @@ fn obtain_config_values(
         src: args.src,
         exclude: args.path_excludes,
         include: args.path_includes,
+        detectors: detector_list(&common),
     };
 
     // Process aderyn.toml if it exists

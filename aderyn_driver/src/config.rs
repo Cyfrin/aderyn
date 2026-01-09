@@ -14,9 +14,20 @@ pub struct AderynConfig {
     pub version: usize,
     pub root: Option<String>,
     pub src: Option<String>,
-    pub exclude: Option<Vec<String>>,
-    pub include: Option<Vec<String>>,
+    #[serde(rename = "exclude")]
+    pub excluded: Option<Vec<String>>,
+    #[serde(rename = "include")]
+    pub included: Option<Vec<String>>,
     pub env: Option<HashMap<String, String>>,
+    pub detectors: Option<DetectorFilter>, // Considers all detectors if None
+}
+
+#[derive(Deserialize, Clone)]
+pub struct DetectorFilter {
+    #[serde(rename = "include")]
+    pub included: Option<Vec<String>>,
+    #[serde(rename = "exclude")]
+    pub excluded: Option<Vec<String>>,
 }
 
 pub fn supplement_values_from_aderyn_toml(
@@ -42,8 +53,8 @@ fn aderyn_toml_config(root: &Path) -> Result<AderynConfig, String> {
     }
 
     // Clear empty vectors
-    clear_empty_vectors(&mut config.exclude);
-    clear_empty_vectors(&mut config.include);
+    clear_empty_vectors(&mut config.excluded);
+    clear_empty_vectors(&mut config.included);
 
     Ok(config)
 }
@@ -72,7 +83,7 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
 
     // If config.exclude is some, append each value to exclude if it is not already present
     let mut local_exclude = current.exclude.clone();
-    if let Some(config_exclude) = &config.exclude {
+    if let Some(config_exclude) = &config.excluded {
         if let Some(local_exclude) = &mut local_exclude {
             for item in config_exclude {
                 if !local_exclude.contains(item) {
@@ -86,7 +97,7 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
 
     // If config.include is some, append each value to include if it is not already present
     let mut local_include = current.include.clone();
-    if let Some(config_scope) = &config.include {
+    if let Some(config_scope) = &config.included {
         if let Some(local_include) = &mut local_include {
             for item in config_scope {
                 if !local_include.contains(item) {
@@ -98,11 +109,33 @@ fn supplement(current: PreprocessedConfig, config: AderynConfig) -> Preprocessed
         }
     }
 
+    // If config.detectors is some, override the current detectors
+    let mut finalized_detectors = current.detectors;
+    if let Some(detectors_config) = &config.detectors {
+        if let Some(include_detectors) = &detectors_config.included
+            && !include_detectors.is_empty()
+        {
+            finalized_detectors = finalized_detectors
+                .into_iter()
+                .filter(|d| include_detectors.contains(&d.name()))
+                .collect::<Vec<_>>();
+        }
+        if let Some(exclude_detectors) = &detectors_config.included
+            && !exclude_detectors.is_empty()
+        {
+            finalized_detectors = finalized_detectors
+                .into_iter()
+                .filter(|d| !exclude_detectors.contains(&d.name()))
+                .collect::<Vec<_>>();
+        }
+    }
+
     PreprocessedConfig {
         root_path: local_root,
         src: local_src,
         exclude: local_exclude,
         include: local_include,
+        detectors: finalized_detectors,
     }
 }
 
@@ -116,9 +149,8 @@ fn clear_empty_vectors<T>(vec: &mut Option<Vec<T>>) {
 
 #[cfg(test)]
 mod tests {
-    use std::{collections::HashMap, env};
-
     use crate::process::PreprocessedConfig;
+    use std::{collections::HashMap, env};
 
     #[test]
     fn test_interpret_aderyn_config_correctly_appends_and_replaces() {
@@ -128,7 +160,13 @@ mod tests {
             let src = Some("ARG_SRC".to_string());
             let exclude = Some(vec!["ARG_EXCLUDE_1".to_string(), "ARG_EXCLUDE_2".to_string()]);
             let include = Some(vec!["ARG_SCOPE_1".to_string(), "ARG_SCOPE_2".to_string()]);
-            PreprocessedConfig { root_path: root.to_path_buf(), src, include, exclude }
+            PreprocessedConfig {
+                root_path: root.to_path_buf(),
+                src,
+                include,
+                exclude,
+                detectors: vec![],
+            }
         };
         let result = {
             let env = HashMap::from_iter(vec![(
@@ -139,9 +177,10 @@ mod tests {
                 version: 1,
                 root: Some("CONFIG_ROOT".to_string()),
                 src: Some("CONFIG_SRC".to_string()),
-                exclude: Some(vec!["CONFIG_EXCLUDE".to_string()]),
-                include: Some(vec!["CONFIG_SCOPE".to_string()]),
+                excluded: Some(vec!["CONFIG_EXCLUDE".to_string()]),
+                included: Some(vec!["CONFIG_SCOPE".to_string()]),
                 env: Some(env),
+                detectors: None,
             };
             super::supplement(current, config)
         };

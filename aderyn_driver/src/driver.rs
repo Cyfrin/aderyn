@@ -61,8 +61,6 @@ pub fn kick_off_audit_mode(args: Args) {
 
 /// One way pipeline to generate vulnerability reports. (for CLI)
 pub fn kick_off_report_creation(args: Args) {
-    let detectors = detector_list(&args);
-
     let run_pipeline = || -> Result<(), Box<dyn std::error::Error>> {
         let cx_wrapper =
             make_context(&args.input_config, &args.common_config).unwrap_or_else(|e| {
@@ -71,7 +69,7 @@ pub fn kick_off_report_creation(args: Args) {
             });
 
         // Load the workspace context into the run function, which runs the detectors
-        run_detector_mode(&cx_wrapper, detectors, &args.output_config)?;
+        run_detector_mode(&cx_wrapper, &args.output_config)?;
         Ok(())
     };
 
@@ -84,8 +82,6 @@ pub fn kick_off_report_creation(args: Args) {
 
 /// Identify and return vulnerability reports. (for LSP)
 pub fn fetch_report_for_lsp(args: Args) -> Arc<Mutex<Option<LspReport>>> {
-    let detectors = detector_list(&args);
-
     let ctx_wrapper = match make_context(&args.input_config, &args.common_config) {
         Ok(ctx_wrapper) => ctx_wrapper,
         Err(_) => {
@@ -93,8 +89,7 @@ pub fn fetch_report_for_lsp(args: Args) -> Arc<Mutex<Option<LspReport>>> {
         }
     };
 
-    let lsp_report = run_lsp_mode(&ctx_wrapper, detectors);
-
+    let lsp_report = run_lsp_mode(&ctx_wrapper);
     Arc::new(tokio::sync::Mutex::new(lsp_report))
 }
 
@@ -107,9 +102,9 @@ pub fn create_mcp_server(args: Args) -> Option<McpServer> {
     Some(McpServer::new(ctx_wrapper))
 }
 
-fn detector_list(args: &Args) -> Vec<Box<dyn IssueDetector>> {
+pub fn detector_list(args: &CliArgsCommonConfig) -> Vec<Box<dyn IssueDetector>> {
     get_all_issue_detectors()
         .into_iter()
-        .filter(|d| !args.common_config.highs_only || d.severity() == IssueSeverity::High)
+        .filter(|d| !args.highs_only || d.severity() == IssueSeverity::High)
         .collect()
 }
