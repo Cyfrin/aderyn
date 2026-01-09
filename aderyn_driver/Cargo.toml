@@ -1,6 +1,6 @@
 [package]
 name = "aderyn_driver"
-version = "0.6.6"
+version = "0.6.5"
 edition = { workspace = true }
 authors = { workspace = true }
 description = { workspace = true }
