@@ -35,7 +35,7 @@ pub fn run_detector_mode(
         OutputInterface::default()
     };
 
-    output_interface_router(output_interface, &report, &cx_wrapper, detectors_used, output_config)?;
+    output_interface_router(output_interface, &report, cx_wrapper, detectors_used, output_config)?;
 
     Ok(())
 }
