@@ -45,7 +45,7 @@ pub fn make_context(
         preprocessed_config.excluded_detectors.clone(),
         preprocessed_config.included_detectors.clone(),
     ) {
-        (None, None) => get_all_issue_detectors().into_iter().collect(),
+        (None, None) => get_all_issue_detectors(),
         (Some(included), None) => {
             get_all_issue_detectors().into_iter().filter(|d| included.contains(&d.name())).collect()
         }
