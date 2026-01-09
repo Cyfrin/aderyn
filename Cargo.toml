@@ -21,8 +21,8 @@ large_enum_variant = "allow"
 result_large_err = "allow"
 
 [workspace.dependencies]
-aderyn_core = { version = "0.6.5", path = "aderyn_core" }
-aderyn_driver = { version = "0.6.5", path = "aderyn_driver" }
+aderyn_core = { version = "0.6.6", path = "aderyn_core" }
+aderyn_driver = { version = "0.6.6", path = "aderyn_driver" }
 indoc = "2"
 clap = "4.4.6"
 criterion = "0.5.1"
