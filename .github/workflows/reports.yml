@@ -8,11 +8,11 @@ concurrency:
 
 jobs:
   reports-setup:
-    name:  Check Reports 
+    name: Check Reports
     runs-on: ubuntu-latest
     outputs:
       rust-nightly: nightly-2025-09-20
-    
+
     strategy:
       fail-fast: false
       matrix:
@@ -30,6 +30,8 @@ jobs:
           - adhoc-sol-files-highs-only-json
           - sarif-report
           - empty-report
+          - include-detectors
+          - exclude-detectors
 
     steps:
       - name: Checkout Sources
@@ -60,7 +62,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -130,5 +132,13 @@ jobs:
             empty-report)
               cargo run -- tests/contract-playground -o reports/empty_report_workflow.md -i IgnoreEverything.sol
               diff ./reports/empty_report.md ./reports/empty_report_workflow.md
+              ;;
+            include-detectors)
+              cargo run -- tests/detector-include -o reports/detector-include-report-workflow.md
+              diff reports/detector-include-report.md reports/detector-include-report-workflow.md
+              ;;
+            exclude-detectors)
+              cargo run -- tests/detector-exclude -o reports/detector-exclude-report-workflow.md
+              diff reports/detector-exclude-report.md reports/detector-exclude-report-workflow.md
               ;;
           esac

@@ -21,8 +21,10 @@ mod project_compiler_grouping_tests {
         let preprocessed_config = PreprocessedConfig {
             root_path,
             src: source,
-            include: include.clone(),
-            exclude: exclude.clone(),
+            included_files: include.clone(),
+            excluded_files: exclude.clone(),
+            included_detectors: None,
+            excluded_detectors: None,
         };
         let (contexts, _) = compile::compile_project(preprocessed_config, false, true).unwrap();
 
@@ -74,8 +76,10 @@ mod project_compiler_grouping_tests {
         let preprocessed_config = PreprocessedConfig {
             root_path: PathBuf::from("../tests/contract-playground").canonicalize().unwrap(),
             src: None,
-            include: Some(vec!["NonExistentFile.sol".to_string()]),
-            exclude: None,
+            included_files: Some(vec!["NonExistentFile.sol".to_string()]),
+            excluded_files: None,
+            included_detectors: None,
+            excluded_detectors: None,
         };
         let (contexts, _) = compile::compile_project(preprocessed_config, false, true).unwrap();
         assert!(contexts.iter().all(|c| c.src_filepaths.is_empty()));
@@ -86,8 +90,10 @@ mod project_compiler_grouping_tests {
         let preprocessed_config = PreprocessedConfig {
             root_path: PathBuf::from_str("../tests/no-sol-files").unwrap(),
             src: None,
-            include: None,
-            exclude: Some(vec!["NonExistentFile.sol".to_string()]),
+            included_files: None,
+            excluded_files: Some(vec!["NonExistentFile.sol".to_string()]),
+            included_detectors: None,
+            excluded_detectors: None,
         };
         let (contexts, _) = compile::compile_project(preprocessed_config, false, true).unwrap();
         assert!(contexts.is_empty());

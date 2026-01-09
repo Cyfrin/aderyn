@@ -27,9 +27,14 @@ pub fn output_interface_router(
     output_interface: OutputInterface,
     report: &Report,
     cx_wrapper: &WorkspaceContextWrapper,
-    detectors_used: &[(String, String)],
     output_config: &CliArgsOutputConfig,
 ) -> Result<()> {
+    let detectors_used = &cx_wrapper
+        .detectors
+        .iter()
+        .map(|d| (d.name(), d.severity().to_string()))
+        .collect::<Vec<_>>();
+
     let get_writer = |filename: &str| -> io::Result<File> {
         let file_path = Path::new(filename);
         if let Some(parent_dir) = file_path.parent() {

@@ -21,7 +21,14 @@ pub fn compile_project(
     verbose: bool,
 ) -> Result<(Vec<WorkspaceContext>, ProjectConfigInput), Box<dyn std::error::Error + Sync + Send>> {
     // Decompose pre-processed config
-    let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
+    let PreprocessedConfig {
+        root_path,
+        src,
+        included_files: include,
+        excluded_files: exclude,
+        included_detectors: _,
+        excluded_detectors: _,
+    } = preprocessed_config;
 
     // Process the pre-processed config using Cyfrin/solidity-ast-rs to translate to runtime values
     let path_form_src = |src: &str| -> PathBuf { PathBuf::from_str(src).unwrap() };

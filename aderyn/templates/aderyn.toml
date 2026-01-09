@@ -4,18 +4,19 @@
 # DO NOT CHANGE version below. As of now, only 1 is supported
 version = 1
 
-# Read the description carefully and uncomment the examples in each paragraph should you consider using them.
+# Uncomment the example to configure the values.
+# If left unspecified, there are reasonable defaults so Aderyn will continue working!
 
 # Base path for resolving remappings and compiling smart contracts, relative to workspace-root (directory in which the editor is open)
 # Most of the time, you want to point it to the directory containing foundry.toml or hardhat.config.js/ts.
 root = {}
 
 # Path of source directory containing the contracts, relative to root (above)
-# Aderyn will traverse all the nested files inside to scan and report vulnerabilities found inside.
-# - If not specified, Aderyn will try to extract it from the framework that is being used. (Foundry / Hardhat). 
-#   That would be "contracts/" in case of Hardhat and in case of Foundry, it depends on foundry.toml and
-#   many other factors like FOUNDRY_PROFILE environment variable, etc.
-# - If specified, Aderyn will override the above found `src`.
+# Aderyn will traverse all the nested files inside to scan and report vulnerabilities.
+# - If not specified, Aderyn will try to extract it from the framework that is being used. (Foundry / Hardhat).
+#   That would be "contracts/" in case of Hardhat and "src/" in case of Foundry. Also, sometimes it is automatically
+#   derived from foundry.toml and other factors like FOUNDRY_PROFILE environment variable.
+# - If specified, Aderyn will override the above configuration.
 # Example:
 # src = "src/"
 
@@ -35,9 +36,19 @@ root = {}
 # exclude = ["src/counters/Counter.sol", "src/others/"]
 # exclude = ["/interfaces/"]
 
+[detectors]
+# Detectors to include or exclude. By default, all detectors are run.
+# If include is specified, only the specified detectors will be run.
+# If exclude is specified, all detectors excluding the specified ones will be run.
+#
+# Names of the detectors can be found by running `aderyn registry`
+# Examples:
+# include = ["unused-error", "weak-randomness"]
+# exclude = ["costly-loop", "empty-require-revert"]
+
 # For advanced use cases, leverage the following
 
-# Remappings 
+# Remappings
 # - It can be specified in `remappings.txt` within the root folder of the project.
 # - If not specified, Aderyn will try to derive the values from foundry.toml (if present.)
 

@@ -9,6 +9,7 @@ use aderyn_core::{
         router::Router,
         workspace::WorkspaceContext,
     },
+    detect::detector::{IssueDetector, IssueSeverity, get_all_issue_detectors},
     stats,
 };
 use solidity_ast::ProjectConfigInput;
@@ -21,13 +22,16 @@ pub struct WorkspaceContextWrapper {
     pub contexts: Vec<WorkspaceContext>,
     pub root_path: PathBuf,
     pub project_config: ProjectConfigInput,
+    pub detectors: Vec<Box<dyn IssueDetector>>,
 }
 
 pub struct PreprocessedConfig {
     pub root_path: PathBuf,
     pub src: Option<String>,
-    pub include: Option<Vec<String>>,
-    pub exclude: Option<Vec<String>>,
+    pub included_files: Option<Vec<String>>,
+    pub excluded_files: Option<Vec<String>>,
+    pub included_detectors: Option<Vec<String>>,
+    pub excluded_detectors: Option<Vec<String>>,
 }
 
 pub fn make_context(
@@ -36,6 +40,38 @@ pub fn make_context(
 ) -> Result<WorkspaceContextWrapper, Box<dyn std::error::Error + Send + Sync>> {
     // Preprocess config by supplementing CLI args with aderyn.toml if exists
     let preprocessed_config = obtain_config_values(args.clone())?;
+
+    let detectors = {
+        let baseline_detectors = if common.highs_only {
+            get_all_issue_detectors()
+                .into_iter()
+                .filter(|d| d.severity() == IssueSeverity::High)
+                .collect()
+        } else {
+            get_all_issue_detectors()
+        };
+
+        match (
+            preprocessed_config.included_detectors.clone(),
+            preprocessed_config.excluded_detectors.clone(),
+        ) {
+            (None, None) => baseline_detectors,
+            (Some(included), None) => {
+                baseline_detectors.into_iter().filter(|d| included.contains(&d.name())).collect()
+            }
+            (None, Some(excluded)) => {
+                baseline_detectors.into_iter().filter(|d| !excluded.contains(&d.name())).collect()
+            }
+            // This case almost doesn't make sense but including it for completion sake.
+            // I can't think of why you would supply both fields - include and exclude detector
+            // names
+            (Some(included), Some(excluded)) => baseline_detectors
+                .into_iter()
+                .filter(|d| included.contains(&d.name()))
+                .filter(|d| !excluded.contains(&d.name()))
+                .collect(),
+        }
+    };
 
     let root_path = preprocessed_config.root_path.clone();
 
@@ -84,7 +120,7 @@ pub fn make_context(
         context.callgraphs = Some(callgraphs);
     }
 
-    Ok(WorkspaceContextWrapper { contexts, root_path, project_config })
+    Ok(WorkspaceContextWrapper { contexts, root_path, project_config, detectors })
 }
 
 /// Supplement the CLI arguments with values from aderyn.toml
@@ -97,8 +133,10 @@ fn obtain_config_values(
     let current = PreprocessedConfig {
         root_path,
         src: args.src,
-        exclude: args.path_excludes,
-        include: args.path_includes,
+        excluded_files: args.path_excludes,
+        included_files: args.path_includes,
+        included_detectors: None,
+        excluded_detectors: None,
     };
 
     // Process aderyn.toml if it exists

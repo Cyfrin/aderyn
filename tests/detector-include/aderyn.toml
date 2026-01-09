@@ -1,0 +1,4 @@
+version = 1
+
+[detectors]
+include = ["unspecific-solidity-pragma", "unused-state-variable"]
