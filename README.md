@@ -42,11 +42,12 @@ code with ease.
 
 ## Features
 
-- Off the shelf support for Foundry and Hardhat projects.
-- Configuration file (`aderyn.toml`) to customize behavior.
-- Markdown, JSON and Sarif reports
+- Runs without need for any configuration support for Foundry and Hardhat projects.
+- Creates Markdown, JSON and Sarif reports.
 - Powers our officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) (1800+ downloads)
 - List of [supported detectors](https://cyfrin.gitbook.io/cyfrin-docs/project-configuration/list-of-supported-detectors)
+- Contributor Friendly
+- Downloaded more than 45K times. 
 
 ## Installation
 
