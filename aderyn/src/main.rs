@@ -277,7 +277,7 @@ fn main() {
     {
         println!();
         println!(
-            "NEW VERSION OF ADERYN AVAILABLE! Please upgrade aderyn by following the instruction here - https://github.com/cyfrin/aderyn"
+            "NEW VERSION OF ADERYN AVAILABLE! Please upgrade - https://github.com/cyfrin/aderyn?tab=readme-ov-file#installation"
         );
         println!("NOTE: You can skip this check by passing --skip-update-check flag");
     }
