@@ -72,6 +72,8 @@ fn guess_root(chunk: &str) -> PathBuf {
         std::fs::canonicalize(Path::new("../tests/hardhat-js-playground")).unwrap()
     } else if chunk.contains("ccip-contracts") {
         std::fs::canonicalize(Path::new("../tests/ccip-contracts")).unwrap()
+    } else if chunk.contains("via-ir-enabled") {
+        std::fs::canonicalize(Path::new("../tests/via-ir-enabled")).unwrap()
     } else {
         todo!("add more roots as you see fit");
     }
