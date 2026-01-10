@@ -26,18 +26,8 @@ Stay logged in with `gh auth login`
     - [ ] Generate Release Notes in the Github's Release page
 
 - **NOTE: Expect the following in CI**:
-  * Sarif report tests fail because of version mismatch.
-  * After the building of global artifacts, `aderyn_driver` and `aderyn_core` crates fail to publish.
+  * Sarif report tests fail because of version mismatch.(But it's okay, an automatic script will shoot off to fix this after the whole release is complete)
   * Binary crate `aderyn` is successfully published.
-
-- [ ] Create a checkpoint on `master`.
-    - [ ] Run `git checkout master && git pull`
-    - [ ] Run `git checkout -b master-merge-<version-to-be-released>`.
-    - [ ] Merge `dev` into it and preserve all changes in `dev`. `git merge --squash -X theirs dev`.
-    - [ ] Sometimes if conflicts are not auto-resolved, pick to keep all the changes from `dev`
-    - [ ] Merge it back to master by creating a PR (Verify CI tests)
-
-- [ ] Switch back to `dev` branch with `git checkout dev`.
 
 > NOTE: Replace `patch` with `minor` based on the needs.
 
