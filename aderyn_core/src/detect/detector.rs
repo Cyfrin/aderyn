@@ -103,6 +103,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ReentrancyStateChangeDetector>::default(),
         Box::<IncorrectUseOfModifierDetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
+        Box::<StateVariableInitOrder>::default(),
     ]
 }
 
@@ -202,9 +203,7 @@ pub enum IssueDetectorNamePool {
     ReturnBomb,
     OutOfOrderRetryable,
     StateVariableCouldBeConstant,
-    // NOTE: `Undecided` will be the default name (for new bots).
-    // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
-    Undecided,
+    StateVariableInitOrder,
 }
 
 pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn IssueDetector>> {
@@ -373,7 +372,6 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DynamicArrayLengthAssignment => {
             Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
         }
-
         IssueDetectorNamePool::IncorrectCaretOperator => {
             Some(Box::<IncorrectUseOfCaretOperatorDetector>::default())
         }
@@ -433,7 +431,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::UncheckedLowLevelCall => {
             Some(Box::<UncheckedLowLevelCallDetector>::default())
         }
-        IssueDetectorNamePool::Undecided => None,
+        IssueDetectorNamePool::StateVariableInitOrder => {
+            Some(Box::<StateVariableInitOrder>::default())
+        }
     }
 }
 
@@ -465,32 +465,25 @@ impl dyn IssueDetector {
 }
 
 pub trait IssueDetector: Send + Sync + 'static {
-    fn detect(&mut self, _context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        Ok(true)
-    }
+    /// Runs the detection algorithm and return true if instances were found.
+    fn detect(&mut self, _context: &WorkspaceContext) -> Result<bool, Box<dyn Error>>;
 
-    fn severity(&self) -> IssueSeverity {
-        IssueSeverity::High
-    }
+    /// Specify High or Low severity.
+    fn severity(&self) -> IssueSeverity;
 
-    fn title(&self) -> String {
-        String::from("Title")
-    }
+    /// Title of the issue.
+    fn title(&self) -> String;
 
-    fn description(&self) -> String {
-        String::from("Description")
-    }
+    /// Description of the issue.
+    fn description(&self) -> String;
 
-    fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::Undecided)
-    }
+    /// Name of the detector.
+    fn name(&self) -> String;
 
-    // Keys are source file name, line number and source location
-    // Value is ASTNode NodeID
-    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
-        BTreeMap::new()
-    }
+    /// Collection of all instances where the issue was discovered.
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID>;
 
+    /// Optionally include special messages crafter for individual messages.
     fn hints(&self) -> BTreeMap<(String, usize, String), String> {
         BTreeMap::new()
     }

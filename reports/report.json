@@ -8101,6 +8101,7 @@
     "multiple-placeholders",
     "reentrancy-state-change",
     "incorrect-use-of-modifier",
-    "unchecked-return"
+    "unchecked-return",
+    "state-variable-init-order"
   ]
 }
