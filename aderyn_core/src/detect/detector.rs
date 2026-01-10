@@ -103,6 +103,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ReentrancyStateChangeDetector>::default(),
         Box::<IncorrectUseOfModifierDetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
+        Box::<StateVariableInitOrder>::default(),
     ]
 }
 
@@ -464,13 +465,25 @@ impl dyn IssueDetector {
 }
 
 pub trait IssueDetector: Send + Sync + 'static {
+    /// Runs the detection algorithm and return true if instances were found.
     fn detect(&mut self, _context: &WorkspaceContext) -> Result<bool, Box<dyn Error>>;
+
+    /// Specify High or Low severity.
     fn severity(&self) -> IssueSeverity;
+
+    /// Title of the issue.
     fn title(&self) -> String;
+
+    /// Description of the issue.
     fn description(&self) -> String;
+
+    /// Name of the detector.
     fn name(&self) -> String;
+
+    /// Collection of all instances where the issue was discovered.
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID>;
 
+    /// Optionally include special messages crafter for individual messages.
     fn hints(&self) -> BTreeMap<(String, usize, String), String> {
         BTreeMap::new()
     }
