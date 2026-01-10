@@ -42,10 +42,11 @@ code with ease.
 
 ## Features
 
-- Off the shelf support for Foundry projects.
-- Off the shelf support for Hardhat projects. (Sometimes `remappings.txt` maybe required)
-- Configuration file (`aderyn.toml`) needed to support custom frameworks.
+- Off the shelf support for Foundry and Hardhat projects.
+- Configuration file (`aderyn.toml`) to customize behavior.
 - Markdown, JSON and Sarif reports
+- Powers our officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) (1800+ downloads)
+- List of [supported detectors](https://cyfrin.gitbook.io/cyfrin-docs/project-configuration/list-of-supported-detectors)
 
 ## Installation
 
