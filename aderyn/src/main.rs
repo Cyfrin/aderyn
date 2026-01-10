@@ -17,18 +17,23 @@ use std::path::PathBuf;
     author,
     version,
     about = indoc!{
-        r#"Aderyn - Rust based Solidity Static analyzer.
+        r#"Aderyn - Rust based Solidity Static Analyzer
 
         CLI Quickstart:
             cd my-solidity-project/
             aderyn
 
-        Official VS Code Extension:
+        Official VS Code Extension: (1800+ downloads)
             https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn
 
-        Tip: Run `aderyn init` in the workspace root to create a config file for customizing the scan.
+        Github Action CI Assistant:
+            https://github.com/marketplace/actions/aderyn-ci-assistant
+
+        Tip: Run `aderyn init` in the workspace root to create a config file for customizing the scan
 
         Help Aderyn stay open source by giving us a star on Github - https://github.com/cyfrin/aderyn
+
+        Stats: ~45k total downloads
 
     "#},
     group(ArgGroup::new("stdout_dependent").requires("stdout")),
@@ -79,7 +84,7 @@ pub struct CommandLineArgs {
     #[arg(short, long, group = "stdout_dependent")]
     lsp: bool,
 
-    /// Only use the high detectors
+    /// Only run the high severity issue detectors
     #[arg(long)]
     highs_only: bool,
 
