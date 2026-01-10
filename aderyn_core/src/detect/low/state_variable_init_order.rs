@@ -79,8 +79,7 @@ impl IssueDetector for StateVariableInitOrder {
                                 let Some(contract_ids) = state_vars_written.get(reference) else {
                                     continue;
                                 };
-                                if contract_ids.into_iter().filter(|&&id| id != contract.id).count()
-                                    > 0
+                                if contract_ids.iter().filter(|&&id| id != contract.id).count() > 0
                                 {
                                     capture!(self, context, var);
                                 }
@@ -137,7 +136,7 @@ impl CallGraphVisitor for StorageVariableTracker {
 }
 
 #[cfg(test)]
-mod state_variable_init_order {
+mod state_variable_init_order_tests {
     use super::*;
 
     #[test]
