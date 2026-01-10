@@ -12,7 +12,7 @@ use crate::{
 };
 use eyre::Result;
 use std::{
-    collections::{BTreeMap, HashSet},
+    collections::{BTreeMap, HashMap, HashSet, hash_map::Entry},
     error::Error,
 };
 
@@ -26,14 +26,17 @@ impl IssueDetector for StateVariableInitOrder {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         if context.via_ir {
             for c in context.deployable_contracts() {
-                // Gather a set of State Variable IDs that are manipulated by constructors
-                // in the inheritance order.
+                // Gather State Variable IDs that are manipulated by constructors
+                // in the contracts present in the inheritance.
                 //
                 // For each function call initializing state variable:
                 //  - Find storage variables read / write in the corresponding function
                 //  - If the storage variable is found in the above set, flag the state variable
                 //
-                let mut state_vars_written: HashSet<NodeID> = Default::default();
+                // Map from
+                //  State variable ID -> Vec<Contract IDs>
+                //  where constructors of Contract IDs have written to State Variable ID
+                let mut state_vars_written: HashMap<NodeID, HashSet<NodeID>> = HashMap::new();
                 {
                     for contract in c.c3(context) {
                         for func in contract.function_definitions() {
@@ -44,7 +47,14 @@ impl IssueDetector for StateVariableInitOrder {
                                 for v in state_change_finder
                                     .fetch_non_exhaustive_manipulated_state_variables()
                                 {
-                                    state_vars_written.insert(v.id);
+                                    match state_vars_written.entry(v.id) {
+                                        Entry::Occupied(mut o) => {
+                                            o.get_mut().insert(contract.id);
+                                        }
+                                        Entry::Vacant(v) => {
+                                            v.insert(HashSet::from([contract.id]));
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -64,9 +74,16 @@ impl IssueDetector for StateVariableInitOrder {
                             let mut tracker = StorageVariableTracker::default();
                             callgraph.accept(context, &mut tracker)?;
 
-                            if tracker.all_references.intersection(&state_vars_written).count() > 0
-                            {
-                                capture!(self, context, var);
+                            for reference in tracker.all_references.iter() {
+                                // Contract IDs whose constructor wrote to that state_variable
+                                let Some(contract_ids) = state_vars_written.get(reference) else {
+                                    continue;
+                                };
+                                if contract_ids.into_iter().filter(|&&id| id != contract.id).count()
+                                    > 0
+                                {
+                                    capture!(self, context, var);
+                                }
                             }
                         }
                     }
