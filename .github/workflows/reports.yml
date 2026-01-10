@@ -32,6 +32,7 @@ jobs:
           - empty-report
           - include-detectors
           - exclude-detectors
+          - via-ir-enabled
 
     steps:
       - name: Checkout Sources
@@ -140,5 +141,9 @@ jobs:
             exclude-detectors)
               cargo run -- tests/detector-exclude -o reports/detector-exclude-report-workflow.md
               diff reports/detector-exclude-report.md reports/detector-exclude-report-workflow.md
+              ;;
+            via-ir-enabled)
+              cargo run -- tests/via-ir-enabled -o reports/via-ir-enabled-report-workflow.md
+              diff reports/via-ir-enabled-report.md reports/via-ir-enabled-report-workflow.md
               ;;
           esac
