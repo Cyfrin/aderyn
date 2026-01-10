@@ -19,20 +19,17 @@ use std::path::PathBuf;
     about = indoc!{
         r#"Aderyn - Rust based Solidity Static analyzer.
 
-        Quickstart:
-        cd my-solidity-project/
-        aderyn
+        CLI Quickstart:
+            cd my-solidity-project/
+            aderyn
 
-        It outputs report.md if the solidity project is foundry/hardhat/soldeer.
+        Official VS Code Extension:
+            https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn
 
-        In the case that it's not, it's important to create a config file via the
-        command `aderyn init` in the workspace root.
+        Tip: Run `aderyn init` in the workspace root to create a config file for customizing the scan.
 
-        For more examples, visit docs: https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli
-        Also ask questions via command line: `aderyn docs "how to configure scan options?"`
+        Help Aderyn stay open source by giving us a star on Github - https://github.com/cyfrin/aderyn
 
-        Help Aderyn stay open source by giving us a star on Github.
-        Repository: https://github.com/cyfrin/aderyn
     "#},
     group(ArgGroup::new("stdout_dependent").requires("stdout")),
 )]
@@ -86,11 +83,11 @@ pub struct CommandLineArgs {
     #[arg(long)]
     highs_only: bool,
 
+    // ---------- Hidden arguments --------------- //
     /// After generating report, skip checking if a new version of Aderyn is available.
-    #[arg(long)]
+    #[arg(long, hide = true)]
     skip_update_check: bool,
 
-    // ---------- Hidden arguments --------------- //
     /// Serialize the reports to stdout, don't write to files.
     #[arg(long, name = "stdout", hide = true)]
     stdout: bool,
@@ -136,7 +133,7 @@ enum MainSubcommand {
         /// Ask question
         question: Option<String>,
     },
-    /// ⚠️ [BETA] Start an MCP server in the project root
+    /// Start an MCP server in the project root
     Mcp {
         #[command(subcommand)]
         transport: McpTransport,
