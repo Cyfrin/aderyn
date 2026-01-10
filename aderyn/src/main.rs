@@ -17,22 +17,21 @@ use std::path::PathBuf;
     author,
     version,
     about = indoc!{
-        r#"Aderyn - Rust based Solidity Static analyzer.
+        r#"Aderyn - Rust based Solidity Static Analyzer (~45k+ total downloads)
 
-        Quickstart:
-        cd my-solidity-project/
-        aderyn
+        CLI Quickstart:
+            cd my-solidity-project/
+            aderyn
 
-        It outputs report.md if the solidity project is foundry/hardhat/soldeer.
+        VS Code Extension: (1800+ downloads)
+            https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn
 
-        In the case that it's not, it's important to create a config file via the
-        command `aderyn init` in the workspace root.
+        Github Action CI Assistant:
+            https://github.com/marketplace/actions/aderyn-ci-assistant
 
-        For more examples, visit docs: https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli
-        Also ask questions via command line: `aderyn docs "how to configure scan options?"`
+        Tip: Run `aderyn init` in the workspace root to create a config file for customizing the scan
+        Help Aderyn stay open source. Give a star to https://github.com/cyfrin/aderyn
 
-        Help Aderyn stay open source by giving us a star on Github.
-        Repository: https://github.com/cyfrin/aderyn
     "#},
     group(ArgGroup::new("stdout_dependent").requires("stdout")),
 )]
@@ -82,15 +81,15 @@ pub struct CommandLineArgs {
     #[arg(short, long, group = "stdout_dependent")]
     lsp: bool,
 
-    /// Only use the high detectors
+    /// Only run the high severity issue detectors
     #[arg(long)]
     highs_only: bool,
 
+    // ---------- Hidden arguments --------------- //
     /// After generating report, skip checking if a new version of Aderyn is available.
-    #[arg(long)]
+    #[arg(long, hide = true)]
     skip_update_check: bool,
 
-    // ---------- Hidden arguments --------------- //
     /// Serialize the reports to stdout, don't write to files.
     #[arg(long, name = "stdout", hide = true)]
     stdout: bool,
@@ -136,7 +135,7 @@ enum MainSubcommand {
         /// Ask question
         question: Option<String>,
     },
-    /// ⚠️ [BETA] Start an MCP server in the project root
+    /// Start an MCP server in the project root
     Mcp {
         #[command(subcommand)]
         transport: McpTransport,
