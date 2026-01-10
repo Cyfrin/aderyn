@@ -223,18 +223,15 @@ fn main() {
                 let url = match question {
                     Some(question) => {
                         let encoded_question = urlencoding::encode(&question);
-                        format!(
-                            "https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme?q={}&ask=true",
-                            encoded_question
-                        )
+                        format!("https://cyfrin.gitbook.io/cyfrin-docs?ask={}", encoded_question)
                     }
-                    None => "https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli".to_string(),
+                    None => "https://cyfrin.gitbook.io/cyfrin-docs".to_string(),
                 };
 
                 // First try opening the URL in browser, if it fails just print to stdout
                 if webbrowser::open(&url).is_err() {
                     println!("Visit {}", url);
-                };
+                }
             }
             MainSubcommand::Mcp { transport } => {
                 // FORCE skip cloc
