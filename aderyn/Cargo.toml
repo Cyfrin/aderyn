@@ -1,6 +1,6 @@
 [package]
 name = "aderyn"
-version = "0.6.6"
+version = "0.6.7"
 edition = { workspace = true }
 default-run = "aderyn"
 authors = { workspace = true }
