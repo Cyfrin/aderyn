@@ -51,43 +51,36 @@ code with ease.
 
 > **NOTE** Windows users must have WSL installed
 
-#### Cyfrinup
+#### Cyfrinup - All in one cross platform installation manager for Cyfrin tools.
 
-**Cyfrinup** is the cross platform installation manager for Cyfrin tools.
+[One time setup](https://github.com/Cyfrin/up). - Run `cyfrinup`
 
-[One time setup](https://github.com/Cyfrin/up).
+Re-run `cyfrinup` to upgrade all Cyfrin tools to the latest version.
 
-Run `aderyn --version` to check the installation.
-
-Run `cyfrinup` to upgrade everything to the latest version.
-
-#### cURL
-
+#### Curl
+Once installed, run `aderyn-update` to upgrade.
 ```sh
 curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cyfrin/aderyn/releases/latest/download/aderyn-installer.sh | bash
 ```
 
-##### Upgrade older versions by running: `aderyn-update`
 
 #### Homebrew
-
+Once installed, run `brew upgrade cyfrin/tap/aderyn` to upgrade.
 ```sh
 brew install cyfrin/tap/aderyn
 ```
 
-##### Upgrade older versions by running: `brew upgrade cyfrin/tap/aderyn`
-
 #### npm
-
+Once installed, re-run `npm install @cyfrin/aderyn -g` to upgrade.
 ```sh
 npm install @cyfrin/aderyn -g
 ```
 
-##### Upgrade older versions by (re)running: `npm install @cyfrin/aderyn -g`
-
 If you are installing with Curl or Homebrew or npm, ensure that the correct version of Aderyn in your path comes from either the Homebrew or npm global packages directory. If an older version exists at `~/.cyfrin/bin/aderyn`, remove it using `rm -f ~/.cyfrin/bin/aderyn`, as this is no longer the default installation location.
 
 ## Quick Start
+
+Run `aderyn --version` to check if Aderyn is installed successfully.
 
 [Quick Start](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/quickstart) example with video guide.
 
