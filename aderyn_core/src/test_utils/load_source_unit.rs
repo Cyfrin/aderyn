@@ -83,19 +83,19 @@ fn guess_root(chunk: &str) -> PathBuf {
 fn make_context1(project_config: &ProjectConfigInput) -> WorkspaceContext {
     let ast_evm_info = derive_ast_and_evm_info(project_config).unwrap();
     let ast_info = ast_evm_info.versioned_asts.first().unwrap();
-    _make_context(ast_info)
+    _make_context(ast_info, ast_evm_info.via_ir)
 }
 
 fn make_context(project_config: &ProjectConfigInput) -> Vec<WorkspaceContext> {
     let mut ws = vec![];
     let ast_evm_info = derive_ast_and_evm_info(project_config).unwrap();
     for ast_info in ast_evm_info.versioned_asts {
-        ws.push(_make_context(&ast_info));
+        ws.push(_make_context(&ast_info, ast_evm_info.via_ir));
     }
     ws
 }
 
-fn _make_context(ast_info: &VersionedAstOutputs) -> WorkspaceContext {
+fn _make_context(ast_info: &VersionedAstOutputs, via_ir: bool) -> WorkspaceContext {
     let mut context = WorkspaceContext::default();
 
     let sources = ast_info.sources.0.clone();
@@ -133,6 +133,8 @@ fn _make_context(ast_info: &VersionedAstOutputs) -> WorkspaceContext {
         let callgraphs = WorkspaceCallGraphs::build(context);
         context.callgraphs = Some(callgraphs);
     }
+
+    context.via_ir = via_ir;
 
     load_legacy_callgraphs(&mut context);
     load_router(&mut context);

@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.0;
 
-contract A {
+abstract contract A {
     uint x;
     constructor() {
         x = 42;

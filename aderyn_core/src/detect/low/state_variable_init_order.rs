@@ -1,11 +1,20 @@
 use crate::{
-    ast::NodeID,
+    ast::{FunctionKind, NodeID},
     capture,
-    context::workspace::WorkspaceContext,
+    context::{
+        browser::{
+            ApproximateStorageChangeFinder, ExtractFunctionCalls, ExtractReferencedDeclarations,
+        },
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
+        workspace::WorkspaceContext,
+    },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
-use std::{collections::BTreeMap, error::Error};
+use std::{
+    collections::{BTreeMap, HashSet},
+    error::Error,
+};
 
 #[derive(Default)]
 pub struct StateVariableInitOrder {
@@ -15,7 +24,55 @@ pub struct StateVariableInitOrder {
 
 impl IssueDetector for StateVariableInitOrder {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        if context.via_ir {}
+        if context.via_ir {
+            for c in context.deployable_contracts() {
+                // Gather a set of State Variable IDs that are manipulated by constructors
+                // in the inheritance order.
+                //
+                // For each function call initializing state variable:
+                //  - Find storage variables read / write in the corresponding function
+                //  - If the storage variable is found in the above set, flag the state variable
+                //
+                let mut state_vars_written: HashSet<NodeID> = Default::default();
+                {
+                    for contract in c.c3(context) {
+                        for func in contract.function_definitions() {
+                            if *func.kind() == FunctionKind::Constructor {
+                                let state_change_finder =
+                                    ApproximateStorageChangeFinder::from(context, func);
+
+                                for v in state_change_finder
+                                    .fetch_non_exhaustive_manipulated_state_variables()
+                                {
+                                    state_vars_written.insert(v.id);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                for contract in c.c3(context) {
+                    for var in contract.top_level_variables() {
+                        let func_calls = ExtractFunctionCalls::from(var).extracted;
+                        for func_call in &func_calls {
+                            let callgraph = CallGraphConsumer::get_legacy(
+                                context,
+                                &[&func_call.into()],
+                                CallGraphDirection::Inward,
+                            )?;
+
+                            let mut tracker = StorageVariableTracker::default();
+                            callgraph.accept(context, &mut tracker)?;
+
+                            if tracker.all_references.intersection(&state_vars_written).count() > 0
+                            {
+                                capture!(self, context, var);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         Ok(!self.found_instances.is_empty())
     }
@@ -46,6 +103,19 @@ impl IssueDetector for StateVariableInitOrder {
 
     fn name(&self) -> String {
         IssueDetectorNamePool::StateVariableInitOrder.to_string()
+    }
+}
+
+#[derive(Default)]
+struct StorageVariableTracker {
+    all_references: HashSet<NodeID>,
+}
+
+impl CallGraphVisitor for StorageVariableTracker {
+    fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
+        let identifiers = ExtractReferencedDeclarations::from(node).extracted;
+        self.all_references.extend(identifiers);
+        Ok(())
     }
 }
 
