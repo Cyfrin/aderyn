@@ -51,7 +51,7 @@ code with ease.
 
 > **NOTE** Windows users must have WSL installed
 
-### Using Cyfrinup
+#### Cyfrinup
 
 **Cyfrinup** is the cross platform installation manager for Cyfrin tools.
 
@@ -61,7 +61,7 @@ Run `aderyn --version` to check the installation.
 
 Run `cyfrinup` to upgrade everything to the latest version.
 
-### Using curl
+#### cURL
 
 ```sh
 curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cyfrin/aderyn/releases/latest/download/aderyn-installer.sh | bash
@@ -69,7 +69,7 @@ curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cyfrin/aderyn/releases/
 
 ##### Upgrade older versions by running: `aderyn-update`
 
-### Using Homebrew
+#### Homebrew
 
 ```sh
 brew install cyfrin/tap/aderyn
@@ -77,7 +77,7 @@ brew install cyfrin/tap/aderyn
 
 ##### Upgrade older versions by running: `brew upgrade cyfrin/tap/aderyn`
 
-### Using npm
+#### npm
 
 ```sh
 npm install @cyfrin/aderyn -g
