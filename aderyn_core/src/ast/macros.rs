@@ -122,84 +122,10 @@ macro_rules! stmt_node {
 }
 
 macro_rules! generate_ast_methods {
-    ($( $name:ident ),* $(,)*) => {
-
-        #[derive(Debug, Clone, PartialEq)]
-        pub enum ASTNode {
-            $($name($name),)*
-            YulFunctionCall(YulFunctionCall),
-            YulIdentifier(YulIdentifier),
-            YulLiteral(YulLiteral),
-        }
-
-        $(
-            impl From<$name> for ASTNode {
-                fn from(value: $name) -> Self {
-                    ASTNode::$name(value)
-                }
-            }
-
-            impl From<&$name> for ASTNode {
-                fn from(value: &$name) -> Self {
-                    ASTNode::$name(value.clone())
-                }
-            }
-        )*
-
-        impl ASTNode {
-            pub fn node_type(&self) -> NodeType {
-                match self {
-                    $(ASTNode::$name(_) => NodeType::$name,)*
-                    ASTNode::YulFunctionCall(_) => NodeType::YulFunctionCall,
-                    ASTNode::YulIdentifier(_) => NodeType::YulIdentifier,
-                    ASTNode::YulLiteral(_) => NodeType::YulLiteral,
-                }
-            }
-            pub fn id(&self) -> Option<NodeID> {
-                match self {
-                    ASTNode::YulFunctionCall(_) => None,
-                    ASTNode::YulIdentifier(_) => None,
-                    ASTNode::YulLiteral(_) => None,
-                    $(ASTNode::$name(n) => Some(n.id),)*
-                }
-            }
-        }
-
-        impl Node for ASTNode {
-            fn accept(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
-                match self {
-                    ASTNode::YulFunctionCall(n) => n.accept(visitor),
-                    ASTNode::YulIdentifier(n) => n.accept(visitor),
-                    ASTNode::YulLiteral(n) => n.accept(visitor),
-                    $(ASTNode::$name(n) => n.accept(visitor),)*
-                }
-            }
-            fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
-                match self {
-                    ASTNode::YulFunctionCall(n) => n.accept_metadata(visitor),
-                    ASTNode::YulIdentifier(n) => n.accept_metadata(visitor),
-                    ASTNode::YulLiteral(n) => n.accept_metadata(visitor),
-                    $(ASTNode::$name(n) => n.accept_metadata(visitor),)*
-                }
-            }
-            fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-                visitor.visit_node_id(self.id())?;
-                Ok(())
-            }
-        }
-
-        impl ASTNode {
-            pub fn src(&self) -> Option<&str> {
-                match self {
-                    ASTNode::YulFunctionCall(node) => Some(&node.src),
-                    ASTNode::YulIdentifier(node) => Some(&node.src),
-                    ASTNode::YulLiteral(node) => Some(&node.src),
-                    $(ASTNode::$name(node) => Some(&node.src),)*
-                }
-            }
-        }
-
-    };
+    (
+        regular: $( $type:ident ),* $(,)*;
+        yul: $( $yul_type:ident ),* $(,)*;
+    ) => {};
 }
 
 macro_rules! accept_id {
