@@ -10,6 +10,48 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/KeccakContract.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 587
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/KeccakContract.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 734
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/KeccakContract.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 887
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as `keccak256()`. Use `abi.encode()` instead which will pad items to 32 bytes, preventing hash collisions: https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode. (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` instead: https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739. If all arguments are strings and or bytes, `bytes.concat()` should be used instead."
+          },
+          "ruleId": "abi-encode-packed-hash-collision"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
@@ -56,48 +98,6 @@
             "text": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made."
           },
           "ruleId": "arbitrary-transfer-from"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/KeccakContract.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 587
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/KeccakContract.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 734
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/KeccakContract.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 887
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as `keccak256()`. Use `abi.encode()` instead which will pad items to 32 bytes, preventing hash collisions: https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode. (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` instead: https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739. If all arguments are strings and or bytes, `bytes.concat()` should be used instead."
-          },
-          "ruleId": "abi-encode-packed-hash-collision"
         },
         {
           "level": "warning",
@@ -292,48 +292,6 @@
             "text": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract."
           },
           "ruleId": "contract-locks-ether"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DangerousStrictEquality1.sol"
-                },
-                "region": {
-                  "byteLength": 25,
-                  "byteOffset": 177
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DangerousStrictEquality2.sol"
-                },
-                "region": {
-                  "byteLength": 34,
-                  "byteOffset": 177
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DangerousStrictEquality2.sol"
-                },
-                "region": {
-                  "byteLength": 43,
-                  "byteOffset": 305
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality."
-          },
-          "ruleId": "strict-equality-contract-balance"
         },
         {
           "level": "warning",
@@ -584,6 +542,312 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 672
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 813
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1112
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1235
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1369
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1506
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 686
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 2981
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 4205
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 5373
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 6342
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 488
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 821
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1218
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 4685
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 5072
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1060
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1405
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1795
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 10940
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 110,
+                  "byteOffset": 99
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 359,
+                  "byteOffset": 572
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 246,
+                  "byteOffset": 85
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 190,
+                  "byteOffset": 337
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 184,
+                  "byteOffset": 533
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 186,
+                  "byteOffset": 723
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 563
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended."
+          },
+          "ruleId": "eth-send-unchecked-address"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ExperimentalEncoder.sol"
                 },
                 "region": {
@@ -634,6 +898,70 @@
             "text": "Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hierarchy later down the line. It is recommended to rename this function or change its parameters."
           },
           "ruleId": "function-selector-collision"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 519
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 549
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 587
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 631
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 708
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator."
+          },
+          "ruleId": "incorrect-caret-operator"
         },
         {
           "level": "warning",
@@ -826,70 +1154,6 @@
             "text": "Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`."
           },
           "ruleId": "incorrect-shift-order"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectCaretOperator.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 519
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectCaretOperator.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 549
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectCaretOperator.sol"
-                },
-                "region": {
-                  "byteLength": 21,
-                  "byteOffset": 587
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectCaretOperator.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 631
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectCaretOperator.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 708
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator."
-          },
-          "ruleId": "incorrect-caret-operator"
         },
         {
           "level": "warning",
@@ -1602,305 +1866,19 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 672
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 813
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1112
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1235
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1369
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1506
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/CallGraphTests.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 686
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 2981
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 4205
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 5373
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 6342
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 488
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 821
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ExternalCalls.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 1218
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 4685
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 5072
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/SendEtherNoChecks.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1060
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/SendEtherNoChecks.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1405
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/SendEtherNoChecks.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1795
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
+                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
                 },
                 "region": {
                   "byteLength": 10,
-                  "byteOffset": 10940
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UncheckedCalls.sol"
-                },
-                "region": {
-                  "byteLength": 110,
-                  "byteOffset": 99
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UncheckedCalls.sol"
-                },
-                "region": {
-                  "byteLength": 359,
-                  "byteOffset": 572
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UncheckedSend.sol"
-                },
-                "region": {
-                  "byteLength": 246,
-                  "byteOffset": 85
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UncheckedSend.sol"
-                },
-                "region": {
-                  "byteLength": 190,
-                  "byteOffset": 337
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UncheckedSend.sol"
-                },
-                "region": {
-                  "byteLength": 184,
-                  "byteOffset": 533
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UncheckedSend.sol"
-                },
-                "region": {
-                  "byteLength": 186,
-                  "byteOffset": 723
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedStateVariable.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 563
+                  "byteOffset": 230
                 }
               }
             }
           ],
           "message": {
-            "text": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended."
+            "text": "solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.Use solidity version 0.5.10 or above."
           },
-          "ruleId": "eth-send-unchecked-address"
+          "ruleId": "signed-integer-storage-array"
         },
         {
           "level": "warning",
@@ -1948,19 +1926,41 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
+                  "uri": "src/DangerousStrictEquality1.sol"
                 },
                 "region": {
-                  "byteLength": 10,
-                  "byteOffset": 230
+                  "byteLength": 25,
+                  "byteOffset": 177
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 34,
+                  "byteOffset": 177
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 43,
+                  "byteOffset": 305
                 }
               }
             }
           ],
           "message": {
-            "text": "solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.Use solidity version 0.5.10 or above."
+            "text": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality."
           },
-          "ruleId": "signed-integer-storage-array"
+          "ruleId": "strict-equality-contract-balance"
         },
         {
           "level": "warning",
@@ -3794,48 +3794,6 @@
             "text": "Name clashes with a built-in-symbol. Consider renaming it."
           },
           "ruleId": "builtin-symbol-shadowing"
-        },
-        {
-          "level": "note",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/CacheArrayLength.sol"
-                },
-                "region": {
-                  "byteLength": 82,
-                  "byteOffset": 234
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/CacheArrayLength.sol"
-                },
-                "region": {
-                  "byteLength": 64,
-                  "byteOffset": 1160
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/CacheArrayLength.sol"
-                },
-                "region": {
-                  "byteLength": 183,
-                  "byteOffset": 1325
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Calling `.length` on a storage array in a loop condition is expensive. Consider caching the length in a local variable in memory before the loop and reusing it."
-          },
-          "ruleId": "storage-array-length-not-cached"
         },
         {
           "level": "note",
@@ -8572,147 +8530,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 267
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ExternalCalls.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 347
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ExternalCalls.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 459
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 1416
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 24,
-                  "byteOffset": 1440
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 2121
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 1657
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ZeroAddressCheck.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 1171
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ZeroAddressCheck.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 1248
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ZeroAddressCheck.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 1327
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/inheritance/ExtendedInheritance.sol"
-                },
-                "region": {
-                  "byteLength": 22,
-                  "byteOffset": 579
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 365
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Check for `address(0)` when assigning values to address state variables."
-          },
-          "ruleId": "state-no-address-check"
-        },
-        {
-          "level": "note",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
@@ -9987,6 +9804,147 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 267
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 347
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 459
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1416
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 1440
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 2121
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesManipulation.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1657
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1171
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1248
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 1327
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/ExtendedInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 579
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 365
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Check for `address(0)` when assigning values to address state variables."
+          },
+          "ruleId": "state-no-address-check"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/CostlyOperationsInsideLoops.sol"
                 },
                 "region": {
@@ -10942,6 +10900,48 @@
             "text": "The contract reads it's own state variable using `this` which adds an unnecessary STATICCALL. Consider removing `this` to access the variable from storage."
           },
           "ruleId": "state-variable-read-external"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 82,
+                  "byteOffset": 234
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 64,
+                  "byteOffset": 1160
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 183,
+                  "byteOffset": 1325
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Calling `.length` on a storage array in a loop condition is expensive. Consider caching the length in a local variable in memory before the loop and reusing it."
+          },
+          "ruleId": "storage-array-length-not-cached"
         },
         {
           "level": "note",

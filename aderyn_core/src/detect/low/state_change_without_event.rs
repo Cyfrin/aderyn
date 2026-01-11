@@ -17,13 +17,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct StateVariableChangesWithoutEventDetector {
+pub struct StateChangeWithoutEventDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for StateVariableChangesWithoutEventDetector {
+impl IssueDetector for StateChangeWithoutEventDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
             if *func.kind() == FunctionKind::Constructor {
@@ -99,8 +99,7 @@ impl CallGraphVisitor for EventEmissionTracker {
 mod state_variable_changes_without_events_tests {
 
     use crate::detect::{
-        detector::IssueDetector,
-        low::state_change_without_event::StateVariableChangesWithoutEventDetector,
+        detector::IssueDetector, low::state_change_without_event::StateChangeWithoutEventDetector,
     };
 
     #[test]
@@ -110,7 +109,7 @@ mod state_variable_changes_without_events_tests {
             "../tests/contract-playground/src/StateVariablesChangesWithoutEvents.sol",
         );
 
-        let mut detector = StateVariableChangesWithoutEventDetector::default();
+        let mut detector = StateChangeWithoutEventDetector::default();
         let found = detector.detect(&context).unwrap();
 
         assert!(found);

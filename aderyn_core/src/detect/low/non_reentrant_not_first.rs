@@ -9,12 +9,12 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct NonReentrantBeforeOthersDetector {
+pub struct NonReentrantNotFirstDetector {
     // Keys are source file name, line number and source location
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for NonReentrantBeforeOthersDetector {
+impl IssueDetector for NonReentrantNotFirstDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let function_definitions = context.function_definitions();
         for definition in function_definitions {
@@ -57,7 +57,7 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
 #[cfg(test)]
 mod non_reentrant_before_others_tests {
 
-    use crate::detect::{detector::IssueDetector, low::NonReentrantBeforeOthersDetector};
+    use crate::detect::{detector::IssueDetector, low::NonReentrantNotFirstDetector};
 
     #[test]
 
@@ -66,7 +66,7 @@ mod non_reentrant_before_others_tests {
             "../tests/contract-playground/src/AdminContract.sol",
         );
 
-        let mut detector = NonReentrantBeforeOthersDetector::default();
+        let mut detector = NonReentrantNotFirstDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 1);

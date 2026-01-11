@@ -20,13 +20,13 @@ use lazy_regex::regex;
 use semver::{Version, VersionReq};
 
 #[derive(Default)]
-pub struct StorageSignedIntegerArrayDetector {
+pub struct SignedIntegerStorageArrayDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for StorageSignedIntegerArrayDetector {
+impl IssueDetector for SignedIntegerStorageArrayDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for source_unit in context.source_units() {
             let tuple_expressions = ExtractTupleExpressions::from(source_unit).extracted;
@@ -138,7 +138,7 @@ mod storage_signed_array_detector {
     use crate::detect::{
         detector::IssueDetector,
         high::signed_integer_storage_array::{
-            SIGNED_STORAGE_ARRAY_POINTER, StorageSignedIntegerArrayDetector,
+            SIGNED_STORAGE_ARRAY_POINTER, SignedIntegerStorageArrayDetector,
         },
     };
 
@@ -149,7 +149,7 @@ mod storage_signed_array_detector {
             "../tests/contract-playground/src/CompilerBugStorageSignedIntegerArray.sol",
         );
 
-        let mut detector = StorageSignedIntegerArrayDetector::default();
+        let mut detector = SignedIntegerStorageArrayDetector::default();
         let found = detector.detect(&context).unwrap();
 
         assert!(found);

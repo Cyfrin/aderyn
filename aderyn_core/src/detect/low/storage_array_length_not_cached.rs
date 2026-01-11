@@ -10,13 +10,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct CacheArrayLengthDetector {
+pub struct StorageArrayLengthNotCachedDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for CacheArrayLengthDetector {
+impl IssueDetector for StorageArrayLengthNotCachedDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN -
         //
@@ -180,7 +180,8 @@ mod loop_investigation_helper {
 mod cache_array_length_tests {
 
     use crate::detect::{
-        detector::IssueDetector, low::storage_array_length_not_cached::CacheArrayLengthDetector,
+        detector::IssueDetector,
+        low::storage_array_length_not_cached::StorageArrayLengthNotCachedDetector,
     };
 
     #[test]
@@ -190,7 +191,7 @@ mod cache_array_length_tests {
             "../tests/contract-playground/src/CacheArrayLength.sol",
         );
 
-        let mut detector = CacheArrayLengthDetector::default();
+        let mut detector = StorageArrayLengthNotCachedDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
 

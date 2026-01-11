@@ -518,6 +518,31 @@
   "high_issues": {
     "issues": [
       {
+        "title": "`abi.encodePacked()` Hash Collision",
+        "description": "abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as `keccak256()`. Use `abi.encode()` instead which will pad items to 32 bytes, preventing hash collisions: https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode. (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` instead: https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739. If all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
+        "detector_name": "abi-encode-packed-hash-collision",
+        "instances": [
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 18,
+            "src": "587:16",
+            "src_char": "587:16"
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 22,
+            "src": "734:16",
+            "src_char": "734:16"
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 26,
+            "src": "887:16",
+            "src_char": "887:16"
+          }
+        ]
+      },
+      {
         "title": "Arbitrary `from` Passed to `transferFrom`",
         "description": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.",
         "detector_name": "arbitrary-transfer-from",
@@ -545,31 +570,6 @@
             "line_no": 47,
             "src": "1598:35",
             "src_char": "1598:35"
-          }
-        ]
-      },
-      {
-        "title": "`abi.encodePacked()` Hash Collision",
-        "description": "abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as `keccak256()`. Use `abi.encode()` instead which will pad items to 32 bytes, preventing hash collisions: https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode. (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` instead: https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739. If all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
-        "detector_name": "abi-encode-packed-hash-collision",
-        "instances": [
-          {
-            "contract_path": "src/KeccakContract.sol",
-            "line_no": 18,
-            "src": "587:16",
-            "src_char": "587:16"
-          },
-          {
-            "contract_path": "src/KeccakContract.sol",
-            "line_no": 22,
-            "src": "734:16",
-            "src_char": "734:16"
-          },
-          {
-            "contract_path": "src/KeccakContract.sol",
-            "line_no": 26,
-            "src": "887:16",
-            "src_char": "887:16"
           }
         ]
       },
@@ -680,31 +680,6 @@
             "line_no": 14,
             "src": "237:1",
             "src_char": "237:1"
-          }
-        ]
-      },
-      {
-        "title": "Dangerous strict equality checks on contract balances",
-        "description": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.",
-        "detector_name": "strict-equality-contract-balance",
-        "instances": [
-          {
-            "contract_path": "src/DangerousStrictEquality1.sol",
-            "line_no": 6,
-            "src": "177:25",
-            "src_char": "177:25"
-          },
-          {
-            "contract_path": "src/DangerousStrictEquality2.sol",
-            "line_no": 6,
-            "src": "177:34",
-            "src_char": "177:34"
-          },
-          {
-            "contract_path": "src/DangerousStrictEquality2.sol",
-            "line_no": 10,
-            "src": "305:43",
-            "src_char": "305:43"
           }
         ]
       },
@@ -852,6 +827,175 @@
         ]
       },
       {
+        "title": "ETH transferred without address checks",
+        "description": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended.",
+        "detector_name": "eth-send-unchecked-address",
+        "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 23,
+            "src": "672:4",
+            "src_char": "672:4"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 28,
+            "src": "813:4",
+            "src_char": "813:4"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 37,
+            "src": "1112:5",
+            "src_char": "1112:5"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 41,
+            "src": "1235:5",
+            "src_char": "1235:5"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 45,
+            "src": "1369:5",
+            "src_char": "1369:5"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 49,
+            "src": "1506:5",
+            "src_char": "1506:5"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 38,
+            "src": "686:16",
+            "src_char": "686:16"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 94,
+            "src": "2981:11",
+            "src_char": "2981:11"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 131,
+            "src": "4205:11",
+            "src_char": "4205:11"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 167,
+            "src": "5373:11",
+            "src_char": "5373:11"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 194,
+            "src": "6342:11",
+            "src_char": "6342:11"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 16,
+            "src": "488:16",
+            "src_char": "488:16"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 26,
+            "src": "821:11",
+            "src_char": "821:11"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 67,
+            "src": "1218:4",
+            "src_char": "1218:4"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 167,
+            "src": "4685:13",
+            "src_char": "4685:13"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 175,
+            "src": "5072:7",
+            "src_char": "5072:7"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 53,
+            "src": "1060:5",
+            "src_char": "1060:5"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 77,
+            "src": "1405:5",
+            "src_char": "1405:5"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 99,
+            "src": "1795:5",
+            "src_char": "1795:5"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 321,
+            "src": "10940:10",
+            "src_char": "10940:10"
+          },
+          {
+            "contract_path": "src/UncheckedCalls.sol",
+            "line_no": 6,
+            "src": "99:110",
+            "src_char": "99:110"
+          },
+          {
+            "contract_path": "src/UncheckedCalls.sol",
+            "line_no": 22,
+            "src": "572:359",
+            "src_char": "572:359"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 6,
+            "src": "85:246",
+            "src_char": "85:246"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 12,
+            "src": "337:190",
+            "src_char": "337:190"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 17,
+            "src": "533:184",
+            "src_char": "533:184"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 22,
+            "src": "723:186",
+            "src_char": "723:186"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 17,
+            "src": "563:8",
+            "src_char": "563:8"
+          }
+        ]
+      },
+      {
         "title": "Experimental ABI Encoder",
         "description": "Experimental encoders should not be used in production. There are multiple known compiler bugs that are caused by the experimental encoder. Upgrade your solidity version to remove the need for experimental features.",
         "detector_name": "experimental-encoder",
@@ -882,6 +1026,43 @@
             "src": "231:22",
             "src_char": "231:22",
             "hint": "collides with the following function name(s) in scope: withdraw"
+          }
+        ]
+      },
+      {
+        "title": "Incorrect use of caret operator",
+        "description": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator.",
+        "detector_name": "incorrect-caret-operator",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 16,
+            "src": "519:8",
+            "src_char": "519:8"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 17,
+            "src": "549:16",
+            "src_char": "549:16"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 18,
+            "src": "587:21",
+            "src_char": "587:21"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 19,
+            "src": "631:13",
+            "src_char": "631:13"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 20,
+            "src": "708:12",
+            "src_char": "708:12"
           }
         ]
       },
@@ -993,43 +1174,6 @@
             "line_no": 8,
             "src": "238:15",
             "src_char": "238:15"
-          }
-        ]
-      },
-      {
-        "title": "Incorrect use of caret operator",
-        "description": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator.",
-        "detector_name": "incorrect-caret-operator",
-        "instances": [
-          {
-            "contract_path": "src/IncorrectCaretOperator.sol",
-            "line_no": 16,
-            "src": "519:8",
-            "src_char": "519:8"
-          },
-          {
-            "contract_path": "src/IncorrectCaretOperator.sol",
-            "line_no": 17,
-            "src": "549:16",
-            "src_char": "549:16"
-          },
-          {
-            "contract_path": "src/IncorrectCaretOperator.sol",
-            "line_no": 18,
-            "src": "587:21",
-            "src_char": "587:21"
-          },
-          {
-            "contract_path": "src/IncorrectCaretOperator.sol",
-            "line_no": 19,
-            "src": "631:13",
-            "src_char": "631:13"
-          },
-          {
-            "contract_path": "src/IncorrectCaretOperator.sol",
-            "line_no": 20,
-            "src": "708:12",
-            "src_char": "708:12"
           }
         ]
       },
@@ -1435,171 +1579,15 @@
         ]
       },
       {
-        "title": "ETH transferred without address checks",
-        "description": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended.",
-        "detector_name": "eth-send-unchecked-address",
+        "title": "Signed integer array in storage (solc `<0.5.10`)",
+        "description": "solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.Use solidity version 0.5.10 or above.",
+        "detector_name": "signed-integer-storage-array",
         "instances": [
           {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 23,
-            "src": "672:4",
-            "src_char": "672:4"
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 28,
-            "src": "813:4",
-            "src_char": "813:4"
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 37,
-            "src": "1112:5",
-            "src_char": "1112:5"
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 41,
-            "src": "1235:5",
-            "src_char": "1235:5"
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 45,
-            "src": "1369:5",
-            "src_char": "1369:5"
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 49,
-            "src": "1506:5",
-            "src_char": "1506:5"
-          },
-          {
-            "contract_path": "src/CallGraphTests.sol",
-            "line_no": 38,
-            "src": "686:16",
-            "src_char": "686:16"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 94,
-            "src": "2981:11",
-            "src_char": "2981:11"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 131,
-            "src": "4205:11",
-            "src_char": "4205:11"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 167,
-            "src": "5373:11",
-            "src_char": "5373:11"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 194,
-            "src": "6342:11",
-            "src_char": "6342:11"
-          },
-          {
-            "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 16,
-            "src": "488:16",
-            "src_char": "488:16"
-          },
-          {
-            "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 26,
-            "src": "821:11",
-            "src_char": "821:11"
-          },
-          {
-            "contract_path": "src/ExternalCalls.sol",
-            "line_no": 67,
-            "src": "1218:4",
-            "src_char": "1218:4"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 167,
-            "src": "4685:13",
-            "src_char": "4685:13"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 175,
-            "src": "5072:7",
-            "src_char": "5072:7"
-          },
-          {
-            "contract_path": "src/SendEtherNoChecks.sol",
-            "line_no": 53,
-            "src": "1060:5",
-            "src_char": "1060:5"
-          },
-          {
-            "contract_path": "src/SendEtherNoChecks.sol",
-            "line_no": 77,
-            "src": "1405:5",
-            "src_char": "1405:5"
-          },
-          {
-            "contract_path": "src/SendEtherNoChecks.sol",
-            "line_no": 99,
-            "src": "1795:5",
-            "src_char": "1795:5"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 321,
-            "src": "10940:10",
-            "src_char": "10940:10"
-          },
-          {
-            "contract_path": "src/UncheckedCalls.sol",
-            "line_no": 6,
-            "src": "99:110",
-            "src_char": "99:110"
-          },
-          {
-            "contract_path": "src/UncheckedCalls.sol",
-            "line_no": 22,
-            "src": "572:359",
-            "src_char": "572:359"
-          },
-          {
-            "contract_path": "src/UncheckedSend.sol",
-            "line_no": 6,
-            "src": "85:246",
-            "src_char": "85:246"
-          },
-          {
-            "contract_path": "src/UncheckedSend.sol",
-            "line_no": 12,
-            "src": "337:190",
-            "src_char": "337:190"
-          },
-          {
-            "contract_path": "src/UncheckedSend.sol",
-            "line_no": 17,
-            "src": "533:184",
-            "src_char": "533:184"
-          },
-          {
-            "contract_path": "src/UncheckedSend.sol",
-            "line_no": 22,
-            "src": "723:186",
-            "src_char": "723:186"
-          },
-          {
-            "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 17,
-            "src": "563:8",
-            "src_char": "563:8"
+            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 9,
+            "src": "230:10",
+            "src_char": "230:10"
           }
         ]
       },
@@ -1630,15 +1618,27 @@
         ]
       },
       {
-        "title": "Signed integer array in storage (solc `<0.5.10`)",
-        "description": "solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.Use solidity version 0.5.10 or above.",
-        "detector_name": "signed-integer-storage-array",
+        "title": "Dangerous strict equality checks on contract balances",
+        "description": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.",
+        "detector_name": "strict-equality-contract-balance",
         "instances": [
           {
-            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
-            "line_no": 9,
-            "src": "230:10",
-            "src_char": "230:10"
+            "contract_path": "src/DangerousStrictEquality1.sol",
+            "line_no": 6,
+            "src": "177:25",
+            "src_char": "177:25"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 6,
+            "src": "177:34",
+            "src_char": "177:34"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 10,
+            "src": "305:43",
+            "src_char": "305:43"
           }
         ]
       },
@@ -2670,31 +2670,6 @@
             "line_no": 22,
             "src": "414:15",
             "src_char": "414:15"
-          }
-        ]
-      },
-      {
-        "title": "Storage Array Length not Cached",
-        "description": "Calling `.length` on a storage array in a loop condition is expensive. Consider caching the length in a local variable in memory before the loop and reusing it.",
-        "detector_name": "storage-array-length-not-cached",
-        "instances": [
-          {
-            "contract_path": "src/CacheArrayLength.sol",
-            "line_no": 12,
-            "src": "234:82",
-            "src_char": "234:82"
-          },
-          {
-            "contract_path": "src/CacheArrayLength.sol",
-            "line_no": 44,
-            "src": "1160:64",
-            "src_char": "1160:64"
-          },
-          {
-            "contract_path": "src/CacheArrayLength.sol",
-            "line_no": 50,
-            "src": "1325:183",
-            "src_char": "1325:183"
           }
         ]
       },
@@ -5333,85 +5308,6 @@
         ]
       },
       {
-        "title": "Address State Variable Set Without Checks",
-        "description": "Check for `address(0)` when assigning values to address state variables.",
-        "detector_name": "state-no-address-check",
-        "instances": [
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 12,
-            "src": "267:15",
-            "src_char": "267:15"
-          },
-          {
-            "contract_path": "src/ExternalCalls.sol",
-            "line_no": 20,
-            "src": "347:16",
-            "src_char": "347:16"
-          },
-          {
-            "contract_path": "src/ExternalCalls.sol",
-            "line_no": 28,
-            "src": "459:6",
-            "src_char": "459:6"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 54,
-            "src": "1416:14",
-            "src_char": "1416:14"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 55,
-            "src": "1440:24",
-            "src_char": "1440:24"
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 58,
-            "src": "2121:14",
-            "src_char": "2121:14"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 56,
-            "src": "1657:17",
-            "src_char": "1657:17"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 43,
-            "src": "1171:14",
-            "src_char": "1171:14"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 47,
-            "src": "1248:16",
-            "src_char": "1248:16"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 51,
-            "src": "1327:23",
-            "src_char": "1327:23"
-          },
-          {
-            "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 18,
-            "src": "579:22",
-            "src_char": "579:22"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 11,
-            "src": "365:17",
-            "src_char": "365:17"
-          }
-        ]
-      },
-      {
         "title": "State Change Without Event",
         "description": "There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes.",
         "detector_name": "state-change-without-event",
@@ -6109,6 +6005,85 @@
         ]
       },
       {
+        "title": "Address State Variable Set Without Checks",
+        "description": "Check for `address(0)` when assigning values to address state variables.",
+        "detector_name": "state-no-address-check",
+        "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 12,
+            "src": "267:15",
+            "src_char": "267:15"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 20,
+            "src": "347:16",
+            "src_char": "347:16"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 28,
+            "src": "459:6",
+            "src_char": "459:6"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 54,
+            "src": "1416:14",
+            "src_char": "1416:14"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 55,
+            "src": "1440:24",
+            "src_char": "1440:24"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 58,
+            "src": "2121:14",
+            "src_char": "2121:14"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 56,
+            "src": "1657:17",
+            "src_char": "1657:17"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 43,
+            "src": "1171:14",
+            "src_char": "1171:14"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 47,
+            "src": "1248:16",
+            "src_char": "1248:16"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 51,
+            "src": "1327:23",
+            "src_char": "1327:23"
+          },
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 18,
+            "src": "579:22",
+            "src_char": "579:22"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 11,
+            "src": "365:17",
+            "src_char": "365:17"
+          }
+        ]
+      },
+      {
         "title": "State Variable Could Be Constant",
         "description": "State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.",
         "detector_name": "state-variable-could-be-constant",
@@ -6636,6 +6611,31 @@
             "line_no": 42,
             "src": "1175:14",
             "src_char": "1175:14"
+          }
+        ]
+      },
+      {
+        "title": "Storage Array Length not Cached",
+        "description": "Calling `.length` on a storage array in a loop condition is expensive. Consider caching the length in a local variable in memory before the loop and reusing it.",
+        "detector_name": "storage-array-length-not-cached",
+        "instances": [
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 12,
+            "src": "234:82",
+            "src_char": "234:82"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 44,
+            "src": "1160:64",
+            "src_char": "1160:64"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 50,
+            "src": "1325:183",
+            "src_char": "1325:183"
           }
         ]
       },
@@ -8015,23 +8015,21 @@
     ]
   },
   "detectors_used": [
+    "abi-encode-packed-hash-collision",
     "arbitrary-transfer-from",
     "assert-state-change",
-    "abi-encode-packed-hash-collision",
     "block-timestamp-deadline",
     "boolean-equality",
     "builtin-symbol-shadowing",
-    "storage-array-length-not-cached",
     "centralization-risk",
     "constant-function-changes-state",
     "constant-function-contains-assembly",
     "contract-locks-ether",
     "costly-loop",
-    "strict-equality-contract-balance",
     "dangerous-unary-operator",
     "dead-code",
-    "delegatecall-in-loop",
     "delegate-call-unchecked-address",
+    "delegatecall-in-loop",
     "delete-nested-mapping",
     "deprecated-oz-function",
     "division-before-multiplication",
@@ -8040,15 +8038,16 @@
     "empty-block",
     "empty-require-revert",
     "enumerable-loop-removal",
+    "eth-send-unchecked-address",
     "experimental-encoder",
     "function-initializing-state",
     "function-pointer-in-constructor",
     "function-selector-collision",
     "inconsistent-type-names",
+    "incorrect-caret-operator",
     "incorrect-erc20-interface",
     "incorrect-erc721-interface",
     "incorrect-shift-order",
-    "incorrect-caret-operator",
     "incorrect-use-of-modifier",
     "internal-function-used-once",
     "large-numeric-literal",
@@ -8072,17 +8071,18 @@
     "reused-contract-name",
     "rtlo",
     "selfdestruct",
-    "eth-send-unchecked-address",
+    "signed-integer-storage-array",
     "solmate-safe-transfer-lib",
-    "state-no-address-check",
     "state-change-without-event",
+    "state-no-address-check",
     "state-variable-could-be-constant",
     "state-variable-could-be-immutable",
     "state-variable-init-order",
     "state-variable-read-external",
     "state-variable-shadowing",
+    "storage-array-length-not-cached",
     "storage-array-memory-edit",
-    "signed-integer-storage-array",
+    "strict-equality-contract-balance",
     "tautological-compare",
     "tautology-or-contradiction",
     "todo",

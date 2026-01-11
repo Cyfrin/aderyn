@@ -62,6 +62,8 @@ axum = { version = "0.8", features = ["macros"] }
 askama = { version = "0.14.0", features = ["full"] }
 clap_complete = "4.4"
 regex = "1.12.2"
+paste = "1.0"
+remain = "0.2.15"
 
 # Uncomment in Production (just before merging to dev)
 # Cyfrin managed github repository

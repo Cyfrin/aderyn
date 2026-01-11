@@ -17,13 +17,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct SendEtherNoChecksDetector {
+pub struct EthSendUncheckedAddressDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for SendEtherNoChecksDetector {
+impl IssueDetector for EthSendUncheckedAddressDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for (func, callgraphs) in context.entrypoints_with_callgraphs() {
             for callgraph in callgraphs {
@@ -99,7 +99,7 @@ impl CallGraphVisitor for AddressChecksAndCallWithValueTracker {
 mod send_ether_no_checks_detector_tests {
 
     use crate::detect::{
-        detector::IssueDetector, high::eth_send_unchecked_address::SendEtherNoChecksDetector,
+        detector::IssueDetector, high::eth_send_unchecked_address::EthSendUncheckedAddressDetector,
     };
 
     #[test]
@@ -108,7 +108,7 @@ mod send_ether_no_checks_detector_tests {
             "../tests/contract-playground/src/SendEtherNoChecksLibImport.sol",
         );
 
-        let mut detector = SendEtherNoChecksDetector::default();
+        let mut detector = EthSendUncheckedAddressDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(!found);
         assert_eq!(detector.instances().len(), 0);
@@ -120,7 +120,7 @@ mod send_ether_no_checks_detector_tests {
             "../tests/contract-playground/src/SendEtherNoChecks.sol",
         );
 
-        let mut detector = SendEtherNoChecksDetector::default();
+        let mut detector = EthSendUncheckedAddressDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 3);

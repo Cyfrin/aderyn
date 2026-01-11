@@ -9,13 +9,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct AvoidAbiEncodePackedDetector {
+pub struct AbiEncodePackedHashCollisionDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for AvoidAbiEncodePackedDetector {
+impl IssueDetector for AbiEncodePackedHashCollisionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for member_access in context.member_accesses() {
             // If the member_access's member_name = "encodePacked", loop through the argument_types
@@ -75,7 +75,7 @@ mod avoid_abi_encode_packed_tests {
 
     use crate::detect::detector::IssueDetector;
 
-    use super::AvoidAbiEncodePackedDetector;
+    use super::AbiEncodePackedHashCollisionDetector;
 
     #[test]
     fn test_avoid_abi_encode_packed_detectorby_by_loading_contract_directly() {
@@ -83,7 +83,7 @@ mod avoid_abi_encode_packed_tests {
             "../tests/contract-playground/src/KeccakContract.sol",
         );
 
-        let mut detector = AvoidAbiEncodePackedDetector::default();
+        let mut detector = AbiEncodePackedHashCollisionDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 3);

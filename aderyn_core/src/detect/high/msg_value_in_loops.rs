@@ -14,13 +14,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct MsgValueUsedInLoopDetector {
+pub struct MsgValueInLoopDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for MsgValueUsedInLoopDetector {
+impl IssueDetector for MsgValueInLoopDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Investigate for loops to check for usage of `msg.value`
         for for_statement in context.for_statements() {
@@ -112,7 +112,7 @@ impl CallGraphVisitor for MsgValueTracker {
 mod msg_value_in_loop_detector {
 
     use crate::detect::{
-        detector::IssueDetector, high::msg_value_in_loops::MsgValueUsedInLoopDetector,
+        detector::IssueDetector, high::msg_value_in_loops::MsgValueInLoopDetector,
     };
 
     #[test]
@@ -122,7 +122,7 @@ mod msg_value_in_loop_detector {
             "../tests/contract-playground/src/MsgValueInLoop.sol",
         );
 
-        let mut detector = MsgValueUsedInLoopDetector::default();
+        let mut detector = MsgValueInLoopDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 4);
