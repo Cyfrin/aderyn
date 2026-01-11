@@ -8,8 +8,8 @@ changed or not.
 
 ## Requirements
 
-- [cargo-release](https://github.com/crate-ci/cargo-release): `cargo install cargo-release`
-- [gh](https://cli.github.com/): `brew install gh`
+- [cargo-release](https://github.com/crate-ci/cargo-release): `cargo install cargo-release` (v0.25.22)
+- [gh](https://cli.github.com/): `brew install gh` (v2.53.0)
 
 Stay logged in with `gh auth login`
 
@@ -18,18 +18,17 @@ Stay logged in with `gh auth login`
 - Code in the `dev` branch must be in good shape for release.
 - If there are breaking changes, a newer version of VSCode extension is ready to be released in it's `main` branch.
 
-## Steps
+## Steps to cut a release
 
-- [ ] Cut a release.
-    - [ ] Switch to dev branch and pull latest changes.
-    - [ ] Run `cargo patch`. Wait until the command is fully done.
-    - [ ] Generate Release Notes in the Github's Release page
+1. Switch to dev branch and pull latest changes.
+2. Run `cargo patch`. Wait until the command is fully done.
+3. Generate Release Notes in the Github's Release page
 
-- **NOTE: Expect the following in CI**:
+- **NOTE: Expect the following to happen in CI**:
   * Sarif report tests fail because of version mismatch.(But it's okay, an automatic script will shoot off to fix this after the whole release is complete)
   * Binary crate `aderyn` is successfully published.
 
-> NOTE: Replace `patch` with `minor` based on the needs.
+> NOTE: Replace `patch` with `minor` if it is a breaking change. Read below to find out more.
 
 
 ## Breaking change
