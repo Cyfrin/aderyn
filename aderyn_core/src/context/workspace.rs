@@ -1,6 +1,5 @@
 use super::{
     browser::GetImmediateParent,
-    capturable::Capturable,
     graph::{LegacyWorkspaceCallGraph, WorkspaceCallGraphs},
     router::Router,
 };
@@ -50,7 +49,12 @@ macro_rules! define_node_contexts {
                 pub via_ir: bool, // True if via_ir is configured for the project.
 
                 pub source_units_context: Vec<SourceUnit>,
+
+                // Yul nodes
                 pub(crate) yul_assignments_context: HashMap<YulAssignment, NodeContext>,
+                pub(crate) yul_function_calls_context: HashMap<YulFunctionCall, NodeContext>,
+                pub(crate) yul_identifiers_context: HashMap<YulIdentifier, NodeContext>,
+                pub(crate) yul_literals_context: HashMap<YulLiteral, NodeContext>,
 
                 $(
                     pub(crate) [<$type:snake s_context>]: HashMap<$type, NodeContext>,
@@ -67,6 +71,15 @@ macro_rules! define_node_contexts {
                 pub fn yul_assignments(&self) -> Vec<&YulAssignment> {
                     self.yul_assignments_context.keys().collect()
                 }
+                pub fn yul_function_calls(&self) -> Vec<&YulFunctionCall> {
+                    self.yul_function_calls_context.keys().collect()
+                }
+                pub fn yul_identifiers(&self) -> Vec<&YulIdentifier> {
+                    self.yul_identifiers_context.keys().collect()
+                }
+                pub fn yul_literals(&self) -> Vec<&YulLiteral> {
+                    self.yul_literals_context.keys().collect()
+                }
 
                 pub fn source_units(&self) -> Vec<&SourceUnit> {
                     self.source_units_context.iter().collect()
@@ -78,10 +91,85 @@ macro_rules! define_node_contexts {
                         $(
                             ASTNode::$type(n) => self.[<$type:snake s_context>].get(n).map(|c| c.source_unit_id),
                         )*
+                        ASTNode::YulFunctionCall(n) => self.yul_function_calls_context.get(n).map(|c| c.source_unit_id),
+                        ASTNode::YulIdentifier(n) => self.yul_identifiers_context.get(n).map(|c| c.source_unit_id),
+                        ASTNode::YulLiteral(n) => self.yul_literals_context.get(n).map(|c| c.source_unit_id),
                     };
                     source_unit_id.and_then(|id| {
                         self.source_units_context.iter().find(|su| su.id == id)
                     })
+                }
+            }
+
+            #[derive(Clone)]
+            pub enum Capturable {
+                $($type($type),)*
+                YulFunctionCall(YulFunctionCall),
+                YulIdentifier(YulIdentifier),
+                YulLiteral(YulLiteral),
+                ASTNode(ASTNode),
+                SourceUnit(SourceUnit),
+            }
+
+            $(
+                impl From<$type> for Capturable {
+                    fn from(value: $type) -> Self {
+                        Self::$type(value)
+                    }
+                }
+
+                impl From<&$type> for Capturable {
+                    fn from(value: &$type) -> Self {
+                        Self::$type(value.clone())
+                    }
+                }
+            )*
+
+            impl From<SourceUnit> for Capturable {
+                fn from(value: SourceUnit) -> Self {
+                    Self::SourceUnit(value)
+                }
+            }
+
+            impl From<&SourceUnit> for Capturable {
+                fn from(value: &SourceUnit) -> Self {
+                    Self::SourceUnit(value.clone())
+                }
+            }
+
+            impl From<ASTNode> for Capturable {
+                fn from(value: ASTNode) -> Self {
+                    Self::ASTNode(value)
+                }
+            }
+
+            impl From<&ASTNode> for Capturable {
+                fn from(value: &ASTNode) -> Self {
+                    Self::ASTNode(value.clone())
+                }
+            }
+
+
+            impl Capturable {
+                pub fn make_key(&self, context: &WorkspaceContext) -> (String, usize, String) {
+                    match self {
+                        Self::ASTNode(node) => context.get_node_sort_key(node),
+                        Self::YulFunctionCall(n) => context.get_node_sort_key(&n.into()),
+                        Self::YulIdentifier(n) => context.get_node_sort_key(&n.into()),
+                        Self::YulLiteral(n) => context.get_node_sort_key(&n.into()),
+                        Self::SourceUnit(n) => context.get_node_sort_key(&n.into()),
+                        $(Self::$type(n) => context.get_node_sort_key(&n.into()),)*
+                    }
+                }
+                pub fn id(&self) -> Option<NodeID> {
+                    match self {
+                        Self::ASTNode(ast_node) => ast_node.id(),
+                        Self::YulFunctionCall(_) => None,
+                        Self::YulIdentifier(_) => None,
+                        Self::YulLiteral(_) => None,
+                        Self::SourceUnit(source_unit_node) => Some(source_unit_node.id),
+                        $(Self::$type(n) => Some(n.id),)*
+                    }
                 }
             }
         }
@@ -93,21 +181,24 @@ define_node_contexts! {
     Assignment,
     BinaryOperation,
     Block,
+    Break,
     Conditional,
+    Continue,
     ContractDefinition,
+    DoWhileStatement,
     ElementaryTypeName,
     ElementaryTypeNameExpression,
     EmitStatement,
     EnumDefinition,
     EnumValue,
-    EventDefinition,
     ErrorDefinition,
+    EventDefinition,
     ExpressionStatement,
+    ForStatement,
     FunctionCall,
     FunctionCallOptions,
     FunctionDefinition,
     FunctionTypeName,
-    ForStatement,
     Identifier,
     IdentifierPath,
     IfStatement,
@@ -117,20 +208,21 @@ define_node_contexts! {
     InheritanceSpecifier,
     InlineAssembly,
     Literal,
-    MemberAccess,
-    NewExpression,
     Mapping,
+    MemberAccess,
     ModifierDefinition,
     ModifierInvocation,
+    NewExpression,
     OverrideSpecifier,
     ParameterList,
+    PlaceholderStatement,
     PragmaDirective,
     Return,
     RevertStatement,
     StructDefinition,
     StructuredDocumentation,
-    TryStatement,
     TryCatchClause,
+    TryStatement,
     TupleExpression,
     UnaryOperation,
     UncheckedBlock,
@@ -140,13 +232,6 @@ define_node_contexts! {
     VariableDeclaration,
     VariableDeclarationStatement,
     WhileStatement,
-    DoWhileStatement,
-    Break,
-    Continue,
-    PlaceholderStatement,
-    YulFunctionCall,
-    YulIdentifier,
-    YulLiteral,
 }
 
 impl WorkspaceContext {
@@ -346,5 +431,37 @@ impl WorkspaceContext {
 
         let code_snippet = &source_content[byte_offset..byte_offset + byte_length];
         code_snippet.to_owned()
+    }
+}
+
+impl From<&&ContractDefinition> for Capturable {
+    fn from(value: &&ContractDefinition) -> Self {
+        #[allow(suspicious_double_ref_op)]
+        Self::ContractDefinition(value.clone().clone())
+    }
+}
+
+impl From<&&ModifierInvocation> for Capturable {
+    fn from(value: &&ModifierInvocation) -> Self {
+        #[allow(suspicious_double_ref_op)]
+        Self::ModifierInvocation(value.clone().clone())
+    }
+}
+
+impl From<YulFunctionCall> for Capturable {
+    fn from(value: YulFunctionCall) -> Self {
+        Self::YulFunctionCall(value)
+    }
+}
+
+impl From<&YulIdentifier> for Capturable {
+    fn from(value: &YulIdentifier) -> Self {
+        Self::YulIdentifier(value.clone())
+    }
+}
+
+impl From<YulLiteral> for Capturable {
+    fn from(value: YulLiteral) -> Self {
+        Self::YulLiteral(value)
     }
 }
