@@ -21,14 +21,19 @@ Stay logged in with `gh auth login`
 ## Steps to cut a release
 
 1. Switch to dev branch and pull latest changes.
-2. Run `cargo patch`. Wait until the command is fully done.
-3. Generate Release Notes in the Github's Release page
+   
+2. Run `cargo patch`. Wait until the command is fully done. Process will take ~30 minutes. 99% of the work happens in Github CI/CD but it is important to keep your terminal running during this duration.
+  
+3. Go to the Releases page, and make sure to `Generate Release Notes`.
+   
 
 - **NOTE: Expect the following to happen in CI**:
   * Sarif report tests fail because of version mismatch.(But it's okay, an automatic script will shoot off to fix this after the whole release is complete)
   * Binary crate `aderyn` is successfully published.
 
 > NOTE: Replace `patch` with `minor` if it is a breaking change. Read below to find out more.
+
+To monitor the changes, visit the Actions tab of this repository and click on Releases workflow. Then search for the workflow event `aderyn-v0.x.x` You can ignore the remaining ones.
 
 
 ## Breaking change
