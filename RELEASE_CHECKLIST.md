@@ -34,7 +34,7 @@ Stay logged in with `gh auth login`
 
 ## Breaking change
 
-If at least one of the following is observed, it's considered a breaking change. In that case, the minor version must be bumped at a minimum. This ensures the VS Code extension remains compatible, as users will be prompted to install the updated version.
+**If at least one of the following is observed, it's considered a breaking change. In that case, the minor version must be bumped at a minimum.** This ensures the VS Code extension remains compatible, as users will be prompted to install the updated version.
 
 - [ ] Changes in CLI flags - `--lsp`, `--json`, `--stdout`
 - [ ] Changes in the JSON output format.
