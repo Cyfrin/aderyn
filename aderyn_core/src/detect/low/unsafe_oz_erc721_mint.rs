@@ -12,13 +12,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct UnsafeERC721MintDetector {
+pub struct UnsafeOzERC721MintDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for UnsafeERC721MintDetector {
+impl IssueDetector for UnsafeOzERC721MintDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for identifier in context.identifiers() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
@@ -79,7 +79,7 @@ impl IssueDetector for UnsafeERC721MintDetector {
 
 #[cfg(test)]
 mod unsafe_erc721_mint_tests {
-    use crate::detect::{detector::IssueDetector, low::UnsafeERC721MintDetector};
+    use crate::detect::{detector::IssueDetector, low::UnsafeOzERC721MintDetector};
 
     #[test]
 
@@ -88,7 +88,7 @@ mod unsafe_erc721_mint_tests {
             "../tests/contract-playground/src/UnsafeERC721Mint.sol",
         );
 
-        let mut detector = UnsafeERC721MintDetector::default();
+        let mut detector = UnsafeOzERC721MintDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 1);

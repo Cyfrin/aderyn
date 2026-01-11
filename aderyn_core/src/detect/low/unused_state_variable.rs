@@ -18,13 +18,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct UnusedStateVariablesDetector {
+pub struct UnusedStateVariableDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for UnusedStateVariablesDetector {
+impl IssueDetector for UnusedStateVariableDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Collect all referencedDeclaration IDs and StateVariableDeclarationIDs
         let mut all_referenced_declarations = BTreeSet::new();
@@ -98,7 +98,7 @@ impl IssueDetector for UnusedStateVariablesDetector {
 mod unused_detector_tests {
 
     use crate::detect::{
-        detector::IssueDetector, low::unused_state_variable::UnusedStateVariablesDetector,
+        detector::IssueDetector, low::unused_state_variable::UnusedStateVariableDetector,
     };
 
     #[test]
@@ -108,7 +108,7 @@ mod unused_detector_tests {
             "../tests/contract-playground/src/UnusedStateVariables.sol",
         );
 
-        let mut detector = UnusedStateVariablesDetector::default();
+        let mut detector = UnusedStateVariableDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 4);

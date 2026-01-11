@@ -10,13 +10,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct DangerousStrictEqualityOnBalanceDetector {
+pub struct StrictEqualityContractBalanceDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
+impl IssueDetector for StrictEqualityContractBalanceDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // When you have found an instance of the issue,
         // use the following macro to add it to `found_instances`:
@@ -83,7 +83,7 @@ mod strict_equality_contract_balance_tests {
 
     use crate::detect::{
         detector::IssueDetector,
-        high::strict_equality_contract_balance::DangerousStrictEqualityOnBalanceDetector,
+        high::strict_equality_contract_balance::StrictEqualityContractBalanceDetector,
     };
 
     #[test]
@@ -93,7 +93,7 @@ mod strict_equality_contract_balance_tests {
             "../tests/contract-playground/src/DangerousStrictEquality1.sol",
         );
 
-        let mut detector = DangerousStrictEqualityOnBalanceDetector::default();
+        let mut detector = StrictEqualityContractBalanceDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 1);
@@ -105,7 +105,7 @@ mod strict_equality_contract_balance_tests {
             "../tests/contract-playground/src/DangerousStrictEquality2.sol",
         );
 
-        let mut detector = DangerousStrictEqualityOnBalanceDetector::default();
+        let mut detector = StrictEqualityContractBalanceDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 2);

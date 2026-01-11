@@ -13,13 +13,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct DeletionNestedMappingDetector {
+pub struct DeleteNestedMappingDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for DeletionNestedMappingDetector {
+impl IssueDetector for DeleteNestedMappingDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for delete_operation in
             context.unary_operations().into_iter().filter(|op| op.operator == "delete")
@@ -96,7 +96,7 @@ impl IssueDetector for DeletionNestedMappingDetector {
 mod deletion_nested_mapping_tests {
 
     use crate::detect::{
-        detector::IssueDetector, high::delete_nested_mapping::DeletionNestedMappingDetector,
+        detector::IssueDetector, high::delete_nested_mapping::DeleteNestedMappingDetector,
     };
 
     #[test]
@@ -106,7 +106,7 @@ mod deletion_nested_mapping_tests {
             "../tests/contract-playground/src/DeletionNestedMappingStructureContract.sol",
         );
 
-        let mut detector = DeletionNestedMappingDetector::default();
+        let mut detector = DeleteNestedMappingDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 1);

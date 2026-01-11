@@ -18,13 +18,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct LiteralsInsteadOfConstantsDetector {
+pub struct LiteralInsteadOfConstantDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for LiteralsInsteadOfConstantsDetector {
+impl IssueDetector for LiteralInsteadOfConstantDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Get all contracts
         // For each contract
@@ -125,7 +125,7 @@ impl IssueDetector for LiteralsInsteadOfConstantsDetector {
 #[cfg(test)]
 mod constants_instead_of_literals_tests {
 
-    use super::LiteralsInsteadOfConstantsDetector;
+    use super::LiteralInsteadOfConstantDetector;
     use crate::detect::detector::IssueDetector;
 
     #[test]
@@ -135,7 +135,7 @@ mod constants_instead_of_literals_tests {
             "../tests/contract-playground/src/ConstantsLiterals.sol",
         );
 
-        let mut detector = LiteralsInsteadOfConstantsDetector::default();
+        let mut detector = LiteralInsteadOfConstantDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 8);

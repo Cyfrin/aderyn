@@ -12,13 +12,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct DeprecatedOZFunctionDetector {
+pub struct DeprecatedOzFunctionDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for DeprecatedOZFunctionDetector {
+impl IssueDetector for DeprecatedOzFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for identifier in context.identifiers() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
@@ -89,7 +89,7 @@ mod deprecated_oz_functions_tests {
 
     use crate::detect::detector::IssueDetector;
 
-    use super::DeprecatedOZFunctionDetector;
+    use super::DeprecatedOzFunctionDetector;
 
     #[test]
 
@@ -98,7 +98,7 @@ mod deprecated_oz_functions_tests {
             "../tests/contract-playground/src/DeprecatedOZFunctions.sol",
         );
 
-        let mut detector = DeprecatedOZFunctionDetector::default();
+        let mut detector = DeprecatedOzFunctionDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 2);

@@ -54,11 +54,13 @@ dependencies = [
  "num-bigint",
  "num-traits",
  "once_cell",
+ "paste",
  "petgraph",
  "phf 0.11.3",
  "prettytable",
  "rayon",
  "regex",
+ "remain",
  "rmcp",
  "semver 1.0.27",
  "serde",
@@ -4863,6 +4865,17 @@ name = "regex-syntax"
 version = "0.8.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7a2d987857b319362043e95f5353c0535c1f58eec5336fdfcf626430af7def58"
+
+[[package]]
+name = "remain"
+version = "0.2.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d7ef12e84481ab4006cb942f8682bba28ece7270743e649442027c5db87df126"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.114",
+]
 
 [[package]]
 name = "reqwest"

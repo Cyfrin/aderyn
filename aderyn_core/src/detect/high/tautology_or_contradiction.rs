@@ -16,13 +16,13 @@ use solidity_integer_helper::{
 };
 
 #[derive(Default)]
-pub struct TautologyOrContraditionDetector {
+pub struct TautologyOrContradictionDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for TautologyOrContraditionDetector {
+impl IssueDetector for TautologyOrContradictionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for binary_operation in context.binary_operations() {
             if let Some(is_tautlogy_or_contradiction) =
@@ -63,7 +63,7 @@ impl IssueDetector for TautologyOrContraditionDetector {
 mod tautology_or_contradiction_tests {
 
     use crate::detect::{
-        detector::IssueDetector, high::tautology_or_contradiction::TautologyOrContraditionDetector,
+        detector::IssueDetector, high::tautology_or_contradiction::TautologyOrContradictionDetector,
     };
 
     #[test]
@@ -73,7 +73,7 @@ mod tautology_or_contradiction_tests {
             "../tests/contract-playground/src/TautologyOrContradiction.sol",
         );
 
-        let mut detector = TautologyOrContraditionDetector::default();
+        let mut detector = TautologyOrContradictionDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 2);

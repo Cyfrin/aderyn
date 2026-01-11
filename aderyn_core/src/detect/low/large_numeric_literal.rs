@@ -9,13 +9,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct LargeLiteralValueDetector {
+pub struct LargeNumericLiteralDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for LargeLiteralValueDetector {
+impl IssueDetector for LargeNumericLiteralDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for numeric_literal in context.literals().iter().filter(|x| x.kind == LiteralKind::Number) {
             if let Some(value) = numeric_literal.value.clone() {
@@ -61,7 +61,7 @@ mod large_literal_values {
 
     use crate::detect::detector::IssueDetector;
 
-    use super::LargeLiteralValueDetector;
+    use super::LargeNumericLiteralDetector;
 
     #[test]
 
@@ -70,7 +70,7 @@ mod large_literal_values {
             "../tests/contract-playground/src/HugeConstants.sol",
         );
 
-        let mut detector = LargeLiteralValueDetector::default();
+        let mut detector = LargeNumericLiteralDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 22);

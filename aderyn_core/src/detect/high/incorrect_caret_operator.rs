@@ -10,13 +10,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct IncorrectUseOfCaretOperatorDetector {
+pub struct IncorrectCaretOperatorDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for IncorrectUseOfCaretOperatorDetector {
+impl IssueDetector for IncorrectCaretOperatorDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Copied Heuristic from Slither:
         // look for binary expressions with ^ operator where at least one of the operands is a
@@ -78,7 +78,7 @@ impl IssueDetector for IncorrectUseOfCaretOperatorDetector {
 #[cfg(test)]
 mod incorrect_use_of_caret_operator_tests {
 
-    use crate::detect::{detector::IssueDetector, high::IncorrectUseOfCaretOperatorDetector};
+    use crate::detect::{detector::IssueDetector, high::IncorrectCaretOperatorDetector};
 
     #[test]
 
@@ -87,7 +87,7 @@ mod incorrect_use_of_caret_operator_tests {
             "../tests/contract-playground/src/IncorrectCaretOperator.sol",
         );
 
-        let mut detector = IncorrectUseOfCaretOperatorDetector::default();
+        let mut detector = IncorrectCaretOperatorDetector::default();
         let found = detector.detect(&context).unwrap();
 
         assert!(found);
