@@ -83,7 +83,7 @@ pub use state_change_without_event::StateVariableChangesWithoutEventDetector;
 pub use state_no_address_check::StateNoAddressCheckDetector;
 pub use state_variable_could_be_constant::StateVariableCouldBeConstantDetector;
 pub use state_variable_could_be_immutable::StateVariableCouldBeImmutableDetector;
-pub use state_variable_init_order::StateVariableInitOrder;
+pub use state_variable_init_order::StateVariableInitOrderDetector;
 pub use state_variable_read_external::StateVariableReadExternalDetector;
 pub use storage_array_length_not_cached::CacheArrayLengthDetector;
 pub use todo::TodoDetector;

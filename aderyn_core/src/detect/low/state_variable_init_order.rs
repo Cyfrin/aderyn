@@ -17,12 +17,12 @@ use std::{
 };
 
 #[derive(Default)]
-pub struct StateVariableInitOrder {
+pub struct StateVariableInitOrderDetector {
     found_instances: BTreeMap<(String, usize, String), NodeID>,
     hints: BTreeMap<(String, usize, String), String>,
 }
 
-impl IssueDetector for StateVariableInitOrder {
+impl IssueDetector for StateVariableInitOrderDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         if context.via_ir {
             for c in context.deployable_contracts() {
@@ -145,7 +145,7 @@ mod state_variable_init_order_tests {
             "../tests/via-ir-enabled/src/SemanticOrdering.sol",
         );
 
-        let mut detector = StateVariableInitOrder::default();
+        let mut detector = StateVariableInitOrderDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 1);
