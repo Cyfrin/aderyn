@@ -72,7 +72,7 @@ impl IssueDetector for WeakRandomnessDetector {
         }
 
         // check if contract uses block.prevrandao
-        for member_access in context.member_accesses() {
+        for member_access in context.member_accesss() {
             if member_access.member_name == "prevrandao"
                 && matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block")
             {

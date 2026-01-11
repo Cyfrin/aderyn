@@ -21,11 +21,11 @@ impl IssueDetector for NewASTNodesDemonstrator {
             capture!(self, context, do_while_statement);
         }
 
-        for break_statement in context.break_statements() {
+        for break_statement in context.breaks() {
             capture!(self, context, break_statement);
         }
 
-        for continue_statements in context.continue_statements() {
+        for continue_statements in context.continues() {
             capture!(self, context, continue_statements);
         }
 

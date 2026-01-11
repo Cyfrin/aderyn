@@ -17,7 +17,7 @@ pub struct AbiEncodePackedHashCollisionDetector {
 
 impl IssueDetector for AbiEncodePackedHashCollisionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for member_access in context.member_accesses() {
+        for member_access in context.member_accesss() {
             // If the member_access's member_name = "encodePacked", loop through the argument_types
             // and count how many of them contain any of the following in type_strings:
             // ["bytes ", "[]", "string"]

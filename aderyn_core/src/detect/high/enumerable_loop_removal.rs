@@ -28,7 +28,7 @@ impl IssueDetector for EnumerableLoopRemovalDetector {
         // If an `at` memberaccess also exists in the loop, add the remove to found_instances
 
         context
-            .member_accesses()
+            .member_accesss()
             .into_iter()
             .filter(|member_access| {
                 member_access.member_name == "remove"

@@ -19,7 +19,7 @@ pub struct DynamicArrayLengthAssignmentDetector {
 impl IssueDetector for DynamicArrayLengthAssignmentDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for member_access in context
-            .member_accesses()
+            .member_accesss()
             .into_iter()
             .filter(|member_access| member_access.l_value_requested)
         {
