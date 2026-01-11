@@ -1,65 +1,3 @@
-macro_rules! generate_capturable_methods {
-    ($( $name:ident ),* $(,)*) => {
-
-        #[derive(Clone)]
-        pub enum Capturable {
-            $($name($name),)*
-            YulFunctionCall(YulFunctionCall),
-            YulIdentifier(YulIdentifier),
-            YulLiteral(YulLiteral),
-            ASTNode(ASTNode),
-        }
-
-        $(
-            impl From<$name> for Capturable {
-                fn from(value: $name) -> Self {
-                    Self::$name(value)
-                }
-            }
-
-            impl From<&$name> for Capturable {
-                fn from(value: &$name) -> Self {
-                    Self::$name(value.clone())
-                }
-            }
-        )*
-
-        impl From<ASTNode> for Capturable {
-            fn from(value: ASTNode) -> Self {
-                Self::ASTNode(value)
-            }
-        }
-
-        impl From<&ASTNode> for Capturable {
-            fn from(value: &ASTNode) -> Self {
-                Self::ASTNode(value.clone())
-            }
-        }
-
-
-        impl Capturable {
-            pub fn make_key(&self, context: &WorkspaceContext) -> (String, usize, String) {
-                match self {
-                    Self::ASTNode(node) => context.get_node_sort_key(node),
-                    Self::YulFunctionCall(n) => context.get_node_sort_key(&n.into()),
-                    Self::YulIdentifier(n) => context.get_node_sort_key(&n.into()),
-                    Self::YulLiteral(n) => context.get_node_sort_key(&n.into()),
-                    $(Self::$name(n) => context.get_node_sort_key(&n.into()),)*
-                }
-            }
-            pub fn id(&self) -> Option<NodeID> {
-                match self {
-                    Self::ASTNode(ast_node) => ast_node.id(),
-                    Self::YulFunctionCall(_) => None,
-                    Self::YulIdentifier(_) => None,
-                    Self::YulLiteral(_) => None,
-                    $(Self::$name(n) => Some(n.id),)*
-                }
-            }
-        }
-    };
-}
-
 macro_rules! make_route {
     ($tool:ty, $st:tt) => {{
         let t = <$tool>::new(std::sync::Arc::clone(&$st));
@@ -112,7 +50,6 @@ macro_rules! mcp_error {
     };
 }
 
-pub(crate) use generate_capturable_methods;
 pub(crate) use make_route;
 pub(crate) use mcp_error;
 pub(crate) use mcp_success;
