@@ -2,15 +2,17 @@ use super::{
     graph::{LegacyWorkspaceCallGraph, WorkspaceCallGraphs},
     router::Router,
 };
-use crate::{ast::*, stats::IgnoreLine};
+use crate::{
+    ast::*,
+    stats::IgnoreLine,
+    visitor::ast_visitor::{ASTConstVisitor, Node},
+};
 use paste::paste;
 use solidity_ast::EvmVersion;
 use std::{
     collections::{HashMap, HashSet},
     path::PathBuf,
 };
-
-pub use crate::ast::ASTNode;
 
 macro_rules! define_node_contexts {
     (
@@ -192,6 +194,105 @@ macro_rules! define_node_contexts {
                     }
                 }
             }
+
+            #[derive(Debug, Clone, PartialEq)]
+            pub enum ASTNode {
+                $($type($type),)*
+                $($yul_type($yul_type),)*
+                SourceUnit(SourceUnit),
+            }
+
+            // Regular nodes
+            $(
+                impl From<$type> for ASTNode {
+                    fn from(value: $type) -> Self {
+                        ASTNode::$type(value)
+                    }
+                }
+
+                impl From<&$type> for ASTNode {
+                    fn from(value: &$type) -> Self {
+                        ASTNode::$type(value.clone())
+                    }
+                }
+            )*
+
+            // Yul nodes
+            $(
+                impl From<$yul_type> for ASTNode {
+                    fn from(value: $yul_type) -> Self {
+                        ASTNode::$yul_type(value)
+                    }
+                }
+
+                impl From<&$yul_type> for ASTNode {
+                    fn from(value: &$yul_type) -> Self {
+                        ASTNode::$yul_type(value.clone())
+                    }
+                }
+            )*
+
+            // Source Unit
+            impl From<SourceUnit> for ASTNode {
+                fn from(value: SourceUnit) -> Self {
+                    ASTNode::SourceUnit(value)
+                }
+            }
+
+            impl From<&SourceUnit> for ASTNode {
+                fn from(value: &SourceUnit) -> Self {
+                    ASTNode::SourceUnit(value.clone())
+                }
+            }
+
+            impl ASTNode {
+                pub fn node_type(&self) -> NodeType {
+                    match self {
+                        $(ASTNode::$type(_) => NodeType::$type,)*
+                        $(ASTNode::$yul_type(_) => NodeType::$yul_type,)*
+                        ASTNode::SourceUnit(_) => NodeType::SourceUnit,
+                    }
+                }
+                pub fn id(&self) -> Option<NodeID> {
+                    match self {
+                        $(ASTNode::$type(n) => Some(n.id),)*
+                        $(ASTNode::$yul_type(_) => None,)*
+                        ASTNode::SourceUnit(n) => Some(n.id),
+                    }
+                }
+            }
+
+            impl Node for ASTNode {
+                fn accept(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
+                    match self {
+                        $(ASTNode::$type(n) => n.accept(visitor),)*
+                        $(ASTNode::$yul_type(n) => n.accept(visitor),)*
+                        ASTNode::SourceUnit(n) => n.accept(visitor),
+                    }
+                }
+                fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
+                    match self {
+                        $(ASTNode::$type(n) => n.accept_metadata(visitor),)*
+                        $(ASTNode::$yul_type(n) => n.accept_metadata(visitor),)*
+                        ASTNode::SourceUnit(n) => n.accept_metadata(visitor),
+                    }
+                }
+                fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
+                    visitor.visit_node_id(self.id())?;
+                    Ok(())
+                }
+            }
+
+            impl ASTNode {
+                pub fn src(&self) -> Option<&str> {
+                    match self {
+                        $(ASTNode::$type(node) => Some(&node.src),)*
+                        $(ASTNode::$yul_type(node) => Some(&node.src),)*
+                        ASTNode::SourceUnit(node) => Some(&node.src),
+                    }
+                }
+            }
+
         }
     };
 }

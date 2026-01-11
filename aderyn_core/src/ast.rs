@@ -1,5 +1,4 @@
 #[allow(clippy::module_inception)]
-pub mod ast;
 pub mod ast_nodes;
 pub mod impls;
 pub mod macros;
@@ -9,8 +8,8 @@ pub mod yul;
 
 pub use self::{impls::*, magic::*, node_type::*, yul::*};
 
+pub use crate::context::workspace::ASTNode;
 pub use NodeID;
-pub use ast::ASTNode;
 pub use ast_nodes::*;
 
 #[cfg(test)]
