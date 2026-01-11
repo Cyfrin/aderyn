@@ -14,7 +14,7 @@ use std::{
     path::PathBuf,
 };
 
-macro_rules! define_node_contexts {
+macro_rules! create_workspace_context {
     (
         regular: $($type:ident),* $(,)?;
         yul: $($yul_type:ident),* $(,)?;
@@ -58,7 +58,14 @@ macro_rules! define_node_contexts {
                     pub(crate) [<$yul_type:snake s_context>]: HashMap<$yul_type, NodeContext>,
                 )*
 
-                // FIXME: Add YulAssignment to ASTNode. This was omitted by mistake.
+                // FIXME: YulAssignment doesn't come with "src" field, so we can't capture location
+                // Therefore for now it is special cased inside this macro impl. Not sure what to do yet.
+                // Temporary workaround is to inspect higher level Yul constructs (such as YulFunctionCall,
+                // YulIdentifier, YulLiteral, etc) and then search for trigger conditions inside those.
+                // If we need to flag, then fag the higher level Yul construct.
+                //
+                // Hopefully later versions of Solc emit some kind of "src" field. At that point, you can
+                // add YulAssignment to the list where this macro is called!
                 pub(crate) yul_assignments_context: HashMap<YulAssignment, NodeContext>,
 
                 // Regular Nodes
@@ -297,7 +304,7 @@ macro_rules! define_node_contexts {
     };
 }
 
-define_node_contexts! {
+create_workspace_context! {
     regular:
         ArrayTypeName,
         Assignment,
