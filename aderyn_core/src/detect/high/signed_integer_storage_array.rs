@@ -143,7 +143,6 @@ mod storage_signed_array_detector {
     };
 
     #[test]
-
     fn test_storage_signed_array() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CompilerBugStorageSignedIntegerArray.sol",

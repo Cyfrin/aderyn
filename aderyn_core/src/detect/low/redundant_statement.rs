@@ -74,7 +74,6 @@ mod redundant_statements_detector {
     };
 
     #[test]
-
     fn test_redundant_statements() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/RedundantStatements.sol",

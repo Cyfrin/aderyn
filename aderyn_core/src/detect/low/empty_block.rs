@@ -81,7 +81,6 @@ mod empty_block_tests {
     use super::EmptyBlockDetector;
 
     #[test]
-
     fn test_empty_block_by_loading_contract_directly() {
         let context = load_solidity_source_unit("../tests/contract-playground/src/EmptyBlocks.sol");
 

@@ -103,7 +103,6 @@ mod state_variable_changes_without_events_tests {
     };
 
     #[test]
-
     fn test_state_variable_changes_without_events() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariablesChangesWithoutEvents.sol",

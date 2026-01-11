@@ -92,7 +92,6 @@ mod deprecated_oz_functions_tests {
     use super::DeprecatedOzFunctionDetector;
 
     #[test]
-
     fn test_deprecated_oz_functions_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DeprecatedOZFunctions.sol",

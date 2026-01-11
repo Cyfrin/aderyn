@@ -70,7 +70,6 @@ mod unspecific_solidity_pragma_tests {
     };
 
     #[test]
-
     fn test_unspecific_solidity_pragma_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/inheritance/IContractInheritance.sol",
@@ -84,7 +83,6 @@ mod unspecific_solidity_pragma_tests {
     }
 
     #[test]
-
     fn test_unspecific_solidity_pragma_detector_by_loading_contract_directly_on_library() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/OnlyLibrary.sol",

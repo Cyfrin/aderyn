@@ -260,7 +260,6 @@ mod unsafe_casting_detector_tests {
     use crate::detect::{detector::IssueDetector, high::UnsafeCastingDetector};
 
     #[test]
-
     fn test_unsafe_casting_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/Casting.sol",

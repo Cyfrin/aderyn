@@ -82,7 +82,6 @@ mod unsafe_erc721_mint_tests {
     use crate::detect::{detector::IssueDetector, low::UnsafeOzERC721MintDetector};
 
     #[test]
-
     fn test_unsafe_erc721_mint_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UnsafeERC721Mint.sol",

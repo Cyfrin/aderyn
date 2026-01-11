@@ -100,7 +100,6 @@ mod deletion_nested_mapping_tests {
     };
 
     #[test]
-
     fn test_deletion_nested_mapping() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DeletionNestedMappingStructureContract.sol",

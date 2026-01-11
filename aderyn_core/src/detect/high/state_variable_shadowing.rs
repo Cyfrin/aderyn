@@ -199,7 +199,6 @@ mod state_variable_shadowing_detector_tests {
     use crate::detect::{detector::IssueDetector, high::StateVariableShadowingDetector};
 
     #[test]
-
     fn test_state_variable_shadowing_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/StateShadowing.sol",

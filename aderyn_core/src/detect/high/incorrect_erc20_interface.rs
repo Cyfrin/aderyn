@@ -191,7 +191,6 @@ mod incorrect_erc20_tests {
     };
 
     #[test]
-
     fn test_incorrect_erc20_functions() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/IncorrectERC20.sol",

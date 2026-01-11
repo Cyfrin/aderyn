@@ -571,7 +571,6 @@ mod approximate_storage_change_finder_tests {
     use super::ApproximateStorageChangeFinder;
 
     #[test]
-
     fn has_variable_declarations() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariablesManipulation.sol",
@@ -581,7 +580,6 @@ mod approximate_storage_change_finder_tests {
     }
 
     #[test]
-
     fn test_no_state_variable_manipulations_found() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariablesManipulation.sol",
@@ -598,7 +596,6 @@ mod approximate_storage_change_finder_tests {
     }
 
     #[test]
-
     fn test_simple_state_variable_manipulations_found() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariablesManipulation.sol",
@@ -624,7 +621,6 @@ mod approximate_storage_change_finder_tests {
     }
 
     #[test]
-
     fn test_fixed_size_array_assignments() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariablesManipulation.sol",
@@ -657,7 +653,6 @@ mod approximate_storage_change_finder_tests {
     }
 
     #[test]
-
     fn test_struct_plus_fixed_array_assignment_example() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariablesManipulation.sol",
@@ -820,7 +815,6 @@ mod approximate_storage_change_finder_tests {
     }
 
     #[test]
-
     fn test_sv_manipulation_library() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariablesManipulation.sol",
@@ -858,7 +852,6 @@ mod approximate_storage_change_finder_tests {
     }
 
     #[test]
-
     fn test_no_struct_plus_fixed_array_assignment_example() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariablesManipulation.sol",
@@ -929,7 +922,6 @@ mod approximate_storage_change_finder_tests {
     }
 
     #[test]
-
     fn test_dynamic_array_push_changes() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariablesManipulation.sol",
@@ -976,7 +968,6 @@ mod approximate_storage_change_finder_tests {
     }
 
     #[test]
-
     fn test_dynamic_mappings_array_push_changes() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariablesManipulation.sol",
@@ -995,7 +986,6 @@ mod approximate_storage_change_finder_tests {
     }
 
     #[test]
-
     fn test_fixed_size_arrays_deletion_example() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariablesManipulation.sol",

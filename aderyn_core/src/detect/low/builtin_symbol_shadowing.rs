@@ -142,7 +142,6 @@ mod builtin_symbol_shadowing_tests {
     };
 
     #[test]
-
     fn test_builtin_symbol_shadow() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/BuiltinSymbolShadow.sol",

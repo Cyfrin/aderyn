@@ -73,7 +73,6 @@ mod useless_modifier_tests {
     use super::ModifierUsedOnlyOnceDetector;
 
     #[test]
-
     fn test_useless_modifier_tests_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/OnceModifierExample.sol",

@@ -67,7 +67,6 @@ mod multiple_constructors_detector_tests {
     use crate::detect::{detector::IssueDetector, high::MultipleConstructorsDetector};
 
     #[test]
-
     fn test_multiple_constructors_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/MultipleConstructorSchemes.sol",
@@ -80,7 +79,6 @@ mod multiple_constructors_detector_tests {
     }
 
     #[test]
-
     fn test_multiple_constructors_detector_no_issue() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ArbitraryTransferFrom.sol",

@@ -58,7 +58,6 @@ mod division_before_multiplication_detector_tests {
     use crate::detect::detector::IssueDetector;
 
     #[test]
-
     fn test_template_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DivisionBeforeMultiplication.sol",

@@ -76,7 +76,6 @@ mod dynamic_array_length_assignment_tests {
     };
 
     #[test]
-
     fn test_dynamic_array_length_assignment() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/DynamicArrayLengthAssignment.sol",

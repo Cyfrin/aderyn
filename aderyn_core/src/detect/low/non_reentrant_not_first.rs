@@ -60,7 +60,6 @@ mod non_reentrant_before_others_tests {
     use crate::detect::{detector::IssueDetector, low::NonReentrantNotFirstDetector};
 
     #[test]
-
     fn test_non_reentrant_before_others_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/AdminContract.sol",

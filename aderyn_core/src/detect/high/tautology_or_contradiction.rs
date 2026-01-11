@@ -67,7 +67,6 @@ mod tautology_or_contradiction_tests {
     };
 
     #[test]
-
     fn test_tautology_or_contradiction_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/TautologyOrContradiction.sol",

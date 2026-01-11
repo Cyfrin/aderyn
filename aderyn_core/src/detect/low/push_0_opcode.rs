@@ -88,7 +88,6 @@ mod unspecific_solidity_pragma_tests {
     use crate::detect::detector::IssueDetector;
 
     #[test]
-
     fn test_push_0_opcode_detector_on_0_8_20_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/inheritance/ExtendedInheritance.sol",
@@ -103,7 +102,6 @@ mod unspecific_solidity_pragma_tests {
     }
 
     #[test]
-
     fn test_push_0_opcode_detector_on_range_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CrazyPragma.sol",
@@ -118,7 +116,6 @@ mod unspecific_solidity_pragma_tests {
     }
 
     #[test]
-
     fn test_push_0_opcode_detector_on_0_8_19_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ArbitraryTransferFrom.sol",
@@ -133,7 +130,6 @@ mod unspecific_solidity_pragma_tests {
     }
 
     #[test]
-
     fn test_push_0_opcode_detector_on_caret_0_8_13_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/Counter.sol",
@@ -148,7 +144,6 @@ mod unspecific_solidity_pragma_tests {
     }
 
     #[test]
-
     fn test_push_0_opcode_detector_on_greter_equal_0_8_0_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/inheritance/IContractInheritance.sol",
@@ -163,7 +158,6 @@ mod unspecific_solidity_pragma_tests {
     }
 
     #[test]
-
     fn test_push_0_opcode_detector_on_pragma_range_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/PragmaRange.sol",

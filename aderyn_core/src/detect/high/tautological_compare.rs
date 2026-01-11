@@ -161,7 +161,6 @@ mod tautological_compare_tests {
     };
 
     #[test]
-
     fn test_tatulogical_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/TautologicalCompare.sol",

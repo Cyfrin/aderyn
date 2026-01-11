@@ -102,7 +102,6 @@ mod delegate_call_in_loop_detector_tests {
     use crate::detect::detector::IssueDetector;
 
     #[test]
-
     fn test_delegate_call_in_loop_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/inheritance/ExtendedInheritance.sol",

@@ -102,7 +102,6 @@ mod unused_detector_tests {
     };
 
     #[test]
-
     fn test_unused_state_variables() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UnusedStateVariables.sol",

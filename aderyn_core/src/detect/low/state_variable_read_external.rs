@@ -131,7 +131,6 @@ mod public_variable_read_in_external_context_detector_tests {
     };
 
     #[test]
-
     fn test_public_variable_read_in_external_context() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/PublicVariableReadInExternalContext.sol",

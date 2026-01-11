@@ -113,7 +113,6 @@ mod nested_struct_in_mapping_detector_tests {
     use crate::detect::{detector::IssueDetector, high::NestedStructInMappingDetector};
 
     #[test]
-
     fn test_nested_struct_in_mapping_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/nested_mappings/NestedMappings.sol",
@@ -126,7 +125,6 @@ mod nested_struct_in_mapping_detector_tests {
     }
 
     #[test]
-
     fn test_nested_struct_in_mapping_detector_no_issue() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/nested_mappings/LaterVersion.sol",

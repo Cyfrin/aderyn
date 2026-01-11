@@ -63,7 +63,6 @@ mod uselss_internal_function {
     use super::InternalFunctionUsedOnceDetector;
 
     #[test]
-
     fn test_useless_internal_functions_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/InternalFunctions.sol",

@@ -75,7 +75,6 @@ mod useless_public_function_tests {
     use super::UnusedPublicFunctionDetector;
 
     #[test]
-
     fn test_useless_public_functions_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/Counter.sol",
@@ -88,7 +87,6 @@ mod useless_public_function_tests {
     }
 
     #[test]
-
     fn test_useless_public_functions_does_not_capture_abstract_contract_functions() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/AbstractContract.sol",
@@ -101,7 +99,6 @@ mod useless_public_function_tests {
     }
 
     #[test]
-
     fn test_useless_public_functions_does_not_capture_virtual_or_overriding_functions() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/PublicFunction.sol",
