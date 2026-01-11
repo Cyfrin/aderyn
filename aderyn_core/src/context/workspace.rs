@@ -170,21 +170,6 @@ macro_rules! define_node_contexts {
                 }
             }
 
-            // TODO: remove when we can.
-            impl From<&&ContractDefinition> for Capturable {
-                fn from(value: &&ContractDefinition) -> Self {
-                    #[allow(suspicious_double_ref_op)]
-                    Self::ContractDefinition(value.clone().clone())
-                }
-            }
-
-            impl From<&&ModifierInvocation> for Capturable {
-                fn from(value: &&ModifierInvocation) -> Self {
-                    #[allow(suspicious_double_ref_op)]
-                    Self::ModifierInvocation(value.clone().clone())
-                }
-            }
-
             impl Capturable {
                 pub fn make_key(&self, context: &WorkspaceContext) -> (String, usize, String) {
                     match self {
