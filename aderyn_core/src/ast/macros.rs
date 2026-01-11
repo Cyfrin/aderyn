@@ -122,16 +122,18 @@ macro_rules! stmt_node {
 }
 
 macro_rules! generate_ast_methods {
-    ($( $name:ident ),* $(,)*) => {
+    (
+        regular: $( $name:ident ),* $(,)*;
+        yul: $( $yul_name:ident ),* $(,)*;
+    ) => {
 
         #[derive(Debug, Clone, PartialEq)]
         pub enum ASTNode {
             $($name($name),)*
-            YulFunctionCall(YulFunctionCall),
-            YulIdentifier(YulIdentifier),
-            YulLiteral(YulLiteral),
+            $($yul_name($yul_name),)*
         }
 
+        // Regular nodes
         $(
             impl From<$name> for ASTNode {
                 fn from(value: $name) -> Self {
@@ -146,21 +148,32 @@ macro_rules! generate_ast_methods {
             }
         )*
 
+        // Yul nodes
+        $(
+            impl From<$yul_name> for ASTNode {
+                fn from(value: $yul_name) -> Self {
+                    ASTNode::$yul_name(value)
+                }
+            }
+
+            impl From<&$yul_name> for ASTNode {
+                fn from(value: &$yul_name) -> Self {
+                    ASTNode::$yul_name(value.clone())
+                }
+            }
+        )*
+
         impl ASTNode {
             pub fn node_type(&self) -> NodeType {
                 match self {
                     $(ASTNode::$name(_) => NodeType::$name,)*
-                    ASTNode::YulFunctionCall(_) => NodeType::YulFunctionCall,
-                    ASTNode::YulIdentifier(_) => NodeType::YulIdentifier,
-                    ASTNode::YulLiteral(_) => NodeType::YulLiteral,
+                    $(ASTNode::$yul_name(_) => NodeType::$yul_name,)*
                 }
             }
             pub fn id(&self) -> Option<NodeID> {
                 match self {
-                    ASTNode::YulFunctionCall(_) => None,
-                    ASTNode::YulIdentifier(_) => None,
-                    ASTNode::YulLiteral(_) => None,
                     $(ASTNode::$name(n) => Some(n.id),)*
+                    $(ASTNode::$yul_name(_) => None,)*
                 }
             }
         }
@@ -168,18 +181,14 @@ macro_rules! generate_ast_methods {
         impl Node for ASTNode {
             fn accept(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
                 match self {
-                    ASTNode::YulFunctionCall(n) => n.accept(visitor),
-                    ASTNode::YulIdentifier(n) => n.accept(visitor),
-                    ASTNode::YulLiteral(n) => n.accept(visitor),
                     $(ASTNode::$name(n) => n.accept(visitor),)*
+                    $(ASTNode::$yul_name(n) => n.accept(visitor),)*
                 }
             }
             fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
                 match self {
-                    ASTNode::YulFunctionCall(n) => n.accept_metadata(visitor),
-                    ASTNode::YulIdentifier(n) => n.accept_metadata(visitor),
-                    ASTNode::YulLiteral(n) => n.accept_metadata(visitor),
                     $(ASTNode::$name(n) => n.accept_metadata(visitor),)*
+                    $(ASTNode::$yul_name(n) => n.accept_metadata(visitor),)*
                 }
             }
             fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -191,10 +200,8 @@ macro_rules! generate_ast_methods {
         impl ASTNode {
             pub fn src(&self) -> Option<&str> {
                 match self {
-                    ASTNode::YulFunctionCall(node) => Some(&node.src),
-                    ASTNode::YulIdentifier(node) => Some(&node.src),
-                    ASTNode::YulLiteral(node) => Some(&node.src),
                     $(ASTNode::$name(node) => Some(&node.src),)*
+                    $(ASTNode::$yul_name(node) => Some(&node.src),)*
                 }
             }
         }
