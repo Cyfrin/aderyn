@@ -254,7 +254,6 @@ mod unused_imports_tests {
     use crate::detect::{detector::IssueDetector, low::unused_import::UnusedImportDetector};
 
     #[test]
-
     fn test_unused_imports() {
         let context =
             crate::detect::test_utils::load_multiple_solidity_source_units_into_single_context(

@@ -82,7 +82,6 @@ mod contracts_with_todos_tests {
     use super::TodoDetector;
 
     #[test]
-
     fn test_contracts_with_todos_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ContractWithTodo.sol",

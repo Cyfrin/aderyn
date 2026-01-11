@@ -73,7 +73,6 @@ mod unused_error_tests {
     use super::UnusedErrorDetector;
 
     #[test]
-
     fn test_unused_error_detection() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UnusedError.sol",

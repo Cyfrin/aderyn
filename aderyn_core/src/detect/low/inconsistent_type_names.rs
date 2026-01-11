@@ -164,7 +164,6 @@ mod inconsistent_type_names_tests {
     use super::InconsistentTypeNamesDetector;
 
     #[test]
-
     fn test_inconsistent_type_names_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/InconsistentUints.sol",
@@ -178,7 +177,6 @@ mod inconsistent_type_names_tests {
     }
 
     #[test]
-
     fn test_inconsistent_type_names_with_casting_sol() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/Casting.sol",

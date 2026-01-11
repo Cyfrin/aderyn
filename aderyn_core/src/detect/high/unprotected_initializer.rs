@@ -112,7 +112,6 @@ mod unprotected_initializer_tests {
     use super::UnprotectedInitializerDetector;
 
     #[test]
-
     fn test_unprotected_initializer_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UnprotectedInitialize.sol",

@@ -59,7 +59,6 @@ mod solmate_safe_transfer_lib_tests {
     use crate::detect::{detector::IssueDetector, low::SolmateSafeTransferLibDetector};
 
     #[test]
-
     fn test_solmate_safe_transfer_lib_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/T11sTranferer.sol",
@@ -72,7 +71,6 @@ mod solmate_safe_transfer_lib_tests {
     }
 
     #[test]
-
     fn test_solmate_safe_transfer_lib_no_issue_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ArbitraryTransferFrom.sol",

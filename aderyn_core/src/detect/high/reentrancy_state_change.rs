@@ -222,7 +222,6 @@ mod state_change_after_external_call_tests {
     };
 
     #[test]
-
     fn test_state_change_after_external_call() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/StateChangeAfterExternalCall.sol",

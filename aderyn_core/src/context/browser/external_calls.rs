@@ -57,7 +57,6 @@ mod external_calls_detector {
     }
 
     #[test]
-
     fn test_direct_call_on_address() {
         let context =
             load_solidity_source_unit("../tests/contract-playground/src/ExternalCalls.sol");

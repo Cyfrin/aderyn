@@ -86,7 +86,6 @@ mod storage_array_edit_with_memory_tests {
     };
 
     #[test]
-
     fn test_storage_array_edit_with_memory() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/StorageParameters.sol",

@@ -154,7 +154,6 @@ mod return_bomb_detector_tests {
     use crate::detect::{detector::IssueDetector, low::return_bomb::ReturnBombDetector};
 
     #[test]
-
     fn test_return_bomb_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ReturnBomb.sol",

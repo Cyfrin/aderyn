@@ -129,7 +129,6 @@ mod constants_instead_of_literals_tests {
     use crate::detect::detector::IssueDetector;
 
     #[test]
-
     fn test_constants_instead_of_literals_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ConstantsLiterals.sol",

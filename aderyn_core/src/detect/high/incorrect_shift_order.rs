@@ -63,7 +63,6 @@ mod incorrect_shift_order_detector_tests {
     use crate::detect::{detector::IssueDetector, high::IncorrectShiftOrderDetector};
 
     #[test]
-
     fn test_incorrect_shift_order_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/IncorrectShift.sol",

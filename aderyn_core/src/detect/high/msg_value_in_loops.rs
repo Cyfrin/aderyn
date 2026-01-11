@@ -116,7 +116,6 @@ mod msg_value_in_loop_detector {
     };
 
     #[test]
-
     fn test_msg_value_in_loop() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/MsgValueInLoop.sol",

@@ -82,7 +82,6 @@ mod unchecked_return_tests {
     use crate::detect::{detector::IssueDetector, low::unchecked_return::UncheckedReturnDetector};
 
     #[test]
-
     fn test_unchecked_return_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UncheckedReturn.sol",

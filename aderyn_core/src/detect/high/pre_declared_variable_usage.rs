@@ -103,7 +103,6 @@ mod pre_declared_variable_usage_tests {
     };
 
     #[test]
-
     fn test_pre_declared_variable_usage() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/PreDeclaredVarUsage.sol",

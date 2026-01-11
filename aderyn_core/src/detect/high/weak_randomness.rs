@@ -156,7 +156,6 @@ mod weak_randomness_detector_tests {
     use crate::detect::{detector::IssueDetector, high::weak_randomness::WeakRandomnessDetector};
 
     #[test]
-
     fn test_weak_randomness_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/WeakRandomness.sol",

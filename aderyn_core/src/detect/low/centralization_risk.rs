@@ -80,7 +80,6 @@ mod centralization_risk_detector_tests {
     use super::CentralizationRiskDetector;
 
     #[test]
-
     fn test_centralization_risk_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/AdminContract.sol",

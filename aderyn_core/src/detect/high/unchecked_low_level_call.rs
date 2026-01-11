@@ -85,7 +85,6 @@ mod unchecked_low_level_calls_tests {
     };
 
     #[test]
-
     fn test_unchecked_low_level_calls() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UncheckedCalls.sol",

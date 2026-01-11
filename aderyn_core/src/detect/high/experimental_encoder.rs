@@ -60,7 +60,6 @@ mod storage_array_encode_compiler_bug_detector_tests {
     };
 
     #[test]
-
     fn test_storage_array_encode_compiler_bug_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ExperimentalEncoder.sol",

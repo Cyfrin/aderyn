@@ -110,7 +110,6 @@ mod local_variable_shadowing_tests {
     };
 
     #[test]
-
     fn test_local_variable_shadowing() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/LocalVariableShadow.sol",

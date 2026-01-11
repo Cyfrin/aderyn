@@ -97,7 +97,6 @@ mod out_of_order_retryable_tests {
     };
 
     #[test]
-
     fn test_out_of_order_retryable() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/OutOfOrderRetryable.sol",

@@ -113,7 +113,6 @@ mod assert_state_changes_tests {
     };
 
     #[test]
-
     fn test_assert_state_change() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/AssertStateChange.sol",

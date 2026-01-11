@@ -170,7 +170,6 @@ mod function_pointers_tests {
     };
 
     #[test]
-
     fn test_function_pointers() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/FunctionPointers.sol",

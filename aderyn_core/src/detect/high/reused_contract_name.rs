@@ -71,7 +71,6 @@ mod reused_contract_name_detector_tests {
     };
 
     #[test]
-
     fn test_reused_contract_name_detector() {
         let context = load_multiple_solidity_source_units_into_single_context(
             &[

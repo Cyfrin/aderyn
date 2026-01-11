@@ -81,7 +81,6 @@ mod incorrect_use_of_caret_operator_tests {
     use crate::detect::{detector::IssueDetector, high::IncorrectCaretOperatorDetector};
 
     #[test]
-
     fn test_incorrect_use_of_operator_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/IncorrectCaretOperator.sol",

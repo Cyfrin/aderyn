@@ -185,7 +185,6 @@ mod cache_array_length_tests {
     };
 
     #[test]
-
     fn test_cache_array_length() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CacheArrayLength.sol",

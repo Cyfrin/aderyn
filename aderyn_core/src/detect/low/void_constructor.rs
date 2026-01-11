@@ -77,7 +77,6 @@ mod template_void_constructors {
     use crate::detect::{detector::IssueDetector, low::void_constructor::VoidConstructorDetector};
 
     #[test]
-
     fn test_template_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/VoidConstructor.sol",

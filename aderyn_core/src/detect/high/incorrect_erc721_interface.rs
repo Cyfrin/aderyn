@@ -263,7 +263,6 @@ mod incorrect_erc721_tests {
     };
 
     #[test]
-
     fn test_incorrect_erc721_functions() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/IncorrectERC721.sol",

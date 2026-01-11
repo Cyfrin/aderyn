@@ -188,7 +188,6 @@ mod test_incorrect_modifier {
     };
 
     #[test]
-
     fn test_incorrect_modifier_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/IncorrectModifier.sol",
