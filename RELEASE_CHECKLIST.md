@@ -48,9 +48,11 @@ Above is a non-exhaustive list There can be more.
 
 For non breaking changes, cut a patch release and everything will be fine.
 
-For a breaking change, when you cut a minor release a new VS Code extension release is required. This is because we assume that with a minor change, the Typescript code needs to adapt it's way of communicating with Aderyn in order to accommodate breaking changes. Such as starting LSP, parsing JSON encoded vulnerabilities, etc.  
+**For a breaking change, when you cut a minor release of Aderyn, a new VS Code extension release is required**. 
+This is because we assume the Typescript code needs to adapt it's way of communicating with Aderyn in order to accommodate breaking changes. Such as starting LSP, parsing JSON encoded vulnerabilities, etc.  
 
-New version of VS Code extension must be released _after_ releasing Aderyn. This is so that when people download VS Code extension, there is ALWAYS an Aderyn Version that is compatible with it.
+**New version of VS Code extension must be released _after_ releasing Aderyn.**
+This is so that when people download VS Code extension, there is ALWAYS an Aderyn Version that is compatible with it.
 
 Make sure to adjust the supported Aderyn versions in the VS Code extension here - https://github.com/Cyfrin/vscode-aderyn/blob/main/package.json#L29C2-L32C5
 
