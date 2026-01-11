@@ -32,7 +32,7 @@ pub fn count_identifiers_that_reference_an_id(
 
 pub fn get_calls_and_delegate_calls(context: &WorkspaceContext) -> Vec<&MemberAccess> {
     context
-        .member_accesses()
+        .member_accesss()
         .into_iter()
         .filter(|member_access| {
             member_access.member_name == "call" || member_access.member_name == "delegatecall"

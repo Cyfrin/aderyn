@@ -22,7 +22,7 @@ pub struct UncheckedLowLevelCallDetector {
 impl IssueDetector for UncheckedLowLevelCallDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let call_types = ["call", "staticcall", "delegatecall"];
-        for member_access in context.member_accesses() {
+        for member_access in context.member_accesss() {
             if call_types.iter().any(|&c| c == member_access.member_name)
                 && member_access.expression.type_descriptions().is_some_and(|type_desc| {
                     type_desc.type_string.as_ref().is_some_and(|type_string| {

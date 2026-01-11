@@ -28,7 +28,7 @@ impl IssueDetector for UnusedErrorDetector {
                 referenced_ids.insert(reference_id);
             }
         }
-        for member_access in context.member_accesses() {
+        for member_access in context.member_accesss() {
             if let Some(reference_id) = member_access.referenced_declaration {
                 referenced_ids.insert(reference_id);
             }

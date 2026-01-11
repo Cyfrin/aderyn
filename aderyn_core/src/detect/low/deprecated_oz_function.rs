@@ -40,7 +40,7 @@ impl IssueDetector for DeprecatedOzFunctionDetector {
                 // Optional: handle other cases, or do nothing
             }
         }
-        for member_access in context.member_accesses() {
+        for member_access in context.member_accesss() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call member_access.accept(self)
             if let Some(ASTNode::SourceUnit(source_unit)) =

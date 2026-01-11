@@ -17,7 +17,7 @@ pub struct UnsafeERC20OperationDetector {
 
 impl IssueDetector for UnsafeERC20OperationDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for member_access in context.member_accesses() {
+        for member_access in context.member_accesss() {
             if member_access.expression.as_ref().type_descriptions().is_some_and(|desc| {
                 desc.type_string.as_ref().is_some_and(|type_string| type_string.contains("ERC20"))
             }) && member_access.member_name == "transferFrom"
