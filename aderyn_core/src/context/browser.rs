@@ -1,5 +1,6 @@
 mod ancestral_line;
 mod closest_ancestor;
+mod context_details;
 mod external_calls;
 mod extractor;
 mod immediate_children;
@@ -12,8 +13,10 @@ mod peek_under;
 mod siblings;
 mod sort_nodes;
 mod storage_vars;
+
 pub use ancestral_line::*;
 pub use closest_ancestor::*;
+pub use context_details::*;
 pub use external_calls::*;
 pub use extractor::*;
 pub use immediate_children::*;
