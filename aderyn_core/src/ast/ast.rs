@@ -48,7 +48,6 @@ generate_ast_methods!(
         PragmaDirective,
         Return,
         RevertStatement,
-        SourceUnit,
         StructDefinition,
         StructuredDocumentation,
         TryCatchClause,

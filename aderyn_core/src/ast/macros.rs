@@ -131,6 +131,7 @@ macro_rules! generate_ast_methods {
         pub enum ASTNode {
             $($type($type),)*
             $($yul_type($yul_type),)*
+            SourceUnit(SourceUnit),
         }
 
         // Regular nodes
@@ -163,17 +164,32 @@ macro_rules! generate_ast_methods {
             }
         )*
 
+        // Source Unit
+        impl From<SourceUnit> for ASTNode {
+            fn from(value: SourceUnit) -> Self {
+                ASTNode::SourceUnit(value)
+            }
+        }
+
+        impl From<&SourceUnit> for ASTNode {
+            fn from(value: &SourceUnit) -> Self {
+                ASTNode::SourceUnit(value.clone())
+            }
+        }
+
         impl ASTNode {
             pub fn node_type(&self) -> NodeType {
                 match self {
                     $(ASTNode::$type(_) => NodeType::$type,)*
                     $(ASTNode::$yul_type(_) => NodeType::$yul_type,)*
+                    ASTNode::SourceUnit(_) => NodeType::SourceUnit,
                 }
             }
             pub fn id(&self) -> Option<NodeID> {
                 match self {
                     $(ASTNode::$type(n) => Some(n.id),)*
                     $(ASTNode::$yul_type(_) => None,)*
+                    ASTNode::SourceUnit(n) => Some(n.id),
                 }
             }
         }
@@ -183,12 +199,14 @@ macro_rules! generate_ast_methods {
                 match self {
                     $(ASTNode::$type(n) => n.accept(visitor),)*
                     $(ASTNode::$yul_type(n) => n.accept(visitor),)*
+                    ASTNode::SourceUnit(n) => n.accept(visitor),
                 }
             }
             fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
                 match self {
                     $(ASTNode::$type(n) => n.accept_metadata(visitor),)*
                     $(ASTNode::$yul_type(n) => n.accept_metadata(visitor),)*
+                    ASTNode::SourceUnit(n) => n.accept_metadata(visitor),
                 }
             }
             fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -202,6 +220,7 @@ macro_rules! generate_ast_methods {
                 match self {
                     $(ASTNode::$type(node) => Some(&node.src),)*
                     $(ASTNode::$yul_type(node) => Some(&node.src),)*
+                    ASTNode::SourceUnit(node) => Some(&node.src),
                 }
             }
         }
