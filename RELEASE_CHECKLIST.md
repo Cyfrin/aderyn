@@ -31,6 +31,7 @@ Stay logged in with `gh auth login`
 
 > NOTE: Replace `patch` with `minor` based on the needs.
 
+
 ## Breaking change
 
 If at least one of the following is observed, it's considered a breaking change. In that case, the minor version must be bumped at a minimum. This ensures the VS Code extension remains compatible, as users will be prompted to install the updated version.
@@ -42,3 +43,15 @@ If at least one of the following is observed, it's considered a breaking change.
 - [ ] Changes to `aderyn.toml` template.
 
 Above is a non-exhaustive list There can be more.
+
+## Implication of bumping up minor version
+
+For non breaking changes, cut a patch release and everything will be fine.
+
+For a breaking change, when you cut a minor release a new VS Code extension release is required. This is because we assume that with a minor change, the Typescript code needs to adapt it's way of communicating with Aderyn in order to accommodate breaking changes. Such as starting LSP, parsing JSON encoded vulnerabilities, etc.  
+
+New version of VS Code extension must be released _after_ releasing Aderyn. This is so that when people download VS Code extension, there is ALWAYS an Aderyn Version that is compatible with it.
+
+Make sure to adjust the supported Aderyn versions in the VS Code extension here - https://github.com/Cyfrin/vscode-aderyn/blob/main/package.json#L29C2-L32C5
+
+
