@@ -22,9 +22,11 @@ Stay logged in with `gh auth login`
 
 1. Switch to dev branch and pull latest changes.
    
-2. Run `cargo patch`. Wait until the command is fully done. Process will take ~30 minutes. 99% of the work happens in Github CI/CD but it is important to keep your terminal running during this duration.
+2. Run `cargo patch`. Now, wait until the command is fully done. In the terminal, you should see something on the lines of "waiting for release completion". This process will take ~30 minutes as it is constantly polling Github Actions API to determine when release is complete. After that it shoots of a post completion script.
+
+> NOTE: If for some reason, you weren't able to keep the terminal open - you have to run `cargo blesspr` locally _after the whole release process is done (from `dev` branch)_. 
   
-3. Go to the Releases page, and make sure to `Generate Release Notes`.
+3. Finally, in the Releases page, click on `Generate Release Notes` for the latest release.
    
 
 - **NOTE: Expect the following to happen in CI**:
@@ -34,6 +36,9 @@ Stay logged in with `gh auth login`
 > NOTE: Replace `patch` with `minor` if it is a breaking change. Read below to find out more.
 
 To monitor the changes, visit the Actions tab of this repository and click on Releases workflow. Then search for the workflow event `aderyn-v0.x.x` You can ignore the remaining ones.
+
+<img width="1075" height="604" alt="Screenshot 2026-01-11 at 1 00 23 PM" src="https://github.com/user-attachments/assets/21c0acd1-6cfa-4c8d-b5ee-14581b3ba6fe" />
+
 
 
 ## Breaking change
