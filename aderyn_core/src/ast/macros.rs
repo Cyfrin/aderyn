@@ -123,42 +123,42 @@ macro_rules! stmt_node {
 
 macro_rules! generate_ast_methods {
     (
-        regular: $( $name:ident ),* $(,)*;
-        yul: $( $yul_name:ident ),* $(,)*;
+        regular: $( $type:ident ),* $(,)*;
+        yul: $( $yul_type:ident ),* $(,)*;
     ) => {
 
         #[derive(Debug, Clone, PartialEq)]
         pub enum ASTNode {
-            $($name($name),)*
-            $($yul_name($yul_name),)*
+            $($type($type),)*
+            $($yul_type($yul_type),)*
         }
 
         // Regular nodes
         $(
-            impl From<$name> for ASTNode {
-                fn from(value: $name) -> Self {
-                    ASTNode::$name(value)
+            impl From<$type> for ASTNode {
+                fn from(value: $type) -> Self {
+                    ASTNode::$type(value)
                 }
             }
 
-            impl From<&$name> for ASTNode {
-                fn from(value: &$name) -> Self {
-                    ASTNode::$name(value.clone())
+            impl From<&$type> for ASTNode {
+                fn from(value: &$type) -> Self {
+                    ASTNode::$type(value.clone())
                 }
             }
         )*
 
         // Yul nodes
         $(
-            impl From<$yul_name> for ASTNode {
-                fn from(value: $yul_name) -> Self {
-                    ASTNode::$yul_name(value)
+            impl From<$yul_type> for ASTNode {
+                fn from(value: $yul_type) -> Self {
+                    ASTNode::$yul_type(value)
                 }
             }
 
-            impl From<&$yul_name> for ASTNode {
-                fn from(value: &$yul_name) -> Self {
-                    ASTNode::$yul_name(value.clone())
+            impl From<&$yul_type> for ASTNode {
+                fn from(value: &$yul_type) -> Self {
+                    ASTNode::$yul_type(value.clone())
                 }
             }
         )*
@@ -166,14 +166,14 @@ macro_rules! generate_ast_methods {
         impl ASTNode {
             pub fn node_type(&self) -> NodeType {
                 match self {
-                    $(ASTNode::$name(_) => NodeType::$name,)*
-                    $(ASTNode::$yul_name(_) => NodeType::$yul_name,)*
+                    $(ASTNode::$type(_) => NodeType::$type,)*
+                    $(ASTNode::$yul_type(_) => NodeType::$yul_type,)*
                 }
             }
             pub fn id(&self) -> Option<NodeID> {
                 match self {
-                    $(ASTNode::$name(n) => Some(n.id),)*
-                    $(ASTNode::$yul_name(_) => None,)*
+                    $(ASTNode::$type(n) => Some(n.id),)*
+                    $(ASTNode::$yul_type(_) => None,)*
                 }
             }
         }
@@ -181,14 +181,14 @@ macro_rules! generate_ast_methods {
         impl Node for ASTNode {
             fn accept(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
                 match self {
-                    $(ASTNode::$name(n) => n.accept(visitor),)*
-                    $(ASTNode::$yul_name(n) => n.accept(visitor),)*
+                    $(ASTNode::$type(n) => n.accept(visitor),)*
+                    $(ASTNode::$yul_type(n) => n.accept(visitor),)*
                 }
             }
             fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
                 match self {
-                    $(ASTNode::$name(n) => n.accept_metadata(visitor),)*
-                    $(ASTNode::$yul_name(n) => n.accept_metadata(visitor),)*
+                    $(ASTNode::$type(n) => n.accept_metadata(visitor),)*
+                    $(ASTNode::$yul_type(n) => n.accept_metadata(visitor),)*
                 }
             }
             fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -200,8 +200,8 @@ macro_rules! generate_ast_methods {
         impl ASTNode {
             pub fn src(&self) -> Option<&str> {
                 match self {
-                    $(ASTNode::$name(node) => Some(&node.src),)*
-                    $(ASTNode::$yul_name(node) => Some(&node.src),)*
+                    $(ASTNode::$type(node) => Some(&node.src),)*
+                    $(ASTNode::$yul_type(node) => Some(&node.src),)*
                 }
             }
         }
