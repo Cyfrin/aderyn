@@ -1,9 +1,8 @@
 use std::cmp::Ordering;
 
 use crate::{
-    ast::NodeID,
+    ast::{ASTConstVisitor, Node, NodeID},
     context::workspace::WorkspaceContext,
-    ast::ast_visitor::{ASTConstVisitor, Node},
 };
 
 pub trait AppearsAfterNodeLocation<T: Node + ?Sized> {

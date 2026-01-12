@@ -4,7 +4,6 @@ use crate::{
         browser::ExtractImmediateChildrenIDs,
         workspace::{ASTNode, WorkspaceContext},
     },
-    ast::ast_visitor::{ASTConstVisitor, Node},
 };
 
 pub trait GetImmediateChildren {

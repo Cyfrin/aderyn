@@ -1,7 +1,6 @@
 use crate::{
-    ast::NodeID,
+    ast::{ASTConstVisitor, Node, NodeID},
     context::{browser::GetPreviousSibling, workspace::WorkspaceContext},
-    ast::ast_visitor::{ASTConstVisitor, Node},
 };
 
 pub trait PeekOver {
