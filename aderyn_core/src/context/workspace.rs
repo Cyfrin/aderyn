@@ -5,7 +5,7 @@ use super::{
 use crate::{
     ast::*,
     stats::IgnoreLine,
-    visitor::ast_visitor::{ASTConstVisitor, Node},
+    ast::ast_visitor::{ASTConstVisitor, Node},
 };
 use paste::paste;
 use solidity_ast::EvmVersion;

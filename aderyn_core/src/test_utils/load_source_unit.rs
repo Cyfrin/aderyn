@@ -5,7 +5,7 @@ use crate::{
         router::Router,
         workspace::WorkspaceContext,
     },
-    visitor::ast_visitor::Node,
+    ast::ast_visitor::Node,
 };
 use semver::Version;
 use solidity_ast::{

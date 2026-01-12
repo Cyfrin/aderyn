@@ -1,7 +1,7 @@
 use crate::{
     ast::*,
     context::workspace::{ASTNode, WorkspaceContext},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
+    ast::ast_visitor::{ASTConstVisitor, Node},
 };
 
 pub trait GetClosestAncestorOfTypeX {

@@ -13,6 +13,8 @@ pub use self::{impls::*, magic::*, node_type::*, yul::*};
 pub use crate::context::workspace::ASTNode;
 pub use NodeID;
 pub use ast_nodes::*;
+pub use ast_visitor::*;
+pub(crate) use macros::*;
 
 #[cfg(test)]
 mod tests {

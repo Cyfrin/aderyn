@@ -1,5 +1,5 @@
 // Original source: https://github.com/camden-smallwood/solidity-rs
-use crate::visitor::ast_visitor::{ASTConstVisitor, Node, list_accept};
+use crate::ast::ast_visitor::{ASTConstVisitor, Node, list_accept};
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::{

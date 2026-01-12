@@ -1,7 +1,7 @@
 use crate::{
     ast::NodeID,
     context::workspace::WorkspaceContext,
-    visitor::ast_visitor::{ASTConstVisitor, Node},
+    ast::ast_visitor::{ASTConstVisitor, Node},
 };
 
 pub trait Peek {

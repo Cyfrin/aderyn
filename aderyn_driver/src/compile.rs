@@ -1,7 +1,7 @@
 #![allow(unstable_name_collisions)]
 
 use aderyn_core::{
-    ast::SourceUnit, context::workspace::WorkspaceContext, visitor::ast_visitor::Node,
+    ast::SourceUnit, ast::ast_visitor::Node, context::workspace::WorkspaceContext,
 };
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use solidity_ast::{
