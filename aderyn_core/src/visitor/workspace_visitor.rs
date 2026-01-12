@@ -1,12 +1,32 @@
-use super::{
-    ast_visitor::ASTConstVisitor,
-    macros::generate_visit_methods_for_workspace_context_with_insert_node,
-};
+use super::ast_visitor::ASTConstVisitor;
 use crate::{
     ast::*,
     context::workspace::{NodeContext, WorkspaceContext},
 };
 use eyre::Result;
+
+macro_rules! generate_visit_methods_for_workspace_context_with_insert_node {
+    ($( $node:ident ),* $(,)*) => {
+        paste::paste! {
+            $(
+                fn [<visit_ $node:snake>](&mut self, node: &$node) -> Result<bool> {
+                    self.nodes
+                        .insert(node.id, ASTNode::$node(node.clone()));
+                    self.[<$node:snake s_context>].insert(
+                        node.clone(),
+                        NodeContext {
+                            source_unit_id: self.last_source_unit_id,
+                            contract_definition_id: self.last_contract_definition_id,
+                            function_definition_id: self.last_function_definition_id,
+                            modifier_definition_id: self.last_modifier_definition_id,
+                        },
+                    );
+                    Ok(true)
+                }
+            )*
+        }
+    };
+}
 
 impl ASTConstVisitor for WorkspaceContext {
     fn visit_contract_definition(&mut self, node: &ContractDefinition) -> Result<bool> {
@@ -116,61 +136,59 @@ impl ASTConstVisitor for WorkspaceContext {
         Ok(true)
     }
 
-    // Read the following like follows -
     generate_visit_methods_for_workspace_context_with_insert_node! {
-        // Explanation for the 1st one : Create a method called `visit_assignment` that takes in `Assignment` as parameter and puts it inside `assignments_context`
-        visit_assignment | Assignment => assignments_context |,
-        visit_binary_operation | BinaryOperation => binary_operations_context |,
-        visit_block | Block => blocks_context |,
-        visit_conditional | Conditional => conditionals_context |,
-        visit_elementary_type_name_expression | ElementaryTypeNameExpression => elementary_type_name_expressions_context |,
-        visit_enum_definition | EnumDefinition => enum_definitions_context |,
-        visit_enum_value | EnumValue => enum_values_context |,
-        visit_event_definition | EventDefinition => event_definitions_context |,
-        visit_error_definition | ErrorDefinition => error_definitions_context |,
-        visit_function_call | FunctionCall => function_calls_context |,
-        visit_function_call_options | FunctionCallOptions => function_call_optionss_context |,
-        visit_for_statement | ForStatement => for_statements_context |,
-        visit_identifier | Identifier => identifiers_context |,
-        visit_identifier_path | IdentifierPath => identifier_paths_context |,
-        visit_if_statement | IfStatement => if_statements_context |,
-        visit_import_directive | ImportDirective => import_directives_context |,
-        visit_index_access | IndexAccess => index_accesss_context |,
-        visit_index_range_access | IndexRangeAccess => index_range_accesss_context |,
-        visit_inheritance_specifier | InheritanceSpecifier => inheritance_specifiers_context |,
-        visit_inline_assembly | InlineAssembly => inline_assemblys_context |,
-        visit_literal | Literal => literals_context |,
-        visit_member_access | MemberAccess => member_accesss_context |,
-        visit_new_expression | NewExpression => new_expressions_context |,
-        visit_modifier_invocation | ModifierInvocation => modifier_invocations_context |,
-        visit_override_specifier | OverrideSpecifier => override_specifiers_context |,
-        visit_parameter_list | ParameterList => parameter_lists_context |,
-        visit_pragma_directive | PragmaDirective => pragma_directives_context |,
-        visit_return | Return => returns_context |,
-        visit_struct_definition | StructDefinition => struct_definitions_context |,
-        visit_structured_documentation | StructuredDocumentation => structured_documentations_context |,
-        visit_tuple_expression | TupleExpression => tuple_expressions_context |,
-        visit_unary_operation | UnaryOperation => unary_operations_context |,
-        visit_unchecked_block | UncheckedBlock => unchecked_blocks_context |,
-        visit_user_defined_value_type_definition | UserDefinedValueTypeDefinition => user_defined_value_type_definitions_context |,
-        visit_using_for_directive | UsingForDirective => using_for_directives_context |,
-        visit_variable_declaration | VariableDeclaration => variable_declarations_context |,
-        visit_variable_declaration_statement | VariableDeclarationStatement => variable_declaration_statements_context |,
-        visit_while_statement | WhileStatement => while_statements_context |,
-        visit_do_while_statement | DoWhileStatement => do_while_statements_context |,
-        visit_break_statement | Break => breaks_context |,
-        visit_continue_statement | Continue => continues_context |,
-        visit_placeholder_statement | PlaceholderStatement => placeholder_statements_context |,
-        visit_array_type_name | ArrayTypeName => array_type_names_context |,
-        visit_mapping | Mapping => mappings_context |,
-        visit_try_statement | TryStatement => try_statements_context |,
-        visit_try_catch_clause | TryCatchClause => try_catch_clauses_context |,
-        visit_user_defined_type_name | UserDefinedTypeName => user_defined_type_names_context |,
-        visit_expression_statement | ExpressionStatement => expression_statements_context |,
-        visit_revert_statement | RevertStatement => revert_statements_context |,
-        visit_emit_statement | EmitStatement => emit_statements_context |,
-        visit_elementary_type_name | ElementaryTypeName => elementary_type_names_context |,
-        visit_function_type_name | FunctionTypeName => function_type_names_context |,
+        ArrayTypeName,
+        Assignment,
+        BinaryOperation,
+        Block,
+        Break,
+        Conditional,
+        Continue,
+        DoWhileStatement,
+        ElementaryTypeName,
+        ElementaryTypeNameExpression,
+        EmitStatement,
+        EnumDefinition,
+        EnumValue,
+        ErrorDefinition,
+        EventDefinition,
+        ExpressionStatement,
+        ForStatement,
+        FunctionCall,
+        FunctionCallOptions,
+        FunctionTypeName,
+        Identifier,
+        IdentifierPath,
+        IfStatement,
+        ImportDirective,
+        IndexAccess,
+        IndexRangeAccess,
+        InheritanceSpecifier,
+        InlineAssembly,
+        Literal,
+        Mapping,
+        MemberAccess,
+        ModifierInvocation,
+        NewExpression,
+        OverrideSpecifier,
+        ParameterList,
+        PlaceholderStatement,
+        PragmaDirective,
+        Return,
+        RevertStatement,
+        StructDefinition,
+        StructuredDocumentation,
+        TryCatchClause,
+        TryStatement,
+        TupleExpression,
+        UnaryOperation,
+        UncheckedBlock,
+        UserDefinedTypeName,
+        UserDefinedValueTypeDefinition,
+        UsingForDirective,
+        VariableDeclaration,
+        VariableDeclarationStatement,
+        WhileStatement,
     }
 
     fn visit_immediate_children(

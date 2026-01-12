@@ -1,11 +1,9 @@
 use crate::{
     ast::NodeID,
-    context::{
+    context::mcp::{
+        MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
         macros::{mcp_error, mcp_success},
-        mcp::{
-            MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
-            node_summarizer::{render, utils::*},
-        },
+        node_summarizer::{render, utils::*},
     },
 };
 use indoc::indoc;

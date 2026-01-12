@@ -1,12 +1,12 @@
 //! This module helps us detect whether a given AST Node has any external calls inside of it
 
-use super::ExtractMemberAccesses;
+use super::ExtractMemberAccesss;
 use crate::context::workspace::ASTNode;
 
 pub fn is_extcallish(ast_node: ASTNode) -> bool {
     // This is so we can skip the FunctionCallOptions layer which solidity compiler inserts
     // when there are options passed to function calls
-    for member_access in ExtractMemberAccesses::from(&ast_node).extracted {
+    for member_access in ExtractMemberAccesss::from(&ast_node).extracted {
         // address(..).call("...") pattern
         let is_call = member_access.member_name == "call";
         if is_call {

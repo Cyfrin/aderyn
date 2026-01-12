@@ -5,7 +5,7 @@ use crate::ast::{ASTNode, Expression, NodeID};
 use crate::{
     capture,
     context::{
-        browser::ExtractMemberAccesses,
+        browser::ExtractMemberAccesss,
         graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
@@ -91,7 +91,7 @@ struct MsgValueTracker {
 impl CallGraphVisitor for MsgValueTracker {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         if !self.has_msg_value
-            && ExtractMemberAccesses::from(node).extracted.iter().any(|member_access| {
+            && ExtractMemberAccesss::from(node).extracted.iter().any(|member_access| {
                 member_access.member_name == "value"
                     && if let Expression::Identifier(identifier) = member_access.expression.as_ref()
                     {

@@ -1,15 +1,13 @@
 use super::render::*;
 use crate::{
     ast::{ASTNode, NodeID},
-    context::{
-        macros::{mcp_error, mcp_success},
-        mcp::{
-            MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
-            contract_surface::util::{
-                get_classified_entrypoint_functions, get_inheritance_chain_info,
-                get_total_state_variables,
-            },
+    context::mcp::{
+        MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
+        contract_surface::util::{
+            get_classified_entrypoint_functions, get_inheritance_chain_info,
+            get_total_state_variables,
         },
+        macros::{mcp_error, mcp_success},
     },
 };
 use indoc::indoc;

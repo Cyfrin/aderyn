@@ -1,5 +1,5 @@
 // Imports
-use crate::context::{macros::make_route, workspace::WorkspaceContext};
+use crate::context::workspace::WorkspaceContext;
 use rmcp::{
     ErrorData as McpError,
     handler::server::{tool::ToolRoute, wrapper::Parameters},
@@ -18,6 +18,9 @@ pub mod node_finder;
 pub mod node_summarizer;
 pub mod project_overview;
 pub mod tool_guide;
+
+// Helpers
+mod macros;
 
 pub use callgraph::CallgraphTool;
 pub use contract_surface::ContractSurfaceTool;
@@ -46,6 +49,22 @@ pub trait ModelContextProtocolTool: Send + Sync + Clone {
 
     // Tool execution logic
     fn execute(&self, input: Parameters<Self::Input>) -> Result<CallToolResult, McpError>;
+}
+
+macro_rules! make_route {
+    ($tool:ty, $st:tt) => {{
+        let t = <$tool>::new(std::sync::Arc::clone(&$st));
+        rmcp::handler::server::tool::ToolRoute::new(
+            rmcp::model::Tool::new(
+                t.name().to_string(),
+                t.description().to_string(),
+                rmcp::handler::server::tool::cached_schema_for_type::<
+                    <$tool as crate::context::mcp::ModelContextProtocolTool>::Input,
+                >(),
+            ),
+            move |a| t.execute(a),
+        )
+    }};
 }
 
 pub fn get_all_mcp_tools<T>(state: Arc<ModelContextProtocolState>) -> Vec<ToolRoute<T>>

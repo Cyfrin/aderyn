@@ -1,9 +1,7 @@
-use crate::context::{
+use crate::context::mcp::{
+    MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
     macros::{mcp_error, mcp_success},
-    mcp::{
-        MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
-        node_finder::{render::*, utils::*},
-    },
+    node_finder::{render::*, utils::*},
 };
 use indoc::indoc;
 use regex::Regex;

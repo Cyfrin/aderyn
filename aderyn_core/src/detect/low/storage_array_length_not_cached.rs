@@ -93,7 +93,7 @@ mod loop_investigation_helper {
     use crate::{
         ast::{ASTNode, Expression, ForStatement, Identifier, NodeID, TypeDescriptions},
         context::{
-            browser::{ApproximateStorageChangeFinder, ExtractMemberAccesses},
+            browser::{ApproximateStorageChangeFinder, ExtractMemberAccesss},
             graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
             workspace::WorkspaceContext,
         },
@@ -107,7 +107,7 @@ mod loop_investigation_helper {
             let mut state_vars_lengths_that_are_referenced = BTreeSet::new();
 
             if let Some(condition) = self.condition.as_ref() {
-                let member_accesses = ExtractMemberAccesses::from(condition).extracted;
+                let member_accesses = ExtractMemberAccesss::from(condition).extracted;
                 for member_access in member_accesses {
                     if member_access.member_name != "length" {
                         continue;

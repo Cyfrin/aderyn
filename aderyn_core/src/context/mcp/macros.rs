@@ -1,19 +1,3 @@
-macro_rules! make_route {
-    ($tool:ty, $st:tt) => {{
-        let t = <$tool>::new(std::sync::Arc::clone(&$st));
-        rmcp::handler::server::tool::ToolRoute::new(
-            rmcp::model::Tool::new(
-                t.name().to_string(),
-                t.description().to_string(),
-                rmcp::handler::server::tool::cached_schema_for_type::<
-                    <$tool as crate::context::mcp::ModelContextProtocolTool>::Input,
-                >(),
-            ),
-            move |a| t.execute(a),
-        )
-    }};
-}
-
 macro_rules! mcp_success {
     ($resp:expr_2021) => {{
         use askama::Template;
@@ -50,6 +34,5 @@ macro_rules! mcp_error {
     };
 }
 
-pub(crate) use make_route;
 pub(crate) use mcp_error;
 pub(crate) use mcp_success;

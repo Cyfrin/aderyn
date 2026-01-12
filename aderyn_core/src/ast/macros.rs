@@ -121,13 +121,6 @@ macro_rules! stmt_node {
     }
 }
 
-macro_rules! generate_ast_methods {
-    (
-        regular: $( $type:ident ),* $(,)*;
-        yul: $( $yul_type:ident ),* $(,)*;
-    ) => {};
-}
-
 macro_rules! accept_id {
     () => {
         fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -141,6 +134,5 @@ pub(crate) use accept_id;
 pub(crate) use ast_node;
 pub(crate) use ast_node_no_partial_eq;
 pub(crate) use expr_node;
-pub(crate) use generate_ast_methods;
 pub(crate) use node_group;
 pub(crate) use stmt_node;

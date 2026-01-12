@@ -5,7 +5,6 @@ mod external_calls;
 mod extractor;
 mod immediate_children;
 mod location;
-mod macros;
 mod parent;
 mod peek;
 mod peek_over;
