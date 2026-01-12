@@ -1,11 +1,10 @@
 use crate::{
-    ast::SourceUnit,
+    ast::{SourceUnit, ast_visitor::Node},
     context::{
         graph::{LegacyWorkspaceCallGraph, Transpose, WorkspaceCallGraphs},
         router::Router,
         workspace::WorkspaceContext,
     },
-    ast::ast_visitor::Node,
 };
 use semver::Version;
 use solidity_ast::{

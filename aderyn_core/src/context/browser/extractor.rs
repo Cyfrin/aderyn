@@ -1,7 +1,4 @@
-use crate::{
-    ast::*,
-    context::workspace::WorkspaceContext,
-};
+use crate::{ast::*, context::workspace::WorkspaceContext};
 use eyre::Result;
 
 macro_rules! generate_extraction_library {

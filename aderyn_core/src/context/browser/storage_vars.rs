@@ -1,7 +1,4 @@
-use crate::{
-    ast::*,
-    context::workspace::WorkspaceContext,
-};
+use crate::{ast::*, context::workspace::WorkspaceContext};
 use eyre::*;
 use std::{
     collections::{BTreeMap, BTreeSet},
