@@ -5,7 +5,7 @@ use crate::ast::{ASTNode, NodeID, NodeType, StateMutability};
 use crate::{
     capture,
     context::browser::{
-        ExtractInlineAssemblies, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
+        ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
     },
 };
 
@@ -131,7 +131,7 @@ impl CallGraphVisitor for AssemblyTracker {
         }
 
         // Check if this node has assembly code
-        let assemblies = ExtractInlineAssemblies::from(node).extracted;
+        let assemblies = ExtractInlineAssemblys::from(node).extracted;
         if !assemblies.is_empty() {
             self.has_assembly = true;
         }

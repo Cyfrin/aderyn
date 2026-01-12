@@ -5,7 +5,7 @@ use crate::ast::{ASTNode, Expression, Identifier, NodeID};
 use crate::{
     capture,
     context::{
-        browser::ExtractMemberAccesses,
+        browser::ExtractMemberAccesss,
         graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
@@ -113,7 +113,7 @@ impl MsgSenderAndTxOriginTracker {
 
 impl CallGraphVisitor for MsgSenderAndTxOriginTracker {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
-        let member_accesses = ExtractMemberAccesses::from(node).extracted;
+        let member_accesses = ExtractMemberAccesss::from(node).extracted;
 
         let has_msg_sender = member_accesses.iter().any(|member_access| {
             member_access.member_name == "sender"

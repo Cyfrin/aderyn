@@ -3,9 +3,11 @@ use super::{
     router::Router,
 };
 use crate::{
-    ast::*,
+    ast::{
+        ast_visitor::{ASTConstVisitor, Node},
+        *,
+    },
     stats::IgnoreLine,
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use paste::paste;
 use solidity_ast::EvmVersion;

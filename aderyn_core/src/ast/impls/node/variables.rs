@@ -1,4 +1,4 @@
-use crate::{ast::*, visitor::ast_visitor::*};
+use crate::ast::*;
 use eyre::Result;
 
 impl Node for VariableDeclaration {

@@ -1,10 +1,7 @@
 use super::render;
-use crate::context::{
-    macros::mcp_success,
-    mcp::{
-        MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
-        project_overview::render::*,
-    },
+use crate::context::mcp::{
+    MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool, macros::mcp_success,
+    project_overview::render::*,
 };
 use indoc::indoc;
 use rmcp::{ErrorData as McpError, handler::server::wrapper::Parameters, model::CallToolResult};

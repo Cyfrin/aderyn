@@ -1,9 +1,7 @@
-use crate::context::{
+use crate::context::mcp::{
+    MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
+    list_contracts::render::{ContractInfoBuilder, ContractsListBuilder},
     macros::{mcp_error, mcp_success},
-    mcp::{
-        MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
-        list_contracts::render::{ContractInfoBuilder, ContractsListBuilder},
-    },
 };
 use indoc::indoc;
 use rmcp::{

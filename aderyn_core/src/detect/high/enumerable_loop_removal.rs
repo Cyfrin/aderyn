@@ -5,7 +5,7 @@ use crate::ast::{NodeID, NodeType};
 use crate::{
     capture,
     context::{
-        browser::{ExtractMemberAccesses, GetClosestAncestorOfTypeX},
+        browser::{ExtractMemberAccesss, GetClosestAncestorOfTypeX},
         workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -45,7 +45,7 @@ impl IssueDetector for EnumerableLoopRemovalDetector {
                     member_access.closest_ancestor_of_type(context, NodeType::DoWhileStatement),
                 ];
                 for parent_loop in parent_loops.into_iter().flatten() {
-                    ExtractMemberAccesses::from(parent_loop).extracted.into_iter().for_each(
+                    ExtractMemberAccesss::from(parent_loop).extracted.into_iter().for_each(
                         |at_member_access| {
                             if at_member_access.member_name == "at" {
                                 capture!(self, context, member_access);

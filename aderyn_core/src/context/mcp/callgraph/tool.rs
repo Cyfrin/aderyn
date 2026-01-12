@@ -1,17 +1,14 @@
 use crate::{
     ast::{ASTNode, NodeID},
-    context::{
-        macros::{mcp_error, mcp_success},
-        mcp::{
-            MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
-            callgraph::{
-                render::{
-                    CallgraphToolResponseBuilder, ContractDataBuilder,
-                    EntrypointFunctionDataBuilder,
-                },
-                utils::{build_post_order_nodes, build_raw_callgraph_for_entrypoint},
+    context::mcp::{
+        MCPToolNamePool, ModelContextProtocolState, ModelContextProtocolTool,
+        callgraph::{
+            render::{
+                CallgraphToolResponseBuilder, ContractDataBuilder, EntrypointFunctionDataBuilder,
             },
+            utils::{build_post_order_nodes, build_raw_callgraph_for_entrypoint},
         },
+        macros::{mcp_error, mcp_success},
     },
 };
 use indoc::indoc;

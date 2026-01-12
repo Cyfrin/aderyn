@@ -4,7 +4,7 @@ use crate::{
     ast::{ASTNode, NodeID},
     capture,
     context::{
-        browser::ExtractMemberAccesses,
+        browser::ExtractMemberAccesss,
         graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
@@ -83,7 +83,7 @@ impl CallGraphVisitor for DelegateCallTracker {
             return Ok(());
         }
 
-        let dcalls = ExtractMemberAccesses::from(node)
+        let dcalls = ExtractMemberAccesss::from(node)
             .extracted
             .into_iter()
             .filter(|ma| ma.member_name == "delegatecall")

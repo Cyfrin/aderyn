@@ -7,8 +7,8 @@ use crate::{
     },
     context::{
         browser::{
-            ExtractBinaryOperations, ExtractFunctionCallOptions, ExtractFunctionCalls,
-            ExtractMemberAccesses,
+            ExtractBinaryOperations, ExtractFunctionCallOptionss, ExtractFunctionCalls,
+            ExtractMemberAccesss,
         },
         workspace::WorkspaceContext,
     },
@@ -78,7 +78,7 @@ pub fn pragma_directive_to_semver(pragma_directive: &PragmaDirective) -> Result<
 pub fn has_msg_sender_binary_operation(ast_node: &ASTNode) -> bool {
     // Directly return the evaluation of the condition
     ExtractBinaryOperations::from(ast_node).extracted.iter().any(|binary_operation| {
-        ExtractMemberAccesses::from(binary_operation).extracted.iter().any(|member_access| {
+        ExtractMemberAccesss::from(binary_operation).extracted.iter().any(|member_access| {
             member_access.member_name == "sender"
                 && if let Expression::Identifier(identifier) = member_access.expression.as_ref() {
                     identifier.name == "msg"
@@ -98,7 +98,7 @@ pub fn has_msg_sender_binary_operation(ast_node: &ASTNode) -> bool {
 // ```
 pub fn has_calls_that_sends_native_eth(ast_node: &ASTNode) -> bool {
     // Check for address(..).call{value: 10}("...") pattern
-    let function_call_ops = ExtractFunctionCallOptions::from(ast_node).extracted;
+    let function_call_ops = ExtractFunctionCallOptionss::from(ast_node).extracted;
     for function_call in &function_call_ops {
         let call_carries_value = function_call.names.contains(&String::from("value"));
         if !call_carries_value {
@@ -148,7 +148,7 @@ pub fn has_delegate_calls_on_non_state_variables(
     ast_node: &ASTNode,
     context: &WorkspaceContext,
 ) -> bool {
-    let member_accesses = ExtractMemberAccesses::from(ast_node).extracted;
+    let member_accesses = ExtractMemberAccesss::from(ast_node).extracted;
     member_accesses.into_iter().any(|member| {
         let is_delegate_call = member.member_name == "delegatecall";
         let mut is_on_non_state_variable = false;
@@ -175,7 +175,7 @@ pub fn get_low_level_calls_on_non_state_variable_addresses(
     ast_node: &ASTNode,
     context: &WorkspaceContext,
 ) -> Vec<MemberAccess> {
-    ExtractMemberAccesses::from(ast_node)
+    ExtractMemberAccesss::from(ast_node)
         .extracted
         .into_iter()
         .filter_map(|member| {
