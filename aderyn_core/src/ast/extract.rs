@@ -12,9 +12,7 @@ macro_rules! generate_extract_api {
         }
     };
 
-    (
-        $( $node:ident ),* $(,)*
-    ) => {
+    ($( $node:ident ),* $(,)*) => {
         paste::paste! {
 
             $(
