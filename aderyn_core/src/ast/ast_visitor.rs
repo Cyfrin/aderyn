@@ -5,20 +5,17 @@ use crate::{
 use eyre::Result;
 
 macro_rules! define_ast_const_visitor_and_implement_for_workspace_context {
-    // callback signature of `with_node_types!`
     (
         regular: $( $node:ident ),* $(,)*;
         yul: $( $yul_node:ident ),* $(,)*;
         yul_sourceless: $( $yul_sourceless_node:ident ),* $(,)*;
     ) => {
-        // Flatten node types into regulat and yul
         define_ast_const_visitor_and_implement_for_workspace_context! {
             regular: $( $node ),*;
             yul: $( $yul_node ),* , $( $yul_sourceless_node ),*;
         }
     };
 
-    // Final implementation
     (
         regular: $( $node:ident ),* $(,)*;
         yul: $( $yul_node:ident ),* $(,)*;

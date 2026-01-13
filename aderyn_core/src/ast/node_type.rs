@@ -1,79 +1,32 @@
 use serde::{Deserialize, Serialize};
 
+use crate::ast::with_node_types;
+
 pub type NodeID = i64;
 
-#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
-pub enum NodeType {
-    ArrayTypeName,
-    Assignment,
-    BinaryOperation,
-    Block,
-    Break,
-    Conditional,
-    Continue,
-    ContractDefinition,
-    DoWhileStatement,
-    ElementaryTypeName,
-    ElementaryTypeNameExpression,
-    EmitStatement,
-    EnumDefinition,
-    EnumValue,
-    ErrorDefinition,
-    EventDefinition,
-    ExpressionStatement,
-    ForStatement,
-    FunctionCall,
-    FunctionCallOptions,
-    FunctionDefinition,
-    FunctionTypeName,
-    Identifier,
-    IdentifierPath,
-    IfStatement,
-    ImportDirective,
-    IndexAccess,
-    IndexRangeAccess,
-    InheritanceSpecifier,
-    InlineAssembly,
-    Literal,
-    Mapping,
-    MemberAccess,
-    ModifierDefinition,
-    ModifierInvocation,
-    NewExpression,
-    OverrideSpecifier,
-    ParameterList,
-    PlaceholderStatement,
-    PragmaDirective,
-    Return,
-    RevertStatement,
-    SourceUnit,
-    StructDefinition,
-    StructuredDocumentation,
-    Throw, // suppport pre 0.5 solidity code
-    TryCatchClause,
-    TryStatement,
-    TupleExpression,
-    UnaryOperation,
-    UncheckedBlock,
-    UserDefinedTypeName,
-    UserDefinedValueTypeDefinition,
-    UsingForDirective,
-    VariableDeclaration,
-    VariableDeclarationStatement,
-    WhileStatement,
-    YulAssignment,
-    YulBlock,
-    YulCase,
-    YulExpression,
-    YulExpressionStatement,
-    YulForLoop,
-    YulFunctionCall,
-    YulFunctionDefinition,
-    YulIdentifier,
-    YulIf,
-    YulLiteral,
-    YulStatement,
-    YulSwitch,
-    YulTypedName,
-    YulVariableDeclaration,
+macro_rules! define_node_types {
+    (
+        regular: $( $node:ident ),* $(,)*;
+        yul: $( $yul_node:ident ),* $(,)*;
+        yul_sourceless: $( $yul_sourceless_node:ident ),* $(,)*;
+    ) => {
+        define_node_types! {
+            $( $node ),*,
+            $( $yul_node ),*,
+            $( $yul_sourceless_node ),*,
+        }
+    };
+    (
+        $( $node:ident ),* $(,)*
+    ) => {
+
+        #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
+        pub enum NodeType {
+            $( $node ),*,
+            SourceUnit,
+            Throw, // suppport pre 0.5 solidity code
+        }
+    };
 }
+
+with_node_types!(define_node_types);
