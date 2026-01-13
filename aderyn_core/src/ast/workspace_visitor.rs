@@ -6,13 +6,37 @@ use crate::{
 use eyre::Result;
 
 macro_rules! generate_visit_methods_for_workspace_context_with_insert_node {
-    ($( $node:ident ),* $(,)*) => {
+    (
+        regular:
+        $( $node:ident ),* $(,)*;
+
+        yul:
+        $( $yul_node:ident ),* $(,)*;
+
+    ) => {
         paste::paste! {
+            // Regular nodes
             $(
                 fn [<visit_ $node:snake>](&mut self, node: &$node) -> Result<bool> {
                     self.nodes
                         .insert(node.id, ASTNode::$node(node.clone()));
                     self.[<$node:snake s_context>].insert(
+                        node.clone(),
+                        NodeContext {
+                            source_unit_id: self.last_source_unit_id,
+                            contract_definition_id: self.last_contract_definition_id,
+                            function_definition_id: self.last_function_definition_id,
+                            modifier_definition_id: self.last_modifier_definition_id,
+                        },
+                    );
+                    Ok(true)
+                }
+            )*
+
+            // Yul nodes (no ID)
+            $(
+                fn [<visit_ $yul_node:snake>](&mut self, node: &$yul_node) -> Result<bool> {
+                    self.[<$yul_node:snake s_context>].insert(
                         node.clone(),
                         NodeContext {
                             source_unit_id: self.last_source_unit_id,
@@ -30,58 +54,75 @@ macro_rules! generate_visit_methods_for_workspace_context_with_insert_node {
 
 impl ASTConstVisitor for WorkspaceContext {
     generate_visit_methods_for_workspace_context_with_insert_node! {
-        ArrayTypeName,
-        Assignment,
-        BinaryOperation,
-        Block,
-        Break,
-        Conditional,
-        Continue,
-        DoWhileStatement,
-        ElementaryTypeName,
-        ElementaryTypeNameExpression,
-        EmitStatement,
-        EnumDefinition,
-        EnumValue,
-        ErrorDefinition,
-        EventDefinition,
-        ExpressionStatement,
-        ForStatement,
-        FunctionCall,
-        FunctionCallOptions,
-        FunctionTypeName,
-        Identifier,
-        IdentifierPath,
-        IfStatement,
-        ImportDirective,
-        IndexAccess,
-        IndexRangeAccess,
-        InheritanceSpecifier,
-        InlineAssembly,
-        Literal,
-        Mapping,
-        MemberAccess,
-        ModifierInvocation,
-        NewExpression,
-        OverrideSpecifier,
-        ParameterList,
-        PlaceholderStatement,
-        PragmaDirective,
-        Return,
-        RevertStatement,
-        StructDefinition,
-        StructuredDocumentation,
-        TryCatchClause,
-        TryStatement,
-        TupleExpression,
-        UnaryOperation,
-        UncheckedBlock,
-        UserDefinedTypeName,
-        UserDefinedValueTypeDefinition,
-        UsingForDirective,
-        VariableDeclaration,
-        VariableDeclarationStatement,
-        WhileStatement,
+        regular:
+            ArrayTypeName,
+            Assignment,
+            BinaryOperation,
+            Block,
+            Break,
+            Conditional,
+            Continue,
+            DoWhileStatement,
+            ElementaryTypeName,
+            ElementaryTypeNameExpression,
+            EmitStatement,
+            EnumDefinition,
+            EnumValue,
+            ErrorDefinition,
+            EventDefinition,
+            ExpressionStatement,
+            ForStatement,
+            FunctionCall,
+            FunctionCallOptions,
+            FunctionTypeName,
+            Identifier,
+            IdentifierPath,
+            IfStatement,
+            ImportDirective,
+            IndexAccess,
+            IndexRangeAccess,
+            InheritanceSpecifier,
+            InlineAssembly,
+            Literal,
+            Mapping,
+            MemberAccess,
+            ModifierInvocation,
+            NewExpression,
+            OverrideSpecifier,
+            ParameterList,
+            PlaceholderStatement,
+            PragmaDirective,
+            Return,
+            RevertStatement,
+            StructDefinition,
+            StructuredDocumentation,
+            TryCatchClause,
+            TryStatement,
+            TupleExpression,
+            UnaryOperation,
+            UncheckedBlock,
+            UserDefinedTypeName,
+            UserDefinedValueTypeDefinition,
+            UsingForDirective,
+            VariableDeclaration,
+            VariableDeclarationStatement,
+            WhileStatement;
+        yul:
+            YulAssignment,
+            YulBlock,
+            YulCase,
+            YulExpression,
+            YulExpressionStatement,
+            YulForLoop,
+            YulFunctionCall,
+            YulFunctionDefinition,
+            YulIdentifier,
+            YulIf,
+            YulLiteral,
+            YulStatement,
+            YulSwitch,
+            YulTypedName,
+            YulVariableDeclaration;
     }
 
     fn visit_contract_definition(&mut self, node: &ContractDefinition) -> Result<bool> {
@@ -148,46 +189,6 @@ impl ASTConstVisitor for WorkspaceContext {
         self.nodes.insert(node.id, ASTNode::SourceUnit(node.clone()));
         self.source_units_context.push(node.clone());
         self.last_source_unit_id = node.id;
-        Ok(true)
-    }
-
-    fn visit_yul_function_call(&mut self, node: &YulFunctionCall) -> Result<bool> {
-        self.yul_function_calls_context.insert(
-            node.clone(),
-            NodeContext {
-                source_unit_id: self.last_source_unit_id,
-                contract_definition_id: self.last_contract_definition_id,
-                function_definition_id: self.last_function_definition_id,
-                modifier_definition_id: self.last_modifier_definition_id,
-            },
-        );
-        Ok(true)
-    }
-
-    fn visit_yul_identifier(&mut self, node: &YulIdentifier) -> Result<bool> {
-        // No node ID in Yul
-        self.yul_identifiers_context.insert(
-            node.clone(),
-            NodeContext {
-                source_unit_id: self.last_source_unit_id,
-                contract_definition_id: self.last_contract_definition_id,
-                function_definition_id: self.last_function_definition_id,
-                modifier_definition_id: self.last_modifier_definition_id,
-            },
-        );
-        Ok(true)
-    }
-
-    fn visit_yul_assignment(&mut self, node: &YulAssignment) -> Result<bool> {
-        self.yul_assignments_context.insert(
-            node.clone(),
-            NodeContext {
-                source_unit_id: self.last_source_unit_id,
-                contract_definition_id: self.last_contract_definition_id,
-                function_definition_id: self.last_function_definition_id,
-                modifier_definition_id: self.last_modifier_definition_id,
-            },
-        );
         Ok(true)
     }
 
