@@ -1,5 +1,5 @@
 use crate::{
-    ast::{SourceUnit, ast_visitor::Node},
+    ast::{Node, SourceUnit},
     context::{
         graph::{LegacyWorkspaceCallGraph, Transpose, WorkspaceCallGraphs},
         router::Router,

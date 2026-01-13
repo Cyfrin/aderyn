@@ -2,14 +2,7 @@ use super::{
     graph::{LegacyWorkspaceCallGraph, WorkspaceCallGraphs},
     router::Router,
 };
-use crate::{
-    ast::{
-        ast_visitor::{ASTConstVisitor, Node},
-        macros::with_node_types,
-        *,
-    },
-    stats::IgnoreLine,
-};
+use crate::{ast::*, stats::IgnoreLine};
 use paste::paste;
 use solidity_ast::EvmVersion;
 use std::{
@@ -17,12 +10,30 @@ use std::{
     path::PathBuf,
 };
 
+pub use crate::context::{ASTNode, Capturable};
+
+/*
+ * Define
+ *  WorkspaceContext,
+ *  NodeContext
+ *
+ *  impl Workspace
+ */
+
 macro_rules! create_workspace_context {
     (
         regular: $($type:ident),* $(,)?;
         yul: $($yul_type:ident),* $(,)?;
         yul_sourceless: $($yul_sourceless:ident),* $(,)?;
     ) => {
+        create_workspace_context!(
+            $($type),*,
+            $($yul_type),*,
+            $($yul_sourceless),*,
+        );
+    };
+
+    ($($type:ident),* $(,)?,) => {
         paste! {
             #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
             pub struct NodeContext {
@@ -50,71 +61,14 @@ macro_rules! create_workspace_context {
 
                 pub source_units_context: Vec<SourceUnit>,
 
-                // Yul nodes
-                $(
-                    pub(crate) [<$yul_type:snake s_context>]: HashMap<$yul_type, NodeContext>,
-                )*
-
-                // Yul sourceless nodes
-                $(
-                    pub(crate) [<$yul_sourceless:snake s_context>]: HashMap<$yul_sourceless, NodeContext>,
-                )*
-
-                // Regular Nodes
-                $(
-                    pub(crate) [<$type:snake s_context>]: HashMap<$type, NodeContext>,
-                )*
+                $(pub(crate) [<$type:snake s_context>]: HashMap<$type, NodeContext>,)*
             }
 
-            #[derive(Debug, Clone, PartialEq)]
-            pub enum ASTNode {
-                // Regular nodes
-                $($type($type),)*
-
-                // Yul nodes
-                $($yul_type($yul_type),)*
-
-                // Yul sourceless nodes
-                $($yul_sourceless($yul_sourceless),)*
-
-                // Source Unit
-                SourceUnit(SourceUnit),
-            }
-
-            #[derive(Clone)]
-            pub enum Capturable {
-                // Regular nodes
-                $($type($type),)*
-
-                // Yul nodes
-                $($yul_type($yul_type),)*
-
-                // Yul sourceless nodes
-                $($yul_sourceless($yul_sourceless),)*
-
-                ASTNode(ASTNode),
-                SourceUnit(SourceUnit),
-            }
 
             impl WorkspaceContext {
-                // Regular nodes
                 $(
                     pub fn [<$type:snake s>](&self) -> Vec<&$type> {
                         self.[<$type:snake s_context>].keys().collect()
-                    }
-                )*
-
-                // Yul nodes
-                $(
-                    pub fn [<$yul_type:snake s>](&self) -> Vec<&$yul_type> {
-                        self.[<$yul_type:snake s_context>].keys().collect()
-                    }
-                )*
-
-                // Yul sourceless nodes
-                $(
-                    pub fn [<$yul_sourceless:snake s>](&self) -> Vec<&$yul_sourceless> {
-                        self.[<$yul_sourceless:snake s_context>].keys().collect()
                     }
                 )*
 
@@ -124,22 +78,7 @@ macro_rules! create_workspace_context {
 
                 pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
                     let source_unit_id = match node {
-                        // Regular nodes
-                        $(
-                            ASTNode::$type(n) => self.[<$type:snake s_context>].get(n).map(|c| c.source_unit_id),
-                        )*
-
-                        // Yul nodes
-                        $(
-                            ASTNode::$yul_type(n) => self.[<$yul_type:snake s_context>].get(n).map(|c| c.source_unit_id),
-                        )*
-
-                        // Yul sourceless nodes
-                        $(
-                            ASTNode::$yul_sourceless(n) => self.[<$yul_sourceless:snake s_context>].get(n).map(|c| c.source_unit_id),
-                        )*
-
-                        // Source Unit AST Node
+                        $(ASTNode::$type(n) => self.[<$type:snake s_context>].get(n).map(|c| c.source_unit_id),)*
                         ASTNode::SourceUnit(n) => Some(n.id),
                     };
                     source_unit_id.and_then(|id| {
@@ -147,221 +86,8 @@ macro_rules! create_workspace_context {
                     })
                 }
             }
-
-            // Regular Nodes
-            $(
-                impl From<$type> for Capturable {
-                    fn from(value: $type) -> Self {
-                        Self::$type(value)
-                    }
-                }
-
-                impl From<&$type> for Capturable {
-                    fn from(value: &$type) -> Self {
-                        Self::$type(value.clone())
-                    }
-                }
-            )*
-
-            // Yul Nodes
-            $(
-                impl From<$yul_type> for Capturable {
-                    fn from(value: $yul_type) -> Self {
-                        Self::$yul_type(value)
-                    }
-                }
-
-                impl From<&$yul_type> for Capturable {
-                    fn from(value: &$yul_type) -> Self {
-                        Self::$yul_type(value.clone())
-                    }
-                }
-            )*
-
-            // Yul sourceless Nodes
-            $(
-                impl From<$yul_sourceless> for Capturable {
-                    fn from(value: $yul_sourceless) -> Self {
-                        Self::$yul_sourceless(value)
-                    }
-                }
-
-                impl From<&$yul_sourceless> for Capturable {
-                    fn from(value: &$yul_sourceless) -> Self {
-                        Self::$yul_sourceless(value.clone())
-                    }
-                }
-            )*
-
-            // Source Unit
-            impl From<SourceUnit> for Capturable {
-                fn from(value: SourceUnit) -> Self {
-                    Self::SourceUnit(value)
-                }
-            }
-
-            impl From<&SourceUnit> for Capturable {
-                fn from(value: &SourceUnit) -> Self {
-                    Self::SourceUnit(value.clone())
-                }
-            }
-
-            // ASTNode
-            impl From<ASTNode> for Capturable {
-                fn from(value: ASTNode) -> Self {
-                    Self::ASTNode(value)
-                }
-            }
-
-            impl From<&ASTNode> for Capturable {
-                fn from(value: &ASTNode) -> Self {
-                    Self::ASTNode(value.clone())
-                }
-            }
-
-            impl Capturable {
-                pub fn make_key(&self, context: &WorkspaceContext) -> (String, usize, String) {
-                    match self {
-                        Self::ASTNode(node) => context.get_node_sort_key(node),
-                        Self::SourceUnit(n) => context.get_node_sort_key(&n.into()),
-                        $(Self::$type(n) => context.get_node_sort_key(&n.into()),)*
-                        $(Self::$yul_type(n) => context.get_node_sort_key(&n.into()),)*
-                        $(Self::$yul_sourceless(n) => context.get_node_sort_key(&n.into()),)*
-                    }
-                }
-                pub fn id(&self) -> Option<NodeID> {
-                    match self {
-                        Self::ASTNode(ast_node) => ast_node.id(),
-                        Self::SourceUnit(source_unit_node) => Some(source_unit_node.id),
-                        $(Self::$type(n) => Some(n.id),)*
-                        $(Self::$yul_type(_) => None,)*
-                        $(Self::$yul_sourceless(_) => None,)*
-                    }
-                }
-            }
-
-            // Regular nodes
-            $(
-                impl From<$type> for ASTNode {
-                    fn from(value: $type) -> Self {
-                        ASTNode::$type(value)
-                    }
-                }
-
-                impl From<&$type> for ASTNode {
-                    fn from(value: &$type) -> Self {
-                        ASTNode::$type(value.clone())
-                    }
-                }
-            )*
-
-            // Yul nodes
-            $(
-                impl From<$yul_type> for ASTNode {
-                    fn from(value: $yul_type) -> Self {
-                        ASTNode::$yul_type(value)
-                    }
-                }
-
-                impl From<&$yul_type> for ASTNode {
-                    fn from(value: &$yul_type) -> Self {
-                        ASTNode::$yul_type(value.clone())
-                    }
-                }
-            )*
-
-            // Yul sourceless nodes
-            $(
-                impl From<$yul_sourceless> for ASTNode {
-                    fn from(value: $yul_sourceless) -> Self {
-                        ASTNode::$yul_sourceless(value)
-                    }
-                }
-
-                impl From<&$yul_sourceless> for ASTNode {
-                    fn from(value: &$yul_sourceless) -> Self {
-                        ASTNode::$yul_sourceless(value.clone())
-                    }
-                }
-            )*
-
-            // Source Unit
-            impl From<SourceUnit> for ASTNode {
-                fn from(value: SourceUnit) -> Self {
-                    ASTNode::SourceUnit(value)
-                }
-            }
-
-            impl From<&SourceUnit> for ASTNode {
-                fn from(value: &SourceUnit) -> Self {
-                    ASTNode::SourceUnit(value.clone())
-                }
-            }
-
-            impl ASTNode {
-                pub fn node_type(&self) -> NodeType {
-                    match self {
-                        $(ASTNode::$type(_) => NodeType::$type,)*
-                        $(ASTNode::$yul_type(_) => NodeType::$yul_type,)*
-                        $(ASTNode::$yul_sourceless(_) => NodeType::$yul_sourceless,)*
-                        ASTNode::SourceUnit(_) => NodeType::SourceUnit,
-                    }
-                }
-                pub fn id(&self) -> Option<NodeID> {
-                    match self {
-                        $(ASTNode::$type(n) => Some(n.id),)*
-                        $(ASTNode::$yul_type(_) => None,)*
-                        $(ASTNode::$yul_sourceless(_) => None,)*
-                        ASTNode::SourceUnit(n) => Some(n.id),
-                    }
-                }
-            }
-
-            impl Node for ASTNode {
-                fn accept(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
-                    match self {
-                        $(ASTNode::$type(n) => n.accept(visitor),)*
-                        $(ASTNode::$yul_type(n) => n.accept(visitor),)*
-                        $(ASTNode::$yul_sourceless(n) => n.accept(visitor),)*
-                        ASTNode::SourceUnit(n) => n.accept(visitor),
-                    }
-                }
-                fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
-                    match self {
-                        $(ASTNode::$type(n) => n.accept_metadata(visitor),)*
-                        $(ASTNode::$yul_type(n) => n.accept_metadata(visitor),)*
-                        $(ASTNode::$yul_sourceless(n) => n.accept_metadata(visitor),)*
-                        ASTNode::SourceUnit(n) => n.accept_metadata(visitor),
-                    }
-                }
-                fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
-                    visitor.visit_node_id(self.id())?;
-                    Ok(())
-                }
-            }
-
-            impl ASTNode {
-                pub fn src(&self) -> Option<&str> {
-                    match self {
-                        $(ASTNode::$type(node) => Some(&node.src),)*
-                        $(ASTNode::$yul_type(node) => Some(&node.src),)*
-                        $(ASTNode::$yul_sourceless(_) => None,)*
-                        ASTNode::SourceUnit(node) => Some(&node.src),
-                    }
-                }
-            }
-
         }
     };
 }
 
 with_node_types!(create_workspace_context);
-
-// NOTE: YulAssignment and other sourceless yul nodes don't come with "src" field, so we can't
-// capture location. Therefore they are categorized as "yul_sourceless" in the with_node_types!
-// macro. Temporary workaround is to inspect higher level Yul constructs (such as YulFunctionCall,
-// YulIdentifier, YulLiteral, etc) and then search for trigger conditions inside those.
-// If we need to flag, then flag the higher level Yul construct.
-//
-// Hopefully later versions of Solc emit some kind of "src" field. At that point, you can
-// move YulAssignment and others from yul_sourceless to yul in macros.rs!
