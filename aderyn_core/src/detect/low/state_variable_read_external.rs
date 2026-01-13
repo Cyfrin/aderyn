@@ -8,11 +8,9 @@ use crate::ast::{
 };
 
 use crate::{
+    ast::{ExtractFunctionCalls, ExtractVariableDeclarations},
     capture,
-    context::{
-        browser::{ExtractFunctionCalls, ExtractVariableDeclarations},
-        workspace::WorkspaceContext,
-    },
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

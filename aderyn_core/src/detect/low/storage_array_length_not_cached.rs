@@ -91,9 +91,12 @@ mod loop_investigation_helper {
     use std::collections::BTreeSet;
 
     use crate::{
-        ast::{ASTNode, Expression, ForStatement, Identifier, NodeID, TypeDescriptions},
+        ast::{
+            ASTNode, Expression, ExtractMemberAccesss, ForStatement, Identifier, NodeID,
+            TypeDescriptions,
+        },
         context::{
-            browser::{ApproximateStorageChangeFinder, ExtractMemberAccesss},
+            browser::ApproximateStorageChangeFinder,
             graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
             workspace::WorkspaceContext,
         },

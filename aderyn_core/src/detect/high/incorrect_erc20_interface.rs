@@ -3,8 +3,9 @@ use std::{collections::BTreeMap, convert::identity, error::Error};
 use crate::ast::{ASTNode, NodeID, Visibility};
 
 use crate::{
+    ast::ExtractFunctionDefinitions,
     capture,
-    context::{browser::ExtractFunctionDefinitions, workspace::WorkspaceContext},
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

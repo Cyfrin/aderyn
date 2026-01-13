@@ -3,9 +3,10 @@ use std::{collections::BTreeMap, error::Error};
 use crate::ast::{Expression, FunctionCall, FunctionCallKind, NodeID, NodeType};
 
 use crate::{
+    ast::{ExtractBinaryOperations, ExtractIdentifiers},
     capture,
     context::{
-        browser::{ExtractBinaryOperations, ExtractIdentifiers, GetClosestAncestorOfTypeX},
+        browser::GetClosestAncestorOfTypeX,
         workspace::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},

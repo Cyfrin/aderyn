@@ -1,10 +1,10 @@
 use super::render::*;
 use crate::{
-    ast::{ASTNode, ContractDefinition, FunctionKind, NodeType, Visibility},
-    context::{
-        browser::{ExtractVariableDeclarations, GetClosestAncestorOfTypeX},
-        workspace::WorkspaceContext,
+    ast::{
+        ASTNode, ContractDefinition, ExtractVariableDeclarations, FunctionKind, NodeType,
+        Visibility,
     },
+    context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
 };
 use rmcp::ErrorData as McpError;
 

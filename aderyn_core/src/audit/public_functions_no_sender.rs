@@ -2,11 +2,8 @@ use prettytable::{Row, row};
 
 use super::auditor::AuditorDetector;
 use crate::{
-    ast::{FunctionKind, NodeType},
-    context::{
-        browser::ExtractModifierInvocations,
-        workspace::{ASTNode, WorkspaceContext},
-    },
+    ast::{ExtractModifierInvocations, FunctionKind, NodeType},
+    context::workspace::{ASTNode, WorkspaceContext},
     detect::helpers::{
         get_implemented_external_and_public_functions, has_msg_sender_binary_operation,
     },

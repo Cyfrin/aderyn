@@ -1,13 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::NodeID,
+    ast::{ExtractIdentifiers, ExtractModifierInvocations, ExtractRevertStatements, NodeID},
     capture,
-    context::{
-        browser::{ExtractIdentifiers, ExtractModifierInvocations, ExtractRevertStatements},
-        graph::CallGraphVisitor,
-        workspace::WorkspaceContext,
-    },
+    context::{graph::CallGraphVisitor, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

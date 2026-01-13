@@ -9,11 +9,10 @@ use crate::ast::{
 };
 
 use crate::{
+    ast::{ExtractPragmaDirectives, ExtractVariableDeclarations},
     capture,
     context::{
-        browser::{
-            ExtractPragmaDirectives, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
-        },
+        browser::GetClosestAncestorOfTypeX,
         workspace::{ASTNode, WorkspaceContext},
     },
     detect::{

@@ -1,9 +1,6 @@
 use crate::{
     ast::*,
-    context::{
-        browser::ExtractImmediateChildrenIDs,
-        workspace::{ASTNode, WorkspaceContext},
-    },
+    context::workspace::{ASTNode, WorkspaceContext},
 };
 
 pub trait GetImmediateChildren {

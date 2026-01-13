@@ -1,11 +1,11 @@
 use std::collections::{HashMap, HashSet, hash_map};
 
 use crate::{
-    ast::{Expression, IdentifierOrIdentifierPath, NodeID, NodeType},
-    context::{
-        browser::{ExtractFunctionCalls, ExtractModifierInvocations},
-        workspace::WorkspaceContext,
+    ast::{
+        Expression, ExtractFunctionCalls, ExtractModifierInvocations, IdentifierOrIdentifierPath,
+        NodeID, NodeType,
     },
+    context::workspace::WorkspaceContext,
 };
 
 use crate::context::graph::{

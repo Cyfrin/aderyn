@@ -1,10 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::{ASTNode, NodeID},
+    ast::{ASTNode, ExtractMemberAccesss, NodeID},
     capture,
     context::{
-        browser::ExtractMemberAccesss,
         graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },

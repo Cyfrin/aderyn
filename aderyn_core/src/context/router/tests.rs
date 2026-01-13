@@ -1,9 +1,8 @@
 #[cfg(test)]
 mod mir_router {
     use crate::{
-        ast::ASTNode,
+        ast::{ASTNode, ExtractFunctionCalls},
         context::{
-            browser::ExtractFunctionCalls,
             router::{ECDest, Router},
             workspace::WorkspaceContext,
         },

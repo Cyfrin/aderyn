@@ -1,12 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::{ContractKind, NodeID, NodeType},
+    ast::{ContractKind, ExtractContractDefinitions, NodeID, NodeType},
     capture,
-    context::{
-        browser::{ExtractContractDefinitions, GetClosestAncestorOfTypeX},
-        workspace::WorkspaceContext,
-    },
+    context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

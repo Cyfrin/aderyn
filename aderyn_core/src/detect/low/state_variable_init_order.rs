@@ -1,10 +1,8 @@
 use crate::{
-    ast::{FunctionKind, NodeID},
+    ast::{ExtractFunctionCalls, ExtractReferencedDeclarations, FunctionKind, NodeID},
     capture,
     context::{
-        browser::{
-            ApproximateStorageChangeFinder, ExtractFunctionCalls, ExtractReferencedDeclarations,
-        },
+        browser::ApproximateStorageChangeFinder,
         graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },

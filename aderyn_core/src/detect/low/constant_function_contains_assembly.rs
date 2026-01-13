@@ -3,10 +3,9 @@ use std::{collections::BTreeMap, error::Error, str::FromStr};
 use crate::ast::{ASTNode, NodeID, NodeType, StateMutability};
 
 use crate::{
+    ast::{ExtractInlineAssemblys, ExtractPragmaDirectives},
     capture,
-    context::browser::{
-        ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
-    },
+    context::browser::GetClosestAncestorOfTypeX,
 };
 
 use crate::{

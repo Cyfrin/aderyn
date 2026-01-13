@@ -3,9 +3,9 @@ use std::{collections::BTreeMap, error::Error};
 use crate::ast::{ASTNode, Expression, FunctionCall, Identifier, NodeID};
 
 use crate::{
+    ast::ExtractReferencedDeclarations,
     capture,
     context::{
-        browser::ExtractReferencedDeclarations,
         graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },

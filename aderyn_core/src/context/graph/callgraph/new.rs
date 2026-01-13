@@ -1,7 +1,7 @@
 use crate::{
-    ast::{NodeID, NodeType},
+    ast::{ExtractFunctionCalls, ExtractModifierInvocations, NodeID, NodeType},
     context::{
-        browser::{ExtractFunctionCalls, ExtractModifierInvocations, GetClosestAncestorOfTypeX},
+        browser::GetClosestAncestorOfTypeX,
         workspace::{ASTNode, WorkspaceContext},
     },
 };

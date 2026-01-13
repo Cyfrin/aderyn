@@ -3,11 +3,9 @@ use std::{collections::BTreeMap, error::Error};
 use crate::ast::{NodeID, NodeType, TypeName};
 
 use crate::{
+    ast::ExtractPragmaDirectives,
     capture,
-    context::{
-        browser::ExtractPragmaDirectives,
-        workspace::{ASTNode, WorkspaceContext},
-    },
+    context::workspace::{ASTNode, WorkspaceContext},
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers::pragma_directive_to_semver,

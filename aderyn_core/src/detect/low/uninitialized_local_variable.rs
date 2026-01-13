@@ -6,8 +6,9 @@ use std::{
 use crate::ast::{ASTNode, NodeID};
 
 use crate::{
+    ast::ExtractReferencedDeclarations,
     capture,
-    context::{browser::ExtractReferencedDeclarations, workspace::WorkspaceContext},
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

@@ -1,10 +1,6 @@
 use crate::{
-    ast::ContractDefinition,
-    context::{
-        browser::{ExtractFunctionCalls, ExtractModifierInvocations},
-        graph::*,
-        workspace::WorkspaceContext,
-    },
+    ast::{ContractDefinition, ExtractFunctionCalls, ExtractModifierInvocations},
+    context::{graph::*, workspace::WorkspaceContext},
 };
 use std::collections::{HashSet, hash_map::*};
 

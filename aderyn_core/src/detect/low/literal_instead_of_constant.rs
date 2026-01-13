@@ -4,13 +4,13 @@ use std::{
 };
 
 use crate::{
-    ast::{Literal, LiteralKind, NodeID},
+    ast::{
+        ExtractFunctionDefinitions, ExtractLiterals, ExtractModifierDefinitions, Literal,
+        LiteralKind, NodeID,
+    },
     capture,
     context::{
-        browser::{
-            ExtractFunctionDefinitions, ExtractLiterals, ExtractModifierDefinitions,
-            GetImmediateParent,
-        },
+        browser::GetImmediateParent,
         workspace::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},

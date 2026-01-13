@@ -3,11 +3,9 @@ use std::{collections::BTreeMap, error::Error};
 use crate::ast::{ContractKind, NodeID, NodeType};
 
 use crate::{
+    ast::ExtractVariableDeclarations,
     capture,
-    context::{
-        browser::{ExtractVariableDeclarations, GetClosestAncestorOfTypeX},
-        workspace::WorkspaceContext,
-    },
+    context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -80,8 +78,8 @@ impl IssueDetector for LocalVariableShadowingDetector {
 
 mod contract_hierarchy_variable_helpers {
     use crate::{
-        ast::{ASTNode, ContractDefinition, VariableDeclaration},
-        context::{browser::ExtractVariableDeclarations, workspace::WorkspaceContext},
+        ast::{ASTNode, ContractDefinition, ExtractVariableDeclarations, VariableDeclaration},
+        context::workspace::WorkspaceContext,
     };
 
     impl ContractDefinition {

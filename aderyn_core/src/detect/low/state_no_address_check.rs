@@ -4,12 +4,12 @@ use std::{
 };
 
 use crate::{
-    ast::{Assignment, BinaryOperation, Expression, Mutability, NodeID, VariableDeclaration},
-    capture,
-    context::{
-        browser::{ExtractAssignments, ExtractBinaryOperations, ExtractIdentifiers},
-        workspace::WorkspaceContext,
+    ast::{
+        Assignment, BinaryOperation, Expression, ExtractAssignments, ExtractBinaryOperations,
+        ExtractIdentifiers, Mutability, NodeID, VariableDeclaration,
     },
+    capture,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
