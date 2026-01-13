@@ -120,12 +120,7 @@ macro_rules! define_ast_const_visitor_and_implement_for_workspace_context {
                             .insert(node.id, ASTNode::$node(node.clone()));
                         self.[<$node:snake s_context>].insert(
                             node.clone(),
-                            NodeContext {
-                                source_unit_id: self.last_source_unit_id,
-                                contract_definition_id: self.last_contract_definition_id,
-                                function_definition_id: self.last_function_definition_id,
-                                modifier_definition_id: self.last_modifier_definition_id,
-                            },
+                            NodeContext { source_unit_id: self.last_source_unit_id },
                         );
                         Ok(true)
                     }
@@ -136,12 +131,7 @@ macro_rules! define_ast_const_visitor_and_implement_for_workspace_context {
                     fn [<visit_ $yul_node:snake>](&mut self, node: &$yul_node) -> Result<bool> {
                         self.[<$yul_node:snake s_context>].insert(
                             node.clone(),
-                            NodeContext {
-                                source_unit_id: self.last_source_unit_id,
-                                contract_definition_id: self.last_contract_definition_id,
-                                function_definition_id: self.last_function_definition_id,
-                                modifier_definition_id: self.last_modifier_definition_id,
-                            },
+                            NodeContext { source_unit_id: self.last_source_unit_id },
                         );
                         Ok(true)
                     }

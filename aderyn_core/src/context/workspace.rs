@@ -27,18 +27,11 @@ macro_rules! create_workspace_context {
             #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
             pub struct NodeContext {
                 pub source_unit_id: NodeID,
-                pub contract_definition_id: Option<NodeID>,
-                pub function_definition_id: Option<NodeID>,
-                pub modifier_definition_id: Option<NodeID>,
             }
 
             #[derive(Default, Debug)]
             pub struct WorkspaceContext {
                 pub last_source_unit_id: NodeID,
-                pub last_contract_definition_id: Option<NodeID>,
-                pub last_function_definition_id: Option<NodeID>,
-                pub last_modifier_definition_id: Option<NodeID>,
-
                 pub parent_link: HashMap<NodeID, NodeID>,
                 pub evm_version: EvmVersion,
 
