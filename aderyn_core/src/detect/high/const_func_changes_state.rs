@@ -102,11 +102,8 @@ mod func_compilation_solc_pragma_helper {
     use semver::{Version, VersionReq};
 
     use crate::{
-        ast::{FunctionDefinition, NodeType},
-        context::{
-            browser::{ExtractPragmaDirectives, GetClosestAncestorOfTypeX},
-            workspace::WorkspaceContext,
-        },
+        ast::{ExtractPragmaDirectives, FunctionDefinition, NodeType},
+        context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
         detect::helpers,
     };
 

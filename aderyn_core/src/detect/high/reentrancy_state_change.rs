@@ -6,9 +6,10 @@ use std::{
 use crate::{ast::NodeID, context::browser::Peek};
 
 use crate::{
+    ast::ExtractFunctionCalls,
     capture,
     context::{
-        browser::{ApproximateStorageChangeFinder, ExtractFunctionCalls},
+        browser::ApproximateStorageChangeFinder,
         flow::{Cfg, CfgNodeId},
         workspace::WorkspaceContext,
     },

@@ -1,12 +1,9 @@
 use std::{collections::BTreeMap, error::Error, ops::Add};
 
 use crate::{
-    ast::{NodeID, TypeName, VariableDeclaration},
+    ast::{ExtractVariableDeclarations, NodeID, TypeName, VariableDeclaration},
     capture,
-    context::{
-        browser::ExtractVariableDeclarations,
-        workspace::{ASTNode, WorkspaceContext},
-    },
+    context::workspace::{ASTNode, WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

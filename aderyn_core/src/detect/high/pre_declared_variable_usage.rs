@@ -6,11 +6,9 @@ use std::{
 use crate::ast::{ASTNode, NodeID};
 
 use crate::{
+    ast::{ExtractIdentifiers, ExtractVariableDeclarations},
     capture,
-    context::{
-        browser::{ExtractIdentifiers, ExtractVariableDeclarations},
-        workspace::WorkspaceContext,
-    },
+    context::workspace::WorkspaceContext,
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers,

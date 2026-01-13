@@ -2,16 +2,11 @@ use semver::{Error, VersionReq};
 
 use crate::{
     ast::{
-        ASTNode, Expression, FunctionDefinition, Identifier, LiteralKind, MemberAccess, NodeID,
-        PragmaDirective, Visibility,
+        ASTNode, Expression, ExtractBinaryOperations, ExtractFunctionCallOptionss,
+        ExtractFunctionCalls, ExtractMemberAccesss, FunctionDefinition, Identifier, LiteralKind,
+        MemberAccess, NodeID, PragmaDirective, Visibility,
     },
-    context::{
-        browser::{
-            ExtractBinaryOperations, ExtractFunctionCallOptionss, ExtractFunctionCalls,
-            ExtractMemberAccesss,
-        },
-        workspace::WorkspaceContext,
-    },
+    context::workspace::WorkspaceContext,
 };
 
 /// Count the number of identifiers that reference a given ID in the context.

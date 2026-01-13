@@ -5,11 +5,9 @@ use crate::ast::{
 };
 
 use crate::{
+    ast::{ExtractPragmaDirectives, ExtractTupleExpressions},
     capture,
-    context::{
-        browser::{ExtractPragmaDirectives, ExtractTupleExpressions, GetImmediateParent},
-        workspace::WorkspaceContext,
-    },
+    context::{browser::GetImmediateParent, workspace::WorkspaceContext},
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers,

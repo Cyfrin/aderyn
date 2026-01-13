@@ -1,4 +1,4 @@
-use crate::ast::*;
+use crate::{ast::*, context::workspace::WorkspaceContext};
 use eyre::Result;
 
 macro_rules! define_ast_const_visitor {

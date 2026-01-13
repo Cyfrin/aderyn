@@ -1,7 +1,7 @@
 use crate::{
-    ast::{NodeID, NodeType},
+    ast::{ExtractReferencedDeclarations, NodeID, NodeType},
     context::{
-        browser::{ExtractReferencedDeclarations, GetClosestAncestorOfTypeX},
+        browser::GetClosestAncestorOfTypeX,
         workspace::{ASTNode, WorkspaceContext},
     },
 };

@@ -6,8 +6,9 @@ use std::{
 use crate::ast::{FunctionCallKind, Mutability, NodeID};
 
 use crate::{
+    ast::ExtractFunctionCalls,
     capture,
-    context::{browser::ExtractFunctionCalls, workspace::WorkspaceContext},
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 

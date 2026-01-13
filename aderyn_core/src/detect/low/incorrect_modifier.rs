@@ -4,10 +4,9 @@ use std::{
 };
 
 use crate::{
-    ast::NodeID,
+    ast::{ExtractFunctionCalls, ExtractPlaceholderStatements, ExtractRevertStatements, NodeID},
     capture,
     context::{
-        browser::{ExtractFunctionCalls, ExtractPlaceholderStatements, ExtractRevertStatements},
         flow::{Cfg, CfgNodeId},
         workspace::WorkspaceContext,
     },
