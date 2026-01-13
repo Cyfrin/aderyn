@@ -5,7 +5,6 @@ pub mod impls;
 pub mod macros;
 pub mod magic;
 pub mod node_type;
-pub mod workspace_visitor;
 pub mod yul;
 
 pub use self::{impls::*, magic::*, node_type::*, yul::*};

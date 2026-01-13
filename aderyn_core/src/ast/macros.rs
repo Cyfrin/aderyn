@@ -130,9 +130,90 @@ macro_rules! accept_id {
     };
 }
 
+macro_rules! with_node_types {
+    ($callback:ident) => {
+        $callback! {
+            regular:
+                ArrayTypeName,
+                Assignment,
+                BinaryOperation,
+                Block,
+                Break,
+                Conditional,
+                Continue,
+                ContractDefinition,
+                DoWhileStatement,
+                ElementaryTypeName,
+                ElementaryTypeNameExpression,
+                EmitStatement,
+                EnumDefinition,
+                EnumValue,
+                ErrorDefinition,
+                EventDefinition,
+                ExpressionStatement,
+                ForStatement,
+                FunctionCall,
+                FunctionCallOptions,
+                FunctionDefinition,
+                FunctionTypeName,
+                Identifier,
+                IdentifierPath,
+                IfStatement,
+                ImportDirective,
+                IndexAccess,
+                IndexRangeAccess,
+                InheritanceSpecifier,
+                InlineAssembly,
+                Literal,
+                Mapping,
+                MemberAccess,
+                ModifierDefinition,
+                ModifierInvocation,
+                NewExpression,
+                OverrideSpecifier,
+                ParameterList,
+                PlaceholderStatement,
+                PragmaDirective,
+                Return,
+                RevertStatement,
+                StructDefinition,
+                StructuredDocumentation,
+                TryCatchClause,
+                TryStatement,
+                TupleExpression,
+                UnaryOperation,
+                UncheckedBlock,
+                UserDefinedTypeName,
+                UserDefinedValueTypeDefinition,
+                UsingForDirective,
+                VariableDeclaration,
+                VariableDeclarationStatement,
+                WhileStatement;
+            yul:
+                YulFunctionCall,
+                YulIdentifier,
+                YulLiteral;
+            yul_sourceless:
+                YulAssignment,
+                YulBlock,
+                YulCase,
+                YulExpression,
+                YulExpressionStatement,
+                YulForLoop,
+                YulFunctionDefinition,
+                YulIf,
+                YulStatement,
+                YulSwitch,
+                YulTypedName,
+                YulVariableDeclaration;
+        }
+    };
+}
+
 pub(crate) use accept_id;
 pub(crate) use ast_node;
 pub(crate) use ast_node_no_partial_eq;
 pub(crate) use expr_node;
 pub(crate) use node_group;
 pub(crate) use stmt_node;
+pub(crate) use with_node_types;
