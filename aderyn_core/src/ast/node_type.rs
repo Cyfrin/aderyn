@@ -49,7 +49,7 @@ pub enum NodeType {
     SourceUnit,
     StructDefinition,
     StructuredDocumentation,
-    Throw, // suppports deserialization of older solidity code
+    Throw, // suppport pre 0.5 solidity code
     TryCatchClause,
     TryStatement,
     TupleExpression,
@@ -76,14 +76,4 @@ pub enum NodeType {
     YulSwitch,
     YulTypedName,
     YulVariableDeclaration,
-    // YulAssignment,
-    // YulBlock,
-    // YulCase,
-    // YulExpressionStatement,
-    // YulFunctionCall,
-    // YulIdentifier,
-    // YulLiteral,
-    // YulSwitch,
-    // YulTypedName,
-    // YulVariableDeclaration,
 }

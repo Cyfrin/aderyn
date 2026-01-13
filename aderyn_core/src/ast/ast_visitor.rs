@@ -1,9 +1,20 @@
-use crate::{ast::*, context::workspace::WorkspaceContext};
+use crate::{
+    ast::*,
+    context::workspace::{NodeContext, WorkspaceContext},
+};
 use eyre::Result;
 
-macro_rules! define_ast_const_visitor {
-    ($($node:ident),* $(,)?) => {
+macro_rules! define_ast_const_visitor_and_implement_for_workspace_context {
+    (
+        regular:
+        $( $node:ident ),* $(,)*;
+
+        yul:
+        $( $yul_node:ident ),* $(,)*;
+
+    ) => {
         paste::paste! {
+
             pub trait ASTConstVisitor {
                 $(
                     fn [<visit_ $node:snake>](&mut self, node: &$node) -> Result<bool> {
@@ -13,6 +24,22 @@ macro_rules! define_ast_const_visitor {
                         self.end_visit_node(node)
                     }
                 )*
+
+                $(
+                    fn [<visit_ $yul_node:snake>](&mut self, node: &$yul_node) -> Result<bool> {
+                        self.visit_node(node)
+                    }
+                    fn [<end_visit_ $yul_node:snake>](&mut self, node: &$yul_node) -> Result<()> {
+                        self.end_visit_node(node)
+                    }
+                )*
+
+                fn visit_source_unit(&mut self, node: &SourceUnit) -> Result<bool> {
+                    self.visit_node(node)
+                }
+                fn end_visit_source_unit(&mut self, node: &SourceUnit) -> Result<()> {
+                    self.end_visit_node(node)
+                }
 
                 fn visit_node(&mut self, _node: &impl Node) -> Result<bool> {
                     Ok(true)
@@ -53,82 +80,159 @@ macro_rules! define_ast_const_visitor {
                     }
                 }
             )*
+
+            $(
+                #[derive(Default)]
+                pub struct [<Extract $yul_node s>] {
+                    pub extracted: Vec<$yul_node>,
+                }
+                impl [<Extract $yul_node s>] {
+                    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+                        let mut extractor = Self::default();
+                        node.accept(&mut extractor).unwrap_or_default();
+                        extractor
+                    }
+                }
+                impl ASTConstVisitor for [<Extract $yul_node s>] {
+                    fn [<visit_ $yul_node:snake>](&mut self, node: &$yul_node) -> Result<bool> {
+                        self.extracted.push(node.clone());
+                        Ok(true)
+                    }
+                }
+            )*
+
+            impl ASTConstVisitor for WorkspaceContext {
+
+                // Regular nodes
+                $(
+                    fn [<visit_ $node:snake>](&mut self, node: &$node) -> Result<bool> {
+                        self.nodes
+                            .insert(node.id, ASTNode::$node(node.clone()));
+                        self.[<$node:snake s_context>].insert(
+                            node.clone(),
+                            NodeContext {
+                                source_unit_id: self.last_source_unit_id,
+                                contract_definition_id: self.last_contract_definition_id,
+                                function_definition_id: self.last_function_definition_id,
+                                modifier_definition_id: self.last_modifier_definition_id,
+                            },
+                        );
+                        Ok(true)
+                    }
+                )*
+
+                // Yul nodes (no ID)
+                $(
+                    fn [<visit_ $yul_node:snake>](&mut self, node: &$yul_node) -> Result<bool> {
+                        self.[<$yul_node:snake s_context>].insert(
+                            node.clone(),
+                            NodeContext {
+                                source_unit_id: self.last_source_unit_id,
+                                contract_definition_id: self.last_contract_definition_id,
+                                function_definition_id: self.last_function_definition_id,
+                                modifier_definition_id: self.last_modifier_definition_id,
+                            },
+                        );
+                        Ok(true)
+                    }
+                )*
+
+                fn visit_source_unit(&mut self, node: &SourceUnit) -> Result<bool> {
+                    self.nodes.insert(node.id, ASTNode::SourceUnit(node.clone()));
+                    self.source_units_context.push(node.clone());
+                    self.last_source_unit_id = node.id;
+                    Ok(true)
+                }
+
+                fn visit_immediate_children(
+                    &mut self,
+                    node_id: NodeID,
+                    node_children_ids: Vec<NodeID>,
+                ) -> Result<()> {
+                    for id in node_children_ids {
+                        self.parent_link.insert(id, node_id);
+                    }
+                    Ok(())
+                }
+
+            }
         }
     };
 }
 
-define_ast_const_visitor! {
-    ArrayTypeName,
-    Assignment,
-    BinaryOperation,
-    Block,
-    Break,
-    Conditional,
-    Continue,
-    ContractDefinition,
-    DoWhileStatement,
-    ElementaryTypeName,
-    ElementaryTypeNameExpression,
-    EmitStatement,
-    EnumDefinition,
-    EnumValue,
-    ErrorDefinition,
-    EventDefinition,
-    ExpressionStatement,
-    ForStatement,
-    FunctionCall,
-    FunctionCallOptions,
-    FunctionDefinition,
-    FunctionTypeName,
-    Identifier,
-    IdentifierPath,
-    IfStatement,
-    ImportDirective,
-    IndexAccess,
-    IndexRangeAccess,
-    InheritanceSpecifier,
-    InlineAssembly,
-    Literal,
-    Mapping,
-    MemberAccess,
-    ModifierDefinition,
-    ModifierInvocation,
-    NewExpression,
-    OverrideSpecifier,
-    ParameterList,
-    PlaceholderStatement,
-    PragmaDirective,
-    Return,
-    RevertStatement,
-    SourceUnit,
-    StructDefinition,
-    StructuredDocumentation,
-    TryCatchClause,
-    TryStatement,
-    TupleExpression,
-    UnaryOperation,
-    UncheckedBlock,
-    UserDefinedTypeName,
-    UserDefinedValueTypeDefinition,
-    UsingForDirective,
-    VariableDeclaration,
-    VariableDeclarationStatement,
-    WhileStatement,
-    YulAssignment,
-    YulBlock,
-    YulCase,
-    YulExpression,
-    YulExpressionStatement,
-    YulForLoop,
-    YulFunctionCall,
-    YulFunctionDefinition,
-    YulIdentifier,
-    YulIf,
-    YulLiteral,
-    YulStatement,
-    YulSwitch,
-    YulTypedName,
-    YulVariableDeclaration,
+define_ast_const_visitor_and_implement_for_workspace_context! {
+    regular:
+        ArrayTypeName,
+        Assignment,
+        BinaryOperation,
+        Block,
+        Break,
+        Conditional,
+        Continue,
+        ContractDefinition,
+        DoWhileStatement,
+        ElementaryTypeName,
+        ElementaryTypeNameExpression,
+        EmitStatement,
+        EnumDefinition,
+        EnumValue,
+        ErrorDefinition,
+        EventDefinition,
+        ExpressionStatement,
+        ForStatement,
+        FunctionCall,
+        FunctionCallOptions,
+        FunctionDefinition,
+        FunctionTypeName,
+        Identifier,
+        IdentifierPath,
+        IfStatement,
+        ImportDirective,
+        IndexAccess,
+        IndexRangeAccess,
+        InheritanceSpecifier,
+        InlineAssembly,
+        Literal,
+        Mapping,
+        MemberAccess,
+        ModifierDefinition,
+        ModifierInvocation,
+        NewExpression,
+        OverrideSpecifier,
+        ParameterList,
+        PlaceholderStatement,
+        PragmaDirective,
+        Return,
+        RevertStatement,
+        StructDefinition,
+        StructuredDocumentation,
+        TryCatchClause,
+        TryStatement,
+        TupleExpression,
+        UnaryOperation,
+        UncheckedBlock,
+        UserDefinedTypeName,
+        UserDefinedValueTypeDefinition,
+        UsingForDirective,
+        VariableDeclaration,
+        VariableDeclarationStatement,
+        WhileStatement;
+    yul:
+        YulAssignment,
+        YulBlock,
+        YulCase,
+        YulExpression,
+        YulExpressionStatement,
+        YulForLoop,
+        YulFunctionCall,
+        YulFunctionDefinition,
+        YulIdentifier,
+        YulIf,
+        YulLiteral,
+        YulStatement,
+        YulSwitch,
+        YulTypedName,
+        YulVariableDeclaration;
 }
 
 // ExtractImmediateChildren is an extractor that extracts immediate children from a node
