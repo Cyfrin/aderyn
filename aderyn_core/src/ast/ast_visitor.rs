@@ -1,17 +1,27 @@
 use crate::{
-    ast::*,
+    ast::{macros::with_node_types, *},
     context::workspace::{NodeContext, WorkspaceContext},
 };
 use eyre::Result;
 
 macro_rules! define_ast_const_visitor_and_implement_for_workspace_context {
+    // callback signature of `with_node_types!`
     (
-        regular:
-        $( $node:ident ),* $(,)*;
+        regular: $( $node:ident ),* $(,)*;
+        yul: $( $yul_node:ident ),* $(,)*;
+        yul_sourceless: $( $yul_sourceless_node:ident ),* $(,)*;
+    ) => {
+        // Flatten node types into regulat and yul
+        define_ast_const_visitor_and_implement_for_workspace_context! {
+            regular: $( $node ),*;
+            yul: $( $yul_node ),* , $( $yul_sourceless_node ),*;
+        }
+    };
 
-        yul:
-        $( $yul_node:ident ),* $(,)*;
-
+    // Final implementation
+    (
+        regular: $( $node:ident ),* $(,)*;
+        yul: $( $yul_node:ident ),* $(,)*;
     ) => {
         paste::paste! {
 
@@ -160,80 +170,7 @@ macro_rules! define_ast_const_visitor_and_implement_for_workspace_context {
     };
 }
 
-define_ast_const_visitor_and_implement_for_workspace_context! {
-    regular:
-        ArrayTypeName,
-        Assignment,
-        BinaryOperation,
-        Block,
-        Break,
-        Conditional,
-        Continue,
-        ContractDefinition,
-        DoWhileStatement,
-        ElementaryTypeName,
-        ElementaryTypeNameExpression,
-        EmitStatement,
-        EnumDefinition,
-        EnumValue,
-        ErrorDefinition,
-        EventDefinition,
-        ExpressionStatement,
-        ForStatement,
-        FunctionCall,
-        FunctionCallOptions,
-        FunctionDefinition,
-        FunctionTypeName,
-        Identifier,
-        IdentifierPath,
-        IfStatement,
-        ImportDirective,
-        IndexAccess,
-        IndexRangeAccess,
-        InheritanceSpecifier,
-        InlineAssembly,
-        Literal,
-        Mapping,
-        MemberAccess,
-        ModifierDefinition,
-        ModifierInvocation,
-        NewExpression,
-        OverrideSpecifier,
-        ParameterList,
-        PlaceholderStatement,
-        PragmaDirective,
-        Return,
-        RevertStatement,
-        StructDefinition,
-        StructuredDocumentation,
-        TryCatchClause,
-        TryStatement,
-        TupleExpression,
-        UnaryOperation,
-        UncheckedBlock,
-        UserDefinedTypeName,
-        UserDefinedValueTypeDefinition,
-        UsingForDirective,
-        VariableDeclaration,
-        VariableDeclarationStatement,
-        WhileStatement;
-    yul:
-        YulAssignment,
-        YulBlock,
-        YulCase,
-        YulExpression,
-        YulExpressionStatement,
-        YulForLoop,
-        YulFunctionCall,
-        YulFunctionDefinition,
-        YulIdentifier,
-        YulIf,
-        YulLiteral,
-        YulStatement,
-        YulSwitch,
-        YulTypedName,
-        YulVariableDeclaration;
-}
+with_node_types!(define_ast_const_visitor_and_implement_for_workspace_context);
 
 // ExtractImmediateChildren is an extractor that extracts immediate children from a node
 #[derive(Default)]

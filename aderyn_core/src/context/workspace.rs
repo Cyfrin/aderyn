@@ -5,6 +5,7 @@ use super::{
 use crate::{
     ast::{
         ast_visitor::{ASTConstVisitor, Node},
+        macros::with_node_types,
         *,
     },
     stats::IgnoreLine,
@@ -20,7 +21,7 @@ macro_rules! create_workspace_context {
     (
         regular: $($type:ident),* $(,)?;
         yul: $($yul_type:ident),* $(,)?;
-        yul_sourceless: $($yul_type_no_src:ident),* $(,)?;
+        yul_sourceless: $($yul_sourceless:ident),* $(,)?;
     ) => {
         paste! {
             #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
@@ -63,7 +64,7 @@ macro_rules! create_workspace_context {
 
                 // Yul sourceless nodes
                 $(
-                    pub(crate) [<$yul_type_no_src:snake s_context>]: HashMap<$yul_type_no_src, NodeContext>,
+                    pub(crate) [<$yul_sourceless:snake s_context>]: HashMap<$yul_sourceless, NodeContext>,
                 )*
 
                 // Regular Nodes
@@ -81,7 +82,7 @@ macro_rules! create_workspace_context {
                 $($yul_type($yul_type),)*
 
                 // Yul sourceless nodes
-                $($yul_type_no_src($yul_type_no_src),)*
+                $($yul_sourceless($yul_sourceless),)*
 
                 // Source Unit
                 SourceUnit(SourceUnit),
@@ -96,7 +97,7 @@ macro_rules! create_workspace_context {
                 $($yul_type($yul_type),)*
 
                 // Yul sourceless nodes
-                $($yul_type_no_src($yul_type_no_src),)*
+                $($yul_sourceless($yul_sourceless),)*
 
                 ASTNode(ASTNode),
                 SourceUnit(SourceUnit),
@@ -119,8 +120,8 @@ macro_rules! create_workspace_context {
 
                 // Yul sourceless nodes
                 $(
-                    pub fn [<$yul_type_no_src:snake s>](&self) -> Vec<&$yul_type_no_src> {
-                        self.[<$yul_type_no_src:snake s_context>].keys().collect()
+                    pub fn [<$yul_sourceless:snake s>](&self) -> Vec<&$yul_sourceless> {
+                        self.[<$yul_sourceless:snake s_context>].keys().collect()
                     }
                 )*
 
@@ -142,7 +143,7 @@ macro_rules! create_workspace_context {
 
                         // Yul sourceless nodes
                         $(
-                            ASTNode::$yul_type_no_src(n) => self.[<$yul_type_no_src:snake s_context>].get(n).map(|c| c.source_unit_id),
+                            ASTNode::$yul_sourceless(n) => self.[<$yul_sourceless:snake s_context>].get(n).map(|c| c.source_unit_id),
                         )*
 
                         // Source Unit AST Node
@@ -186,15 +187,15 @@ macro_rules! create_workspace_context {
 
             // Yul sourceless Nodes
             $(
-                impl From<$yul_type_no_src> for Capturable {
-                    fn from(value: $yul_type_no_src) -> Self {
-                        Self::$yul_type_no_src(value)
+                impl From<$yul_sourceless> for Capturable {
+                    fn from(value: $yul_sourceless) -> Self {
+                        Self::$yul_sourceless(value)
                     }
                 }
 
-                impl From<&$yul_type_no_src> for Capturable {
-                    fn from(value: &$yul_type_no_src) -> Self {
-                        Self::$yul_type_no_src(value.clone())
+                impl From<&$yul_sourceless> for Capturable {
+                    fn from(value: &$yul_sourceless) -> Self {
+                        Self::$yul_sourceless(value.clone())
                     }
                 }
             )*
@@ -232,7 +233,7 @@ macro_rules! create_workspace_context {
                         Self::SourceUnit(n) => context.get_node_sort_key(&n.into()),
                         $(Self::$type(n) => context.get_node_sort_key(&n.into()),)*
                         $(Self::$yul_type(n) => context.get_node_sort_key(&n.into()),)*
-                        $(Self::$yul_type_no_src(n) => context.get_node_sort_key(&n.into()),)*
+                        $(Self::$yul_sourceless(n) => context.get_node_sort_key(&n.into()),)*
                     }
                 }
                 pub fn id(&self) -> Option<NodeID> {
@@ -241,7 +242,7 @@ macro_rules! create_workspace_context {
                         Self::SourceUnit(source_unit_node) => Some(source_unit_node.id),
                         $(Self::$type(n) => Some(n.id),)*
                         $(Self::$yul_type(_) => None,)*
-                        $(Self::$yul_type_no_src(_) => None,)*
+                        $(Self::$yul_sourceless(_) => None,)*
                     }
                 }
             }
@@ -278,15 +279,15 @@ macro_rules! create_workspace_context {
 
             // Yul sourceless nodes
             $(
-                impl From<$yul_type_no_src> for ASTNode {
-                    fn from(value: $yul_type_no_src) -> Self {
-                        ASTNode::$yul_type_no_src(value)
+                impl From<$yul_sourceless> for ASTNode {
+                    fn from(value: $yul_sourceless) -> Self {
+                        ASTNode::$yul_sourceless(value)
                     }
                 }
 
-                impl From<&$yul_type_no_src> for ASTNode {
-                    fn from(value: &$yul_type_no_src) -> Self {
-                        ASTNode::$yul_type_no_src(value.clone())
+                impl From<&$yul_sourceless> for ASTNode {
+                    fn from(value: &$yul_sourceless) -> Self {
+                        ASTNode::$yul_sourceless(value.clone())
                     }
                 }
             )*
@@ -309,7 +310,7 @@ macro_rules! create_workspace_context {
                     match self {
                         $(ASTNode::$type(_) => NodeType::$type,)*
                         $(ASTNode::$yul_type(_) => NodeType::$yul_type,)*
-                        $(ASTNode::$yul_type_no_src(_) => NodeType::$yul_type_no_src,)*
+                        $(ASTNode::$yul_sourceless(_) => NodeType::$yul_sourceless,)*
                         ASTNode::SourceUnit(_) => NodeType::SourceUnit,
                     }
                 }
@@ -317,7 +318,7 @@ macro_rules! create_workspace_context {
                     match self {
                         $(ASTNode::$type(n) => Some(n.id),)*
                         $(ASTNode::$yul_type(_) => None,)*
-                        $(ASTNode::$yul_type_no_src(_) => None,)*
+                        $(ASTNode::$yul_sourceless(_) => None,)*
                         ASTNode::SourceUnit(n) => Some(n.id),
                     }
                 }
@@ -328,7 +329,7 @@ macro_rules! create_workspace_context {
                     match self {
                         $(ASTNode::$type(n) => n.accept(visitor),)*
                         $(ASTNode::$yul_type(n) => n.accept(visitor),)*
-                        $(ASTNode::$yul_type_no_src(n) => n.accept(visitor),)*
+                        $(ASTNode::$yul_sourceless(n) => n.accept(visitor),)*
                         ASTNode::SourceUnit(n) => n.accept(visitor),
                     }
                 }
@@ -336,7 +337,7 @@ macro_rules! create_workspace_context {
                     match self {
                         $(ASTNode::$type(n) => n.accept_metadata(visitor),)*
                         $(ASTNode::$yul_type(n) => n.accept_metadata(visitor),)*
-                        $(ASTNode::$yul_type_no_src(n) => n.accept_metadata(visitor),)*
+                        $(ASTNode::$yul_sourceless(n) => n.accept_metadata(visitor),)*
                         ASTNode::SourceUnit(n) => n.accept_metadata(visitor),
                     }
                 }
@@ -351,7 +352,7 @@ macro_rules! create_workspace_context {
                     match self {
                         $(ASTNode::$type(node) => Some(&node.src),)*
                         $(ASTNode::$yul_type(node) => Some(&node.src),)*
-                        $(ASTNode::$yul_type_no_src(_) => None,)*
+                        $(ASTNode::$yul_sourceless(_) => None,)*
                         ASTNode::SourceUnit(node) => Some(&node.src),
                     }
                 }
@@ -361,87 +362,13 @@ macro_rules! create_workspace_context {
     };
 }
 
-create_workspace_context! {
-    regular:
-        ArrayTypeName,
-        Assignment,
-        BinaryOperation,
-        Block,
-        Break,
-        Conditional,
-        Continue,
-        ContractDefinition,
-        DoWhileStatement,
-        ElementaryTypeName,
-        ElementaryTypeNameExpression,
-        EmitStatement,
-        EnumDefinition,
-        EnumValue,
-        ErrorDefinition,
-        EventDefinition,
-        ExpressionStatement,
-        ForStatement,
-        FunctionCall,
-        FunctionCallOptions,
-        FunctionDefinition,
-        FunctionTypeName,
-        Identifier,
-        IdentifierPath,
-        IfStatement,
-        ImportDirective,
-        IndexAccess,
-        IndexRangeAccess,
-        InheritanceSpecifier,
-        InlineAssembly,
-        Literal,
-        Mapping,
-        MemberAccess,
-        ModifierDefinition,
-        ModifierInvocation,
-        NewExpression,
-        OverrideSpecifier,
-        ParameterList,
-        PlaceholderStatement,
-        PragmaDirective,
-        Return,
-        RevertStatement,
-        StructDefinition,
-        StructuredDocumentation,
-        TryCatchClause,
-        TryStatement,
-        TupleExpression,
-        UnaryOperation,
-        UncheckedBlock,
-        UserDefinedTypeName,
-        UserDefinedValueTypeDefinition,
-        UsingForDirective,
-        VariableDeclaration,
-        VariableDeclarationStatement,
-        WhileStatement;
-    yul:
-        YulFunctionCall,
-        YulIdentifier,
-        YulLiteral;
-    yul_sourceless:
-        YulAssignment,
-        YulBlock,
-        YulCase,
-        YulExpression,
-        YulExpressionStatement,
-        YulForLoop,
-        YulFunctionDefinition,
-        YulIf,
-        YulStatement,
-        YulSwitch,
-        YulTypedName,
-        YulVariableDeclaration;
-}
+with_node_types!(create_workspace_context);
 
 // NOTE: YulAssignment and other sourceless yul nodes don't come with "src" field, so we can't
-// capture location Therefore for now it is special cased inside this macro impl. Not sure what to
-// do yet. Temporary workaround is to inspect higher level Yul constructs (such as YulFunctionCall,
+// capture location. Therefore they are categorized as "yul_sourceless" in the with_node_types!
+// macro. Temporary workaround is to inspect higher level Yul constructs (such as YulFunctionCall,
 // YulIdentifier, YulLiteral, etc) and then search for trigger conditions inside those.
-// If we need to flag, then fag the higher level Yul construct.
+// If we need to flag, then flag the higher level Yul construct.
 //
 // Hopefully later versions of Solc emit some kind of "src" field. At that point, you can
-// add YulAssignment to the list where this macro is called!
+// move YulAssignment and others from yul_sourceless to yul in macros.rs!
