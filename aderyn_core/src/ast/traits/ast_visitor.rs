@@ -4,13 +4,63 @@ use crate::{
 };
 use eyre::Result;
 
-macro_rules! implement_for_workspace_context {
+macro_rules! define_ast_const_visitor {
     (
         regular: $( $node:ident ),* $(,)*;
         yul: $( $yul_node:ident ),* $(,)*;
         yul_sourceless: $( $yul_sourceless_node:ident ),* $(,)*;
     ) => {
-        implement_for_workspace_context! {
+        define_ast_const_visitor! (
+            $( $node ),*,
+            $( $yul_node ),*,
+            $( $yul_sourceless_node ),*,
+            SourceUnit,
+        );
+    };
+
+    ($( $node:ident ),* $(,)*) => {
+        paste::paste! {
+
+            pub trait ASTConstVisitor {
+                $(
+                    fn [<visit_ $node:snake>](&mut self, node: &$node) -> Result<bool> {
+                        self.visit_node(node)
+                    }
+                    fn [<end_visit_ $node:snake>](&mut self, node: &$node) -> Result<()> {
+                        self.end_visit_node(node)
+                    }
+                )*
+
+                fn visit_node(&mut self, _node: &impl Node) -> Result<bool> {
+                    Ok(true)
+                }
+                fn end_visit_node(&mut self, _node: &impl Node) -> Result<()> {
+                    Ok(())
+                }
+
+                fn visit_immediate_children(
+                    &mut self,
+                    _node_id: NodeID,
+                    _node_children_ids: Vec<NodeID>,
+                ) -> Result<()> {
+                    Ok(())
+                }
+
+                fn visit_node_id(&mut self, _node_id: Option<NodeID>) -> Result<()> {
+                    Ok(())
+                }
+            }
+        }
+    };
+}
+
+macro_rules! implement_ast_const_for_workspace_context {
+    (
+        regular: $( $node:ident ),* $(,)*;
+        yul: $( $yul_node:ident ),* $(,)*;
+        yul_sourceless: $( $yul_sourceless_node:ident ),* $(,)*;
+    ) => {
+        implement_ast_const_for_workspace_context! {
             regular: $( $node ),*;
             yul: $( $yul_node ),* , $( $yul_sourceless_node ),*;
         }
@@ -71,72 +121,5 @@ macro_rules! implement_for_workspace_context {
     };
 }
 
-macro_rules! define_ast_const_visitor {
-    (
-        regular: $( $node:ident ),* $(,)*;
-        yul: $( $yul_node:ident ),* $(,)*;
-        yul_sourceless: $( $yul_sourceless_node:ident ),* $(,)*;
-    ) => {
-        define_ast_const_visitor! {
-            regular: $( $node ),*;
-            yul: $( $yul_node ),* , $( $yul_sourceless_node ),*;
-        }
-    };
-
-    (
-        regular: $( $node:ident ),* $(,)*;
-        yul: $( $yul_node:ident ),* $(,)*;
-    ) => {
-        paste::paste! {
-
-            pub trait ASTConstVisitor {
-                $(
-                    fn [<visit_ $node:snake>](&mut self, node: &$node) -> Result<bool> {
-                        self.visit_node(node)
-                    }
-                    fn [<end_visit_ $node:snake>](&mut self, node: &$node) -> Result<()> {
-                        self.end_visit_node(node)
-                    }
-                )*
-
-                $(
-                    fn [<visit_ $yul_node:snake>](&mut self, node: &$yul_node) -> Result<bool> {
-                        self.visit_node(node)
-                    }
-                    fn [<end_visit_ $yul_node:snake>](&mut self, node: &$yul_node) -> Result<()> {
-                        self.end_visit_node(node)
-                    }
-                )*
-
-                fn visit_source_unit(&mut self, node: &SourceUnit) -> Result<bool> {
-                    self.visit_node(node)
-                }
-                fn end_visit_source_unit(&mut self, node: &SourceUnit) -> Result<()> {
-                    self.end_visit_node(node)
-                }
-
-                fn visit_node(&mut self, _node: &impl Node) -> Result<bool> {
-                    Ok(true)
-                }
-                fn end_visit_node(&mut self, _node: &impl Node) -> Result<()> {
-                    Ok(())
-                }
-
-                fn visit_immediate_children(
-                    &mut self,
-                    _node_id: NodeID,
-                    _node_children_ids: Vec<NodeID>,
-                ) -> Result<()> {
-                    Ok(())
-                }
-
-                fn visit_node_id(&mut self, _node_id: Option<NodeID>) -> Result<()> {
-                    Ok(())
-                }
-            }
-        }
-    };
-}
-
 with_node_types!(define_ast_const_visitor);
-with_node_types!(implement_for_workspace_context);
+with_node_types!(implement_ast_const_for_workspace_context);
