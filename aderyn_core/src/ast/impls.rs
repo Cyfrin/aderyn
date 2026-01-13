@@ -1,7 +1,7 @@
-pub mod ctx;
-pub mod disp;
-pub mod node;
-pub mod own;
+mod ctx;
+mod disp;
+mod node;
+mod own;
 
 use crate::ast::*;
 
