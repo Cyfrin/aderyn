@@ -23,15 +23,19 @@ use std::path::PathBuf;
             cd my-solidity-project/
             aderyn
 
-        VS Code Extension: (1800+ downloads)
-            https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn
-
-        Github Action CI Assistant:
-            https://github.com/marketplace/actions/aderyn-ci-assistant
-
         Tip: Run `aderyn init` in the workspace root to create a config file for customizing the scan
-        Help Aderyn stay open source. Give a star to https://github.com/cyfrin/aderyn
 
+        Aderyn full tutorial:
+            https://cyfrin.gitbook.io/cyfrin-docs
+
+        Other tools:
+            1. VS Code Extension: (1800+ downloads)
+               https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn
+
+            2. Github Action CI Assistant
+               https://github.com/marketplace/actions/aderyn-ci-assistant
+
+        Help Aderyn stay open source. Give a star to https://github.com/cyfrin/aderyn
     "#},
     group(ArgGroup::new("stdout_dependent").requires("stdout")),
 )]
@@ -49,7 +53,6 @@ pub struct CommandLineArgs {
 
     /// List of path fragments to explicitly include, delimited by comma.
     ///
-    /// Use this to include only specified source files in the analysis:
     /// Examples:
     ///     -i src/MyContract.sol
     ///     -i src/MyContract.sol,src/MyOtherContract.sol
@@ -58,7 +61,6 @@ pub struct CommandLineArgs {
 
     /// List of path fragments to explicitly exclude, delimited by comma.
     ///
-    /// Use this to exclude only specified source files in the analysis:
     /// Examples:
     ///     -x src/MyContract.sol
     ///     -x src/MyContract.sol,src/MyOtherContract.sol
@@ -66,8 +68,6 @@ pub struct CommandLineArgs {
     path_excludes: Option<Vec<String>>,
 
     /// Output report final path. [options: *.json, *.md, *.sarif]
-    ///
-    /// NOTE: Overwrites existing file if found in the same path.
     #[arg(short, long, default_value = "report.md", verbatim_doc_comment, value_hint = ValueHint::FilePath)]
     output: String,
 
@@ -103,6 +103,17 @@ pub struct CommandLineArgs {
 
 #[derive(Debug, Subcommand)]
 enum MainSubcommand {
+    /// Initializes aderyn.toml for customizing scan. Optional but highly recommended.
+    Init {
+        /// Optional path inside root where aderyn.toml will be created
+        #[arg(value_hint = ValueHint::DirPath)]
+        path: Option<String>,
+    },
+    /// Start an MCP server in the project root.
+    Mcp {
+        #[command(subcommand)]
+        transport: McpTransport,
+    },
     /// Browse detector registry.
     Registry {
         /// all    - View all available detectors
@@ -111,28 +122,17 @@ enum MainSubcommand {
         #[arg(default_value = "all", verbatim_doc_comment)]
         detector: String,
     },
-    /// Generate shell completion scripts.
-    Completions {
-        /// Shell to generate completions for.
-        #[arg(value_enum)]
-        shell: SupportedShellsForCompletions,
-    },
-    /// Initializes aderyn.toml for customizing scan. Optional but highly recommended.
-    Init {
-        /// Optional path inside root where aderyn.toml will be created
-        #[arg(value_hint = ValueHint::DirPath)]
-        path: Option<String>,
-    },
     /// Browse Aderyn documentation.
     /// Chat with AI for help - aderyn docs "how to exclude files from scan?"
     Docs {
         /// Ask question.
         question: Option<String>,
     },
-    /// Start an MCP server in the project root.
-    Mcp {
-        #[command(subcommand)]
-        transport: McpTransport,
+    /// Generate shell completion scripts.
+    Completions {
+        /// Shell to generate completions for.
+        #[arg(value_enum)]
+        shell: SupportedShellsForCompletions,
     },
 }
 
