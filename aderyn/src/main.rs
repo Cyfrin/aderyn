@@ -23,65 +23,59 @@ use std::path::PathBuf;
             cd my-solidity-project/
             aderyn
 
-        VS Code Extension: (1800+ downloads)
-            https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn
-
-        Github Action CI Assistant:
-            https://github.com/marketplace/actions/aderyn-ci-assistant
-
         Tip: Run `aderyn init` in the workspace root to create a config file for customizing the scan
-        Help Aderyn stay open source. Give a star to https://github.com/cyfrin/aderyn
 
+        Aderyn full tutorial:
+            https://cyfrin.gitbook.io/cyfrin-docs
+
+        Other tools:
+            1. VS Code Extension: (1800+ downloads)
+               https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn
+
+            2. Github Action CI Assistant
+               https://github.com/marketplace/actions/aderyn-ci-assistant
+
+        Help Aderyn stay open source. Give a star to https://github.com/cyfrin/aderyn
     "#},
     group(ArgGroup::new("stdout_dependent").requires("stdout")),
 )]
 pub struct CommandLineArgs {
-    /// Commands to initialize a config file and docs help
-    #[clap(subcommand)]
+    #[clap(subcommand, verbatim_doc_comment)]
     subcommand: Option<MainSubcommand>,
 
-    /// Solidity project root directory
+    /// Solidity project root directory.
     #[arg(default_value = ".", value_hint = ValueHint::DirPath)]
     root: String,
 
-    /// Path to the contracts source directory (relative to the root)
-    /// By default, it is auto detected in most projects.
+    /// Path to the contracts source directory relative to the root. [default: auto detected]
     #[arg(short, long, use_value_delimiter = true, verbatim_doc_comment, value_hint =  ValueHint::DirPath)]
     src: Option<String>,
 
-    /// List of path fragments to include, delimited by comma (no spaces)
-    /// By default, it is auto detected.
+    /// List of path fragments to explicitly include, delimited by comma.
     ///
-    /// Use this to include only specified source files in the analysis:
     /// Examples:
     ///     -i src/MyContract.sol
     ///     -i src/MyContract.sol,src/MyOtherContract.sol
     #[arg(short = 'i', long, use_value_delimiter = true, verbatim_doc_comment, value_hint = ValueHint::Other)]
     path_includes: Option<Vec<String>>,
 
-    /// List of path fragments to exclude, delimited by comma (no spaces)
-    /// By default, it is auto detected.
+    /// List of path fragments to explicitly exclude, delimited by comma.
     ///
-    /// Use this to exclude only specified source files in the analysis:
     /// Examples:
     ///     -x src/MyContract.sol
     ///     -x src/MyContract.sol,src/MyOtherContract.sol
     #[arg(short = 'x', long, use_value_delimiter = true, verbatim_doc_comment, value_hint = ValueHint::Other)]
     path_excludes: Option<Vec<String>>,
 
-    /// Desired file path for the final report
-    /// Output file extension (.json/.md/.sarif) decides the format.
-    ///
-    /// NOTE: Allowed formats: JSON, Markdown, Sarif
-    /// NOTE: Overwrites existing file if found in the same path.
+    /// Output report final path. [options: *.json, *.md, *.sarif]
     #[arg(short, long, default_value = "report.md", verbatim_doc_comment, value_hint = ValueHint::FilePath)]
     output: String,
 
-    /// Start Aderyn's LSP server on stdout. (Must be accompanied with `--stdout`)
+    /// Start Aderyn's LSP server on stdout. (Must be accompanied with `--stdout`).
     #[arg(short, long, group = "stdout_dependent")]
     lsp: bool,
 
-    /// Only run the high severity issue detectors
+    /// Limit detectors to high severity detectors.
     #[arg(long)]
     highs_only: bool,
 
@@ -98,18 +92,29 @@ pub struct CommandLineArgs {
     #[arg(long, hide = true)]
     skip_cloc: bool,
 
-    /// Run in Auditor mode, which only outputs manual audit helpers
+    /// Run in Auditor mode, which only outputs manual audit helpers.
     #[arg(long, hide = true)]
     auditor_mode: bool,
 
-    /// Do not include code snippets in the report (reduces markdown report size in large repos)
+    /// Do not include code snippets in the report (reduces markdown report size in large repos).
     #[arg(long, hide = true)]
     no_snippets: bool,
 }
 
 #[derive(Debug, Subcommand)]
 enum MainSubcommand {
-    /// Browse detector registry
+    /// Initializes aderyn.toml for customizing scan. Optional but highly recommended.
+    Init {
+        /// Optional path inside root where aderyn.toml will be created
+        #[arg(value_hint = ValueHint::DirPath)]
+        path: Option<String>,
+    },
+    /// Start an MCP server in the project root.
+    Mcp {
+        #[command(subcommand)]
+        transport: McpTransport,
+    },
+    /// Browse detector registry.
     Registry {
         /// all    - View all available detectors
         ///
@@ -117,40 +122,29 @@ enum MainSubcommand {
         #[arg(default_value = "all", verbatim_doc_comment)]
         detector: String,
     },
-    /// Generate shell completion scripts
-    Completions {
-        /// Shell to generate completions for
-        #[arg(value_enum)]
-        shell: SupportedShellsForCompletions,
-    },
-    /// Initializes aderyn.toml. Required when solidity project root is not the workspace root
-    Init {
-        /// Optional path inside root where aderyn.toml will be created
-        #[arg(value_hint = ValueHint::DirPath)]
-        path: Option<String>,
-    },
-    /// Browse Aderyn documentation
+    /// Browse Aderyn documentation.
     /// Chat with AI for help - aderyn docs "how to exclude files from scan?"
     Docs {
-        /// Ask question
+        /// Ask question.
         question: Option<String>,
     },
-    /// Start an MCP server in the project root
-    Mcp {
-        #[command(subcommand)]
-        transport: McpTransport,
+    /// Generate shell completion scripts.
+    Completions {
+        /// Shell to generate completions for.
+        #[arg(value_enum)]
+        shell: SupportedShellsForCompletions,
     },
 }
 
 #[derive(Debug, Subcommand)]
 enum McpTransport {
-    /// Run MCP server over streamable HTTP
+    /// Run MCP server over streamable HTTP.
     HttpStream {
-        /// Port to bind the MCP server on (defaults to 6277)
+        /// Port to bind the MCP server on (defaults to 6277).
         #[arg(long, default_value_t = 6277)]
         port: u16,
     },
-    /// Run MCP server over STDIO
+    /// Run MCP server over STDIO.
     Stdio,
 }
 
