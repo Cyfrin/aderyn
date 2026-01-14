@@ -91,7 +91,6 @@ macro_rules! define_ast_node {
 macro_rules! impl_conversion_for_ast_node {
     ($($type:ident),* $(,)?) => {
 
-        // Regular nodes + Yul nodes + Yul sourceless nodes + SourceUnit
         $(
             impl From<$type> for ASTNode {
                 fn from(value: $type) -> Self {
