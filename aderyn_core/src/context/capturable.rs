@@ -15,7 +15,7 @@ macro_rules! make_capturable_node {
         yul_sourceless: $($yul_sourceless:ident),* $(,)?;
     ) => {
 
-        define_ast_node! (
+        define_capturable_node! (
             $($type),*,
             $($yul_type),*,
             $($yul_sourceless),*,
@@ -23,7 +23,7 @@ macro_rules! make_capturable_node {
             ASTNode,
         );
 
-        impl_conversion_for_ast_node! (
+        impl_conversion_for_capturable_node! (
             $($type),*,
             $($yul_type),*,
             $($yul_sourceless),*,
@@ -55,7 +55,7 @@ macro_rules! make_capturable_node {
     };
 }
 
-macro_rules! define_ast_node {
+macro_rules! define_capturable_node {
     ($($type:ident),* $(,)?) => {
 
         #[derive(Clone)]
@@ -66,9 +66,8 @@ macro_rules! define_ast_node {
     };
 }
 
-macro_rules! impl_conversion_for_ast_node {
+macro_rules! impl_conversion_for_capturable_node {
     ($($type:ident),* $(,)?) => {
-        // Regular nodes + Yul nodes + Yul sourceless nodes + SourceUnit + AST Node
         $(
             impl From<$type> for Capturable {
                 fn from(value: $type) -> Self {
