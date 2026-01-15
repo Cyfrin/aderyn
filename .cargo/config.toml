@@ -1,9 +1,0 @@
-[alias]
-xtask = "run --package xtask --bin xtask --"
-prep = "xtask reportgen"
-patch = "xtask cut-release --patch"
-minor = "xtask cut-release --minor"
-blesspr = "xtask blesspr"
-tomlgen = "xtask tomlgen"
-fixfmt = "fmt --all"
-fixclippy = "clippy --quiet --workspace --all-targets --all-features --allow-dirty --fix"

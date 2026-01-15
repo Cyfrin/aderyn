@@ -1,7 +1,0 @@
-version = 1
-# src = ""
-exclude = ["lib/"]
-# remappings = []
-# scope = [
-#     "AdminContract.sol"
-# ]

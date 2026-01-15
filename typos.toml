@@ -1,5 +1,0 @@
-[files]
-extend-exclude = ["tests/*", "benchmarks/*"]
-
-[default.extend-words]
-nd = "nd"
