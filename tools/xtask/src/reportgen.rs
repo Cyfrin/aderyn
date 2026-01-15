@@ -41,9 +41,9 @@ fn run_report(report: &crate::report_config::ReportConfig, release: bool) -> any
         cmd = cmd.arg(arg);
     }
 
-    cmd = cmd.arg("-o").arg(&report.output);
+    cmd = cmd.arg("-o").arg(report.output());
 
-    println!("Running: {} -> {}", report.name, report.output);
+    println!("Running: {} -> {}", report.name, report.output());
     cmd.run()?;
     Ok(())
 }
@@ -93,7 +93,7 @@ fn ci_verify_report(report: &crate::report_config::ReportConfig) -> anyhow::Resu
     }
 
     // Generate temp output path
-    let baseline = &report.output;
+    let baseline = &report.output();
     let workflow_output = baseline
         .replace(".md", "-workflow.md")
         .replace(".json", "-workflow.json")
