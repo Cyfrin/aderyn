@@ -41,7 +41,7 @@ fn run_report(report: &crate::report_config::ReportConfig, release: bool) -> any
         cmd = cmd.arg(arg);
     }
 
-    cmd = cmd.arg("-o").arg(&report.output());
+    cmd = cmd.arg("-o").arg(report.output());
 
     println!("Running: {} -> {}", report.name, report.output());
     cmd.run()?;
