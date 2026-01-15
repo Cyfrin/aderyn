@@ -9,6 +9,9 @@ publish = false
 anyhow = "1.0"
 xflags = "0.3"
 xshell = "0.2"
+serde.workspace = true
+serde_json.workspace = true
+toml.workspace = true
 
 [lints]
 workspace = true

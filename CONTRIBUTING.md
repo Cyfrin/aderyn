@@ -46,7 +46,7 @@ Indexed in [DeepWiki](https://deepwiki.com/Cyfrin/aderyn)
 2. Clone this repo and `cd aderyn/`
 3. Run `make` . Make sure to have tools listed at the top of the Makefile installed in your computer.
 4. Work on the issue, write unit tests. Use `cargo test <test-name>` to test. Feel free to add solidity files to `tests/contract-playground`.
-5. Run `cargo prep --cpg` to generate the report for the same.
+5. Run `cargo prep -n playground` to generate the report for the same. Run `cargo prep` to see all available reports.
 6. Once happy with the work, run `cargo blesspr` to "polish" your PR so CI can be happy.
 7. Create a pull request to `dev` branch here. The maintainers will be notified. Either @alexroan or @TilakMaddy will reach out to you.
 
@@ -59,7 +59,7 @@ Suggested VSCode extensions
 2. Run `bacon` at the root
 3. Press
   * `t` for tests
-  * `r` for generating a report on contract-playground. Shorthand for `cargo prep --cfg`
+  * `r` for generating a report on contract-playground. Shorthand for `cargo prep -n playground`
   * `a` for generating all reports. Shorthand for `cargo prep --all --parallel`
   * `Alt-b` or `⌥-b` (Option-B on Mac) for "blessing" the PR. Shorthand for `cargo blesspr`
 

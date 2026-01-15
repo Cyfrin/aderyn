@@ -1,0 +1,129 @@
+# Report Generation Configuration
+# Single source of truth for all report generation commands.
+# Used by: cargo xtask reportgen, CI workflow
+#
+# Fields:
+#   name        - unique identifier (used as CLI flag: cargo prep -n <name>)
+#   description - human-readable description
+#   root        - project root directory
+#   args        - additional CLI arguments
+#   output      - output file path (baseline for CI diff)
+#   env         - environment variables
+#   pre_command - command to run before generation (local)
+#   ci_setup    - setup command for CI (e.g., pnpm install)
+#   ci_env      - environment variables for CI (overrides env)
+#   ci_skip     - exclude from CI matrix (default: false)
+
+[[reports]]
+name = "playground"
+description = "Contract playground (markdown)"
+root = "./tests/contract-playground"
+args = ["-i", "src/", "-x", "lib/"]
+output = "./reports/report.md"
+
+[[reports]]
+name = "playground-json"
+description = "Contract playground (json)"
+root = "./tests/contract-playground"
+args = ["-i", "src/", "-x", "lib/"]
+output = "./reports/report.json"
+
+[[reports]]
+name = "playground-sarif"
+description = "Contract playground (sarif)"
+root = "./tests/contract-playground"
+output = "./reports/report.sarif"
+
+[[reports]]
+name = "adhoc"
+description = "Adhoc sol files"
+root = "./tests/adhoc-sol-files"
+output = "./reports/adhoc-sol-files-report.md"
+
+[[reports]]
+name = "sablier"
+description = "Sablier (nested root with aderyn.toml)"
+root = "./tests/2024-05-Sablier"
+output = "./reports/sablier-aderyn-toml-nested-root.md"
+ci_setup = "pnpm install --prefix tests/2024-05-Sablier/v2-core"
+ci_env = { FOUNDRY_PROFILE = "uniswap" }
+
+[[reports]]
+name = "nft"
+description = "Foundry NFT"
+root = "./tests/foundry-nft-f23"
+args = ["-i", "src/", "-x", "lib/"]
+output = "./reports/nft-report.md"
+pre_command = "cd tests/foundry-nft-f23 && forge install && cd ../.."
+
+[[reports]]
+name = "ccip"
+description = "CCIP Functions"
+root = "tests/ccip-contracts/contracts"
+args = ["--src", "src/v0.8/functions/", "-x", "tests/,test/,mocks/"]
+output = "./reports/ccip-functions-report.md"
+
+[[reports]]
+name = "uniswap"
+description = "Uniswap foundry profile"
+root = "tests/contract-playground/"
+output = "./reports/uniswap_profile.md"
+env = { FOUNDRY_PROFILE = "uniswap" }
+
+[[reports]]
+name = "prb"
+description = "PRB Math"
+root = "tests/prb-math"
+output = "reports/prb-math-report.md"
+ci_setup = "pnpm install --prefix tests/prb-math/"
+
+[[reports]]
+name = "temple"
+description = "Temple Gold"
+root = "tests/2024-07-templegold/protocol"
+output = "reports/templegold-report.md"
+ci_skip = true
+
+[[reports]]
+name = "hardhat"
+description = "Hardhat JS Playground"
+root = "tests/hardhat-js-playground"
+output = "reports/hardhat-playground-report.md"
+
+[[reports]]
+name = "nft-icm"
+description = "Foundry NFT with ICM"
+root = "tests/foundry-nft-f23-icm"
+output = "./reports/nft-report-icm.md"
+
+[[reports]]
+name = "detector-exclude"
+description = "Detector exclusion test"
+root = "tests/detector-exclude"
+output = "reports/detector-exclude-report.md"
+
+[[reports]]
+name = "detector-include"
+description = "Detector inclusion test"
+root = "tests/detector-include"
+output = "reports/detector-include-report.md"
+
+[[reports]]
+name = "viair"
+description = "Via IR compilation"
+root = "tests/via-ir-enabled"
+output = "reports/via-ir-enabled-report.md"
+
+[[reports]]
+name = "highs"
+description = "JSON highs-only filter"
+root = "./tests/adhoc-sol-files"
+args = ["--highs-only"]
+output = "./reports/adhoc-sol-files-highs-only-report.json"
+
+[[reports]]
+name = "empty"
+description = "Empty report (no matches)"
+root = "tests/contract-playground"
+args = ["-i", "IgnoreEverything.sol"]
+output = "reports/empty_report.md"

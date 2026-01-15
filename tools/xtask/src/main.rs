@@ -10,6 +10,7 @@
 mod blesspr;
 mod cut_release;
 mod flags;
+mod report_config;
 mod reportgen;
 mod tomlgen;
 
