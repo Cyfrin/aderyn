@@ -1,9 +1,10 @@
-use std::path::PathBuf;
-use std::thread;
+use std::{path::PathBuf, thread};
 use xshell::{Shell, cmd};
 
-use crate::flags::Reportgen;
-use crate::report_config::{ReportConfig, ReportgenConfig};
+use crate::{
+    flags::Reportgen,
+    report_config::{ReportConfig, ReportgenConfig},
+};
 
 fn get_project_root() -> PathBuf {
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
@@ -53,9 +54,7 @@ fn run_all_parallel(config: &ReportgenConfig, release: bool) -> anyhow::Result<(
 
     for report in reports {
         let name = report.name.clone();
-        let handle = thread::spawn(move || {
-            run_report(&report, release)
-        });
+        let handle = thread::spawn(move || run_report(&report, release));
         handles.push((name, handle));
     }
 
@@ -95,7 +94,8 @@ fn ci_verify_report(report: &crate::report_config::ReportConfig) -> anyhow::Resu
 
     // Generate temp output path
     let baseline = &report.output;
-    let workflow_output = baseline.replace(".md", "-workflow.md")
+    let workflow_output = baseline
+        .replace(".md", "-workflow.md")
         .replace(".json", "-workflow.json")
         .replace(".sarif", "-workflow.sarif");
 
@@ -103,11 +103,7 @@ fn ci_verify_report(report: &crate::report_config::ReportConfig) -> anyhow::Resu
     let mut cmd = cmd!(sh, "cargo run");
 
     // Use ci_env if present, otherwise use env
-    let env_vars = if report.ci_env.is_empty() {
-        &report.env
-    } else {
-        &report.ci_env
-    };
+    let env_vars = if report.ci_env.is_empty() { &report.env } else { &report.ci_env };
 
     for (key, val) in env_vars {
         cmd = cmd.env(key, val);
@@ -154,9 +150,9 @@ pub fn reportgen(choice: Reportgen) -> anyhow::Result<()> {
 
     // Handle --ci-verify
     if let Some(name) = &choice.ci_verify {
-        let report = config
-            .find_by_name(name)
-            .ok_or_else(|| anyhow::anyhow!("Unknown report: {}. Use --list-json to see available reports.", name))?;
+        let report = config.find_by_name(name).ok_or_else(|| {
+            anyhow::anyhow!("Unknown report: {}. Use --list-json to see available reports.", name)
+        })?;
         return ci_verify_report(report);
     }
 
@@ -171,9 +167,9 @@ pub fn reportgen(choice: Reportgen) -> anyhow::Result<()> {
 
     // Handle --name
     if let Some(name) = &choice.name {
-        let report = config
-            .find_by_name(name)
-            .ok_or_else(|| anyhow::anyhow!("Unknown report: {}. Use --list-json to see available reports.", name))?;
+        let report = config.find_by_name(name).ok_or_else(|| {
+            anyhow::anyhow!("Unknown report: {}. Use --list-json to see available reports.", name)
+        })?;
         return run_report(report, choice.release);
     }
 
