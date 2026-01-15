@@ -15,10 +15,23 @@
 
 [[reports]]
 name = "playground"
-description = "Contract Playground"
+description = "Contract playground (markdown)"
 root = "./tests/contract-playground"
 args = ["-i", "src/", "-x", "lib/"]
 output = "./reports/report.md"
+
+[[reports]]
+name = "playground-json"
+description = "Contract playground (json)"
+root = "./tests/contract-playground"
+args = ["-i", "src/", "-x", "lib/"]
+output = "./reports/report.json"
+
+[[reports]]
+name = "playground-sarif"
+description = "Contract playground (sarif)"
+root = "./tests/contract-playground"
+output = "./reports/report.sarif"
 
 [[reports]]
 name = "adhoc"
@@ -100,24 +113,11 @@ root = "tests/via-ir-enabled"
 output = "reports/via-ir-enabled-report.md"
 
 [[reports]]
-name = "playground-json"
-description = "JSON format output"
-root = "./tests/contract-playground"
-args = ["-i", "src/", "-x", "lib/"]
-output = "./reports/report.json"
-
-[[reports]]
 name = "highs"
 description = "JSON highs-only filter"
 root = "./tests/adhoc-sol-files"
 args = ["--highs-only"]
 output = "./reports/adhoc-sol-files-highs-only-report.json"
-
-[[reports]]
-name = "playground-sarif"
-description = "SARIF format output"
-root = "./tests/contract-playground"
-output = "./reports/report.sarif"
 
 [[reports]]
 name = "empty"
