@@ -7751,6 +7751,9 @@ name = "xtask"
 version = "0.5.2"
 dependencies = [
  "anyhow",
+ "serde",
+ "serde_json",
+ "toml 0.8.23",
  "xflags",
  "xshell",
 ]
