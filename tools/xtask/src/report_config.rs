@@ -22,6 +22,8 @@ pub struct ReportConfig {
     pub ci_setup: Option<String>,
     #[serde(default)]
     pub ci_env: HashMap<String, String>,
+    #[serde(default)]
+    pub ci_skip: bool,
 }
 
 impl ReportgenConfig {
@@ -36,9 +38,19 @@ impl ReportgenConfig {
         self.reports.iter().find(|r| r.name == name)
     }
 
-    /// Output report names as JSON for CI matrix generation
+    /// Output report info as JSON for CI matrix generation (excludes ci_skip reports)
     pub fn to_json(&self) -> String {
-        let names: Vec<&str> = self.reports.iter().map(|r| r.name.as_str()).collect();
-        serde_json::to_string(&names).unwrap_or_else(|_| "[]".to_string())
+        let reports: Vec<serde_json::Value> = self
+            .reports
+            .iter()
+            .filter(|r| !r.ci_skip)
+            .map(|r| {
+                serde_json::json!({
+                    "name": r.name,
+                    "description": r.description
+                })
+            })
+            .collect();
+        serde_json::to_string(&reports).unwrap_or_else(|_| "[]".to_string())
     }
 }

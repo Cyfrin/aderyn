@@ -12,6 +12,7 @@
 #   pre_command - command to run before generation (local)
 #   ci_setup    - setup command for CI (e.g., pnpm install)
 #   ci_env      - environment variables for CI (overrides env)
+#   ci_skip     - exclude from CI matrix (default: false)
 
 [[reports]]
 name = "playground"
@@ -81,6 +82,7 @@ name = "temple"
 description = "Temple Gold"
 root = "tests/2024-07-templegold/protocol"
 output = "reports/templegold-report.md"
+ci_skip = true
 
 [[reports]]
 name = "hardhat"
