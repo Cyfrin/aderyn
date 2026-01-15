@@ -131,6 +131,8 @@ fn ci_verify_report(report: &crate::report_config::ReportConfig) -> anyhow::Resu
 
     match diff_result {
         Ok(_) => {
+            // Clean up workflow file on success
+            let _ = std::fs::remove_file(&workflow_output);
             println!("OK: {} matches baseline", report.name);
             Ok(())
         }
