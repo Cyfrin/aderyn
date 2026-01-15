@@ -7,38 +7,46 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  reports-setup:
-    name: Check Reports
+  # Generate the matrix from reportgen.toml
+  matrix-setup:
+    name: Setup Matrix
     runs-on: ubuntu-latest
     outputs:
-      rust-nightly: nightly-2025-09-20
-
-    strategy:
-      fail-fast: false
-      matrix:
-        task:
-          - report-workflow
-          - uniswap_profile-workflow
-          - sablier
-          - adhoc-sol-files-workflow
-          - nft-workflow
-          - nft-workflow-env
-          - ccip-functions-report
-          - hardhat-playground-report
-          - prb-math-report
-          - report-json
-          - adhoc-sol-files-highs-only-json
-          - sarif-report
-          - empty-report
-          - include-detectors
-          - exclude-detectors
-          - via-ir-enabled
-
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout Sources
         uses: actions/checkout@v4
 
-      - name: Checkout repository with submodules
+      - name: Install Rust Nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2025-09-20
+          override: true
+
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build xtask
+        run: cargo build -p xtask
+
+      - name: Generate matrix
+        id: set-matrix
+        run: |
+          REPORTS=$(cargo xtask reportgen --list-json)
+          echo "matrix={\"task\":$REPORTS}" >> $GITHUB_OUTPUT
+
+  reports-check:
+    name: Check Reports
+    needs: matrix-setup
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.matrix-setup.outputs.matrix) }}
+
+    steps:
+      - name: Checkout Sources
         uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -52,7 +60,7 @@ jobs:
           restore-keys: |
             submodules-${{ runner.os }}-${{ hashFiles('.gitmodules') }}
 
-      - name: Install Rust Nightly (2025-01-01)
+      - name: Install Rust Nightly
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -73,77 +81,8 @@ jobs:
       - name: Restore Rust Cache
         uses: Swatinem/rust-cache@v2
 
-      - name: Prebuild (${{ matrix.task }})
-        run: |
-          cargo build
+      - name: Build
+        run: cargo build
 
-      - name: Generate Report (${{ matrix.task }})
-        run: |
-          case "${{ matrix.task }}" in
-            report-workflow)
-              cargo run -- -o ./reports/report-workflow.md  --src src/ ./tests/contract-playground/ --skip-update-check
-              diff ./reports/report.md ./reports/report-workflow.md
-              ;;
-            uniswap_profile-workflow)
-              FOUNDRY_PROFILE=uniswap cargo run -- -o ./reports/uniswap_profile-workflow.md ./tests/contract-playground/ --skip-update-check
-              diff reports/uniswap_profile.md reports/uniswap_profile-workflow.md
-              ;;
-            sablier)
-              pnpm install --prefix tests/2024-05-Sablier/v2-core
-              FOUNDRY_PROFILE=uniswap cargo run -- -o ./reports/sablier.md ./tests/2024-05-Sablier --skip-update-check
-              diff reports/sablier-aderyn-toml-nested-root.md reports/sablier.md
-              ;;
-            adhoc-sol-files-workflow)
-              cargo run -- -o ./reports/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check
-              diff ./reports/adhoc-sol-files-report.md ./reports/adhoc-sol-files-report-workflow.md
-              ;;
-            nft-workflow)
-              cargo run -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check
-              diff ./reports/nft-report.md ./reports/nft-workflow-report.md
-              ;;
-            nft-workflow-env)
-              cargo run -- -o ./reports/nft-workflow-report-icm.md ./tests/foundry-nft-f23-icm --skip-update-check
-              diff ./reports/nft-report-icm.md ./reports/nft-workflow-report-icm.md
-              ;;
-            ccip-functions-report)
-              cargo run -- -o reports/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --src src/v0.8/functions/ -x "tests/,test/,mocks/"  --skip-update-check
-              diff ./reports/ccip-functions-report.md ./reports/ccip-functions-report-workflow.md
-              ;;
-            hardhat-playground-report)
-              cargo run -- tests/hardhat-js-playground -o reports/hardhat-playground-report-workflow.md --skip-update-check
-              diff ./reports/hardhat-playground-report.md ./reports/hardhat-playground-report-workflow.md
-              ;;
-            prb-math-report)
-              pnpm install --prefix tests/prb-math/
-              cargo run -- ./tests/prb-math -o ./reports/prb-math-report-workflow.md --skip-update-check
-              diff ./reports/prb-math-report.md ./reports/prb-math-report-workflow.md
-              ;;
-            report-json)
-              cargo run -- -o ./reports/report-workflow.json -i src/ -x lib/ ./tests/contract-playground/ --skip-update-check
-              diff ./reports/report.json ./reports/report-workflow.json
-              ;;
-            adhoc-sol-files-highs-only-json)
-              cargo run -- -o ./reports/adhoc-sol-files-highs-only-report-workflow.json ./tests/adhoc-sol-files --skip-update-check --highs-only
-              diff ./reports/adhoc-sol-files-highs-only-report.json ./reports/adhoc-sol-files-highs-only-report-workflow.json
-              ;;
-            sarif-report)
-              cargo run -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check
-              diff ./reports/report.sarif ./reports/ci-report.sarif
-              ;;
-            empty-report)
-              cargo run -- tests/contract-playground -o reports/empty_report_workflow.md -i IgnoreEverything.sol
-              diff ./reports/empty_report.md ./reports/empty_report_workflow.md
-              ;;
-            include-detectors)
-              cargo run -- tests/detector-include -o reports/detector-include-report-workflow.md
-              diff reports/detector-include-report.md reports/detector-include-report-workflow.md
-              ;;
-            exclude-detectors)
-              cargo run -- tests/detector-exclude -o reports/detector-exclude-report-workflow.md
-              diff reports/detector-exclude-report.md reports/detector-exclude-report-workflow.md
-              ;;
-            via-ir-enabled)
-              cargo run -- tests/via-ir-enabled -o reports/via-ir-enabled-report-workflow.md
-              diff reports/via-ir-enabled-report.md reports/via-ir-enabled-report-workflow.md
-              ;;
-          esac
+      - name: Verify Report (${{ matrix.task }})
+        run: cargo xtask reportgen --ci-verify ${{ matrix.task }}

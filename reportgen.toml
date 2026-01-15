@@ -1,0 +1,127 @@
+# Report Generation Configuration
+# Single source of truth for all report generation commands.
+# Used by: cargo xtask reportgen, CI workflow
+#
+# Fields:
+#   name        - unique identifier (used as CLI flag: cargo prep -n <name>)
+#   description - human-readable description
+#   root        - project root directory
+#   args        - additional CLI arguments
+#   output      - output file path (baseline for CI diff)
+#   env         - environment variables
+#   pre_command - command to run before generation (local)
+#   ci_setup    - setup command for CI (e.g., pnpm install)
+#   ci_env      - environment variables for CI (overrides env)
+
+[[reports]]
+name = "cpg"
+description = "Contract Playground"
+root = "./tests/contract-playground"
+args = ["-i", "src/", "-x", "lib/"]
+output = "./reports/report.md"
+
+[[reports]]
+name = "adhoc"
+description = "Adhoc sol files"
+root = "./tests/adhoc-sol-files"
+output = "./reports/adhoc-sol-files-report.md"
+
+[[reports]]
+name = "sablier"
+description = "Sablier (aderyn.toml with nested root)"
+root = "./tests/2024-05-Sablier"
+output = "./reports/sablier-aderyn-toml-nested-root.md"
+ci_setup = "pnpm install --prefix tests/2024-05-Sablier/v2-core"
+ci_env = { FOUNDRY_PROFILE = "uniswap" }
+
+[[reports]]
+name = "fnft"
+description = "Foundry NFT"
+root = "./tests/foundry-nft-f23"
+args = ["-i", "src/", "-x", "lib/"]
+output = "./reports/nft-report.md"
+pre_command = "cd tests/foundry-nft-f23 && forge install && cd ../.."
+
+[[reports]]
+name = "ccip"
+description = "CCIP Functions"
+root = "tests/ccip-contracts/contracts"
+args = ["--src", "src/v0.8/functions/", "-x", "tests/,test/,mocks/"]
+output = "./reports/ccip-functions-report.md"
+
+[[reports]]
+name = "cpgu"
+description = "Contract Playground Uniswap profile"
+root = "tests/contract-playground/"
+output = "./reports/uniswap_profile.md"
+env = { FOUNDRY_PROFILE = "uniswap" }
+
+[[reports]]
+name = "prb-math"
+description = "PRB Math"
+root = "tests/prb-math"
+output = "reports/prb-math-report.md"
+ci_setup = "pnpm install --prefix tests/prb-math/"
+
+[[reports]]
+name = "templegold"
+description = "Temple Gold"
+root = "tests/2024-07-templegold/protocol"
+output = "reports/templegold-report.md"
+
+[[reports]]
+name = "hardhat"
+description = "Hardhat JS Playground"
+root = "tests/hardhat-js-playground"
+output = "reports/hardhat-playground-report.md"
+
+[[reports]]
+name = "fnft-icm"
+description = "Foundry NFT ICM"
+root = "tests/foundry-nft-f23-icm"
+output = "./reports/nft-report-icm.md"
+
+[[reports]]
+name = "detector-exclude"
+description = "Detector exclude test"
+root = "tests/detector-exclude"
+output = "reports/detector-exclude-report.md"
+
+[[reports]]
+name = "detector-include"
+description = "Detector include test"
+root = "tests/detector-include"
+output = "reports/detector-include-report.md"
+
+[[reports]]
+name = "via-ir"
+description = "Via IR enabled"
+root = "tests/via-ir-enabled"
+output = "reports/via-ir-enabled-report.md"
+
+[[reports]]
+name = "json"
+description = "JSON report"
+root = "./tests/contract-playground"
+args = ["-i", "src/", "-x", "lib/"]
+output = "./reports/report.json"
+
+[[reports]]
+name = "json-highs"
+description = "Adhoc sol files highs only JSON"
+root = "./tests/adhoc-sol-files"
+args = ["--highs-only"]
+output = "./reports/adhoc-sol-files-highs-only-report.json"
+
+[[reports]]
+name = "sarif"
+description = "SARIF report"
+root = "./tests/contract-playground"
+output = "./reports/report.sarif"
+
+[[reports]]
+name = "empty"
+description = "Empty report (no matching files)"
+root = "tests/contract-playground"
+args = ["-i", "IgnoreEverything.sol"]
+output = "reports/empty_report.md"

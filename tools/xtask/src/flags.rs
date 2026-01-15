@@ -11,41 +11,20 @@ xflags::xflags! {
         }
         cmd blesspr {}
         cmd reportgen {
-            /// Run all integration tests
+            /// Run a specific report by name (from reportgen.toml)
+            optional -n, --name name: String
+
+            /// Run all reports
             optional -a, --all
 
-            /// Parallel
+            /// Run reports in parallel (requires --all)
             optional --parallel
 
-            /// Sablier
-            optional -s, --sablier
+            /// Output report names as JSON (for CI matrix)
+            optional --list-json
 
-            /// Templegold
-            optional -t, --tg
-
-            /// AdHoc Sol files
-            optional -h, --adhoc
-
-            /// CCIP
-            optional -c, --ccip
-
-            /// Contract Playground
-            optional -p, --cpg
-
-            /// Foundry NFT
-            optional -n, --fnft
-
-            /// Foundry NFT ICM
-            optional -i, --fnft-icm
-
-            /// Contract Playrground Uniswap
-            optional -u, --cpgu
-
-            /// Hardhat Js Playground
-            optional -b, --hhpg
-
-            /// PRB Math
-            optional -y, --prb-math
+            /// CI verify mode: run setup, generate, diff against baseline
+            optional --ci-verify name: String
 
             /// Run in release mode
             optional --release
@@ -81,18 +60,11 @@ pub struct Blesspr;
 
 #[derive(Debug)]
 pub struct Reportgen {
+    pub name: Option<String>,
     pub all: bool,
     pub parallel: bool,
-    pub sablier: bool,
-    pub tg: bool,
-    pub adhoc: bool,
-    pub ccip: bool,
-    pub cpg: bool,
-    pub fnft: bool,
-    pub fnft_icm: bool,
-    pub cpgu: bool,
-    pub hhpg: bool,
-    pub prb_math: bool,
+    pub list_json: bool,
+    pub ci_verify: Option<String>,
     pub release: bool,
 }
 

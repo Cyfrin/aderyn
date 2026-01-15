@@ -55,7 +55,7 @@ background = false
 
 [jobs.contract-playground]
 command = [
-    "cargo", "prep", "--cpg"
+    "cargo", "prep", "-n", "cpg"
     # put launch parameters for your program behind a `--` separator
 ]
 need_stdout = true
