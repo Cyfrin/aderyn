@@ -71,12 +71,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 8
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Cache pnpm store
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('.gitmodules') }}
+          restore-keys: |
+            pnpm-store-${{ runner.os }}-
 
       - name: Restore Rust Cache
         uses: Swatinem/rust-cache@v2
