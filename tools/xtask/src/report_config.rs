@@ -13,7 +13,8 @@ pub struct ReportConfig {
     pub root: String,
     #[serde(default)]
     pub args: Vec<String>,
-    pub output: String,
+    #[serde(default)]
+    pub output: Option<String>,
     #[serde(default)]
     pub env: HashMap<String, String>,
     #[serde(default)]
@@ -24,6 +25,15 @@ pub struct ReportConfig {
     pub ci_env: HashMap<String, String>,
     #[serde(default)]
     pub ci_skip: bool,
+}
+
+impl ReportConfig {
+    /// Get output path, defaulting to reports/<name>-report.md
+    pub fn output(&self) -> String {
+        self.output
+            .clone()
+            .unwrap_or_else(|| format!("reports/{}-report.md", self.name))
+    }
 }
 
 impl ReportgenConfig {
