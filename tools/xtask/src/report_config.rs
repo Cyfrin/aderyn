@@ -30,9 +30,7 @@ pub struct ReportConfig {
 impl ReportConfig {
     /// Get output path, defaulting to reports/<name>-report.md
     pub fn output(&self) -> String {
-        self.output
-            .clone()
-            .unwrap_or_else(|| format!("reports/{}-report.md", self.name))
+        self.output.clone().unwrap_or_else(|| format!("reports/{}-report.md", self.name))
     }
 }
 
