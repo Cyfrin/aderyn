@@ -75,6 +75,7 @@ setup: check-tools ## Set up the project for the first time
 	cd tests/hardhat-js-playground && yarn install --frozen-lockfile
 
 	@echo "$(YELLOW)Ensuring clean git state...$(NC)"
+	cd tests/2024-07-templegold && git restore package.json || true
 	git checkout -- tests/ || true
 
 	@echo "$(GREEN)Project setup complete!$(NC)"
