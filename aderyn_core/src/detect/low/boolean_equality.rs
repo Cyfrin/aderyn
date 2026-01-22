@@ -4,7 +4,10 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace::WorkspaceContext,
-    detect::{detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity}, helpers::is_constant_boolean},
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::is_constant_boolean,
+    },
 };
 use eyre::Result;
 
@@ -41,7 +44,9 @@ impl IssueDetector for BooleanEqualityDetector {
     }
 
     fn description(&self) -> String {
-        String::from("If `x` is a boolean, use `if(x)` and `if(!x)` instead of `if(x == true)` or `if(x == false)`.")
+        String::from(
+            "If `x` is a boolean, use `if(x)` and `if(!x)` instead of `if(x == true)` or `if(x == false)`.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

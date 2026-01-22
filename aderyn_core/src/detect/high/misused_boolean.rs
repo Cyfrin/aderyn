@@ -4,7 +4,10 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace::WorkspaceContext,
-    detect::{detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity}, helpers::is_constant_boolean},
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::is_constant_boolean,
+    },
 };
 use eyre::Result;
 
@@ -30,9 +33,11 @@ impl IssueDetector for MisusedBooleanDetector {
             }
         }
 
-        for if_statement in context.if_statements()
+        for if_statement in context
+            .if_statements()
             .iter()
-            .filter(|statement| is_constant_boolean(context, &statement.condition)) {
+            .filter(|statement| is_constant_boolean(context, &statement.condition))
+        {
             capture!(self, context, if_statement);
         }
 
@@ -48,7 +53,9 @@ impl IssueDetector for MisusedBooleanDetector {
     }
 
     fn description(&self) -> String {
-        String::from("The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.")
+        String::from(
+            "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
