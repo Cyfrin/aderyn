@@ -74,9 +74,13 @@ just setup
 
 4. Open a pull request to the `dev` branch. A maintainer (@alexroan or @TilakMaddy) will review it.
 
-**Tips**
+**Code quality**
 
-- Use `cargo fixfmt` and `cargo fixclippy` to apply quick fixes on code quality
+Before submitting, run these commands to fix formatting and lint issues:
+```bash
+cargo fixfmt
+cargo fixclippy
+```
 
 **Suggested VSCode extensions**
 
@@ -93,6 +97,34 @@ For a better development experience, install [Bacon](https://dystroy.org/bacon/)
 | `r` | Generate report for contract-playground |
 | `a` | Generate all reports in parallel |
 | `Alt-b` / `⌥-b` | Bless the PR (run all CI checks) |
+
+#### Adding a new test project
+
+Test projects live in `tests/` and are registered in `reportgen.toml`. To add a new one:
+
+1. Create a directory under `tests/` with your Solidity files
+
+2. Add a configuration entry to `reportgen.toml`:
+   ```toml
+   [[reports]]
+   name = "my-project"              # Used as: cargo prep -n my-project
+   description = "My test project"
+   root = "tests/my-project"
+   ```
+
+3. Generate the baseline report:
+   ```bash
+   cargo prep -n my-project
+   ```
+   This creates `reports/my-project-report.md`.
+
+See `reportgen.toml` for all available configuration options.
+
+**Project types**
+
+- **Foundry projects**: Include a `foundry.toml`. Use `args` to specify source directories.
+- **Standalone Solidity files**: Just add `.sol` files. Optionally include an `aderyn.toml` for configuration.
+- **Hardhat projects**: Works out of the box if compilation artifacts exist.
 
 #### Pull Request Process
 
