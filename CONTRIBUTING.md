@@ -1,6 +1,6 @@
-# Welcome to the Cyfrin Aderyn Contributing Guide
+# Contributing to Aderyn
 
-This guide aims to provide an overview of the contribution workflow to help make the contribution process effective for everyone involved.
+This guide provides an overview of the contribution workflow to help make the contribution process effective for everyone involved.
 
 ## About the Project
 
@@ -18,7 +18,7 @@ Cyfrin Aderyn aims to give engineers and smart contract security researchers rel
 
 ### Project Status
 
-The project is under active development.
+The project is under active development. Indexed in [DeepWiki](https://deepwiki.com/Cyfrin/aderyn).
 
 You can contribute to this repo in many ways:
 
@@ -32,43 +32,86 @@ Contributions are made via Issues and Pull Requests (PRs). A few general guideli
 - Contributions should only fix/add the functionality in the issue OR address style issues, not both.
 - If you're running into an error, please give context. Explain what you're trying to do and how to reproduce the error.
 
-## Getting started
+## Getting Started
 
-### Overview 
+### Prerequisites
 
-Indexed in [DeepWiki](https://deepwiki.com/Cyfrin/aderyn)
+- [Rust](https://www.rust-lang.org/tools/install)
+- [Just command runner](https://just.systems/man/en/)
 
-### Pull Requests
+### Setup
 
-#### Developer environment setup
+```bash
+git clone https://github.com/Cyfrin/aderyn.git
+cd aderyn
+just setup
+```
 
-1. [Install Rust](https://www.rust-lang.org/tools/install),
-2. Clone this repo and `cd aderyn/`
-3. Run `just setup`. Install the [Just Command Runner](https://just.systems/man/en/)
-4. Work on the issue, write unit tests. Use `cargo test <test-name>` to test. Feel free to add solidity files to `tests/contract-playground`.
-5. Run `cargo prep -n playground` to generate the report for the same. Run `cargo prep` to see all available reports.
-6. Once happy with the work, run `cargo blesspr` to "polish" your PR so CI can be happy.
-7. Create a pull request to `dev` branch here. The maintainers will be notified. Either @alexroan or @TilakMaddy will reach out to you.
+### Development Workflow
 
-Suggested VSCode extensions
-* [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
-* [Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
+1. Work on the issue and write unit tests
+   - Add Solidity test files to `tests/contract-playground/` for small additions
+   - For larger test cases, create your own project under `tests/`. Prefer projects without external dependencies—use `forge init --no-git` for a minimal Foundry setup
+   - Run specific tests with `cargo test <test-name>`
 
-#### Advanced Setup
-1. Install [Bacon](https://dystroy.org/bacon/)
-2. Run `bacon` at the root
-3. Press
-  * `t` for tests
-  * `r` for generating a report on contract-playground. Shorthand for `cargo prep -n playground`
-  * `a` for generating all reports. Shorthand for `cargo prep --all --parallel`
-  * `Alt-b` or `⌥-b` (Option-B on Mac) for "blessing" the PR. Shorthand for `cargo blesspr`
+2. Generate reports to verify your changes using `cargo prep`. This command runs Aderyn against test projects and outputs baseline reports to `reports/`. These reports are committed to the repo, and CI verifies that your changes produce the expected output.
+   ```bash
+   cargo prep -n playground   # Generate report for contract-playground
+   cargo prep                 # Show all available test projects
+   ```
 
-#### Tips
-Feel free to reach out to `cargo fixfmt` and `cargo fixclippy` to apply quick fixes on code quality.
+3. Polish your PR before submitting. This regenerates reports and fixes code quality issues.
+   ```bash
+   cargo blesspr              # Run all checks to satisfy CI
+   ```
 
-#### Pull Request Process
+   > **Quick fixes only?** For small changes, you can skip the full `blesspr` and just run:
+   > ```bash
+   > cargo fixfmt && cargo fixclippy
+   > ```
 
-We follow the ["fork-and-pull" Git workflow](https://github.com/susam/gitpr)
+4. Open a pull request to the `dev` branch. A maintainer (@alexroan or @TilakMaddy) will review it.
+
+### Adding a Test Project
+
+Test projects live in `tests/` and are registered in `reportgen.toml`. To add a new one:
+
+1. Create a directory under `tests/` with your Solidity files
+
+2. Add a configuration entry to `reportgen.toml`:
+   ```toml
+   [[reports]]
+   name = "my-project"              # Used as: cargo prep -n my-project
+   description = "My test project"
+   root = "tests/my-project"
+   ci_setup = "pnpm install --prefix tests/my-project"  # If dependencies needed
+   ```
+
+3. If your project has dependencies (npm/pnpm/yarn), add the install command to the `setup` recipe in `justfile`:
+   ```just
+   (run_install "my-project" \
+       pnpm install --prefix tests/my-project --frozen-lockfile) &
+   pids+=($!)
+   ```
+   Also add the `node_modules` path to the `clean` recipe.
+
+4. Generate the baseline report:
+   ```bash
+   cargo prep -n my-project
+   ```
+   This creates `reports/my-project-report.md`.
+
+See `reportgen.toml` for all available configuration options.
+
+**Project types**
+
+- **Foundry projects**: Include a `foundry.toml`. Use `args` to specify source directories.
+- **Standalone Solidity files**: Just add `.sol` files. Optionally include an `aderyn.toml` for configuration.
+- **Hardhat projects**: Work out of the box if compilation artifacts exist.
+
+## Pull Requests
+
+We follow the ["fork-and-pull" Git workflow](https://github.com/susam/gitpr).
 
 1. Fork the repo
 2. Clone the project
@@ -91,17 +134,17 @@ Once you submit your PR:
 
 Once the PR is approved, we'll "squash-and-merge" to keep the git commit history clean.
 
-### Issues
+## Issues
 
 Issues should be used to report problems, request a new feature, or discuss potential changes before a PR is created.
 
-#### Solve an issue
+### Solve an Issue
 
 Please review our [existing issues](https://github.com/cyfrin/aderyn/issues) to find one that interests you.
 
-If a contributor is working on the issue, they will be assigned to the individual. If you find an issue to work on, you can assign it to yourself and open a PR with a fix.
+If a contributor is working on an issue, they will be assigned to it. If you find an issue to work on, you are welcome to assign it to yourself and open a PR with a fix.
 
-#### Report Bugs
+### Report Bugs
 
 If a related issue doesn't exist, you can open a new issue.
 
