@@ -1,6 +1,6 @@
-# Welcome to the Cyfrin Aderyn Contributing Guide
+# Contributing to Aderyn
 
-This guide aims to provide an overview of the contribution workflow to help make the contribution process effective for everyone involved.
+This guide provides an overview of the contribution workflow to help make the contribution process effective for everyone involved.
 
 ## About the Project
 
@@ -18,7 +18,7 @@ Cyfrin Aderyn aims to give engineers and smart contract security researchers rel
 
 ### Project Status
 
-The project is under active development.
+The project is under active development. Indexed in [DeepWiki](https://deepwiki.com/Cyfrin/aderyn).
 
 You can contribute to this repo in many ways:
 
@@ -32,22 +32,14 @@ Contributions are made via Issues and Pull Requests (PRs). A few general guideli
 - Contributions should only fix/add the functionality in the issue OR address style issues, not both.
 - If you're running into an error, please give context. Explain what you're trying to do and how to reproduce the error.
 
-## Getting started
+## Getting Started
 
-### Overview 
-
-Indexed in [DeepWiki](https://deepwiki.com/Cyfrin/aderyn)
-
-### Pull Requests
-
-#### Developer environment setup
-
-**Prerequisites**
+### Prerequisites
 
 - [Rust](https://www.rust-lang.org/tools/install)
 - [Just command runner](https://just.systems/man/en/)
 
-**Getting started**
+### Setup
 
 ```bash
 git clone https://github.com/Cyfrin/aderyn.git
@@ -55,7 +47,7 @@ cd aderyn
 just setup
 ```
 
-**Development workflow**
+### Development Workflow
 
 1. Work on the issue and write unit tests
    - Add Solidity test files to `tests/contract-playground/` as needed
@@ -67,27 +59,22 @@ just setup
    cargo prep                 # Show all available test projects
    ```
 
-3. Polish your PR before submitting
+3. Polish your PR before submitting. This regenerates reports and fixes code quality issues.
    ```bash
    cargo blesspr              # Run all checks to satisfy CI
    ```
 
 4. Open a pull request to the `dev` branch. A maintainer (@alexroan or @TilakMaddy) will review it.
 
-**Code quality**
+### Code Quality
 
-Before submitting, run these commands to fix formatting and lint issues:
+If you are not running `cargo blesspr` due to the small scope of your changes, run these commands to fix formatting and lint issues:
 ```bash
 cargo fixfmt
 cargo fixclippy
 ```
 
-**Suggested VSCode extensions**
-
-- [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) - Rust language support
-- [Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved syntax highlighting
-
-#### Advanced setup (optional)
+### Advanced Setup (Optional)
 
 For a better development experience, install [Bacon](https://dystroy.org/bacon/) and run `bacon` at the project root. Keyboard shortcuts:
 
@@ -98,7 +85,7 @@ For a better development experience, install [Bacon](https://dystroy.org/bacon/)
 | `a` | Generate all reports in parallel |
 | `Alt-b` / `⌥-b` | Bless the PR (run all CI checks) |
 
-#### Adding a new test project
+### Adding a Test Project
 
 Test projects live in `tests/` and are registered in `reportgen.toml`. To add a new one:
 
@@ -112,7 +99,15 @@ Test projects live in `tests/` and are registered in `reportgen.toml`. To add a 
    root = "tests/my-project"
    ```
 
-3. Generate the baseline report:
+3. If your project has dependencies (npm/pnpm/yarn), add the install command to the `setup` recipe in `justfile`:
+   ```just
+   (run_install "my-project" \
+       pnpm install --prefix tests/my-project --frozen-lockfile) &
+   pids+=($!)
+   ```
+   Also add the `node_modules` path to the `clean` recipe.
+
+4. Generate the baseline report:
    ```bash
    cargo prep -n my-project
    ```
@@ -124,11 +119,11 @@ See `reportgen.toml` for all available configuration options.
 
 - **Foundry projects**: Include a `foundry.toml`. Use `args` to specify source directories.
 - **Standalone Solidity files**: Just add `.sol` files. Optionally include an `aderyn.toml` for configuration.
-- **Hardhat projects**: Works out of the box if compilation artifacts exist.
+- **Hardhat projects**: Work out of the box if compilation artifacts exist.
 
-#### Pull Request Process
+## Pull Requests
 
-We follow the ["fork-and-pull" Git workflow](https://github.com/susam/gitpr)
+We follow the ["fork-and-pull" Git workflow](https://github.com/susam/gitpr).
 
 1. Fork the repo
 2. Clone the project
@@ -151,17 +146,17 @@ Once you submit your PR:
 
 Once the PR is approved, we'll "squash-and-merge" to keep the git commit history clean.
 
-### Issues
+## Issues
 
 Issues should be used to report problems, request a new feature, or discuss potential changes before a PR is created.
 
-#### Solve an issue
+### Solve an Issue
 
 Please review our [existing issues](https://github.com/cyfrin/aderyn/issues) to find one that interests you.
 
-If a contributor is working on the issue, they will be assigned to the individual. If you find an issue to work on, you can assign it to yourself and open a PR with a fix.
+If a contributor is working on an issue, they will be assigned to it. If you find an issue to work on, you are welcome to assign it to yourself and open a PR with a fix.
 
-#### Report Bugs
+### Report Bugs
 
 If a related issue doesn't exist, you can open a new issue.
 
