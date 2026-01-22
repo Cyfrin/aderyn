@@ -1,126 +1,119 @@
-# Tools required for the setup
+# Configuration
 required_tools := "forge pnpm yarn cargo-clippy"
 
-# Colors for better UX
+# Colors
 green := '\033[0;32m'
 yellow := '\033[0;33m'
 red := '\033[0;31m'
 nc := '\033[0m'
 
-# Default recipe
 default: setup
 
-# Display help
 help:
     @just --list
 
-# Check if all required tools are installed
 check-tools:
     #!/usr/bin/env bash
     set -euo pipefail
     echo -e "{{yellow}}Checking for required tools...{{nc}}"
+
+    declare -A install_instructions=(
+        [forge]="curl -L https://foundry.paradigm.xyz | bash && foundryup"
+        [pnpm]="npm install -g pnpm"
+        [yarn]="npm install -g yarn"
+        [cargo-clippy]="rustup component add clippy"
+    )
+
     for tool in {{required_tools}}; do
-        if ! command -v $tool >/dev/null 2>&1; then
+        if ! command -v "$tool" >/dev/null 2>&1; then
             echo -e "{{red}}Error: $tool is not installed.{{nc}}"
-            case $tool in
-                forge)
-                    echo "To install Foundry (which includes 'forge'), run:"
-                    echo "  curl -L https://foundry.paradigm.xyz | bash"
-                    echo "  foundryup"
-                    ;;
-                pnpm)
-                    echo "To install pnpm, run:"
-                    echo "  npm install -g pnpm"
-                    ;;
-                yarn)
-                    echo "To install yarn, run:"
-                    echo "  npm install -g yarn"
-                    ;;
-                cargo-clippy)
-                    echo "To install cargo-clippy, ensure Rust is installed, then run:"
-                    echo "  rustup component add clippy"
-                    ;;
-                *)
-                    echo "No installation instructions available for $tool."
-                    ;;
-            esac
+            if [[ -n "${install_instructions[$tool]:-}" ]]; then
+                echo "To install, run: ${install_instructions[$tool]}"
+            fi
             exit 1
-        else
-            echo -e "{{green}}✓{{nc}} $tool is installed."
         fi
+        echo -e "{{green}}✓{{nc}} $tool is installed."
     done
+
     echo -e "{{green}}All required tools are installed.{{nc}}"
 
-# Set up the project for the first time
 setup: check-tools
     #!/usr/bin/env bash
     set -euo pipefail
-    echo -e "{{yellow}}Setting up the project...{{nc}}"
 
-    echo -e "{{yellow}}Updating git submodules...{{nc}}"
+    info() { echo -e "{{yellow}}$1{{nc}}"; }
+    success() { echo -e "{{green}}✓ $1{{nc}}"; }
+
+    run_install() {
+        local name="$1"; shift
+        info "Installing dependencies for $name..."
+        "$@"
+        success "$name done"
+    }
+
+    info "Setting up the project..."
+    info "Updating git submodules..."
     git submodule update --init --recursive
 
-    echo -e "{{yellow}}Installing all dependencies in parallel...{{nc}}"
-
+    info "Installing all dependencies in parallel..."
     pids=()
 
-    (echo -e "{{yellow}}Installing dependencies for ccip-contracts...{{nc}}" && \
-     pnpm install --prefix tests/ccip-contracts/contracts/ --frozen-lockfile && \
-     echo -e "{{green}}✓ ccip-contracts done{{nc}}") &
+    (run_install "ccip-contracts" \
+        pnpm install --prefix tests/ccip-contracts/contracts/ --frozen-lockfile) &
     pids+=($!)
 
-    (echo -e "{{yellow}}Installing dependencies for 2024-05-Sablier...{{nc}}" && \
-     pnpm install --prefix tests/2024-05-Sablier/v2-core && \
-     echo -e "{{green}}✓ 2024-05-Sablier done{{nc}}") &
+    (run_install "2024-05-Sablier" \
+        pnpm install --prefix tests/2024-05-Sablier/v2-core) &
     pids+=($!)
 
-    (echo -e "{{yellow}}Installing dependencies for prb-math...{{nc}}" && \
-     pnpm install --prefix tests/prb-math && \
-     echo -e "{{green}}✓ prb-math done{{nc}}") &
+    (run_install "prb-math" \
+        pnpm install --prefix tests/prb-math) &
     pids+=($!)
 
-    # templegold root and protocol must run sequentially
-    (echo -e "{{yellow}}Installing dependencies for 2024-07-templegold (root)...{{nc}}" && \
-     cd tests/2024-07-templegold && yarn install --frozen-lockfile --ignore-engines && \
-     echo -e "{{green}}✓ 2024-07-templegold (root) done{{nc}}" && \
-     echo -e "{{yellow}}Installing dependencies for 2024-07-templegold (protocol)...{{nc}}" && \
-     cd protocol && yarn install --frozen-lockfile --ignore-engines && \
-     echo -e "{{green}}✓ 2024-07-templegold (protocol) done{{nc}}") &
+    # templegold: root and protocol must run sequentially
+    (run_install "2024-07-templegold (root)" \
+        yarn --cwd tests/2024-07-templegold install --frozen-lockfile --ignore-engines
+     run_install "2024-07-templegold (protocol)" \
+        yarn --cwd tests/2024-07-templegold/protocol install --frozen-lockfile --ignore-engines) &
     pids+=($!)
 
-    (echo -e "{{yellow}}Installing dependencies for hardhat-js-playground...{{nc}}" && \
-     cd tests/hardhat-js-playground && yarn install --frozen-lockfile && \
-     echo -e "{{green}}✓ hardhat-js-playground done{{nc}}") &
+    (run_install "hardhat-js-playground" \
+        yarn --cwd tests/hardhat-js-playground install --frozen-lockfile) &
     pids+=($!)
 
-    # Wait for all and capture failures
+    # Wait for all background jobs
     failed=0
     for pid in "${pids[@]}"; do
-        wait $pid || failed=1
+        wait "$pid" || failed=1
     done
 
-    if [ $failed -ne 0 ]; then
+    if [[ $failed -ne 0 ]]; then
         echo -e "{{red}}Some installations failed!{{nc}}"
         exit 1
     fi
 
-    echo -e "{{yellow}}Ensuring clean git state...{{nc}}"
-    (cd tests/2024-07-templegold && git restore package.json) || true
-    (cd tests/2024-07-templegold/protocol && git restore package.json) || true
-    (cd tests/hardhat-js-playground && git restore package.json) || true
+    info "Ensuring clean git state..."
+    git -C tests/2024-07-templegold restore package.json || true
+    git -C tests/2024-07-templegold/protocol restore package.json || true
+    git -C tests/hardhat-js-playground restore package.json || true
     git checkout -- tests/ || true
 
     echo -e "{{green}}Project setup complete!{{nc}}"
 
-# Clean all installed dependencies (node_modules)
 clean:
     #!/usr/bin/env bash
     set -euo pipefail
     echo -e "{{yellow}}Cleaning installed dependencies...{{nc}}"
-    rm -rf tests/ccip-contracts/contracts/node_modules
-    rm -rf tests/2024-05-Sablier/v2-core/node_modules
-    rm -rf tests/prb-math/node_modules
-    rm -rf tests/2024-07-templegold/node_modules
-    rm -rf tests/2024-07-templegold/protocol/node_modules
-    rm -rf tests/hardhat-js-playground/node_modules
+
+    dirs=(
+        tests/ccip-contracts/contracts/node_modules
+        tests/2024-05-Sablier/v2-core/node_modules
+        tests/prb-math/node_modules
+        tests/2024-07-templegold/node_modules
+        tests/2024-07-templegold/protocol/node_modules
+        tests/hardhat-js-playground/node_modules
+    )
+
+    rm -rf "${dirs[@]}"
+
     echo -e "{{green}}Clean complete!{{nc}}"
