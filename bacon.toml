@@ -1,9 +1,20 @@
-# This is a configuration file for the bacon tool
+# Bacon configuration for Aderyn development
+# https://dystroy.org/bacon/
 #
 # Complete help on configuration: https://dystroy.org/bacon/config/
+# Default config: https://github.com/Canop/bacon/blob/main/defaults/default-bacon.toml
 #
-# You may check the current default at
-#   https://github.com/Canop/bacon/blob/main/defaults/default-bacon.toml
+# Install: cargo install bacon
+# Run: bacon (at project root)
+#
+# Keyboard shortcuts:
+#   t         Run tests
+#   r         Generate report for contract-playground
+#   a         Generate all reports in parallel
+#   Alt-b     Bless the PR (run all CI checks)
+#   c         Run clippy
+#   f         Check formatting
+#   d         Open docs
 
 default_job = "clippy-display-warnings"
 env.CARGO_TERM_COLOR = "always"

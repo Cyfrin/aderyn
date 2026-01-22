@@ -50,10 +50,11 @@ just setup
 ### Development Workflow
 
 1. Work on the issue and write unit tests
-   - Add Solidity test files to `tests/contract-playground/` as needed
+   - Add Solidity test files to `tests/contract-playground/` for small additions
+   - For larger test cases, create your own project under `tests/`. Prefer projects without external dependencies—use `forge init --no-git` for a minimal Foundry setup
    - Run specific tests with `cargo test <test-name>`
 
-2. Generate reports to verify your changes
+2. Generate reports to verify your changes using `cargo prep`. This command runs Aderyn against test projects and outputs baseline reports to `reports/`. These reports are committed to the repo, and CI verifies that your changes produce the expected output.
    ```bash
    cargo prep -n playground   # Generate report for contract-playground
    cargo prep                 # Show all available test projects
@@ -64,26 +65,12 @@ just setup
    cargo blesspr              # Run all checks to satisfy CI
    ```
 
+   > **Quick fixes only?** For small changes, you can skip the full `blesspr` and just run:
+   > ```bash
+   > cargo fixfmt && cargo fixclippy
+   > ```
+
 4. Open a pull request to the `dev` branch. A maintainer (@alexroan or @TilakMaddy) will review it.
-
-### Code Quality
-
-If you are not running `cargo blesspr` due to the small scope of your changes, run these commands to fix formatting and lint issues:
-```bash
-cargo fixfmt
-cargo fixclippy
-```
-
-### Advanced Setup (Optional)
-
-For a better development experience, install [Bacon](https://dystroy.org/bacon/) and run `bacon` at the project root. Keyboard shortcuts:
-
-| Key | Action |
-|-----|--------|
-| `t` | Run tests |
-| `r` | Generate report for contract-playground |
-| `a` | Generate all reports in parallel |
-| `Alt-b` / `⌥-b` | Bless the PR (run all CI checks) |
 
 ### Adding a Test Project
 
