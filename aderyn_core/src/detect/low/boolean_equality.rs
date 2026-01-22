@@ -1,15 +1,22 @@
-use crate::{detect::helpers::is_constant_boolean, issue_detector};
+use std::{collections::BTreeMap, error::Error};
+
+use crate::{
+    ast::NodeID,
+    capture,
+    context::workspace::WorkspaceContext,
+    detect::{detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity}, helpers::is_constant_boolean},
+};
 use eyre::Result;
 
-issue_detector! {
-    BooleanEqualityDetector;
+#[derive(Default)]
+pub struct BooleanEqualityDetector {
+    // Keys are: [0] source file name, [1] line number, [2] character location of node.
+    // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
+    found_instances: BTreeMap<(String, usize, String), NodeID>,
+}
 
-    severity: Low,
-    title: "Boolean equality is not required",
-    desc: "If `x` is a boolean, use `if(x)` and `if(!x)` instead of `if(x == true)` or `if(x == false)`.",
-    name: BooleanEquality,
-
-    |context| {
+impl IssueDetector for BooleanEqualityDetector {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for binary_operation in context.binary_operations() {
             if binary_operation.operator == "=="
                 && [
@@ -19,11 +26,31 @@ issue_detector! {
                 .iter()
                 .any(|&operand| is_constant_boolean(context, operand))
             {
-                grab!(binary_operation);
+                capture!(self, context, binary_operation);
             }
         }
+        Ok(!self.found_instances.is_empty())
     }
 
+    fn severity(&self) -> IssueSeverity {
+        IssueSeverity::Low
+    }
+
+    fn title(&self) -> String {
+        String::from("Boolean equality is not required")
+    }
+
+    fn description(&self) -> String {
+        String::from("If `x` is a boolean, use `if(x)` and `if(!x)` instead of `if(x == true)` or `if(x == false)`.")
+    }
+
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
+        self.found_instances.clone()
+    }
+
+    fn name(&self) -> String {
+        format!("{}", IssueDetectorNamePool::BooleanEquality)
+    }
 }
 
 #[cfg(test)]
