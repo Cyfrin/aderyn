@@ -97,6 +97,7 @@ Test projects live in `tests/` and are registered in `reportgen.toml`. To add a 
    name = "my-project"              # Used as: cargo prep -n my-project
    description = "My test project"
    root = "tests/my-project"
+   ci_setup = "pnpm install --prefix tests/my-project"  # If dependencies needed
    ```
 
 3. If your project has dependencies (npm/pnpm/yarn), add the install command to the `setup` recipe in `justfile`:
