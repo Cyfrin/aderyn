@@ -82,7 +82,6 @@ setup: check-tools
     # templegold root and protocol must run sequentially
     (echo -e "{{yellow}}Installing dependencies for 2024-07-templegold (root)...{{nc}}" && \
      cd tests/2024-07-templegold && yarn install --frozen-lockfile --ignore-engines && \
-     git restore package.json && \
      echo -e "{{green}}✓ 2024-07-templegold (root) done{{nc}}" && \
      echo -e "{{yellow}}Installing dependencies for 2024-07-templegold (protocol)...{{nc}}" && \
      cd protocol && yarn install --frozen-lockfile --ignore-engines && \
@@ -106,7 +105,9 @@ setup: check-tools
     fi
 
     echo -e "{{yellow}}Ensuring clean git state...{{nc}}"
-    cd tests/2024-07-templegold && git restore package.json || true
+    (cd tests/2024-07-templegold && git restore package.json) || true
+    (cd tests/2024-07-templegold/protocol && git restore package.json) || true
+    (cd tests/hardhat-js-playground && git restore package.json) || true
     git checkout -- tests/ || true
 
     echo -e "{{green}}Project setup complete!{{nc}}"
