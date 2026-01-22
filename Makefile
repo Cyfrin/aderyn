@@ -60,15 +60,35 @@ setup: check-tools ## Set up the project for the first time
 	pnpm install --prefix tests/ccip-contracts/contracts/ --frozen-lockfile
 
 	@echo "$(YELLOW)Installing dependencies for 2024-05-Sablier...$(NC)"
-	pnpm install --prefix tests/2024-05-Sablier/v2-core --frozen-lockfile
+	pnpm install --prefix tests/2024-05-Sablier/v2-core
 
 	@echo "$(YELLOW)Installing dependencies for prb-math...$(NC)"
-	pnpm install --prefix tests/prb-math --frozen-lockfile
+	pnpm install --prefix tests/prb-math
 
-	@echo "$(YELLOW)Installing dependencies for 2024-07-templegold...$(NC)"
-	cd tests/2024-07-templegold && yarn install --immutable && git restore package.json
+	@echo "$(YELLOW)Installing dependencies for 2024-07-templegold (root)...$(NC)"
+	cd tests/2024-07-templegold && yarn install --frozen-lockfile --ignore-engines && git restore package.json || true
+
+	@echo "$(YELLOW)Installing dependencies for 2024-07-templegold (protocol)...$(NC)"
+	cd tests/2024-07-templegold/protocol && yarn install --frozen-lockfile --ignore-engines
+
+	@echo "$(YELLOW)Installing dependencies for hardhat-js-playground...$(NC)"
+	cd tests/hardhat-js-playground && yarn install --frozen-lockfile
+
+	@echo "$(YELLOW)Ensuring clean git state...$(NC)"
+	git checkout -- tests/ || true
 
 	@echo "$(GREEN)Project setup complete!$(NC)"
+
+.PHONY: clean
+clean: ## Clean all installed dependencies (node_modules)
+	@echo "$(YELLOW)Cleaning installed dependencies...$(NC)"
+	rm -rf tests/ccip-contracts/contracts/node_modules
+	rm -rf tests/2024-05-Sablier/v2-core/node_modules
+	rm -rf tests/prb-math/node_modules
+	rm -rf tests/2024-07-templegold/node_modules
+	rm -rf tests/2024-07-templegold/protocol/node_modules
+	rm -rf tests/hardhat-js-playground/node_modules
+	@echo "$(GREEN)Clean complete!$(NC)"
 
 # Debug: Print the value of a variable with `make print-VAR_NAME`
 print-%: ; @echo $*=$($*)

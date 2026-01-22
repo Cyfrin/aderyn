@@ -10,9 +10,6 @@
 [submodule "tests/contract-playground/lib/v2-periphery"]
 	path = tests/contract-playground/lib/v2-periphery
 	url = https://github.com/Uniswap/v2-periphery
-[submodule "bot/foundry_workspace/lib/forge-std"]
-	path = bot/foundry_workspace/lib/forge-std
-	url = https://github.com/foundry-rs/forge-std
 [submodule "tests/foundry-nft-f23/lib/forge-std"]
 	path = tests/foundry-nft-f23/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
