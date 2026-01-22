@@ -79,14 +79,13 @@ setup: check-tools
      echo -e "{{green}}✓ prb-math done{{nc}}") &
     pids+=($!)
 
+    # templegold root and protocol must run sequentially
     (echo -e "{{yellow}}Installing dependencies for 2024-07-templegold (root)...{{nc}}" && \
      cd tests/2024-07-templegold && yarn install --frozen-lockfile --ignore-engines && \
      git restore package.json && \
-     echo -e "{{green}}✓ 2024-07-templegold (root) done{{nc}}") &
-    pids+=($!)
-
-    (echo -e "{{yellow}}Installing dependencies for 2024-07-templegold (protocol)...{{nc}}" && \
-     cd tests/2024-07-templegold/protocol && yarn install --frozen-lockfile --ignore-engines && \
+     echo -e "{{green}}✓ 2024-07-templegold (root) done{{nc}}" && \
+     echo -e "{{yellow}}Installing dependencies for 2024-07-templegold (protocol)...{{nc}}" && \
+     cd protocol && yarn install --frozen-lockfile --ignore-engines && \
      echo -e "{{green}}✓ 2024-07-templegold (protocol) done{{nc}}") &
     pids+=($!)
 
