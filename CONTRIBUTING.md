@@ -44,7 +44,7 @@ Indexed in [DeepWiki](https://deepwiki.com/Cyfrin/aderyn)
 
 1. [Install Rust](https://www.rust-lang.org/tools/install),
 2. Clone this repo and `cd aderyn/`
-3. Run `just` . Make sure to have tools listed at the top of the Makefile installed in your computer.
+3. Run `just setup`. Install the [Just Command Runner](https://just.systems/man/en/)
 4. Work on the issue, write unit tests. Use `cargo test <test-name>` to test. Feel free to add solidity files to `tests/contract-playground`.
 5. Run `cargo prep -n playground` to generate the report for the same. Run `cargo prep` to see all available reports.
 6. Once happy with the work, run `cargo blesspr` to "polish" your PR so CI can be happy.
