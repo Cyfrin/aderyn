@@ -42,29 +42,57 @@ Indexed in [DeepWiki](https://deepwiki.com/Cyfrin/aderyn)
 
 #### Developer environment setup
 
-1. [Install Rust](https://www.rust-lang.org/tools/install),
-2. Clone this repo and `cd aderyn/`
-3. Run `just setup`. Install the [Just Command Runner](https://just.systems/man/en/)
-4. Work on the issue, write unit tests. Use `cargo test <test-name>` to test. Feel free to add solidity files to `tests/contract-playground`.
-5. Run `cargo prep -n playground` to generate the report for the same. Run `cargo prep` to see all available reports.
-6. Once happy with the work, run `cargo blesspr` to "polish" your PR so CI can be happy.
-7. Create a pull request to `dev` branch here. The maintainers will be notified. Either @alexroan or @TilakMaddy will reach out to you.
+**Prerequisites**
 
-Suggested VSCode extensions
-* [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
-* [Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
+- [Rust](https://www.rust-lang.org/tools/install)
+- [Just command runner](https://just.systems/man/en/)
 
-#### Advanced Setup
-1. Install [Bacon](https://dystroy.org/bacon/)
-2. Run `bacon` at the root
-3. Press
-  * `t` for tests
-  * `r` for generating a report on contract-playground. Shorthand for `cargo prep -n playground`
-  * `a` for generating all reports. Shorthand for `cargo prep --all --parallel`
-  * `Alt-b` or `⌥-b` (Option-B on Mac) for "blessing" the PR. Shorthand for `cargo blesspr`
+**Getting started**
 
-#### Tips
-Feel free to reach out to `cargo fixfmt` and `cargo fixclippy` to apply quick fixes on code quality.
+```bash
+git clone https://github.com/Cyfrin/aderyn.git
+cd aderyn
+just setup
+```
+
+**Development workflow**
+
+1. Work on the issue and write unit tests
+   - Add Solidity test files to `tests/contract-playground/` as needed
+   - Run specific tests with `cargo test <test-name>`
+
+2. Generate reports to verify your changes
+   ```bash
+   cargo prep -n playground   # Generate report for contract-playground
+   cargo prep                 # Show all available test projects
+   ```
+
+3. Polish your PR before submitting
+   ```bash
+   cargo blesspr              # Run all checks to satisfy CI
+   ```
+
+4. Open a pull request to the `dev` branch. A maintainer (@alexroan or @TilakMaddy) will review it.
+
+**Tips**
+
+- Use `cargo fixfmt` and `cargo fixclippy` to apply quick fixes on code quality
+
+**Suggested VSCode extensions**
+
+- [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) - Rust language support
+- [Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved syntax highlighting
+
+#### Advanced setup (optional)
+
+For a better development experience, install [Bacon](https://dystroy.org/bacon/) and run `bacon` at the project root. Keyboard shortcuts:
+
+| Key | Action |
+|-----|--------|
+| `t` | Run tests |
+| `r` | Generate report for contract-playground |
+| `a` | Generate all reports in parallel |
+| `Alt-b` / `⌥-b` | Bless the PR (run all CI checks) |
 
 #### Pull Request Process
 
