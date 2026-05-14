@@ -5,6 +5,7 @@ use crate::{
     runner::{run_auditor_mode, run_detector_mode, run_lsp_mode},
 };
 use aderyn_core::detect::detector::{IssueDetector, IssueSeverity, get_all_issue_detectors};
+use aderyn_core::report::IssueCount;
 use field_access::FieldAccess;
 use std::sync::Arc;
 use tokio::sync::Mutex;
@@ -60,8 +61,8 @@ pub fn kick_off_audit_mode(args: Args) {
 }
 
 /// One way pipeline to generate vulnerability reports. (for CLI)
-pub fn kick_off_report_creation(args: Args) {
-    let run_pipeline = || -> Result<(), Box<dyn std::error::Error>> {
+pub fn kick_off_report_creation(args: Args) -> IssueCount {
+    let run_pipeline = || -> Result<IssueCount, Box<dyn std::error::Error>> {
         let cx_wrapper =
             make_context(&args.input_config, &args.common_config).unwrap_or_else(|e| {
                 eprintln!("Error making context: {}", e);
@@ -69,15 +70,14 @@ pub fn kick_off_report_creation(args: Args) {
             });
 
         // Load the workspace context into the run function, which runs the detectors
-        run_detector_mode(&cx_wrapper, &args.output_config)?;
-        Ok(())
+        run_detector_mode(&cx_wrapper, &args.output_config)
     };
 
     // Kick-off
     run_pipeline().unwrap_or_else(|e| {
         eprintln!("Error driving aderyn: {}", e);
         std::process::exit(1);
-    });
+    })
 }
 
 /// Identify and return vulnerability reports. (for LSP)
