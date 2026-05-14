@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 126,
-    "total_sloc": 4727
+    "total_sloc": 4737
   },
   "files_details": {
     "files_details": [
@@ -75,7 +75,7 @@
       },
       {
         "file_path": "src/CostlyOperationsInsideLoops.sol",
-        "n_sloc": 17
+        "n_sloc": 27
       },
       {
         "file_path": "src/Counter.sol",
@@ -2867,6 +2867,12 @@
             "src_char": "214:79"
           },
           {
+            "contract_path": "src/CostlyOperationsInsideLoops.sol",
+            "line_no": 30,
+            "src": "698:79",
+            "src_char": "698:79"
+          },
+          {
             "contract_path": "src/EnumerableSetIteration.sol",
             "line_no": 29,
             "src": "989:157",
@@ -5371,6 +5377,18 @@
             "line_no": 15,
             "src": "314:4",
             "src_char": "314:4"
+          },
+          {
+            "contract_path": "src/CostlyOperationsInsideLoops.sol",
+            "line_no": 23,
+            "src": "527:12",
+            "src_char": "527:12"
+          },
+          {
+            "contract_path": "src/CostlyOperationsInsideLoops.sol",
+            "line_no": 29,
+            "src": "659:17",
+            "src_char": "659:17"
           },
           {
             "contract_path": "src/Counter.sol",
