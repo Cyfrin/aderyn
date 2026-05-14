@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, convert::identity, error::Error};
 
-use crate::ast::{ASTNode, NodeID};
+use crate::ast::{ASTNode, ForStatement, NodeID};
 
 use crate::{capture, context::browser::ApproximateStorageChangeFinder};
 
@@ -24,7 +24,7 @@ impl IssueDetector for CostlyLoopDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Investigate for loops to check for storage writes
         for for_statement in context.for_statements() {
-            if changes_state(context, &(for_statement.into())).is_some_and(identity) {
+            if for_loop_changes_state(context, for_statement).is_some_and(identity) {
                 capture!(self, context, for_statement);
             }
         }
@@ -67,6 +67,31 @@ impl IssueDetector for CostlyLoopDetector {
     fn name(&self) -> String {
         IssueDetectorNamePool::CostlyLoop.to_string()
     }
+}
+
+fn for_loop_changes_state(
+    context: &WorkspaceContext,
+    for_statement: &ForStatement,
+) -> Option<bool> {
+    let mut repeated_node_ids = vec![];
+
+    if let Some(condition) = &for_statement.condition {
+        repeated_node_ids.push(condition.get_node_id());
+    }
+    if let Some(loop_expression) = &for_statement.loop_expression {
+        repeated_node_ids.push(Some(loop_expression.id));
+    }
+    repeated_node_ids.push(for_statement.body.get_node_id());
+
+    for node_id in repeated_node_ids.into_iter().flatten() {
+        if let Some(ast_node) = context.nodes.get(&node_id)
+            && changes_state(context, ast_node).is_some_and(identity)
+        {
+            return Some(true);
+        }
+    }
+
+    Some(false)
 }
 
 fn changes_state(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool> {
@@ -117,6 +142,6 @@ mod costly_operations_inside_loops_tests {
         let mut detector = CostlyLoopDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 2);
     }
 }
