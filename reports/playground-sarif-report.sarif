@@ -4138,6 +4138,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/CostlyOperationsInsideLoops.sol"
+                },
+                "region": {
+                  "byteLength": 79,
+                  "byteOffset": 698
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/EnumerableSetIteration.sol"
                 },
                 "region": {
@@ -8634,6 +8645,28 @@
                 "region": {
                   "byteLength": 4,
                   "byteOffset": 314
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CostlyOperationsInsideLoops.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 527
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CostlyOperationsInsideLoops.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 659
                 }
               }
             },

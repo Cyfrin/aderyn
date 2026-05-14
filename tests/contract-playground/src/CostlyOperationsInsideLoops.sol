@@ -19,4 +19,16 @@ contract CostlyOperationsInLoop {
         }
         state_variable = local_variable;
     }
+
+    function goodInitOnly() external {
+        for (state_variable = 0; state_variable < 1; ) {
+            break;
+        }
+    }
+
+    function badLoopExpression() external {
+        for (uint i = 0; i < loop_count; state_variable++) {
+            i++;
+        }
+    }
 }
