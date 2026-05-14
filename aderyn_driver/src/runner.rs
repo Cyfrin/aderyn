@@ -11,11 +11,12 @@ use aderyn_core::report::*;
 pub fn run_detector_mode(
     cx_wrapper: &WorkspaceContextWrapper,
     output_config: &CliArgsOutputConfig,
-) -> Result<(), Box<dyn Error>> {
+) -> Result<IssueCount, Box<dyn Error>> {
     println!("Running {} detectors", cx_wrapper.detectors.len());
 
     let detectors = cx_wrapper.detectors.iter().map(|d| d.skeletal_clone()).collect();
     let report = detect_issues(&cx_wrapper.contexts, &cx_wrapper.root_path, detectors)?;
+    let issue_count = report.issue_count();
     let output_file_path = output_config.output.clone();
 
     let output_interface = if output_file_path.ends_with(".json") {
@@ -31,7 +32,7 @@ pub fn run_detector_mode(
 
     output_interface_router(output_interface, &report, cx_wrapper, output_config)?;
 
-    Ok(())
+    Ok(issue_count)
 }
 
 pub fn run_lsp_mode(ctx_wrapper: &WorkspaceContextWrapper) -> Option<LspReport> {

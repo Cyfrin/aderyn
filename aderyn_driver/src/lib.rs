@@ -10,5 +10,7 @@ pub mod config;
 pub mod driver;
 pub mod process;
 
-pub use aderyn_core::{ast as core_ast, detect as detection_modules, detect::detector};
+pub use aderyn_core::{
+    ast as core_ast, detect as detection_modules, detect::detector, report::IssueCount,
+};
 pub use mcp::SingletonMcpServer;

@@ -7,6 +7,7 @@ use aderyn::{
     print_all_detectors_view, print_detail_view,
 };
 use aderyn_driver::driver::{self, Args, kick_off_report_creation};
+use aderyn_driver::IssueCount;
 use clap::{ArgGroup, CommandFactory, Parser, Subcommand, ValueHint};
 use clap_complete::{Shell, generate};
 use indoc::indoc;
@@ -78,6 +79,14 @@ pub struct CommandLineArgs {
     /// Limit detectors to high severity detectors.
     #[arg(long)]
     highs_only: bool,
+
+    /// Exit with code 1 if any low or high severity issues are detected.
+    #[arg(long)]
+    fail_low: bool,
+
+    /// Exit with code 1 if any high severity issues are detected.
+    #[arg(long)]
+    fail_high: bool,
 
     // ---------- Hidden arguments --------------- //
     /// After generating report, skip checking if a new version of Aderyn is available.
@@ -250,6 +259,8 @@ fn main() {
         return;
     }
 
+    let mut issue_count: Option<IssueCount> = None;
+
     if cmd_args.auditor_mode {
         driver::kick_off_audit_mode(args.clone());
     } else {
@@ -259,7 +270,16 @@ fn main() {
             args.common_config.skip_cloc = true;
             spin_up_language_server(args);
         } else {
-            kick_off_report_creation(args.clone());
+            issue_count = Some(kick_off_report_creation(args.clone()));
+        }
+    }
+
+    if let Some(count) = &issue_count {
+        if cmd_args.fail_low && (count.low > 0 || count.high > 0) {
+            std::process::exit(1);
+        }
+        if cmd_args.fail_high && count.high > 0 {
+            std::process::exit(1);
         }
     }
 
