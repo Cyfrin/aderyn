@@ -99,7 +99,7 @@ impl IssueDetector for ReentrancyStateChangeDetector {
 
     fn description(&self) -> String {
         String::from(
-            "Changing state after an external call can lead to re-entrancy attacks.\
+            "Changing state after an external call can lead to re-entrancy attacks. \
         Use the checks-effects-interactions pattern to avoid this issue.",
         )
     }
