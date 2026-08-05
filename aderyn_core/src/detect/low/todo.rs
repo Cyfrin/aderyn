@@ -2,7 +2,6 @@ use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::NodeID,
-    capture,
     context::{
         browser::Peek,
         workspace::{ASTNode, WorkspaceContext},
@@ -28,14 +27,60 @@ impl IssueDetector for TodoDetector {
                 if contract_code.is_empty() {
                     continue;
                 }
+
+                // `contract_code` is only a slice of the file (starting at the
+                // contract's `src` offset), so token positions coming out of
+                // the tokenizer are *relative* to it. Resolve the contract's
+                // absolute (file, line, byte-offset) so we can translate each
+                // TODO token back into an absolute file location instead of
+                // always pointing at the contract itself.
+                let (file_path, contract_start_line, contract_src_location) =
+                    context.get_node_sort_key_pure(&contract_as_ast);
+                let Some((contract_offset_str, _)) = contract_src_location.split_once(':') else {
+                    continue;
+                };
+                let Ok(contract_offset) = contract_offset_str.parse::<usize>() else {
+                    continue;
+                };
+
+                let line_start_offsets = line_start_byte_offsets(&contract_code);
+
                 let tokens = stats::token::tokenize(&contract_code);
                 for token in tokens {
                     match token.token_type {
                         stats::token::TokenType::MultilineComment
                         | stats::token::TokenType::SinglelineComment => {
                             if token.content.to_lowercase().contains("todo") {
-                                capture!(self, context, contract);
-                                break;
+                                // Line number of the comment, relative to the contract, is
+                                // 1-indexed; translate it to an absolute line in the file.
+                                let relative_line = token.start_line;
+                                let absolute_line =
+                                    contract_start_line + relative_line.saturating_sub(1);
+
+                                // Locate the byte offset (within the file) where the
+                                // comment starts, so the reported snippet/range points
+                                // at the TODO comment rather than the contract.
+                                let line_start = line_start_offsets
+                                    .get(relative_line.saturating_sub(1))
+                                    .copied()
+                                    .unwrap_or(0);
+                                let line_end = line_start_offsets
+                                    .get(relative_line)
+                                    .copied()
+                                    .unwrap_or(contract_code.len());
+                                let line_slice =
+                                    contract_code.get(line_start..line_end).unwrap_or("");
+                                let leading_whitespace =
+                                    line_slice.len() - line_slice.trim_start().len();
+                                let token_offset_in_contract = line_start + leading_whitespace;
+                                let absolute_offset = contract_offset + token_offset_in_contract;
+
+                                let key = (
+                                    file_path.clone(),
+                                    absolute_line,
+                                    format!("{absolute_offset}:{}", token.content.len()),
+                                );
+                                self.found_instances.insert(key, contract.id);
                             }
                         }
                         _ => (),
@@ -74,6 +119,18 @@ impl IssueDetector for TodoDetector {
     }
 }
 
+/// Returns the byte offset (within `content`) at which each line starts.
+/// `offsets[i]` is the byte offset of line `i + 1` (1-indexed lines).
+fn line_start_byte_offsets(content: &str) -> Vec<usize> {
+    let mut offsets = vec![0];
+    for (i, c) in content.char_indices() {
+        if c == '\n' {
+            offsets.push(i + 1);
+        }
+    }
+    offsets
+}
+
 #[cfg(test)]
 mod contracts_with_todos_tests {
 
@@ -91,6 +148,25 @@ mod contracts_with_todos_tests {
         let found = detector.detect(&context).unwrap();
 
         assert!(found);
-        assert_eq!(detector.instances().len(), 1);
+
+        // ContractWithTodo.sol has 4 separate TODO comments (lines 8, 9, 14, 15).
+        // Each one should be reported individually, on its own line, instead of
+        // being collapsed into a single instance pointing at the contract
+        // definition (line 4).
+        let instances = detector.instances();
+
+        println!("Found {} TODO instances:", instances.len());
+        for (key, value) in instances.iter() {
+            println!("{:?} => {:?}", key, value);
+        }
+        assert_eq!(instances.len(), 4);
+
+        let reported_lines: std::collections::BTreeSet<usize> =
+            instances.keys().map(|(_, line, _)| *line).collect();
+        assert_eq!(
+            reported_lines,
+            std::collections::BTreeSet::from([8, 9, 14, 15]),
+            "expected the TODO detector to flag the exact lines of each comment"
+        );
     }
 }

@@ -634,13 +634,25 @@ State variables that are only changed in the constructor should be declared immu
 
 Contract contains comments with TODOS. Consider implementing or removing them.
 
-<details><summary>1 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
 
-- Found in Counter.sol [Line: 4](../tests/adhoc-sol-files/Counter.sol#L4)
+- Found in Counter.sol [Line: 15](../tests/adhoc-sol-files/Counter.sol#L15)
 
 	```solidity
-	contract Counter {
+	    // TODO
+	```
+
+- Found in Counter.sol [Line: 20](../tests/adhoc-sol-files/Counter.sol#L20)
+
+	```solidity
+	    /// TODO
+	```
+
+- Found in Counter.sol [Line: 22](../tests/adhoc-sol-files/Counter.sol#L22)
+
+	```solidity
+	        // TODO
 	```
 
 </details>

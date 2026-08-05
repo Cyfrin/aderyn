@@ -1431,6 +1431,24 @@
             "src_char": "2952:18"
           },
           {
+            "contract_path": "src/VoidConstructor.sol",
+            "line_no": 13,
+            "src": "272:1",
+            "src_char": "272:1"
+          },
+          {
+            "contract_path": "src/VoidConstructor.sol",
+            "line_no": 25,
+            "src": "583:1",
+            "src_char": "583:1"
+          },
+          {
+            "contract_path": "src/VoidConstructor.sol",
+            "line_no": 32,
+            "src": "663:1",
+            "src_char": "663:1"
+          },
+          {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 4,
             "src": "67:6",
@@ -6646,21 +6664,51 @@
         "instances": [
           {
             "contract_path": "src/ContractWithTodo.sol",
-            "line_no": 4,
-            "src": "66:8",
-            "src_char": "66:8"
+            "line_no": 8,
+            "src": "182:37",
+            "src_char": "182:37"
+          },
+          {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 9,
+            "src": "227:32",
+            "src_char": "227:32"
+          },
+          {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 14,
+            "src": "384:49",
+            "src_char": "384:49"
+          },
+          {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 15,
+            "src": "441:34",
+            "src_char": "441:34"
           },
           {
             "contract_path": "src/Counter.sol",
-            "line_no": 4,
-            "src": "74:7",
-            "src_char": "74:7"
+            "line_no": 15,
+            "src": "265:8",
+            "src_char": "265:8"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 20,
+            "src": "345:9",
+            "src_char": "345:9"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 22,
+            "src": "408:8",
+            "src_char": "408:8"
           },
           {
             "contract_path": "src/TautologicalCompare.sol",
-            "line_no": 4,
-            "src": "66:19",
-            "src_char": "66:19"
+            "line_no": 8,
+            "src": "163:51",
+            "src_char": "163:51"
           }
         ]
       },
