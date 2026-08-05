@@ -1222,7 +1222,7 @@ Changing state after an external call can lead to re-entrancy attacks.Use the ch
 
 When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.
 
-<details><summary>26 Found Instances</summary>
+<details><summary>29 Found Instances</summary>
 
 
 - Found in src/EmitAfterExternalCall.sol [Line: 4](../tests/contract-playground/src/EmitAfterExternalCall.sol#L4)
@@ -1259,6 +1259,24 @@ When compiling contracts with certain development frameworks (for example: Truff
 
 	```solidity
 	interface IUniswapV2Router02 {
+	```
+
+- Found in src/VoidConstructor.sol [Line: 13](../tests/contract-playground/src/VoidConstructor.sol#L13)
+
+	```solidity
+	contract B is VoidConstructor, FilledConstructor {
+	```
+
+- Found in src/VoidConstructor.sol [Line: 25](../tests/contract-playground/src/VoidConstructor.sol#L25)
+
+	```solidity
+	contract C is VoidConstructor() {
+	```
+
+- Found in src/VoidConstructor.sol [Line: 32](../tests/contract-playground/src/VoidConstructor.sol#L32)
+
+	```solidity
+	contract D is VoidConstructor {
 	```
 
 - Found in src/ZeroAddressCheck.sol [Line: 4](../tests/contract-playground/src/ZeroAddressCheck.sol#L4)
@@ -6657,25 +6675,55 @@ Calling `.length` on a storage array in a loop condition is expensive. Consider 
 
 Contract contains comments with TODOS. Consider implementing or removing them.
 
-<details><summary>3 Found Instances</summary>
+<details><summary>8 Found Instances</summary>
 
 
-- Found in src/ContractWithTodo.sol [Line: 4](../tests/contract-playground/src/ContractWithTodo.sol#L4)
+- Found in src/ContractWithTodo.sol [Line: 8](../tests/contract-playground/src/ContractWithTodo.sol#L8)
 
 	```solidity
-	contract TodoList {
+	        // TODO: Add task to the tasks array
 	```
 
-- Found in src/Counter.sol [Line: 4](../tests/contract-playground/src/Counter.sol#L4)
+- Found in src/ContractWithTodo.sol [Line: 9](../tests/contract-playground/src/ContractWithTodo.sol#L9)
 
 	```solidity
-	contract Counter {
+	        // TODO: Emit TaskCreated event
 	```
 
-- Found in src/TautologicalCompare.sol [Line: 4](../tests/contract-playground/src/TautologicalCompare.sol#L4)
+- Found in src/ContractWithTodo.sol [Line: 14](../tests/contract-playground/src/ContractWithTodo.sol#L14)
 
 	```solidity
-	contract TautologicalCompare {
+	        // TODO: Toggle the completed status of the task
+	```
+
+- Found in src/ContractWithTodo.sol [Line: 15](../tests/contract-playground/src/ContractWithTodo.sol#L15)
+
+	```solidity
+	        // TODO: Emit TaskCompleted event
+	```
+
+- Found in src/Counter.sol [Line: 15](../tests/contract-playground/src/Counter.sol#L15)
+
+	```solidity
+	    // TODO
+	```
+
+- Found in src/Counter.sol [Line: 20](../tests/contract-playground/src/Counter.sol#L20)
+
+	```solidity
+	    /// TODO
+	```
+
+- Found in src/Counter.sol [Line: 22](../tests/contract-playground/src/Counter.sol#L22)
+
+	```solidity
+	        // TODO
+	```
+
+- Found in src/TautologicalCompare.sol [Line: 8](../tests/contract-playground/src/TautologicalCompare.sol#L8)
+
+	```solidity
+	    // TODO: Blocked until we have Data Flow Analysis.
 	```
 
 </details>

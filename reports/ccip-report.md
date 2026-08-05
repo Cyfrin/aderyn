@@ -2012,46 +2012,46 @@ Contract contains comments with TODOS. Consider implementing or removing them.
 <details><summary>7 Found Instances</summary>
 
 
-- Found in src/v0.8/functions/dev/v1_X/FunctionsBilling.sol [Line: 17](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsBilling.sol#L17)
+- Found in src/v0.8/functions/dev/v1_X/FunctionsBilling.sol [Line: 295](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsBilling.sol#L295)
 
 	```solidity
-	abstract contract FunctionsBilling is Routable, IFunctionsBilling {
+	    bytes memory /* offchainMetadata TODO: use in getDonFee() for dynamic billing */,
 	```
 
-- Found in src/v0.8/functions/v1_0_0/FunctionsBilling.sol [Line: 15](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsBilling.sol#L15)
+- Found in src/v0.8/functions/v1_0_0/FunctionsBilling.sol [Line: 254](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsBilling.sol#L254)
 
 	```solidity
-	abstract contract FunctionsBilling is Routable, IFunctionsBilling {
+	    bytes memory /* offchainMetadata TODO: use in getDonFee() for dynamic billing */
 	```
 
-- Found in src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol [Line: 12](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol#L12)
+- Found in src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol [Line: 35](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol#L35)
 
 	```solidity
-	abstract contract OCR2Base is ConfirmedOwner, OCR2Abstract {
+	    uint8 f; // TODO: could be optimized by squeezing into one slot
 	```
 
-- Found in src/v0.8/functions/v1_1_0/FunctionsBilling.sol [Line: 17](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsBilling.sol#L17)
+- Found in src/v0.8/functions/v1_1_0/FunctionsBilling.sol [Line: 271](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsBilling.sol#L271)
 
 	```solidity
-	abstract contract FunctionsBilling is Routable, IFunctionsBilling {
+	    bytes memory /* offchainMetadata TODO: use in getDonFee() for dynamic billing */,
 	```
 
-- Found in src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol [Line: 12](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol#L12)
+- Found in src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol [Line: 29](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol#L29)
 
 	```solidity
-	abstract contract OCR2Base is ConfirmedOwner, OCR2Abstract {
+	    uint8 f; // TODO: could be optimized by squeezing into one slot
 	```
 
-- Found in src/v0.8/functions/v1_3_0/FunctionsBilling.sol [Line: 17](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsBilling.sol#L17)
+- Found in src/v0.8/functions/v1_3_0/FunctionsBilling.sol [Line: 293](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsBilling.sol#L293)
 
 	```solidity
-	abstract contract FunctionsBilling is Routable, IFunctionsBilling {
+	    bytes memory /* offchainMetadata TODO: use in getDonFee() for dynamic billing */,
 	```
 
-- Found in src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol [Line: 12](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol#L12)
+- Found in src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol [Line: 29](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol#L29)
 
 	```solidity
-	abstract contract OCR2Base is ConfirmedOwner, OCR2Abstract {
+	    uint8 f; // TODO: could be optimized by squeezing into one slot
 	```
 
 </details>

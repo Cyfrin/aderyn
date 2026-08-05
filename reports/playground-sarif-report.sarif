@@ -1597,6 +1597,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/VoidConstructor.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 272
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/VoidConstructor.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 583
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/VoidConstructor.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 663
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
@@ -10952,8 +10985,41 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "byteLength": 8,
-                  "byteOffset": 66
+                  "byteLength": 37,
+                  "byteOffset": 182
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "byteLength": 32,
+                  "byteOffset": 227
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "byteLength": 49,
+                  "byteOffset": 384
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "byteLength": 34,
+                  "byteOffset": 441
                 }
               }
             },
@@ -10963,8 +11029,30 @@
                   "uri": "src/Counter.sol"
                 },
                 "region": {
-                  "byteLength": 7,
-                  "byteOffset": 74
+                  "byteLength": 8,
+                  "byteOffset": 265
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Counter.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 345
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Counter.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 408
                 }
               }
             },
@@ -10974,8 +11062,8 @@
                   "uri": "src/TautologicalCompare.sol"
                 },
                 "region": {
-                  "byteLength": 19,
-                  "byteOffset": 66
+                  "byteLength": 51,
+                  "byteOffset": 163
                 }
               }
             }
