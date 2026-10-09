@@ -13,11 +13,33 @@ use crate::{
     },
 };
 use eyre::Result;
-use semver::Version;
+use semver::{Version, VersionReq};
+use std::str::FromStr;
 
 #[derive(Default)]
 pub struct UnsafeMathPre08Detector {
     found_instances: BTreeMap<(String, usize, String), NodeID>,
+}
+
+fn version_req_allows_below_0_8_0(version_req: &VersionReq) -> bool {
+    for minor in 4..=7 {
+        let latest_patch = match minor {
+            4 => 26,
+            5 => 17,
+            6 => 12,
+            7 => 6,
+            _ => unreachable!(),
+        };
+
+        for patch in 0..=latest_patch {
+            let version = Version::from_str(&format!("0.{minor}.{patch}")).unwrap();
+            if version_req.matches(&version) {
+                return true;
+            }
+        }
+    }
+
+    false
 }
 
 impl IssueDetector for UnsafeMathPre08Detector {
@@ -39,13 +61,7 @@ impl IssueDetector for UnsafeMathPre08Detector {
 
             for pragma in pragmas {
                 if let Ok(version_req) = pragma_directive_to_semver(pragma) {
-                    // Check if it allows any version below 0.8.0
-                    allows_pre_08 = (0..=7).any(|minor| {
-                        (0..=25).any(|patch| {
-                            let v = Version::new(0, minor, patch);
-                            version_req.matches(&v)
-                        })
-                    });
+                    allows_pre_08 = version_req_allows_below_0_8_0(&version_req);
                     if allows_pre_08 {
                         break;
                     }
@@ -122,6 +138,42 @@ mod unsafe_math_pre_08_tests {
         assert!(found);
         // add(y), sub(y), mul(y), safeAdd(a,b) have total: 3+3+2+1 = 9 operations flagged
         assert_eq!(detector.instances().len(), 9);
+    }
+
+    #[test]
+    fn test_unsafe_math_pre_08_detector_on_0_4_26() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/UnsafeMathPre08Exact0426.sol",
+        );
+
+        let mut detector = UnsafeMathPre08Detector::default();
+        let found = detector.detect(&context).unwrap();
+        assert!(found);
+        assert_eq!(detector.instances().len(), 1);
+    }
+
+    #[test]
+    fn test_unsafe_math_pre_08_detector_on_range() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/UnsafeMathPre08Range.sol",
+        );
+
+        let mut detector = UnsafeMathPre08Detector::default();
+        let found = detector.detect(&context).unwrap();
+        assert!(found);
+        assert_eq!(detector.instances().len(), 1);
+    }
+
+    #[test]
+    fn test_unsafe_math_pre_08_detector_on_open_range() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/UnsafeMathPre08OpenRange.sol",
+        );
+
+        let mut detector = UnsafeMathPre08Detector::default();
+        let found = detector.detect(&context).unwrap();
+        assert!(found);
+        assert_eq!(detector.instances().len(), 1);
     }
 
     #[test]
