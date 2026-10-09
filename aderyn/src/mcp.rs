@@ -128,6 +128,9 @@ async fn shutdown_signal() {
         term.recv().await;
     };
 
+    #[cfg(not(unix))]
+    let terminate = std::future::pending::<()>();
+
     tokio::select! {
         _ = ctrl_c => {},
         _ = terminate => {},
