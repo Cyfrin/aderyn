@@ -101,8 +101,13 @@ pub fn make_context(
         let sloc_stats: HashMap<String, usize> =
             stats.iter().map(|(key, value)| (key.to_owned(), value.code)).collect();
 
-        let ignore_line_stats: HashMap<String, Vec<stats::IgnoreLine>> =
-            stats.iter().map(|(key, value)| (key.to_owned(), value.ignore_lines.clone())).collect();
+        // Normalize keys the same way `detect_issues` looks them up.
+        let ignore_line_stats: HashMap<String, Vec<stats::IgnoreLine>> = stats
+            .iter()
+            .map(|(key, value)| {
+                (stats::normalized_path_key(Path::new(key)), value.ignore_lines.clone())
+            })
+            .collect();
 
         context.set_sloc_stats(sloc_stats);
         context.set_ignore_lines_stats(ignore_line_stats);
