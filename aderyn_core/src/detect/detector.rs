@@ -177,6 +177,7 @@ define_detectors! {
     UnprotectedInitializer,
     UnsafeCasting,
     UnsafeERC20Operation,
+    UnsafeMathPre08,
     UnsafeOzERC721Mint,
     UnspecificSolidityPragma,
     UnusedError,
