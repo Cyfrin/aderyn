@@ -2,8 +2,8 @@ use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::{
-        ContractKind, ExtractAssignments, ExtractBinaryOperations, ExtractContractDefinitions,
-        ExtractPragmaDirectives, ExtractUnaryOperations, NodeID, NodeType,
+        ContractKind, ExtractAssignments, ExtractBinaryOperations, ExtractPragmaDirectives,
+        ExtractUnaryOperations, NodeID, NodeType,
     },
     capture,
     context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
@@ -60,7 +60,7 @@ impl IssueDetector for UnsafeMathPre08Detector {
             let mut allows_pre_08 = false;
 
             for pragma in pragmas {
-                if let Ok(version_req) = pragma_directive_to_semver(pragma) {
+                if let Ok(version_req) = pragma_directive_to_semver(&pragma) {
                     allows_pre_08 = version_req_allows_below_0_8_0(&version_req);
                     if allows_pre_08 {
                         break;
@@ -75,14 +75,14 @@ impl IssueDetector for UnsafeMathPre08Detector {
             // Flag arithmetic operations
             let binary_ops = ExtractBinaryOperations::from(contract).extracted;
             for op in binary_ops {
-                if ["+", "-", "*"].contains(&op.operator.as_str()) {
+                if ["+", "-", "*", "/", "%", "**"].contains(&op.operator.as_str()) {
                     capture!(self, context, op);
                 }
             }
 
             let assignments = ExtractAssignments::from(contract).extracted;
             for op in assignments {
-                if ["+=", "-=", "*="].contains(&op.operator.as_str()) {
+                if ["+=", "-=", "*=", "/=", "%="].contains(&op.operator.as_str()) {
                     capture!(self, context, op);
                 }
             }

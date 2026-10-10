@@ -1,5 +1,5 @@
 # Configuration
-required_tools := "forge pnpm yarn cargo-clippy"
+required_tools := "forge pnpm yarn"
 
 # Colors
 green := '\033[0;32m'
