@@ -33,6 +33,6 @@ contract UnsafeMathPre08 {
 
 contract SafeMath08 {
     // To test the negative case we would need another file or just another pragma,
-    // but Solidity allows only one pragma per file for compiler matching usually, 
+    // but Solidity allows only one pragma per file for compiler matching usually,
     // or we can test multiple files.
 }
