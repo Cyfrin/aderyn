@@ -56,6 +56,7 @@ node_group! {
     PlaceholderStatement,
     Return,
     RevertStatement,
+    Throw,
     TryStatement,
     UncheckedBlock,
     VariableDeclarationStatement,
@@ -675,6 +676,11 @@ stmt_node!(
 stmt_node!(
     #[derive(Hash)]
     struct PlaceholderStatement {}
+);
+
+stmt_node!(
+    #[derive(Hash)]
+    struct Throw {}
 );
 
 stmt_node!(

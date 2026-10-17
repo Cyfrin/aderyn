@@ -27,6 +27,7 @@ impl Node for Statement {
             Statement::PlaceholderStatement(placeholder_statement) => {
                 placeholder_statement.accept(visitor)
             }
+            Statement::Throw(throw_statement) => throw_statement.accept(visitor),
         }
     }
     fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -308,6 +309,15 @@ impl Node for Continue {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_continue(self)?;
         visitor.end_visit_continue(self)
+    }
+
+    macros::accept_id!();
+}
+
+impl Node for Throw {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_throw(self)?;
+        visitor.end_visit_throw(self)
     }
 
     macros::accept_id!();
