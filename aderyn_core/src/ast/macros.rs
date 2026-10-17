@@ -178,6 +178,7 @@ macro_rules! with_node_types {
                 RevertStatement,
                 StructDefinition,
                 StructuredDocumentation,
+                Throw,
                 TryCatchClause,
                 TryStatement,
                 TupleExpression,

@@ -15,6 +15,7 @@ impl Cfg {
             Statement::IfStatement(n) => self.add_if_statement(n),
             Statement::PlaceholderStatement(n) => self.add_placeholder_statement(n),
             Statement::RevertStatement(n) => self.add_revert_statement(n),
+            Statement::Throw(n) => self.add_throw_statement(n),
             Statement::Return(n) => self.add_return_statement(n),
             Statement::InlineAssembly(n) => self.add_inline_assembly_statement(n),
             Statement::Continue(n) => self.add_continue_statement(n),

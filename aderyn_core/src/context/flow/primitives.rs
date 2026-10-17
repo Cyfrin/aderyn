@@ -159,6 +159,13 @@ impl Cfg {
     pub fn add_revert_statement(&mut self, stmt: &RevertStatement) -> CfgNodeId {
         self.add_node(CfgNodeDescriptor::RevertStatement(Box::new(CfgRevertStatement::from(stmt))))
     }
+
+    // Solidity 0.4 `throw` aborts like `revert`, so it shares the revert CFG primitive.
+    pub fn add_throw_statement(&mut self, stmt: &Throw) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::RevertStatement(Box::new(CfgRevertStatement {
+            revert_statement: stmt.id,
+        })))
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////

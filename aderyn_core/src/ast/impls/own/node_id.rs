@@ -97,6 +97,7 @@ impl Statement {
             Statement::Continue(continue_statement) => Some(continue_statement.id),
             Statement::DoWhileStatement(do_while_statement) => Some(do_while_statement.id),
             Statement::PlaceholderStatement(placeholder) => Some(placeholder.id),
+            Statement::Throw(throw) => Some(throw.id),
         }
     }
 }

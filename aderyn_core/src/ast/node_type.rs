@@ -24,7 +24,6 @@ macro_rules! define_node_types {
         pub enum NodeType {
             $( $node ),*,
             SourceUnit,
-            Throw, // suppport pre 0.5 solidity code
         }
     };
 }
