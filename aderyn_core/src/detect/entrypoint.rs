@@ -10,7 +10,7 @@ use crate::{
     ast::NodeID,
     context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
-    stats::When,
+    stats::{When, normalized_path_key},
 };
 use rayon::iter::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator};
 use serde::Serialize;
@@ -260,19 +260,10 @@ pub fn detect_issues(
             issue.instances = detectors_instances
                 .into_iter()
                 .filter(|(instance, _)| {
-                    let Some(lines_to_ignore_in_file) = ignore_lines.get(
-                        &dunce::canonicalize(root_rel_path.join(&instance.0).as_path())
-                            .unwrap()
-                            .to_string_lossy()
-                            .to_string(),
-                    ) else {
-                        panic!(
-                            "File Not Found in Ignore stats: {}",
-                            &dunce::canonicalize(root_rel_path.join(&instance.0).as_path())
-                                .unwrap()
-                                .to_string_lossy()
-                                .to_string()
-                        );
+                    let key = normalized_path_key(&root_rel_path.join(&instance.0));
+                    let Some(lines_to_ignore_in_file) = ignore_lines.get(&key) else {
+                        // No ignore stats for this file means nothing to ignore. Keep it.
+                        return true;
                     };
 
                     if lines_to_ignore_in_file.is_empty() {

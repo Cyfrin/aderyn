@@ -58,6 +58,15 @@ pub fn collect_stats(
         .collect()
 }
 
+/// Key used for per file stats (like ignore lines).
+///
+/// Both the writer (`make_context` in aderyn_driver) and the reader (`detect_issues`) must build
+/// keys the same way, otherwise lookups miss. `dunce` gives a plain `C:\...` path on Windows
+/// instead of the `\\?\` form, and falls back to the raw path if canonicalize fails.
+pub fn normalized_path_key(path: &Path) -> String {
+    dunce::canonicalize(path).unwrap_or_else(|_| path.to_path_buf()).to_string_lossy().to_string()
+}
+
 pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
     if r_content.is_empty() {
         return Stats { code: 0, ignore_lines: vec![] };
@@ -68,4 +77,26 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
     let ignore_lines = get_lines_to_ignore(&token_descriptors);
 
     Stats { code: code_lines, ignore_lines }
+}
+
+#[cfg(test)]
+mod normalized_path_key_tests {
+    use super::normalized_path_key;
+    use std::path::Path;
+
+    #[test]
+    fn same_file_gives_same_key() {
+        let dir = std::env::temp_dir();
+        let file = dir.join("aderyn_norm_key_test.sol");
+        std::fs::write(&file, "").unwrap();
+        let messy = dir.join(".").join("aderyn_norm_key_test.sol");
+        assert_eq!(normalized_path_key(&file), normalized_path_key(&messy));
+        std::fs::remove_file(&file).unwrap();
+    }
+
+    #[test]
+    fn missing_file_falls_back_to_raw_path() {
+        let p = Path::new("does/not/exist.sol");
+        assert_eq!(normalized_path_key(p), p.to_string_lossy());
+    }
 }
