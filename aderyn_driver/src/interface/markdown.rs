@@ -1,7 +1,7 @@
 use std::{
     collections::{HashMap, HashSet},
     io::{Result, Write},
-    path::{Path, PathBuf},
+    path::Path,
 };
 
 use aderyn_core::{context::workspace::WorkspaceContext, report::*};
@@ -14,7 +14,7 @@ pub fn print_report(
     writer: &mut Box<dyn Write>,
     report: &Report,
     cx_wrapper: &WorkspaceContextWrapper,
-    output_rel_path: String,
+    output_rel_path: Option<String>,
     no_snippets: bool,
 ) -> Result<()> {
     let (contexts, root_path) = (&cx_wrapper.contexts, &cx_wrapper.root_path);
@@ -49,7 +49,7 @@ pub fn print_report(
             for issue_body in &issues {
                 counter += 1;
                 print_issue(
-                    writer,
+                    writer.as_mut(),
                     PrintIssueParams {
                         issue_body,
                         severity,
@@ -72,7 +72,7 @@ struct PrintIssueParams<'a> {
     severity: &'a str,
     number: i32,
     root_path: &'a Path,
-    output_rel_path: String,
+    output_rel_path: Option<String>,
     no_snippets: bool,
 }
 
@@ -204,7 +204,7 @@ fn print_table_of_contents<W: Write>(mut writer: W, report: &Report) -> Result<(
 }
 
 fn print_issue(
-    writer: &mut Box<dyn Write>,
+    writer: &mut dyn Write,
     params: PrintIssueParams,
     file_data: &HashMap<String, &String>,
 ) -> Result<()> {
@@ -249,19 +249,21 @@ fn print_issue(
             }
         };
 
+        let source_path = std::fs::canonicalize(&path)?;
+        let link_path = if let Some(output_path) = &params.output_rel_path {
+            carve_shortest_path(std::fs::canonicalize(output_path)?, source_path)
+        } else {
+            source_path
+        };
+
+        let link = format!("{}#L{}", link_path.display(), instance.line_no);
+        let link = if params.output_rel_path.is_none() { format!("<{link}>") } else { link };
+
         if params.no_snippets {
             writeln!(
                 writer,
-                "- Found in {} [Line: {}]({}#L{})",
-                instance.contract_path,
-                instance.line_no,
-                carve_shortest_path(
-                    std::fs::canonicalize(PathBuf::from(params.output_rel_path.clone())).unwrap(),
-                    std::fs::canonicalize(&path).unwrap()
-                )
-                .to_str()
-                .unwrap(),
-                instance.line_no,
+                "- Found in {} [Line: {}]({})",
+                instance.contract_path, instance.line_no, link,
             )?;
             continue;
         }
@@ -273,33 +275,14 @@ fn print_issue(
         if let Some(hint) = instance.hint.as_ref() {
             writeln!(
                 writer,
-                "- Found in {} [Line: {}]({}#L{})\n\n\t{}\n\t```solidity\n\t{}\n\t```\n",
-                instance.contract_path,
-                instance.line_no,
-                carve_shortest_path(
-                    std::fs::canonicalize(PathBuf::from(params.output_rel_path.clone())).unwrap(),
-                    std::fs::canonicalize(&path).unwrap()
-                )
-                .to_str()
-                .unwrap(),
-                instance.line_no,
-                hint,
-                line_preview,
+                "- Found in {} [Line: {}]({})\n\n\t{}\n\t```solidity\n\t{}\n\t```\n",
+                instance.contract_path, instance.line_no, link, hint, line_preview,
             )?;
         } else {
             writeln!(
                 writer,
-                "- Found in {} [Line: {}]({}#L{})\n\n\t```solidity\n\t{}\n\t```\n",
-                instance.contract_path,
-                instance.line_no,
-                carve_shortest_path(
-                    std::fs::canonicalize(PathBuf::from(params.output_rel_path.clone())).unwrap(),
-                    std::fs::canonicalize(&path).unwrap()
-                )
-                .to_str()
-                .unwrap(),
-                instance.line_no,
-                line_preview,
+                "- Found in {} [Line: {}]({})\n\n\t```solidity\n\t{}\n\t```\n",
+                instance.contract_path, instance.line_no, link, line_preview,
             )?;
         }
     }
@@ -307,4 +290,61 @@ fn print_issue(
     line_nos_printed.clear();
     writeln!(writer, "\n")?; // Add an extra newline for spacing
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn issue_links_with_and_without_report_file() {
+        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+        let contract_path = "src/lib.rs".to_string();
+        let source = std::fs::read_to_string(root.join(&contract_path)).unwrap();
+        let file_data = HashMap::from([(contract_path.clone(), &source)]);
+        for stdout in [false, true] {
+            for no_snippets in [false, true] {
+                for hint in [None, Some("Check the state change".to_string())] {
+                    let issue = IssueBody {
+                        title: "State change".to_string(),
+                        description: "Emit an event".to_string(),
+                        detector_name: "state-change".to_string(),
+                        instances: vec![IssueInstance {
+                            contract_path: contract_path.clone(),
+                            line_no: 1,
+                            src: String::new(),
+                            src_char: String::new(),
+                            src_char2: String::new(),
+                            hint,
+                        }],
+                    };
+                    let mut output = Vec::new();
+                    print_issue(
+                        &mut output,
+                        PrintIssueParams {
+                            issue_body: &issue,
+                            severity: "L",
+                            number: 1,
+                            root_path: root,
+                            output_rel_path: (!stdout)
+                                .then(|| root.join("Cargo.toml").to_str().unwrap().to_string()),
+                            no_snippets,
+                        },
+                        &file_data,
+                    )
+                    .unwrap();
+                    let expected = if stdout {
+                        root.join(&contract_path).canonicalize().unwrap()
+                    } else {
+                        contract_path.clone().into()
+                    };
+                    let output = String::from_utf8(output).unwrap();
+                    let destination = format!("{}#L1", expected.display());
+                    let destination = if stdout { format!("<{destination}>") } else { destination };
+                    assert!(output.contains(&format!("[Line: 1]({destination})")));
+                    assert_eq!(output.contains("```solidity"), !no_snippets);
+                }
+            }
+        }
+    }
 }

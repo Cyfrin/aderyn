@@ -69,7 +69,7 @@ pub fn output_interface_router(
                 &mut b,
                 report,
                 cx_wrapper,
-                output_config.output.clone(),
+                (!output_config.stdout).then(|| output_config.output.clone()),
                 output_config.no_snippets,
             )?;
         }
