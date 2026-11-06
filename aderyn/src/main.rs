@@ -71,6 +71,10 @@ pub struct CommandLineArgs {
     #[arg(short, long, default_value = "report.md", verbatim_doc_comment, value_hint = ValueHint::FilePath)]
     output: String,
 
+    /// Print the report to stdout without writing a file.
+    #[arg(long, name = "stdout")]
+    stdout: bool,
+
     /// Start Aderyn's LSP server on stdout. (Must be accompanied with `--stdout`).
     #[arg(short, long, group = "stdout_dependent")]
     lsp: bool,
@@ -83,10 +87,6 @@ pub struct CommandLineArgs {
     /// After generating report, skip checking if a new version of Aderyn is available.
     #[arg(long, hide = true)]
     skip_update_check: bool,
-
-    /// Serialize the reports to stdout, don't write to files.
-    #[arg(long, name = "stdout", hide = true)]
-    stdout: bool,
 
     /// Skip counting number of lines of code.
     #[arg(long, hide = true)]

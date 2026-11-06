@@ -93,6 +93,12 @@ aderyn
 
 This generates a [report.md](https://github.com/Cyfrin/aderyn/blob/dev/reports/report.md)
 
+To print the report in your terminal without writing a file:
+
+```sh
+aderyn --stdout
+```
+
 See examples using more CLI options [here](https://cyfrin.gitbook.io/cyfrin-docs/cli-options)
 
 ## VS Code extension
