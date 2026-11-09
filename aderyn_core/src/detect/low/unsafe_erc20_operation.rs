@@ -20,10 +20,10 @@ impl IssueDetector for UnsafeERC20OperationDetector {
         for member_access in context.member_accesss() {
             if member_access.expression.as_ref().type_descriptions().is_some_and(|desc| {
                 desc.type_string.as_ref().is_some_and(|type_string| type_string.contains("ERC20"))
-            }) && member_access.member_name == "transferFrom"
-                || member_access.member_name == "approve"
-                || member_access.member_name == "transfer"
-            {
+            }) && matches!(
+                member_access.member_name.as_str(),
+                "transferFrom" | "approve" | "transfer"
+            ) {
                 capture!(self, context, member_access);
             }
         }
@@ -70,5 +70,16 @@ mod unsafe_erc20_functions_tests {
         assert!(found);
         // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 5);
+    }
+
+    #[test]
+    fn test_unsafe_erc20_operations_require_erc20_receiver() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/UnsafeERC20Receiver.sol",
+        );
+        let mut detector = UnsafeERC20OperationDetector::default();
+        assert!(detector.detect(&context).unwrap());
+        let lines: Vec<_> = detector.instances().keys().map(|(_, line, _)| *line).collect();
+        assert_eq!(lines, vec![26, 27, 28]);
     }
 }
