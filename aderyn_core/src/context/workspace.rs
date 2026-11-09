@@ -27,13 +27,15 @@ macro_rules! create_workspace_context {
         yul_sourceless: $($yul_sourceless:ident),* $(,)?;
     ) => {
         create_workspace_context!(
-            $($type),*,
-            $($yul_type),*,
-            $($yul_sourceless),*,
+            regular: $($type),*;
+            yul: $($yul_type),*, $($yul_sourceless),*;
         );
     };
 
-    ($($type:ident),* $(,)?,) => {
+    (
+        regular: $($type:ident),* $(,)?;
+        yul: $($yul_type:ident),* $(,)?;
+    ) => {
         paste! {
             #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
             pub struct NodeContext {
@@ -61,14 +63,21 @@ macro_rules! create_workspace_context {
 
                 pub source_units_context: Vec<SourceUnit>,
 
-                $(pub(crate) [<$type:snake s_context>]: HashMap<$type, NodeContext>,)*
+                // Semantic node equality can group distinct source occurrences.
+                $(pub(crate) [<$type:snake s_context>]: HashMap<NodeID, ($type, NodeContext)>,)*
+                $(pub(crate) [<$yul_type:snake s_context>]: HashMap<$yul_type, NodeContext>,)*
             }
 
 
             impl WorkspaceContext {
                 $(
                     pub fn [<$type:snake s>](&self) -> Vec<&$type> {
-                        self.[<$type:snake s_context>].keys().collect()
+                        self.[<$type:snake s_context>].values().map(|(node, _)| node).collect()
+                    }
+                )*
+                $(
+                    pub fn [<$yul_type:snake s>](&self) -> Vec<&$yul_type> {
+                        self.[<$yul_type:snake s_context>].keys().collect()
                     }
                 )*
 
@@ -78,7 +87,8 @@ macro_rules! create_workspace_context {
 
                 pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
                     let source_unit_id = match node {
-                        $(ASTNode::$type(n) => self.[<$type:snake s_context>].get(n).map(|c| c.source_unit_id),)*
+                        $(ASTNode::$type(n) => self.[<$type:snake s_context>].get(&n.id).map(|(_, c)| c.source_unit_id),)*
+                        $(ASTNode::$yul_type(n) => self.[<$yul_type:snake s_context>].get(n).map(|c| c.source_unit_id),)*
                         ASTNode::SourceUnit(n) => Some(n.id),
                     };
                     source_unit_id.and_then(|id| {
@@ -91,3 +101,6 @@ macro_rules! create_workspace_context {
 }
 
 with_node_types!(create_workspace_context);
+
+#[cfg(test)]
+mod tests;

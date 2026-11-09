@@ -19,8 +19,6 @@ impl Hash for Identifier {
         self.overloaded_declarations.hash(state);
         self.referenced_declaration.hash(state);
         self.type_descriptions.hash(state);
-        self.src.hash(state);
-        self.id.hash(state);
     }
 }
 
@@ -35,8 +33,6 @@ impl Hash for IdentifierPath {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.name.hash(state);
         self.referenced_declaration.hash(state);
-        self.src.hash(state);
-        self.id.hash(state);
     }
 }
 
@@ -51,7 +47,6 @@ impl PartialEq for ElementaryTypeName {
 impl Hash for ElementaryTypeName {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.state_mutability.hash(state);
-        self.name.hash(state);
         self.type_descriptions.hash(state);
     }
 }
@@ -65,9 +60,6 @@ impl PartialEq for UserDefinedTypeName {
 
 impl Hash for UserDefinedTypeName {
     fn hash<H: Hasher>(&self, state: &mut H) {
-        self.path_node.hash(state);
         self.referenced_declaration.hash(state);
-        self.name.hash(state);
-        self.type_descriptions.hash(state);
     }
 }

@@ -80,8 +80,8 @@ macro_rules! implement_ast_const_for_workspace_context {
                         self.nodes
                             .insert(node.id, ASTNode::$node(node.clone()));
                         self.[<$node:snake s_context>].insert(
-                            node.clone(),
-                            NodeContext { source_unit_id: self.last_source_unit_id },
+                            node.id,
+                            (node.clone(), NodeContext { source_unit_id: self.last_source_unit_id }),
                         );
                         Ok(true)
                     }
