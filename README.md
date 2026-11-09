@@ -105,6 +105,10 @@ Download from [Visual Studio Marketplace](https://marketplace.visualstudio.com/i
 Checkout [Aderyn CI Assistant](https://github.com/marketplace/actions/aderyn-ci-assistant) in the marketplace.
 Performs Static analysis on Solidity codebases in CI to catch potential vulnerabilities before committing code. 
 
+## Related Resources
+
+- [Vulnerability acceptance rates](https://github.com/holistis/bug-bounty-intelligence-mcp/blob/main/vulnerability-acceptance-rates.json): a free, standalone dataset of real-world confirmation rates per vulnerability class (reentrancy, access-control, oracle-manipulation, etc.), computed from reconciled Sherlock audit-competition judging data. Can be used as an optional triage signal on top of Aderyn's detector output: which findings to look at first, not a verdict on any specific finding. See [discussion](https://github.com/Cyfrin/aderyn/issues/1084).
+
 ## Contributing & License
 
 Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md) for in-depth developer environment setup and PR approval process.
