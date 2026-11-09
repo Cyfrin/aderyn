@@ -835,6 +835,17 @@
                   "byteOffset": 563
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnsafeERC20Receiver.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 534
+                }
+              }
             }
           ],
           "message": {
@@ -8199,6 +8210,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UnsafeERC20Receiver.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UnsafeERC721Mint.sol"
                 },
                 "region": {
@@ -11244,6 +11266,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UnsafeERC20Receiver.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 952
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnsafeERC20Receiver.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 986
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnsafeERC20Receiver.sol"
+                },
+                "region": {
+                  "byteLength": 41,
+                  "byteOffset": 1021
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/router/ExternalCalls.sol"
                 },
                 "region": {
@@ -11592,17 +11647,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 18,
-                  "byteOffset": 5185
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
@@ -11658,99 +11702,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/IncorrectModifier.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 2103
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 28,
-                  "byteOffset": 4927
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 28,
-                  "byteOffset": 5328
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/SendEtherNoChecks.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 1255
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 368
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 10512
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 20,
-                  "byteOffset": 10557
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/Trump.sol"
                 },
                 "region": {
                   "byteLength": 29,
                   "byteOffset": 10869
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 28,
-                  "byteOffset": 11111
                 }
               }
             },
@@ -11768,11 +11724,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/UninitializedStateVariable.sol"
+                  "uri": "src/UnsafeERC20Receiver.sol"
                 },
                 "region": {
-                  "byteLength": 29,
-                  "byteOffset": 599
+                  "byteLength": 13,
+                  "byteOffset": 952
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnsafeERC20Receiver.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 986
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnsafeERC20Receiver.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 1021
                 }
               }
             }

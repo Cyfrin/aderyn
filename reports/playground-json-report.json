@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 126,
-    "total_sloc": 4727
+    "total_source_units": 127,
+    "total_sloc": 4753
   },
   "files_details": {
     "files_details": [
@@ -372,6 +372,10 @@
       {
         "file_path": "src/UnprotectedInitialize.sol",
         "n_sloc": 44
+      },
+      {
+        "file_path": "src/UnsafeERC20Receiver.sol",
+        "n_sloc": 26
       },
       {
         "file_path": "src/UnsafeERC721Mint.sol",
@@ -992,6 +996,12 @@
             "line_no": 17,
             "src": "563:8",
             "src_char": "563:8"
+          },
+          {
+            "contract_path": "src/UnsafeERC20Receiver.sol",
+            "line_no": 13,
+            "src": "534:9",
+            "src_char": "534:9"
           }
         ]
       },
@@ -5122,6 +5132,12 @@
             "src_char": "32:24"
           },
           {
+            "contract_path": "src/UnsafeERC20Receiver.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/UnsafeERC721Mint.sol",
             "line_no": 2,
             "src": "32:23",
@@ -6808,6 +6824,24 @@
             "src_char": "575:47"
           },
           {
+            "contract_path": "src/UnsafeERC20Receiver.sol",
+            "line_no": 26,
+            "src": "952:24",
+            "src_char": "952:24"
+          },
+          {
+            "contract_path": "src/UnsafeERC20Receiver.sol",
+            "line_no": 27,
+            "src": "986:25",
+            "src_char": "986:25"
+          },
+          {
+            "contract_path": "src/UnsafeERC20Receiver.sol",
+            "line_no": 28,
+            "src": "1021:41",
+            "src_char": "1021:41"
+          },
+          {
             "contract_path": "src/router/ExternalCalls.sol",
             "line_no": 27,
             "src": "594:7",
@@ -7002,12 +7036,6 @@
             "src_char": "1699:20"
           },
           {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 162,
-            "src": "5185:18",
-            "src_char": "5185:18"
-          },
-          {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 32,
             "src": "1062:13",
@@ -7038,58 +7066,10 @@
             "src_char": "1598:18"
           },
           {
-            "contract_path": "src/IncorrectModifier.sol",
-            "line_no": 83,
-            "src": "2103:23",
-            "src_char": "2103:23"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 171,
-            "src": "4927:28",
-            "src_char": "4927:28"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 180,
-            "src": "5328:28",
-            "src_char": "5328:28"
-          },
-          {
-            "contract_path": "src/SendEtherNoChecks.sol",
-            "line_no": 67,
-            "src": "1255:19",
-            "src_char": "1255:19"
-          },
-          {
-            "contract_path": "src/StateShadowing.sol",
-            "line_no": 22,
-            "src": "368:19",
-            "src_char": "368:19"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 309,
-            "src": "10512:19",
-            "src_char": "10512:19"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 310,
-            "src": "10557:20",
-            "src_char": "10557:20"
-          },
-          {
             "contract_path": "src/Trump.sol",
             "line_no": 318,
             "src": "10869:29",
             "src_char": "10869:29"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 324,
-            "src": "11111:28",
-            "src_char": "11111:28"
           },
           {
             "contract_path": "src/Trump.sol",
@@ -7098,10 +7078,22 @@
             "src_char": "11990:29"
           },
           {
-            "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 18,
-            "src": "599:29",
-            "src_char": "599:29"
+            "contract_path": "src/UnsafeERC20Receiver.sol",
+            "line_no": 26,
+            "src": "952:13",
+            "src_char": "952:13"
+          },
+          {
+            "contract_path": "src/UnsafeERC20Receiver.sol",
+            "line_no": 27,
+            "src": "986:14",
+            "src_char": "986:14"
+          },
+          {
+            "contract_path": "src/UnsafeERC20Receiver.sol",
+            "line_no": 28,
+            "src": "1021:18",
+            "src_char": "1021:18"
           }
         ]
       },
