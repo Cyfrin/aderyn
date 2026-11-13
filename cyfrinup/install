@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Preserve this legacy URL for clients that pipe it into a shell.
+printf '%s\n' \
+  'Aderyn has been retired and is no longer maintained.' \
+  'This legacy installer no longer installs or updates software.' \
+  'Existing installations have not been changed.' >&2
+
+exit 1
