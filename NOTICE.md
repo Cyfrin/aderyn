@@ -1,20 +1,21 @@
-## IMPORTANT
+# Legacy installer retirement
 
-Why is master branch empty ?
-Why is this branch not deleted?
-Why does cyfrinup/dynamic_script exist ?
+This branch preserves these historical Aderyn installer URLs:
 
-* No code must be pushed to master branch. It should only contain one file - cyfrinup/dynamic_script
+- `https://raw.githubusercontent.com/Cyfrin/aderyn/master/cyfrinup/cyfrinup`
+- `https://raw.githubusercontent.com/Cyfrin/aderyn/master/cyfrinup/dynamic_script`
 
-* It exists to provide smooth user experience for users who installed aderyn more than 2 years go
+The original setup URL, `https://raw.githubusercontent.com/Cyfrin/aderyn/dev/cyfrinup/install`,
+is preserved separately on the `dev` branch with the same retirement behavior.
 
-* The new way to install cyfrinup is from https://github.com/Cyfrin/up
+Older installed clients fetch these paths and pipe their contents into a shell.
+Aderyn is retired, so each endpoint returns valid shell that prints a retirement
+notice to stderr and exits with status 1. It does not download software, modify
+existing installations, or forward to the shared Cyfrin/Up installer.
 
+Keep the `master` branch and both `cyfrinup` paths available. Do not
+delete or rename them, replace the script with HTML, or restore installation
+logic. Keep this branch limited to legacy compatibility files and this notice.
 
-## NOTE
-
-* Don't change the location (cyfrinup/dynamic_script)
-* Don't delete this branch (master branch)
-* Don't rename this branch (master branch)
-
-
+The shared [Cyfrin/Up](https://github.com/Cyfrin/Up) installer remains separate
+and continues serving maintained Cyfrin tools.
