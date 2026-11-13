@@ -1,3 +1,8 @@
+> **Aderyn is retired and no longer maintained.** There are no supported
+> installation or upgrade paths. The usage and integration documentation below
+> is retained for historical reference. Existing installations receive no updates
+> or support.
+
 <p align="center">
     <br />
     <a href="https://cyfrin.io/">
@@ -37,50 +42,41 @@
 
 You can read the [Cyfrin official documentation](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme) for an in-depth look at Aderyn's functionalities.
 
-There is also an officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. Download from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview) and start identifying vulnerabilities in your Solidity 
-code with ease.  
+The [VS Code extension](https://github.com/Cyfrin/vscode-aderyn/) is also retired
+and has been delisted from the Visual Studio Marketplace.
 
 ## Features
 
 - Runs without need for any configuration support for Foundry and Hardhat projects.
 - Creates Markdown, JSON and Sarif reports.
-- Powers our officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) (1800+ downloads)
+- Previously powered the [VS Code extension](https://github.com/Cyfrin/vscode-aderyn/).
 - List of [supported detectors](https://cyfrin.gitbook.io/cyfrin-docs/project-configuration/list-of-supported-detectors)
 - Contributor Friendly
 - Downloaded more than 45K times. 
 
-## Installation
+## Installation and removal
 
-> **NOTE** Windows users must have WSL installed
-
-#### Cyfrinup - All in one cross platform installation manager for Cyfrin tools.
-
-[One time setup](https://github.com/Cyfrin/up). - Run `cyfrinup`
-
-Re-run `cyfrinup` to upgrade all Cyfrin tools to the latest version.
-
-#### Curl
-Once installed, run `aderyn-update` to upgrade.
-```sh
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cyfrin/aderyn/releases/latest/download/aderyn-installer.sh | bash
-```
-
+Aderyn installation and upgrades are no longer supported through Homebrew, npm,
+Cyfrinup, or the shell installer. Legacy installer scripts and release assets may
+remain accessible during retirement; they are not supported installation paths.
 
 #### Homebrew
-Once installed, run `brew upgrade cyfrin/tap/aderyn` to upgrade.
+
+The Aderyn Homebrew package is retired. Remove an existing installation with:
+
 ```sh
-brew install cyfrin/tap/aderyn
+brew uninstall cyfrin/tap/aderyn
 ```
 
 #### npm
-Once installed, re-run `npm install @cyfrin/aderyn -g` to upgrade.
+
+The Aderyn npm package is retired. Remove an existing global installation with:
+
 ```sh
-npm install @cyfrin/aderyn -g
+npm uninstall --global @cyfrin/aderyn
 ```
 
-If you are installing with Curl or Homebrew or npm, ensure that the correct version of Aderyn in your path comes from either the Homebrew or npm global packages directory. If an older version exists at `~/.cyfrin/bin/aderyn`, remove it using `rm -f ~/.cyfrin/bin/aderyn`, as this is no longer the default installation location.
-
-## Quick Start
+## Quick Start (historical)
 
 Run `aderyn --version` to check if Aderyn is installed successfully.
 
@@ -97,17 +93,20 @@ See examples using more CLI options [here](https://cyfrin.gitbook.io/cyfrin-docs
 
 ## VS Code extension
 
-Officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. 
-Download from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview)
+The [VS Code extension](https://github.com/Cyfrin/vscode-aderyn/) is retired and
+has been delisted from the Visual Studio Marketplace. Existing users can uninstall
+Aderyn from VS Code's Extensions view.
 
 ## Github Action
 
-Checkout [Aderyn CI Assistant](https://github.com/marketplace/actions/aderyn-ci-assistant) in the marketplace.
-Performs Static analysis on Solidity codebases in CI to catch potential vulnerabilities before committing code. 
+The historical [Aderyn CI Assistant](https://github.com/marketplace/actions/aderyn-ci-assistant)
+integration performed static analysis on Solidity codebases in CI. This integration
+is no longer supported.
 
 ## Contributing & License
 
-Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md) for in-depth developer environment setup and PR approval process.
+Historical developer setup and contribution information is retained in the
+[contribution guidelines](./CONTRIBUTING.md).
 Aderyn is an open-source software licensed under the [GPL-3.0 License](./LICENSE).
 
 To learn how to create your custom Aderyn detectors, [checkout the official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/detectors-quickstart)
